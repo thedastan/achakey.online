@@ -1,4 +1,6 @@
-export default function SvgPlay() {
+import { IProps } from "./Types";
+
+export default function SvgPlay({ fill }: IProps) {
   return (
     <svg
       width="33"
@@ -12,12 +14,12 @@ export default function SvgPlay() {
           cx="16.5006"
           cy="15.7994"
           r="15.1271"
-          stroke="white"
+          stroke={fill}
           strokeWidth="1.34463"
         />
         <path
           d="M21.7713 15.0006C22.603 15.5288 22.603 16.7426 21.7713 17.2708L15.5393 21.2286C14.6441 21.7972 13.4738 21.154 13.4738 20.0935L13.4738 12.1779C13.4738 11.1174 14.6441 10.4743 15.5393 11.0428L21.7713 15.0006Z"
-          fill="white"
+          fill={fill}
         />
       </g>
       <defs>
@@ -25,7 +27,7 @@ export default function SvgPlay() {
           <rect
             width="31.5989"
             height="31.5989"
-            fill="white"
+            fill={fill}
             transform="translate(0.701172)"
           />
         </clipPath>
