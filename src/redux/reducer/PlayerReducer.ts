@@ -1,4 +1,3 @@
-import { type } from "os";
 import { PlayerAction, PlayerActionTypes, PlayerState } from "../types/Player";
 
 const initialState: PlayerState = {

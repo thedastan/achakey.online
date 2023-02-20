@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Basket, Details, Header, Main, MyPlaylist } from "./pages/Index";
+import { Basket, AllPlaylist, Header, Main, MyPlaylist } from "./pages/Index";
 
 function App() {
   return (
@@ -8,8 +8,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/basket" element={<Basket />} />
-        <Route path="/my-playlist/:idPlay" element={<MyPlaylist />} />
-        <Route path="/details/:id" element={<Details />} />
+        <Route path="/my-playlist" element={<MyPlaylist />} />
+        <Route path="/all-playlist/" element={<AllPlaylist />} />
       </Routes>
     </div>
   );
