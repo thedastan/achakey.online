@@ -16,18 +16,33 @@ import SvgVolumeFull from "../../assets/svg/SvgVolumeFull";
 import SvgVolumeNull from "../../assets/svg/SvgVolumeNull";
 import SvgVolumeSmall from "../../assets/svg/SvgVolumeSmall";
 import SvgVolumeMiddle from "../../assets/svg/SvgVolumeMiddle";
+import SvgRandom from "../../assets/svg/SvgRandom";
+import SvgLoop from "../../assets/svg/SvgLoop";
+import SvgActiveLoop from "../../assets/svg/SvgActiveLoop";
 
 interface IlistMedia {
   listTruck?: ITrack[] | any;
+  setCurrentIndex: any;
+  currentIndex: number;
+  eventChange: boolean;
+  setEventChange: any;
 }
 
-let audio: any;
+let audio: HTMLAudioElement | any;
 
-export default function AudioPlayer({ listTruck }: IlistMedia) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function AudioPlayer({
+  listTruck,
+  currentIndex,
+  eventChange,
+  setCurrentIndex,
+  setEventChange,
+}: IlistMedia) {
   const { pause, volume, active, duration, currentTime } = useAppSelector(
     (state) => state.playReducer
   );
+
+  const [random, setRandom] = useState(false);
+  const [loop, setLoop] = useState(false);
 
   const {
     activeTrack,
@@ -82,19 +97,70 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   };
 
   const OnClickNext = () => {
-    setCurrentIndex((currentIndex) => (currentIndex + 1) % listTruck.length);
-    activeTrack(listTruck[currentIndex]);
-    playTrack();
-    audio.play();
+    setEventChange(false);
+    setCurrentIndex(
+      (currentIndex: number) => (currentIndex + 1) % listTruck.length
+    );
+
+    activeTrack(
+      listTruck[
+        eventChange
+          ? listTruck.length - 1 === currentIndex
+            ? 0
+            : currentIndex + 1
+          : listTruck.length - 1 === currentIndex
+          ? 0
+          : currentIndex + 1
+      ]
+    );
   };
 
   const OnClickPrev = () => {
-    setCurrentIndex((currentIndex) =>
-      currentIndex === 1 ? listTruck.length - 1 : currentIndex - 1
+    setCurrentIndex((index: number) =>
+      index === 0 ? listTruck.length - 1 : index - 1
     );
-    activeTrack(listTruck[currentIndex]);
+    activeTrack(
+      listTruck[
+        eventChange
+          ? currentIndex - 1
+          : currentIndex === 0
+          ? listTruck.length - 1
+          : currentIndex - 1
+      ]
+    );
+    setEventChange(false);
+  };
+
+  const OnClickRandom = () => {
+    let currentValue = listTruck[Math.floor(Math.random() * listTruck.length)];
+
+    activeTrack(currentValue);
     playTrack();
-    audio.play();
+    setRandom(!random);
+  };
+
+  function startTimer() {
+    let seconds: any = currentTime % 60;
+    let minutes: any = Math.floor(currentTime / 60);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    return minutes + ":" + seconds;
+  }
+
+  function currentTimerAudio() {
+    let minutes: any = Math.floor(duration / 60);
+    let seconds: any = duration % 60;
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    return minutes + ":" + seconds;
+  }
+
+  const loopActive = () => {
+    setLoop(!loop);
   };
 
   useEffect(() => {
@@ -102,18 +168,30 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     audio.play();
   }, [active]);
 
+  useEffect(() => {
+    loop
+      ? audio.addEventListener("ended", () => {
+          playTrack();
+          audio.play();
+        })
+      : audio.addEventListener("ended", () => {
+          audio.currentTime = 0;
+          audio.pause();
+        });
+  }, [loop]);
+
   if (!active) {
     return null;
   }
 
   return (
-    <section style={{ marginBottom: "32px" }}>
+    <section style={{ marginBottom: "32px", background: "transparent" }}>
       <Box display="flex" alignItems="end">
         <Box maxW="176px" h="225px" mr="23px">
           <Image src={ImageW} />
         </Box>
         <Box w="100%">
-          <Text mb="32px" fontSize="38.57px">
+          <Text mb="32px" fontSize="38.57px" color="white">
             {active.name}
           </Text>
           <Box display="flex" mb="32px" alignItems="center">
@@ -125,21 +203,61 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               onChange={changeCurrentTime}
               className="time"
             />
-            <Text w="100px" textAlign="end">
-              {currentTime} / {duration}
+            <Text w="120px" textAlign="end" textColor="white">
+              {startTimer()} / {currentTimerAudio()}
             </Text>
           </Box>
 
           <Box display="flex" alignItems="center">
             <Box mr="31px">
-              <Button bg="gray.600" onClick={OnClickPrev}>
+              <Button
+                onClick={OnClickRandom}
+                bg="transparent"
+                rounded="50px"
+                p="0"
+                mr="5px"
+                colorScheme="none"
+              >
+                <SvgRandom fill={random ? "#0EEB24" : "white"} />
+              </Button>
+              <Button
+                bg="transparent"
+                colorScheme="none"
+                onClick={OnClickPrev}
+                p="0"
+              >
                 <SvgPrev />
               </Button>
-              <Button bg="gray.600" onClick={play}>
+              <Button
+                bg="transparent"
+                colorScheme="none"
+                onClick={play}
+                p="0"
+                mx="2px"
+              >
                 {pause ? <SvgPlay fill="white" /> : <SvgPause fill="white" />}
               </Button>
-              <Button bg="gray.600" onClick={OnClickNext}>
+              <Button
+                bg="transparent"
+                colorScheme="none"
+                onClick={OnClickNext}
+                p="0"
+              >
                 <SvgNext />
+              </Button>
+              <Button
+                onClick={loopActive}
+                bg="transparent"
+                rounded="50px"
+                p="0"
+                ml="5px"
+                colorScheme="none"
+              >
+                {!loop ? (
+                  <SvgLoop fill={loop ? "#0EEB24" : "white"} />
+                ) : (
+                  <SvgActiveLoop />
+                )}
               </Button>
             </Box>
 
@@ -147,9 +265,9 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               <Box mr="9px" display="flex" alignItems="center">
                 {volume === 0 ? (
                   <SvgVolumeNull />
-                ) : volume < 40 ? (
+                ) : volume < 35 ? (
                   <SvgVolumeSmall />
-                ) : volume < 80 ? (
+                ) : volume < 70 ? (
                   <SvgVolumeMiddle />
                 ) : (
                   <SvgVolumeFull />
@@ -165,7 +283,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               />
             </Box>
 
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" ml="auto">
               <Button
                 rounded="50px"
                 px="53px"
