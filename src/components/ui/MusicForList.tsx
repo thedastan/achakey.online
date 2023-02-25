@@ -1,16 +1,23 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Text, Image } from "@chakra-ui/react";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
 import { SvgPlayerGifDefault } from "../../assets/svg/SvgPlayerGifDefault";
 import { useAppSelector } from "../../hooks/Index";
+import trackImage from "../../assets/img/Ellipse.png";
 
 interface ITrackChange {
   onClick?: any;
   name?: string;
   music?: any;
+  tracks?: boolean;
 }
 
-export default function MusicForList({ onClick, name, music }: ITrackChange) {
+export default function MuITrackListsicForList({
+  onClick,
+  name,
+  music,
+  tracks,
+}: ITrackChange) {
   const { active, pause } = useAppSelector((state) => state.playReducer);
 
   return (
@@ -24,7 +31,8 @@ export default function MusicForList({ onClick, name, music }: ITrackChange) {
       alignContent="center"
       background="transparent"
     >
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" w="25vw">
+        {tracks && <Image src={trackImage} w="47px" mr="29px" />}
         {active?._id === music._id ? (
           <Box display="inline-block" w="32px" h="32px" pt="2px">
             {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
@@ -43,16 +51,14 @@ export default function MusicForList({ onClick, name, music }: ITrackChange) {
           {name}
         </Text>
       </Box>
-      <Text color="white" cursor="pointer">
-        {music.artist}
-      </Text>
-      <Text color="white" w="160px">
-        {music.text}
+      <Text color="white">{music.excerpt}</Text>
+      <Text color="white" ml="50px">
+        {music.price}
       </Text>
       <Button
         border="1px"
         borderColor={active?._id === music._id ? "green" : "white"}
-        rounded="0px"
+        rounded="38px"
         fontSize="9px"
         h="23px"
         w="84px"

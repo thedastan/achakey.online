@@ -1,11 +1,11 @@
 export interface ITrack {
   _id?: string;
   name?: string;
-  artist?: string;
   text?: string;
-  listens?: number;
   picture?: string;
   audio?: string;
+  excerpt?: string | number;
+  price?: string;
 }
 
 export interface TrackState {
