@@ -1,6 +1,6 @@
 import { IProps } from "./Types";
 
-export default function SvgLoop({ fill }: IProps) {
+export default function SvgLoop({ fill = "white" }: IProps) {
   return (
     <svg
       role="img"

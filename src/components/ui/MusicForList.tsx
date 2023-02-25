@@ -1,5 +1,4 @@
 import { Box, Button, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
 import { SvgPlayerGifDefault } from "../../assets/svg/SvgPlayerGifDefault";
@@ -24,21 +23,14 @@ export default function MusicForList({ onClick, name, music }: ITrackChange) {
       justifyContent="space-between"
       alignContent="center"
       background="transparent"
-      mt="1px"
     >
-      <Box display="flex" alignItems="center" w="200px">
+      <Box display="flex" alignItems="center">
         {active?._id === music._id ? (
-          <Box
-            cursor="pointer"
-            display="inline-block"
-            w="32px"
-            h="32px"
-            pt="2px"
-          >
+          <Box display="inline-block" w="32px" h="32px" pt="2px">
             {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
           </Box>
         ) : (
-          <Box cursor="pointer" display="inline-block" w="32px">
+          <Box display="inline-block" w="32px">
             <SvgPlay fill={active?._id === music._id ? "#0EEB24" : "#FFFFFF"} />
           </Box>
         )}

@@ -3,22 +3,27 @@ import { Box, Text } from "@chakra-ui/layout";
 import { Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
+import {
+  currentIndexAction,
+  eventChange,
+} from "../../pages/allPlaylist/reducer/action-creator";
+
 import SvgNext from "../../assets/svg/SvgNext";
 import SvgPause from "../../assets/svg/SvgPause";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import SvgPrev from "../../assets/svg/SvgPrev";
-import { useAppSelector } from "../../hooks/Index";
 import { useAction } from "../../hooks/useActions";
 import { ITrack } from "../../redux/types/Track";
 import ImageW from "../../assets/img/чарли пут 3.png";
-import "./style.scss";
+import SvgActiveLoop from "../../assets/svg/SvgActiveLoop";
 import SvgVolumeFull from "../../assets/svg/SvgVolumeFull";
 import SvgVolumeNull from "../../assets/svg/SvgVolumeNull";
 import SvgVolumeSmall from "../../assets/svg/SvgVolumeSmall";
 import SvgVolumeMiddle from "../../assets/svg/SvgVolumeMiddle";
 import SvgRandom from "../../assets/svg/SvgRandom";
 import SvgLoop from "../../assets/svg/SvgLoop";
-import SvgActiveLoop from "../../assets/svg/SvgActiveLoop";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import "./style.scss";
 
 interface IlistMedia {
   listTruck?: ITrack[] | any;
@@ -30,19 +35,25 @@ interface IlistMedia {
 
 let audio: HTMLAudioElement | any;
 
-export default function AudioPlayer({
-  listTruck,
-  currentIndex,
-  eventChange,
-  setCurrentIndex,
-  setEventChange,
-}: IlistMedia) {
+export default function AudioPlayer({ listTruck }: IlistMedia) {
+  const dispatch = useAppDispatch();
+  const { event } = useAppSelector((state) => state.eventReducer);
+  const { currentIndex: indexCurrent } = useAppSelector(
+    (state) => state.currentIndexReducer
+  );
+  
   const { pause, volume, active, duration, currentTime } = useAppSelector(
     (state) => state.playReducer
   );
 
+  let randomIndex = Math.floor(Math.random() * listTruck.length);
+  let randomMusic = listTruck[randomIndex];
+
   const [random, setRandom] = useState(false);
   const [loop, setLoop] = useState(false);
+  const [allLoop, setAllLoop] = useState(false);
+  const [next, setNext] = useState(false);
+  const [prev, setPrev] = useState(false);
 
   const {
     activeTrack,
@@ -97,46 +108,68 @@ export default function AudioPlayer({
   };
 
   const OnClickNext = () => {
-    setEventChange(false);
-    setCurrentIndex(
-      (currentIndex: number) => (currentIndex + 1) % listTruck.length
+    setNext(true);
+    dispatch(eventChange(false));
+
+    dispatch(
+      currentIndexAction(
+        listTruck.length - 1 === indexCurrent ? 0 : indexCurrent + 1
+      )
     );
 
     activeTrack(
       listTruck[
-        eventChange
-          ? listTruck.length - 1 === currentIndex
+        event
+          ? listTruck.length - 1 === indexCurrent
             ? 0
-            : currentIndex + 1
-          : listTruck.length - 1 === currentIndex
+            : indexCurrent + 1
+          : listTruck.length - 1 === indexCurrent
           ? 0
-          : currentIndex + 1
+          : indexCurrent + 1
       ]
     );
   };
 
   const OnClickPrev = () => {
-    setCurrentIndex((index: number) =>
-      index === 0 ? listTruck.length - 1 : index - 1
+    setPrev(true);
+
+    dispatch(
+      currentIndexAction(
+        indexCurrent === 0 ? listTruck.length - 1 : indexCurrent - 1
+      )
     );
+
     activeTrack(
       listTruck[
-        eventChange
-          ? currentIndex - 1
-          : currentIndex === 0
+        event
+          ? indexCurrent - 1
+          : indexCurrent === 0
           ? listTruck.length - 1
-          : currentIndex - 1
+          : indexCurrent - 1
       ]
     );
-    setEventChange(false);
+
+    dispatch(eventChange(false));
   };
 
   const OnClickRandom = () => {
-    let currentValue = listTruck[Math.floor(Math.random() * listTruck.length)];
-
-    activeTrack(currentValue);
     playTrack();
     setRandom(!random);
+    setAllLoop(false);
+    setLoop(false);
+  };
+
+  const loopActive = () => {
+    if (allLoop) {
+      setLoop(true);
+      setAllLoop(false);
+    } else if (loop) {
+      setAllLoop(false);
+      setLoop(false);
+    } else {
+      setAllLoop(true);
+      setLoop(false);
+    }
   };
 
   function startTimer() {
@@ -159,14 +192,26 @@ export default function AudioPlayer({
     return minutes + ":" + seconds;
   }
 
-  const loopActive = () => {
-    setLoop(!loop);
-  };
+  useEffect(() => {
+    setTimeout(() => {
+      setPrev(false);
+      setNext(false);
+    }, 200);
+  }, [next, prev]);
 
   useEffect(() => {
     playTrack();
     audio.play();
   }, [active]);
+
+  useEffect(() => {
+    if (random) {
+      if (currentTime === duration) {
+        dispatch(currentIndexAction(randomIndex));
+        activeTrack(randomMusic);
+      }
+    }
+  }, [currentTime, random]);
 
   useEffect(() => {
     loop
@@ -179,6 +224,35 @@ export default function AudioPlayer({
           audio.pause();
         });
   }, [loop]);
+
+  useEffect(() => {
+    if (!next || prev) {
+      if (allLoop) {
+        if (duration) {
+          if (currentTime === duration) {
+            dispatch(eventChange(false));
+
+            dispatch(
+              currentIndexAction(
+                listTruck.length - 1 === indexCurrent ? 0 : indexCurrent + 1
+              )
+            );
+            activeTrack(
+              listTruck[
+                event
+                  ? listTruck.length - 1 === indexCurrent
+                    ? 0
+                    : indexCurrent + 1
+                  : listTruck.length - 1 === indexCurrent
+                  ? 0
+                  : indexCurrent + 1
+              ]
+            );
+          }
+        }
+      }
+    }
+  }, [next, prev, allLoop, currentTime]);
 
   if (!active) {
     return null;
@@ -217,6 +291,7 @@ export default function AudioPlayer({
                 p="0"
                 mr="5px"
                 colorScheme="none"
+                className="random"
               >
                 <SvgRandom fill={random ? "#0EEB24" : "white"} />
               </Button>
@@ -254,7 +329,7 @@ export default function AudioPlayer({
                 colorScheme="none"
               >
                 {!loop ? (
-                  <SvgLoop fill={loop ? "#0EEB24" : "white"} />
+                  <SvgLoop fill={allLoop ? "#0EEB24" : "white"} />
                 ) : (
                   <SvgActiveLoop />
                 )}

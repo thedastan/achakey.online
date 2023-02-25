@@ -1,20 +1,20 @@
 import { Box, Text } from "@chakra-ui/react";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { useAction } from "../../hooks/useActions";
+import {
+  currentIndexAction,
+  eventChange,
+} from "../../pages/allPlaylist/reducer/action-creator";
 import { ITrack } from "../../redux/types/Track";
 import MusicForList from "../ui/MusicForList";
 
 interface ITrackList {
   tracks: ITrack[];
-  setCurrentIndex?: any;
-  setEventChange?: any;
 }
 
-export default function TrackList({
-  tracks,
-  setCurrentIndex,
-  setEventChange,
-}: ITrackList) {
+export default function TrackList({ tracks }: ITrackList) {
   const { activeTrack } = useAction();
+  const dispatch = useAppDispatch();
 
   const listTable = [
     {
@@ -31,19 +31,18 @@ export default function TrackList({
     },
   ];
 
-  const OnChange = (data: ITrack, index: any) => {
-    setCurrentIndex(index);
+  const OnChange = (data: ITrack, index: number) => {
     activeTrack(data);
-    setEventChange(true);
+    eventChange(true);
+    // setCurrentIndex(index);
+    dispatch(currentIndexAction(index));
   };
 
-  // tracks.length === index + 1 ? index : index + 1;
-
   return (
-    <Box bg="transparent">
+    <Box>
       <Box display="flex" justifyContent="space-between">
         {listTable.map((item, index) => (
-          <Text key={index} fontWeight="600" color="white">
+          <Text key={index} fontWeight="600" textColor="white">
             {item.text}
           </Text>
         ))}
@@ -56,9 +55,6 @@ export default function TrackList({
             music={el}
             onClick={() => OnChange(el, index)}
           />
-        ))}
-        {tracks.map((el) => (
-          <Box>{el.name}</Box>
         ))}
       </Box>
     </Box>

@@ -6,7 +6,6 @@ import TrackList from "../../components/trackList/TrackList";
 
 export default function AllPlaylist() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [eventChange, setEventChange] = useState(false);
 
   const listTruck = [
     {
@@ -29,42 +28,32 @@ export default function AllPlaylist() {
       name: "Герой",
       audio:
         "https://uztop.net/uploads/music/2023/02/FREEMAN_996_Geroj_OST_RAZBOI.mp3",
-      artist: "freeman 996",
-      text: "03:07",
+      artist: "Freeman 996",
     },
     {
-      _id: "4",
-      name: "Албетте",
-      audio: require("../../assets/audio/freeman996-albette.mp3"),
-      artist: "freeman 996",
-      text: "03:07",
-    },
-    {
-      _id: "5",
+      _id: "10",
       name: "Ойлорумда",
       audio:
         "https://mp3fly.net/uploads/files/mp3/02-2021/1613108060_Bakr_-_Oylorumda.mp3",
-      artist: "freeman 996",
-      text: "03:07",
+      artist: "Bakr",
+    },
+    {
+      _id: "5",
+      name: "Силуэт",
+      audio: require("../../assets/audio/bakr-tvoj-siluet-igraet-na-glazah.mp3"),
+      artist: "Bakr",
     },
   ];
 
-  console.log(currentIndex, "DOM");
 
   return (
     <section style={{ background: "#242424" }}>
       <Container maxW="1220px">
         <AudioPlayer
-          setEventChange={setEventChange}
-          eventChange={eventChange}
           listTruck={listTruck}
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
         />
         <TrackList
           tracks={listTruck}
-          setCurrentIndex={setCurrentIndex}
-          setEventChange={setEventChange}
         />
       </Container>
     </section>
