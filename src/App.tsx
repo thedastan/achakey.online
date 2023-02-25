@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import Footer from "./components/footer/Footer";
 import { Basket, AllPlaylist, Header, Main, MyPlaylist } from "./pages/Index";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Route path="/my-playlist" element={<MyPlaylist />} />
         <Route path="/all-playlist/" element={<AllPlaylist />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

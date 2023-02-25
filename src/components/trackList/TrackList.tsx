@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { useAppDispatch } from "../../hooks/Index";
 import { useAction } from "../../hooks/useActions";
 import {
   currentIndexAction,
@@ -10,52 +10,52 @@ import MusicForList from "../ui/MusicForList";
 
 interface ITrackList {
   tracks: ITrack[];
+  allTracks?: boolean;
 }
 
-export default function TrackList({ tracks }: ITrackList) {
+export default function TrackList({ tracks, allTracks }: ITrackList) {
   const { activeTrack } = useAction();
   const dispatch = useAppDispatch();
-
-  const listTable = [
-    {
-      text: "Трек",
-    },
-    {
-      text: "Исполнители",
-    },
-    {
-      text: "Длительность",
-    },
-    {
-      text: "В корзину",
-    },
-  ];
 
   const OnChange = (data: ITrack, index: number) => {
     activeTrack(data);
     eventChange(true);
-    // setCurrentIndex(index);
     dispatch(currentIndexAction(index));
   };
 
   return (
-    <Box>
-      <Box display="flex" justifyContent="space-between">
-        {listTable.map((item, index) => (
-          <Text key={index} fontWeight="600" textColor="white">
-            {item.text}
-          </Text>
-        ))}
-      </Box>
+    <Box
+      minH={!allTracks ? "60vh" : "100vh"}
+      mx="auto"
+      display="flex"
+      flexDir="column"
+      justifyContent="center"
+    >
       <Box>
-        {tracks.map((el, index) => (
-          <MusicForList
-            name={el?.name}
-            key={index}
-            music={el}
-            onClick={() => OnChange(el, index)}
-          />
-        ))}
+        <Box display="flex" justifyContent="space-between">
+          <Text fontWeight="600" textColor="white" w="25vw">
+            {allTracks ? "Все треки" : "Все Альбомы"}
+          </Text>
+          <Text fontWeight="600" textColor="white" textAlign="end" pr="28px">
+            Отрывок
+          </Text>
+          <Text fontWeight="600" textColor="white">
+            Цена
+          </Text>
+          <Text fontWeight="600" textColor="white">
+            В корзину
+          </Text>
+        </Box>
+        <Box>
+          {tracks.map((el, index) => (
+            <MusicForList
+              name={el?.name}
+              key={index}
+              music={el}
+              onClick={() => OnChange(el, index)}
+            />
+          ))}
+        </Box>
       </Box>
     </Box>
   );
