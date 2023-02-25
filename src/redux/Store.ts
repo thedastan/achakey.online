@@ -5,10 +5,16 @@ import thunk from "redux-thunk";
 
 import { playReducer } from "./reducer/PlayerReducer";
 import { trackReducer } from "./reducer/TrackReducer";
+import { eventReducer } from "../pages/allPlaylist/reducer/reducer";
+import { currentIndexReducer } from "../pages/allPlaylist/reducer/reducer";
+import { FunctionForMusicReducer } from "../components/audio-player/reducer/reducer";
 
 const rootReducer = combineReducers({
   playReducer,
   trackReducer,
+  eventReducer,
+  currentIndexReducer,
+  FunctionForMusicReducer,
 });
 
 export const setUpStore = () => {
