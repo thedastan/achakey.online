@@ -1,5 +1,6 @@
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
+import MenuBar from "../ui/MenuBar";
 
 interface IMain {
   children: JSX.Element;
@@ -8,9 +9,11 @@ interface IMain {
 export default function PageRouting({ children }: IMain) {
   return (
     <>
-      <Header />
-      <main>{children}</main>
-      <Footer />
+      <MenuBar>
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </MenuBar>
     </>
   );
 }
