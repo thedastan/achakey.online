@@ -7,6 +7,7 @@ import {
   currentIndexAction,
   eventChange,
 } from "../../pages/allPlaylist/reducer/action-creator";
+
 import SvgNext from "../../assets/svg/SvgNext";
 import SvgPause from "../../assets/svg/SvgPause";
 import SvgPlay from "../../assets/svg/SvgPlay";
@@ -26,6 +27,10 @@ import "./style.scss";
 
 interface IlistMedia {
   listTruck?: ITrack[] | any;
+  setCurrentIndex: any;
+  currentIndex: number;
+  eventChange: boolean;
+  setEventChange: any;
 }
 
 let audio: HTMLAudioElement | any;
@@ -36,6 +41,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   const { currentIndex: indexCurrent } = useAppSelector(
     (state) => state.currentIndexReducer
   );
+  
   const { pause, volume, active, duration, currentTime } = useAppSelector(
     (state) => state.playReducer
   );

@@ -43,7 +43,12 @@ export default function MusicForList({ onClick, name, music }: ITrackChange) {
           {name}
         </Text>
       </Box>
-
+      <Text color="white" cursor="pointer">
+        {music.artist}
+      </Text>
+      <Text color="white" w="160px">
+        {music.text}
+      </Text>
       <Button
         border="1px"
         borderColor={active?._id === music._id ? "green" : "white"}
@@ -52,7 +57,8 @@ export default function MusicForList({ onClick, name, music }: ITrackChange) {
         h="23px"
         w="84px"
         textColor={active?._id === music._id ? "green" : "white"}
-        bg="transparent"
+        background="transparent"
+        colorScheme="none"
       >
         + в корзину
       </Button>

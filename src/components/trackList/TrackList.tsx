@@ -10,7 +10,6 @@ import MusicForList from "../ui/MusicForList";
 
 interface ITrackList {
   tracks: ITrack[];
-  // setCurrentIndex: any;
 }
 
 export default function TrackList({ tracks }: ITrackList) {
