@@ -23,7 +23,6 @@ export default function MuITrackListsicForList({
   return (
     <Box
       py="22px"
-      onClick={() => onClick(music)}
       borderBottom="2px"
       borderColor="#4F4F4F"
       display="flex"
@@ -31,19 +30,26 @@ export default function MuITrackListsicForList({
       alignContent="center"
       background="transparent"
     >
-      <Box display="flex" alignItems="center" w="25vw">
+      <Box
+        display="flex"
+        alignItems="center"
+        w="25vw"
+        onClick={() => onClick(music)}
+      >
         {tracks && <Image src={trackImage} w="47px" mr="29px" />}
-        {active?._id === music._id ? (
+        {active?.audio === music.audio ? (
           <Box display="inline-block" w="32px" h="32px" pt="2px">
             {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
           </Box>
         ) : (
           <Box display="inline-block" w="32px">
-            <SvgPlay fill={active?._id === music._id ? "#0EEB24" : "#FFFFFF"} />
+            <SvgPlay
+              fill={active?.audio === music.audio ? "#0EEB24" : "#FFFFFF"}
+            />
           </Box>
         )}
         <Text
-          textColor={active?._id === music._id ? "green" : "white"}
+          textColor={active?.audio === music.audio ? "green" : "white"}
           fontSize="14px"
           ml="17.4px"
           cursor="pointer"
@@ -57,12 +63,12 @@ export default function MuITrackListsicForList({
       </Text>
       <Button
         border="1px"
-        borderColor={active?._id === music._id ? "green" : "white"}
+        borderColor={active?.audio === music.audio ? "green" : "white"}
         rounded="38px"
         fontSize="9px"
         h="23px"
         w="84px"
-        textColor={active?._id === music._id ? "green" : "white"}
+        textColor={active?.audio === music.audio ? "green" : "white"}
         background="transparent"
         colorScheme="none"
       >

@@ -11,11 +11,6 @@ enum AlbumOrTracks {
 }
 
 export default function MyPlaylist() {
-  let activeStyle = {
-    color: "white",
-    cursor: "pointer",
-  };
-
   const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
   const isAlbum = isActive === AlbumOrTracks.ALBUM;
   const isTracks = isActive === AlbumOrTracks.TRACKS;
@@ -82,6 +77,7 @@ export default function MyPlaylist() {
             </Box>
           </Box>
         </Box>
+        <BottomPlayer />
       </Container>
     </section>
   );
