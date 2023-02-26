@@ -6,6 +6,7 @@ import {
   InputLeftElement,
 } from "@chakra-ui/react";
 import SvgSearch from "../../assets/svg/SvgSearch";
+import "./style.scss";
 
 export default function Header() {
   return (
@@ -17,6 +18,7 @@ export default function Header() {
         right: "0",
         marginBottom: "65px",
       }}
+      className="header"
     >
       <Box py="30px" bg="transparent">
         <Container maxW="1220px">

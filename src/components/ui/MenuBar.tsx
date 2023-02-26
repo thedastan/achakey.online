@@ -34,7 +34,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
 
   return (
     <Box maxW="1660px" mx="auto">
-      <Box position="fixed" left="0" top="0" bottom="0" bg="#0B0B0B">
+      <Box position="fixed" left="0" top="0" bottom="0" bg="#0B0B0B" zIndex="2">
         <Box py="46px">
           {list.map((el, index) => (
             <Box key={index} py="17.5px" pl="30px" pr="41px">
@@ -43,7 +43,9 @@ export default function MenuBar({ children }: IPropsMenuBar) {
           ))}
         </Box>
       </Box>
-      <Box ml="auto">{children}</Box>;
+      <Box w={{ base: "100%", md: "95%" }} ml="auto" pb="50px" bg="#1B1B1B">
+        {children}
+      </Box>
     </Box>
   );
 }
