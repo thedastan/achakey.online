@@ -1,50 +1,88 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
+import { useState } from "react";
+import MyTracks from "../../components/myTracks/MyTracks";
 import BottomPlayer from "../../components/ui/BottomPLayer";
+import JaxImage from "../../assets/img/Jax.png";
+import MyAlbum from "../../components/MyAlbum/MyAlbum";
+
+enum AlbumOrTracks {
+  ALBUM = "ALBUM",
+  TRACKS = "TRACKS",
+}
 
 export default function MyPlaylist() {
-  const listTruck = [
-    {
-      _id: "1",
-      name: "Волчий вой",
-      audio:
-        "https://muzes.net/uploads/music/2022/10/Ulukmanapo_Volchij_voj.mp3",
-      artist: "Ulukmanapo",
-      text: "03:11",
-    },
-    {
-      _id: "2",
-      name: "la liga",
-      audio: "https://dl2.mp3party.net/online/10068051.mp3",
-      artist: "Ulukmanapo",
-      text: "03:11",
-    },
-    {
-      _id: "3",
-      name: "Герой",
-      audio:
-        "https://uztop.net/uploads/music/2023/02/FREEMAN_996_Geroj_OST_RAZBOI.mp3",
-      artist: "Freeman 996",
-    },
-    {
-      _id: "10",
-      name: "Ойлорумда",
-      audio:
-        "https://mp3fly.net/uploads/files/mp3/02-2021/1613108060_Bakr_-_Oylorumda.mp3",
-      artist: "Bakr",
-    },
-    {
-      _id: "5",
-      name: "Силуэт",
-      audio: require("../../assets/audio/bakr-tvoj-siluet-igraet-na-glazah.mp3"),
-      artist: "Bakr",
-    },
-  ];
+  let activeStyle = {
+    color: "white",
+    cursor: "pointer",
+  };
+
+  const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
+  const isAlbum = isActive === AlbumOrTracks.ALBUM;
+  const isTracks = isActive === AlbumOrTracks.TRACKS;
 
   return (
     <section>
-      <Box>My playlist</Box>
+      <Container maxW="1220px">
+        <Box pt="150px" pl={{ base: "60px", md: "50px", xl: "5%" }}>
+          <Box display="flex" mb="31px" zIndex="0">
+            <Text
+              cursor="pointer"
+              fontWeight="600"
+              color={isTracks ? "white" : "rgba(255, 255, 255, 0.4)"}
+              mr="69px"
+              fontSize="24px"
+              onClick={() => setActive(AlbumOrTracks.TRACKS)}
+            >
+              Моя музыка
+            </Text>
+            <Text
+              cursor="pointer"
+              fontWeight="600"
+              color={isAlbum ? "white" : "rgba(255, 255, 255, 0.4)"}
+              fontSize="24px"
+              onClick={() => setActive(AlbumOrTracks.ALBUM)}
+            >
+              Моя альбом
+            </Text>
+          </Box>
+          <Box display="flex">
+            <Box
+              w={{ base: "90vw", lg: "699px" }}
+              h="auto"
+              mx={{ base: "auto", lg: "none" }}
+            >
+              {isTracks ? <MyTracks /> : <MyAlbum />}
+            </Box>
+            <Box w="279px" ml="auto" display={{ base: "none", lg: "block" }}>
+              <Image src={JaxImage} w="100%" mb="18px" />
 
-      <BottomPlayer />
+              <Box overflowY="auto" maxH="400px">
+                <Text>
+                  Менин ойлорумда сенин атың чөгуп калды Жана жүрөгүмдө, о-уо-о
+                  Менин жүрөгүмдөн абдан жылуу оорун алдың Жана көкурөгумдөн,
+                  йе-е-е Менин ойлорумда сенин атың чөгуп калды Жана жүрөгүмдө,
+                  о-уо-о Менин жүрөгүмдөн абдан жылуу оорун алдың Жана
+                  көкурөгумдөн, йе-е-е До нашего знакомства я был бессердечным
+                  Встретив её, сразу я потерял дар речи Нежный голос шепчет,
+                  обнимая плечи Я думал, что навечно, а ты считала встречи Запах
+                  твоих локон меня торкал до манна Секунду за секундой
+                  становился наркоманом Не смог стопанутся, ты стала марихуаной
+                  Для меня и даришь туманы, растаману Ты — мой воздух и я дышу
+                  тобой Ты — моя муза кислая, моя любовь и боль Пусть накроет
+                  волной холодной зимой Ты будь рядом со мной, моя любовь Мою
+                  любовь к тебе никогда не потушить Она горит внутри и она хочет
+                  жить Я знаю что отпускаю тебя навсегда Мне бы главное чтоб ты
+                  была счастлива Менин ойлорумда сенин атың чөгуп калды Жана
+                  жүрөгүмдө, о-уо-о Менин жүрөгүмдөн абдан жылуу оорун алдың
+                  Жана көкурөгумдөн, йе-е-е Менин ойлорумда сенин атың чөгуп
+                  калды Жана жүрөгүмдө, о-уо-о Менин жүрөгүмдөн абдан жылуу
+                  оорун алдың Жана көкурөгумдөн, йе-е-е
+                </Text>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Container>
     </section>
   );
 }

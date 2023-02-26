@@ -25,7 +25,7 @@ export default function TrackList({ tracks, allTracks }: ITrackList) {
 
   return (
     <Box
-      minH={!allTracks ? "60vh" : "100vh"}
+      minH={!allTracks ? "90vh" : "100vh"}
       mx="auto"
       display="flex"
       flexDir="column"

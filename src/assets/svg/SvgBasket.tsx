@@ -1,6 +1,8 @@
 import { IProps } from "./Types";
 
-export default function SvgBasket({ fill = "#E0E0E0" }: IProps) {
+export default function SvgBasket({
+  fill = "rgba(255, 255, 255, 0.4)",
+}: IProps) {
   return (
     <svg
       width="30"
