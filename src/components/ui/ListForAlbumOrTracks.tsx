@@ -37,17 +37,19 @@ export default function ListForAlbumOrTracks({
           0{index}
         </Text>
         <Image src={JaxImage} maxW="42px" mr="23px" />
-        {active?._id === music._id ? (
+        {active?.audio === music.audio ? (
           <Box display="inline-block" w="32px" h="32px" pt="2px">
             {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
           </Box>
         ) : (
           <Box display="inline-block" w="32px">
-            <SvgPlay fill={active?._id === music._id ? "#0EEB24" : "#FFFFFF"} />
+            <SvgPlay
+              fill={active?.audio === music.audio ? "#0EEB24" : "#FFFFFF"}
+            />
           </Box>
         )}
         <Text
-          textColor={active?._id === music._id ? "green" : "white"}
+          textColor={active?.audio === music.audio ? "green" : "white"}
           fontSize="14px"
           ml="17.4px"
           cursor="pointer"

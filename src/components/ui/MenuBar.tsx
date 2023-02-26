@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import SvgAllTracks from "../../assets/svg/SvgAllTracks";
 import SvgBasket from "../../assets/svg/SvgBasket";
 import SvgHome from "../../assets/svg/SvgHome";
@@ -12,22 +13,54 @@ export default function MenuBar({ children }: IPropsMenuBar) {
   const list = [
     {
       item: "",
-      svg: <SvgHome />,
+      svg: (
+        <SvgHome
+          fill={
+            window.location.pathname === "/"
+              ? "white"
+              : "rgba(255, 255, 255, 0.4)"
+          }
+        />
+      ),
       link: "/",
     },
     {
       item: "",
-      svg: <SvgAllTracks />,
-      link: "/",
+      svg: (
+        <SvgAllTracks
+          fill={
+            window.location.pathname === "/all-playlist"
+              ? "white"
+              : "rgba(255, 255, 255, 0.4)"
+          }
+        />
+      ),
+      link: "/all-playlist",
     },
     {
       item: "",
-      svg: <SvgTrack />,
-      link: "/",
+      svg: (
+        <SvgTrack
+          fill={
+            window.location.pathname === "/my-playlist"
+              ? "white"
+              : "rgba(255, 255, 255, 0.4)"
+          }
+        />
+      ),
+      link: "/my-playlist",
     },
     {
       item: "",
-      svg: <SvgBasket />,
+      svg: (
+        <SvgBasket
+          fill={
+            window.location.pathname === "/basket"
+              ? "white"
+              : "rgba(255, 255, 255, 0.4)"
+          }
+        />
+      ),
       link: "/",
     },
   ];
@@ -38,7 +71,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
         <Box py="46px">
           {list.map((el, index) => (
             <Box key={index} py="17.5px" pl="30px" pr="41px">
-              {el.svg}
+              <Link to={el.link}>{el.svg}</Link>
             </Box>
           ))}
         </Box>

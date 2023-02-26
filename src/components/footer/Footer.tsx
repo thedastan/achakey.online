@@ -11,10 +11,7 @@ export default function Footer() {
     <footer
       style={{
         background: "#3E3E3E",
-        position: "fixed",
-        bottom: "0",
-        left: "0",
-        right: "0",
+        zIndex: "5",
       }}
     >
       <Container maxW="1220px">

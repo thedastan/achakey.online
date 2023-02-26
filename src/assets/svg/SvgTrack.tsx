@@ -1,8 +1,6 @@
 import { IProps } from "./Types";
 
-export default function SvgTrack({
-  fill = "rgba(255, 255, 255, 0.4)",
-}: IProps) {
+export default function SvgTrack({ fill }: IProps) {
   return (
     <svg
       width="24"
