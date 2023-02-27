@@ -1,6 +1,6 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import { useAppDispatch } from "../../hooks/Index";
-import { useAction } from "../../hooks/useActions";
+import { useAction, useExcerpAction } from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
@@ -28,12 +28,15 @@ export default function MyTracks() {
   ];
 
   const { activeTrack } = useAction();
+  const { excerptPauseAction } = useExcerpAction();
+
   const dispatch = useAppDispatch();
 
   const OnChange = (data: ITrack, index: number) => {
     activeTrack(data);
     eventChange(true);
     dispatch(currentIndexAction(index));
+    excerptPauseAction();
   };
 
   return (

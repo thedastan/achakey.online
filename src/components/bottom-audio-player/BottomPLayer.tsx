@@ -1,6 +1,11 @@
 import { Box, Container, Text } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+
+import {
+  currentIndexAction,
+  eventChange,
+} from "../../pages/allPlaylist/reducer/action-creator";
 import SvgActiveLoop from "../../assets/svg/SvgActiveLoop";
 import SvgLoop from "../../assets/svg/SvgLoop";
 import SvgNext from "../../assets/svg/SvgNext";
@@ -13,11 +18,7 @@ import SvgVolumeMiddle from "../../assets/svg/SvgVolumeMiddle";
 import SvgVolumeNull from "../../assets/svg/SvgVolumeNull";
 import SvgVolumeSmall from "../../assets/svg/SvgVolumeSmall";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
-import { useAction } from "../../hooks/useActions";
-import {
-  currentIndexAction,
-  eventChange,
-} from "../../pages/allPlaylist/reducer/action-creator";
+import { useAction, useExcerpAction } from "../../hooks/useActions";
 
 let audio: HTMLAudioElement | any;
 
@@ -81,6 +82,7 @@ export default function BottomPlayer() {
   const [allLoop, setAllLoop] = useState(false);
   const [next, setNext] = useState(false);
   const [prev, setPrev] = useState(false);
+  const { excerptPauseAction } = useExcerpAction();
 
   const {
     activeTrack,
@@ -116,9 +118,11 @@ export default function BottomPlayer() {
     if (pause) {
       playTrack();
       audio.play();
+      excerptPauseAction();
     } else {
       pauseTrack();
       audio.pause();
+      excerptPauseAction();
     }
   };
 

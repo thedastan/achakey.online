@@ -15,7 +15,7 @@ export function SvgPlayerGif({ fill }: IProps) {
         y="4"
         width="2.7"
         height="8"
-        fill="#0eeb24"
+        fill="#49DEFF"
       />
       <rect
         className="eq-bar eq-bar--2"
@@ -23,7 +23,7 @@ export function SvgPlayerGif({ fill }: IProps) {
         y="4"
         width="2.7"
         height="16"
-        fill="#0eeb24"
+        fill="#49DEFF"
       />
       <rect
         className="eq-bar eq-bar--3"
@@ -31,7 +31,7 @@ export function SvgPlayerGif({ fill }: IProps) {
         y="4"
         width="2.7"
         height="11"
-        fill="#0eeb24"
+        fill="#49DEFF"
       />
     </svg>
   );

@@ -3,11 +3,12 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import { playReducer } from "./reducer/PlayerReducer";
+import { playReducer } from "../components/bottom-audio-player/reducer/PlayerReducer";
 import { trackReducer } from "./reducer/TrackReducer";
 import { eventReducer } from "../pages/allPlaylist/reducer/reducer";
 import { currentIndexReducer } from "../pages/allPlaylist/reducer/reducer";
 import { FunctionForMusicReducer } from "../components/audio-player/reducer/reducer";
+import { excerptPlayerReducer } from "./reducer/excerptPlayerReducer";
 
 const rootReducer = combineReducers({
   playReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   eventReducer,
   currentIndexReducer,
   FunctionForMusicReducer,
+  excerptPlayerReducer,
 });
 
 export const setUpStore = () => {

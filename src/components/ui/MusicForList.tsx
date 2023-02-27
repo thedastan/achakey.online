@@ -18,7 +18,9 @@ export default function MuITrackListsicForList({
   music,
   tracks,
 }: ITrackChange) {
-  const { active, pause } = useAppSelector((state) => state.playReducer);
+  const { active, pause } = useAppSelector(
+    (state) => state.excerptPlayerReducer
+  );
 
   return (
     <Box
@@ -37,19 +39,19 @@ export default function MuITrackListsicForList({
         onClick={() => onClick(music)}
       >
         {tracks && <Image src={trackImage} w="47px" mr="29px" />}
-        {active?.audio === music.audio ? (
+        {active?.audio === music?.audio ? (
           <Box display="inline-block" w="32px" h="32px" pt="2px">
             {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
           </Box>
         ) : (
           <Box display="inline-block" w="32px">
             <SvgPlay
-              fill={active?.audio === music.audio ? "#0EEB24" : "#FFFFFF"}
+              fill={active?.audio === music?.audio ? "#49DEFF" : "#FFFFFF"}
             />
           </Box>
         )}
         <Text
-          textColor={active?.audio === music.audio ? "green" : "white"}
+          textColor={active?.audio === music?.audio ? "blue" : "white"}
           fontSize="14px"
           ml="17.4px"
           cursor="pointer"
@@ -57,18 +59,20 @@ export default function MuITrackListsicForList({
           {name}
         </Text>
       </Box>
-      <Text color="white">{music.excerpt}</Text>
+      <Text color="white" display={{ base: "none", md: "block" }}>
+        {music?.excerpt}
+      </Text>
       <Text color="white" ml="50px">
-        {music.price}
+        {music?.price}
       </Text>
       <Button
         border="1px"
-        borderColor={active?.audio === music.audio ? "green" : "white"}
+        borderColor={active?.audio === music?.audio ? "blue" : "white"}
         rounded="38px"
         fontSize="9px"
         h="23px"
         w="84px"
-        textColor={active?.audio === music.audio ? "green" : "white"}
+        textColor={active?.audio === music.audio ? "blue" : "white"}
         background="transparent"
         colorScheme="none"
       >

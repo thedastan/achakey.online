@@ -1,5 +1,7 @@
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Container, Image } from "@chakra-ui/react";
 import { useAppDispatch } from "../../hooks/Index";
+import Slider from "react-slick";
+
 import { useAction } from "../../hooks/useActions";
 import {
   currentIndexAction,
@@ -10,9 +12,15 @@ import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 import sebelep from "../../assets/img/sebelep.png";
 import lilia from "../../assets/img/lilia.png";
 import kimBilet from "../../assets/img/kimBilet.png";
-import { useState } from "react";
+import { SampleNextArrow } from "../ui/SampleNextArrow";
+import { SamplePrevArrow } from "../ui/SamplePrevArrow";
+import "./style.css";
+import { useRef, useState } from "react";
 
 export default function MyAlbum() {
+  const ref = useRef<any>();
+  const [next, setNext] = useState();
+
   const listTruck = [
     {
       _id: "1",
@@ -64,6 +72,15 @@ export default function MyAlbum() {
     {
       image: kimBilet,
     },
+    {
+      image: sebelep,
+    },
+    {
+      image: lilia,
+    },
+    {
+      image: kimBilet,
+    },
   ];
 
   const { activeTrack } = useAction();
@@ -75,29 +92,61 @@ export default function MyAlbum() {
     dispatch(currentIndexAction(index));
   };
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+    ],
+  };
+
   return (
-    <Box minH="90vh">
-      <Box display="flex">
-        {imges.map((item, index) => (
-          <Image
-            src={item.image}
-            key={index}
-            w={{ base: "120px", md: "191px" }}
-            h={{ base: "100px", md: "160px" }}
-            mr="25px"
-            mb="47px"
-          />
-        ))}
+    <Container maxW="1220px">
+      <Box minH="90vh">
+        <Box mb="47px" w="100%">
+          <Slider {...settings} ref={(c: any) => setNext(c)}>
+            {imges.map((item, index) => (
+              <Image
+                src={item.image}
+                key={index}
+                w={{ base: "120px", md: "191px" }}
+                px="17px"
+              />
+            ))}
+          </Slider>
+        </Box>
+        <Box>
+          {listTruck.map((item, index) => (
+            <ListForAlbumOrTracks
+              music={item}
+              key={index}
+              index={index + 1}
+              name={item.name}
+              onClick={() => OnChange(item, index)}
+            />
+          ))}
+        </Box>
       </Box>
-      {listTruck.map((item, index) => (
-        <ListForAlbumOrTracks
-          music={item}
-          key={index}
-          index={index + 1}
-          name={item.name}
-          onClick={() => OnChange(item, index)}
-        />
-      ))}
-    </Box>
+    </Container>
   );
 }
