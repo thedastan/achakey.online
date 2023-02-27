@@ -9,7 +9,7 @@ interface IMain {
 }
 
 export default function PageRouting({ children }: IMain) {
-  // const navigation = useNavigate();
+  const navigation = useNavigate();
 
   return (
     <>

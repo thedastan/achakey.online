@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Text } from "@chakra-ui/layout";
 import { Image } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import {
   currentIndexAction,
@@ -12,16 +12,13 @@ import SvgNext from "../../assets/svg/SvgNext";
 import SvgPause from "../../assets/svg/SvgPause";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import SvgPrev from "../../assets/svg/SvgPrev";
-import { useAction } from "../../hooks/useActions";
+import { useAction, useExcerpAction } from "../../hooks/useActions";
 import { ITrack } from "../../redux/types/Track";
 import ImageW from "../../assets/img/чарли пут 3.png";
-import SvgActiveLoop from "../../assets/svg/SvgActiveLoop";
 import SvgVolumeFull from "../../assets/svg/SvgVolumeFull";
 import SvgVolumeNull from "../../assets/svg/SvgVolumeNull";
 import SvgVolumeSmall from "../../assets/svg/SvgVolumeSmall";
 import SvgVolumeMiddle from "../../assets/svg/SvgVolumeMiddle";
-import SvgRandom from "../../assets/svg/SvgRandom";
-import SvgLoop from "../../assets/svg/SvgLoop";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import "./style.scss";
 
@@ -39,36 +36,29 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   );
 
   const { pause, volume, active, duration, currentTime } = useAppSelector(
-    (state) => state.playReducer
+    (state) => state.excerptPlayerReducer
   );
 
-  let randomIndex = Math.floor(Math.random() * listTruck.length);
-  let randomMusic = listTruck[randomIndex];
-
-  const [random, setRandom] = useState(false);
-  const [loop, setLoop] = useState(false);
-  const [allLoop, setAllLoop] = useState(false);
-  const [next, setNext] = useState(false);
-  const [prev, setPrev] = useState(false);
+  const { pauseTrack } = useAction();
 
   const {
-    activeTrack,
-    pauseTrack,
-    playTrack,
-    setCurrentTime,
-    setDuration,
-    setVolume,
-  } = useAction();
+    excerptActiveAction,
+    excerptPauseAction,
+    excerptPlayAction,
+    excerptCurrentTimeAction,
+    excerptDurationAction,
+    excerptVolumeAction,
+  } = useExcerpAction();
 
   const setAudio = () => {
     if (active) {
       audio.src = active.audio;
       audio.volume = volume / 100;
       audio.onloadedmetadata = () => {
-        setDuration(Math.ceil(audio.duration));
+        excerptDurationAction(Math.ceil(audio.duration));
       };
       audio.ontimeupdate = () => {
-        setCurrentTime(Math.ceil(audio.currentTime));
+        excerptCurrentTimeAction(Math.ceil(audio.currentTime));
       };
     }
   };
@@ -83,28 +73,29 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
   const play = () => {
     if (pause) {
-      playTrack();
+      excerptPlayAction();
       audio.play();
-    } else {
       pauseTrack();
+    } else {
+      excerptPauseAction();
       audio.pause();
+      pauseTrack();
     }
   };
 
   const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     audio.volume = Number(e.target.value) / 100;
 
-    setVolume(Number(e.target.value));
+    excerptVolumeAction(Number(e.target.value));
   };
 
   const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
     audio.currentTime = Number(e.target.value);
 
-    setCurrentTime(Number(e.target.value));
+    excerptCurrentTimeAction(Number(e.target.value));
   };
 
   const OnClickNext = () => {
-    setNext(true);
     dispatch(eventChange(false));
 
     dispatch(
@@ -113,7 +104,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
       )
     );
 
-    activeTrack(
+    excerptActiveAction(
       listTruck[
         event
           ? listTruck.length - 1 === indexCurrent
@@ -127,15 +118,13 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   };
 
   const OnClickPrev = () => {
-    setPrev(true);
-
     dispatch(
       currentIndexAction(
         indexCurrent === 0 ? listTruck.length - 1 : indexCurrent - 1
       )
     );
 
-    activeTrack(
+    excerptActiveAction(
       listTruck[
         event
           ? indexCurrent - 1
@@ -146,26 +135,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     );
 
     dispatch(eventChange(false));
-  };
-
-  const OnClickRandom = () => {
-    playTrack();
-    setRandom(!random);
-    setAllLoop(false);
-    setLoop(false);
-  };
-
-  const loopActive = () => {
-    if (allLoop) {
-      setLoop(true);
-      setAllLoop(false);
-    } else if (loop) {
-      setAllLoop(false);
-      setLoop(false);
-    } else {
-      setAllLoop(true);
-      setLoop(false);
-    }
   };
 
   function startTimer() {
@@ -189,66 +158,9 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      setPrev(false);
-      setNext(false);
-    }, 200);
-  }, [next, prev]);
-
-  useEffect(() => {
-    playTrack();
+    excerptPlayAction();
     audio.play();
   }, [active]);
-
-  useEffect(() => {
-    if (random) {
-      if (currentTime === duration) {
-        dispatch(currentIndexAction(randomIndex));
-        activeTrack(randomMusic);
-      }
-    }
-  }, [currentTime, random]);
-
-  useEffect(() => {
-    loop
-      ? audio.addEventListener("ended", () => {
-          playTrack();
-          audio.play();
-        })
-      : audio.addEventListener("ended", () => {
-          audio.currentTime = 0;
-          audio.pause();
-        });
-  }, [loop]);
-
-  useEffect(() => {
-    if (!next || prev) {
-      if (allLoop) {
-        if (duration) {
-          if (currentTime === duration) {
-            dispatch(eventChange(false));
-
-            dispatch(
-              currentIndexAction(
-                listTruck.length - 1 === indexCurrent ? 0 : indexCurrent + 1
-              )
-            );
-            activeTrack(
-              listTruck[
-                event
-                  ? listTruck.length - 1 === indexCurrent
-                    ? 0
-                    : indexCurrent + 1
-                  : listTruck.length - 1 === indexCurrent
-                  ? 0
-                  : indexCurrent + 1
-              ]
-            );
-          }
-        }
-      }
-    }
-  }, [next, prev, allLoop, currentTime]);
 
   if (!active) {
     return null;
@@ -281,17 +193,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           <Box display="flex" alignItems="center">
             <Box mr="31px">
               <Button
-                onClick={OnClickRandom}
-                bg="transparent"
-                rounded="50px"
-                p="0"
-                mr="5px"
-                colorScheme="none"
-                className="random"
-              >
-                <SvgRandom fill={random ? "#0EEB24" : "white"} />
-              </Button>
-              <Button
                 bg="transparent"
                 colorScheme="none"
                 onClick={OnClickPrev}
@@ -315,20 +216,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 p="0"
               >
                 <SvgNext />
-              </Button>
-              <Button
-                onClick={loopActive}
-                bg="transparent"
-                rounded="50px"
-                p="0"
-                ml="5px"
-                colorScheme="none"
-              >
-                {!loop ? (
-                  <SvgLoop fill={allLoop ? "#0EEB24" : "white"} />
-                ) : (
-                  <SvgActiveLoop />
-                )}
               </Button>
             </Box>
 

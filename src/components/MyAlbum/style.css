@@ -1,0 +1,12 @@
+.slick-arrow .slick-next {
+    display: none;
+    background: red;
+}
+
+.slick-arrow .slick-next::after {
+    content: none
+}
+
+.slick-arrow .slick-next::before {
+    content: none
+}

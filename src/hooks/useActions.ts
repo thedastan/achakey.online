@@ -2,7 +2,8 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import actionFunctionForMusic from "../components/audio-player/reducer/action-creators";
-import actionCreators from "../redux/action-creators";
+import actionCreators from "../components/bottom-audio-player/action-creators";
+import actionCreatorsExcerpt from "../redux/action-creators";
 import { useAppDispatch } from "./Index";
 
 export const useAction = () => {
@@ -13,4 +14,9 @@ export const useAction = () => {
 export const useFanctionForMusic = () => {
   const dispatch = useAppDispatch();
   return bindActionCreators(actionFunctionForMusic, dispatch);
+};
+
+export const useExcerpAction = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(actionCreatorsExcerpt, dispatch);
 };

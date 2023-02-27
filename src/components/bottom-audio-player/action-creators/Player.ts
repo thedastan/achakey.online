@@ -1,5 +1,5 @@
-import { PlayerAction, PlayerActionTypes } from "../types/Player";
-import { ITrack } from "../types/Track";
+import { PlayerAction, PlayerActionTypes } from "../../../redux/types/Player";
+import { ITrack } from "../../../redux/types/Track";
 
 export const playTrack = (): PlayerAction => {
   return { type: PlayerActionTypes.PLAY };

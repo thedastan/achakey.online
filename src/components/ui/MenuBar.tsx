@@ -10,6 +10,8 @@ interface IPropsMenuBar {
 }
 
 export default function MenuBar({ children }: IPropsMenuBar) {
+  const naivigate = useNavigate();
+
   const list = [
     {
       item: "",
@@ -67,7 +69,15 @@ export default function MenuBar({ children }: IPropsMenuBar) {
 
   return (
     <Box maxW="1660px" mx="auto">
-      <Box position="fixed" left="0" top="0" bottom="0" bg="#0B0B0B" zIndex="2">
+      <Box
+        position="fixed"
+        left="0"
+        top="0"
+        bottom="0"
+        bg="#0B0B0B"
+        zIndex="2"
+        display={{ base: "none", md: "block" }}
+      >
         <Box py="46px">
           {list.map((el, index) => (
             <Box key={index} py="17.5px" pl="30px" pr="41px">
@@ -76,7 +86,38 @@ export default function MenuBar({ children }: IPropsMenuBar) {
           ))}
         </Box>
       </Box>
-      <Box w={{ base: "100%", md: "95%" }} ml="auto" pb="50px" bg="#1B1B1B">
+      <Box display={{ base: "block", md: "none" }}>
+        <Box
+          position="fixed"
+          bottom="21px"
+          left="0"
+          right="0"
+          display="flex"
+          justifyContent="center"
+        >
+          <Box
+            py="15px"
+            rounded="59px"
+            w="90vw"
+            display="flex"
+            justifyContent="space-between"
+            bg="#0B0B0B"
+            px="46px"
+          >
+            {list.map((el, index) => (
+              <Box key={index}>
+                <Link to={el.link}>{el.svg}</Link>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </Box>
+      <Box
+        w={{ base: "100%", md: "92%", xl: "95%" }}
+        ml="auto"
+        pb="50px"
+        bg="#1B1B1B"
+      >
         {children}
       </Box>
     </Box>

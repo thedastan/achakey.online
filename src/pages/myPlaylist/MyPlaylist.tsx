@@ -1,7 +1,7 @@
-import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
+import { Box, Container, Image, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import MyTracks from "../../components/myTracks/MyTracks";
-import BottomPlayer from "../../components/ui/BottomPLayer";
+import MyTracks from "../../components/my-tracks/Mytracks";
+import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
 import JaxImage from "../../assets/img/Jax.png";
 import MyAlbum from "../../components/MyAlbum/MyAlbum";
 
@@ -18,7 +18,7 @@ export default function MyPlaylist() {
   return (
     <section>
       <Container maxW="1220px">
-        <Box pt="150px" pl={{ base: "60px", md: "50px", xl: "5%" }}>
+        <Box pt="150px" pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}>
           <Box display="flex" mb="31px" zIndex="0">
             <Text
               cursor="pointer"
@@ -41,17 +41,19 @@ export default function MyPlaylist() {
             </Text>
           </Box>
           <Box display="flex">
-            <Box
-              w={{ base: "90vw", lg: "699px" }}
-              h="auto"
-              mx={{ base: "auto", lg: "none" }}
-            >
+            <Box w={{ base: "90vw", lg: "699px" }} h="auto">
               {isTracks ? <MyTracks /> : <MyAlbum />}
             </Box>
-            <Box w="279px" ml="auto" display={{ base: "none", lg: "block" }}>
-              <Image src={JaxImage} w="100%" mb="18px" />
+            <Box
+              w="300px"
+              ml={{ md: "auto" }}
+              mx={{ base: "auto", md: "none" }}
+              display={{ base: "none", lg: "block" }}
+              pl="20px"
+            >
+              <Image src={JaxImage} w="300px" mb="18px" />
 
-              <Box overflowY="auto" maxH="400px">
+              <Box overflowY="auto" maxH="400px" textColor="white">
                 <Text>
                   Менин ойлорумда сенин атың чөгуп калды Жана жүрөгүмдө, о-уо-о
                   Менин жүрөгүмдөн абдан жылуу оорун алдың Жана көкурөгумдөн,
