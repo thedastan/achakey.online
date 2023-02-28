@@ -6,9 +6,13 @@ import {
   InputLeftElement,
 } from "@chakra-ui/react";
 import SvgSearch from "../../assets/svg/SvgSearch";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import "./style.scss";
 
 export default function Header() {
+  const dispatch = useAppDispatch();
+  const { ser } = useAppSelector((state) => state.searchReducer);
+
   return (
     <section
       style={{

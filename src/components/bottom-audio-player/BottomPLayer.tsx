@@ -1,5 +1,5 @@
 import { Box, Container, Text } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/react";
+import { Button, Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import {
@@ -19,6 +19,9 @@ import SvgVolumeNull from "../../assets/svg/SvgVolumeNull";
 import SvgVolumeSmall from "../../assets/svg/SvgVolumeSmall";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { useAction, useExcerpAction } from "../../hooks/useActions";
+import Jax from "../../assets/img/Жакс.png";
+
+import "./style.css";
 
 let audio: HTMLAudioElement | any;
 
@@ -292,104 +295,108 @@ export default function BottomPlayer() {
   return (
     <Box
       position="fixed"
-      bottom="5px"
-      left="0"
-      right="191px"
-      py="30px"
-      bg="#B7B7B7"
-      maxW="710px"
+      bottom="0"
+      left="100px"
+      right="0"
+      bg="rgba(11, 11, 11, 0.49)"
       mx="auto"
-      rounded="10px"
+      rounded="0px"
+      className="blur"
     >
-      <Container maxW="1220px">
-        <Box display="flex" mb="32px" alignItems="center">
-          <input
-            type="range"
-            min={0}
-            max={duration}
-            value={currentTime}
-            onChange={changeCurrentTime}
-            className="time"
-          />
-          <Text w="120px" textAlign="end" textColor="white">
+      <Box display="flex" alignItems="center">
+        <input
+          type="range"
+          min={0}
+          max={duration}
+          value={currentTime}
+          onChange={changeCurrentTime}
+          className="time"
+        />
+      </Box>
+      <Box display="flex" justifyContent="space-between">
+        <Image src={Jax} maxW="74px" />
+        <Box display="flex" alignItems="center">
+          <Box mr="31px">
+            <Button
+              onClick={OnClickRandom}
+              bg="transparent"
+              rounded="50px"
+              p="0"
+              mr="5px"
+              colorScheme="none"
+              className="random"
+            >
+              <SvgRandom fill={random ? "#0EEB24" : "white"} />
+            </Button>
+            <Button
+              bg="transparent"
+              colorScheme="none"
+              onClick={OnClickPrev}
+              p="0"
+            >
+              <SvgPrev />
+            </Button>
+            <Button
+              bg="transparent"
+              colorScheme="none"
+              onClick={play}
+              p="0"
+              mx="2px"
+            >
+              {pause ? <SvgPlay fill="white" /> : <SvgPause fill="white" />}
+            </Button>
+            <Button
+              bg="transparent"
+              colorScheme="none"
+              onClick={OnClickNext}
+              p="0"
+            >
+              <SvgNext />
+            </Button>
+            <Button
+              onClick={loopActive}
+              bg="transparent"
+              rounded="50px"
+              p="0"
+              ml="5px"
+              colorScheme="none"
+            >
+              {!loop ? (
+                <SvgLoop fill={allLoop ? "#0EEB24" : "white"} />
+              ) : (
+                <SvgActiveLoop />
+              )}
+            </Button>
+          </Box>
+        </Box>
+
+        <Box mr="31px">
+          <Text textAlign="end" textColor="white" pb="5px" fontSize="12px">
             {startTimer()} / {currentTimerAudio()}
           </Text>
-        </Box>
-        <Box mr="31px">
-          <Button
-            onClick={OnClickRandom}
-            bg="transparent"
-            rounded="50px"
-            p="0"
-            mr="5px"
-            colorScheme="none"
-            className="random"
-          >
-            <SvgRandom fill={random ? "#0EEB24" : "white"} />
-          </Button>
-          <Button
-            bg="transparent"
-            colorScheme="none"
-            onClick={OnClickPrev}
-            p="0"
-          >
-            <SvgPrev />
-          </Button>
-          <Button
-            bg="transparent"
-            colorScheme="none"
-            onClick={play}
-            p="0"
-            mx="2px"
-          >
-            {pause ? <SvgPlay fill="white" /> : <SvgPause fill="white" />}
-          </Button>
-          <Button
-            bg="transparent"
-            colorScheme="none"
-            onClick={OnClickNext}
-            p="0"
-          >
-            <SvgNext />
-          </Button>
-          <Button
-            onClick={loopActive}
-            bg="transparent"
-            rounded="50px"
-            p="0"
-            ml="5px"
-            colorScheme="none"
-          >
-            {!loop ? (
-              <SvgLoop fill={allLoop ? "#0EEB24" : "white"} />
-            ) : (
-              <SvgActiveLoop />
-            )}
-          </Button>
-        </Box>
+          <Box display="flex" alignItems="center">
+            <Box mr="9px" display="flex" alignItems="center">
+              {volume === 0 ? (
+                <SvgVolumeNull />
+              ) : volume < 35 ? (
+                <SvgVolumeSmall />
+              ) : volume < 70 ? (
+                <SvgVolumeMiddle />
+              ) : (
+                <SvgVolumeFull />
+              )}
+            </Box>
 
-        <Box mr="31px" display="flex" alignItems="center">
-          <Box mr="9px" display="flex" alignItems="center">
-            {volume === 0 ? (
-              <SvgVolumeNull />
-            ) : volume < 35 ? (
-              <SvgVolumeSmall />
-            ) : volume < 70 ? (
-              <SvgVolumeMiddle />
-            ) : (
-              <SvgVolumeFull />
-            )}
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={volume}
+              onChange={changeVolume}
+            />
           </Box>
-
-          <input
-            type="range"
-            min={0}
-            max={100}
-            value={volume}
-            onChange={changeVolume}
-          />
         </Box>
-      </Container>
+      </Box>
     </Box>
   );
 }
