@@ -11,26 +11,22 @@ import {
   Link,
   Text,
 } from '@chakra-ui/react'
+import { IInputAuth } from './formInterfaces'
 
-const AuthorationForgot: FC = () => {
+const Authoration: FC = () => {
   const [passEye, setPassEye] = useState(false)
-  const [secondPassEye, setSecondPassEye] = useState(false)
 
   const handleClick = () => {
     setPassEye(!passEye)
-  }
-
-  const handleSecondClick = () => {
-    setSecondPassEye(!secondPassEye)
   }
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm<IInputAuth>()
 
-  const onSubmit: SubmitHandler = (data) => {
+  const onSubmit: SubmitHandler<IInputAuth> = (data) => {
     alert(JSON.stringify(data, null, 2))
   }
 
@@ -97,41 +93,15 @@ const AuthorationForgot: FC = () => {
               {errors.password && errors.password?.message}
             </Text>
           </Box>
-          <Box mb="10px">
-            <InputGroup>
-              <Input
-                {...register('forgotPassword', { required: 'введите пароль' })}
-                type={secondPassEye ? 'text' : 'password'}
-                placeholder="Потвердите пароль*"
-                border="1px"
-                borderColor="#174079"
-                bg="#ffffff"
-                borderRadius={{ base: '10px', sm: '15px' }}
-                fontSize="14px"
-                py={{ base: '10px', sm: '25px' }}
-                color="#000000"
-              />
-              <InputRightElement width="3rem" h="100%">
-                <Box
-                  color="#2A3654"
-                  h="100%"
-                  display="flex"
-                  alignItems="center"
-                  cursor="pointer"
-                  fontSize={{ base: '20px', sm: '25px' }}
-                  onClick={handleSecondClick}
-                >
-                  {secondPassEye ? <BsEyeSlashFill /> : <BsEyeFill />}
-                </Box>
-              </InputRightElement>
-            </InputGroup>
-            <Text
-              color="red.500"
-              fontSize="12px"
-              ml={{ base: '5px', sm: '14px' }}
-            >
-              {errors.forgotPassword && errors.forgotPassword?.message}
-            </Text>
+          <Box
+            my="10px"
+            fontFamily="Poppins"
+            fontWeight="400"
+            fontSize="14px"
+            display="flex"
+            justifyContent="flex-end"
+          >
+            <Link color="rgba(59,113,254,1)">Забыли пароль?</Link>
           </Box>
           <Button
             mt={{ base: '10px', sm: '15px' }}
@@ -157,9 +127,7 @@ const AuthorationForgot: FC = () => {
             fontWeight="400"
             fontSize="14px"
           >
-            <Text color="#353535" pr="5px">
-              Нет аккаунта?
-            </Text>
+            <Text color="#353535" pr="5px">Нет аккаунта?</Text>
             <Link color="rgba(59,113,254,1)">Зарегистрироватсься?</Link>
           </Box>
         </FormControl>
@@ -168,4 +136,4 @@ const AuthorationForgot: FC = () => {
   )
 }
 
-export default AuthorationForgot
+export default Authoration
