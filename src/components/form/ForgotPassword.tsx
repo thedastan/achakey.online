@@ -1,14 +1,15 @@
 import { Box, Button, FormControl, Input, Link, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { FC } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { IForgotPasword } from './formInterfaces'
 
-const ForgotPassword = () => {
+const ForgotPassword: FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
-  const onSubmit: SubmitHandler = (data) => {
+  } = useForm<IForgotPasword>()
+  const onSubmit: SubmitHandler<IForgotPasword> = (data) => {
     alert(JSON.stringify(data, null, 2))
   }
   return (

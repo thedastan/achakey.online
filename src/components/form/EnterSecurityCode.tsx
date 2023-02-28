@@ -7,11 +7,11 @@ import {
   PinInputField,
   Text,
 } from '@chakra-ui/react'
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, FC } from 'react'
 
-const EnterSecurityCode = () => {
+const EnterSecurityCode: FC = () => {
   const [time, setTime] = useState('00:01:00')
-  const intervalRef = useRef(null)
+  const intervalRef = useRef<any>(null)
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
