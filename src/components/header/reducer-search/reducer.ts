@@ -1,10 +1,17 @@
-import { SearchAction, SearchState, SearchTypes } from "../types/Index";
+import { SearchAction, SearchTypes } from "../types/Index";
+
+interface SearchState {
+  searchChange: string;
+}
 
 const initialState: SearchState = {
   searchChange: "",
 };
 
-export const searchReducer = (state = initialState, action: SearchAction) => {
+export const searchChangeReducer = (
+  state = initialState,
+  action: SearchAction
+) => {
   switch (action.type) {
     case SearchTypes.SERACH_CHANGE:
       return { ...state, searchChange: action.payload };

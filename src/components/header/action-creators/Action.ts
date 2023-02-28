@@ -1,5 +1,5 @@
-import { SearchAction, SearchState, SearchTypes } from "../types/Index";
+import { SearchAction, SearchTypes } from "../types/Index";
 
-export const searchResult = (payload: SearchState): SearchAction => {
+export const searchResult = (payload: string): SearchAction => {
   return { type: SearchTypes.SERACH_CHANGE, payload };
 };
