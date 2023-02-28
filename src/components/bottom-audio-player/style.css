@@ -1,0 +1,45 @@
+.blur {
+    backdrop-filter: blur(10px);
+}
+
+/********** Range Input Styles **********/
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+    outline: none;
+}
+
+/***** Chrome, Safari, Opera and Edge Chromium styles *****/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+    background-color: #303030;
+    border-radius: 0;
+    height: 4px;
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+    /* Override default look */
+    appearance: none;
+    margin-top: -2.5px;
+    /* Centers thumb on the track */
+
+    /*custom styles*/
+    background-color: #5cd5eb;
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+}
+
+input[type="range"] {
+    background-color: #5cd5eb;
+}
