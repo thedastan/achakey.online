@@ -6,11 +6,11 @@ import {
   InputLeftElement,
   Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+
 import SvgSearch from "../../assets/svg/SvgSearch";
+import { searchResult } from "./action-creators/Action";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import Popup from "../ui/Popup";
-import { searchResult } from "./action-creators/Action";
 import "./style.scss";
 
 export default function Header() {
