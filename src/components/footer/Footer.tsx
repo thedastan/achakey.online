@@ -19,7 +19,11 @@ export default function Footer() {
         zIndex: "5",
       }}
     >
-      <Container maxW="1220px" pl={{ base: "0", md: "12%", lg: "6%" }}>
+      <Container
+        maxW="1220px"
+        pl={{ base: "0", md: "12%", lg: "6%" }}
+        pb={{ base: "96px", md: "35px" }}
+      >
         <Box
           display="flex"
           justifyContent="space-around"
@@ -65,7 +69,6 @@ export default function Footer() {
             py="9px"
             flexDir={{ base: "column", md: "row" }}
             textAlign="center"
-            pb={{ base: "96px", md: "0" }}
           >
             {listTwo.map((item, index) => (
               <Text

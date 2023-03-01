@@ -58,7 +58,7 @@ export default function BasketListProduct({
           w={{ base: "50%", lg: "32%" }}
         >
           <Text fontSize="12px" color="white">
-            {price}
+            {price}c
           </Text>
           <Button
             ml={{ base: "2%", md: "18%" }}
