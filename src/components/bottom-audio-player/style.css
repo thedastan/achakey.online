@@ -2,44 +2,28 @@
     backdrop-filter: blur(10px);
 }
 
-/********** Range Input Styles **********/
 input[type="range"] {
     -webkit-appearance: none;
-    appearance: none;
-    cursor: pointer;
-}
-
-/* Removes default focus */
-input[type="range"]:focus {
     outline: none;
-}
-
-/***** Chrome, Safari, Opera and Edge Chromium styles *****/
-/* slider track */
-input[type="range"]::-webkit-slider-runnable-track {
-    background-color: #303030;
-    border-radius: 0;
     height: 4px;
+    overflow: hidden;
 }
 
-/* slider thumb */
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-}
-
-input[type="range"]:hover::-webkit-slider-thumb {
-    /* Override default look */
-    appearance: none;
-    margin-top: -2.5px;
-    /* Centers thumb on the track */
-
-    /*custom styles*/
-    background-color: #5cd5eb;
-    height: 7px;
-    width: 7px;
+    width: 6px;
+    height: 6px;
+    background: #5cd5eb;
     border-radius: 50%;
+    box-shadow: -401px 0 0 400px #5cd5eb;
 }
 
-input[type="range"] {
-    background-color: #5cd5eb;
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 6px;
+    height: 6px;
+    background: #14353b;
+    border-radius: 50%;
+    box-shadow: -401px 0 0 400px #5cd5eb;
+    z-index: 10;
 }
