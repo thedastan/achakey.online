@@ -52,7 +52,6 @@ export default function MyPlaylist() {
               pl="20px"
             >
               <Image src={JaxImage} w="300px" mb="18px" />
-
               <Box overflowY="auto" maxH="400px" textColor="white">
                 <Text>
                   Менин ойлорумда сенин атың чөгуп калды Жана жүрөгүмдө, о-уо-о
