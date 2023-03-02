@@ -10,6 +10,7 @@ import { currentIndexReducer } from "../pages/allPlaylist/reducer/reducer";
 import { FunctionForMusicReducer } from "../components/audio-player/reducer/reducer";
 import { excerptPlayerReducer } from "./reducer/excerptPlayerReducer";
 import { searchChangeReducer } from "../components/header/reducer-search/reducer";
+import { reducerTabBoolean } from "../pages/myPlaylist/reducer/reducer";
 
 const rootReducer = combineReducers({
   playReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   FunctionForMusicReducer,
   excerptPlayerReducer,
   searchChangeReducer,
+  reducerTabBoolean,
 });
 
 export const setUpStore = () => {

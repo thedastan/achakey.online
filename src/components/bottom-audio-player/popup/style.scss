@@ -1,0 +1,30 @@
+$transitionTime: "1" ".5", "2" ".7", "3" "1", "4" "1.2", "5" "1.5";
+
+.volume {
+  transform: translateY(150vw);
+  transition: all 0.55s;
+  opacity: 0;
+
+  &.transform {
+    transform: translateY(0);
+    opacity: 1;
+
+    @media screen and (min-width: 992px) {
+      display: none;
+    }
+  }
+
+  &-link {
+    display: flex;
+    justify-content: end;
+    font-size: 24px;
+    margin-bottom: 46px;
+    font-weight: 600;
+
+    &.active {
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px;
+    }
+  }
+}

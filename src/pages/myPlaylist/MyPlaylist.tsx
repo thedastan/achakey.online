@@ -4,6 +4,8 @@ import MyTracks from "../../components/my-tracks/Mytracks";
 import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
 import JaxImage from "../../assets/img/Jax.png";
 import MyAlbum from "../../components/MyAlbum/MyAlbum";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { tabBooleanAction } from "./action-creators/action";
 
 enum AlbumOrTracks {
   ALBUM = "ALBUM",
@@ -11,7 +13,9 @@ enum AlbumOrTracks {
 }
 
 export default function MyPlaylist() {
+  const dispatch = useAppDispatch();
   const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
+
   const isAlbum = isActive === AlbumOrTracks.ALBUM;
   const isTracks = isActive === AlbumOrTracks.TRACKS;
 
@@ -26,7 +30,10 @@ export default function MyPlaylist() {
               color={isTracks ? "white" : "rgba(255, 255, 255, 0.4)"}
               mr="69px"
               fontSize="24px"
-              onClick={() => setActive(AlbumOrTracks.TRACKS)}
+              onClick={() => {
+                setActive(AlbumOrTracks.TRACKS);
+                dispatch(tabBooleanAction(true));
+              }}
             >
               Моя музыка
             </Text>
@@ -35,7 +42,10 @@ export default function MyPlaylist() {
               fontWeight="600"
               color={isAlbum ? "white" : "rgba(255, 255, 255, 0.4)"}
               fontSize="24px"
-              onClick={() => setActive(AlbumOrTracks.ALBUM)}
+              onClick={() => {
+                setActive(AlbumOrTracks.ALBUM);
+                dispatch(tabBooleanAction(false));
+              }}
             >
               Моя альбом
             </Text>

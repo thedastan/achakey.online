@@ -22,6 +22,7 @@ import { useAction, useExcerpAction } from "../../hooks/useActions";
 import Jax from "../../assets/img/Жакс.png";
 
 import "./style.css";
+import VolumePopup from "./popup/VolumePopup";
 
 let audio: HTMLAudioElement | any;
 
@@ -29,43 +30,66 @@ export default function BottomPlayer() {
   const listTruck = [
     {
       _id: "1",
-      name: "Волчий вой",
-      audio:
-        "https://muzes.net/uploads/music/2022/10/Ulukmanapo_Volchij_voj.mp3",
-      excerpt: "00:30",
-      price: "90c",
+      name: "Наряд ангела",
+      audio: require("../../assets/audio/naryd_angela.mp3"),
     },
     {
       _id: "2",
-      name: "la liga",
-      audio: "https://dl2.mp3party.net/online/10068051.mp3",
-      excerpt: "00:30",
-      price: "90c",
+      name: "Богатами",
+      audio: "https://dl2.mp3party.net/online/10092705.mp3",
     },
     {
       _id: "3",
-      name: "Герой",
-      audio:
-        "https://uztop.net/uploads/music/2023/02/FREEMAN_996_Geroj_OST_RAZBOI.mp3",
-      excerpt: "00:30",
-      price: "90c",
-    },
-    {
-      _id: "10",
-      name: "Ойлорумда",
-      audio:
-        "https://mp3fly.net/uploads/files/mp3/02-2021/1613108060_Bakr_-_Oylorumda.mp3",
-      excerpt: "00:30",
-      price: "90c",
-    },
-    {
-      _id: "5",
-      name: "Силуэт",
-      audio: require("../../assets/audio/bakr-tvoj-siluet-igraet-na-glazah.mp3"),
-      excerpt: "00:30",
-      price: "90c",
+      name: "Слишком плохой для тебя",
+      audio: require("../../assets/audio/rick.mp3"),
     },
   ];
+
+  const objAlbum = {
+    title: "Lilia",
+    listAlbums: [
+      {
+        _id: "1",
+        name: "Волчий вой",
+        audio:
+          "https://muzes.net/uploads/music/2022/10/Ulukmanapo_Volchij_voj.mp3",
+        excerpt: "00:30",
+        price: "90c",
+      },
+      {
+        _id: "2",
+        name: "la liga",
+        audio: "https://dl2.mp3party.net/online/10068051.mp3",
+        excerpt: "00:30",
+        price: "90c",
+      },
+      {
+        _id: "3",
+        name: "Герой",
+        audio:
+          "https://uztop.net/uploads/music/2023/02/FREEMAN_996_Geroj_OST_RAZBOI.mp3",
+        excerpt: "00:30",
+        price: "90c",
+      },
+      {
+        _id: "10",
+        name: "Ойлорумда",
+        audio:
+          "https://mp3fly.net/uploads/files/mp3/02-2021/1613108060_Bakr_-_Oylorumda.mp3",
+        excerpt: "00:30",
+        price: "90c",
+      },
+      {
+        _id: "5",
+        name: "Силуэт",
+        audio: require("../../assets/audio/bakr-tvoj-siluet-igraet-na-glazah.mp3"),
+        excerpt: "00:30",
+        price: "90c",
+      },
+    ],
+  };
+
+  const listAlbums = objAlbum.listAlbums;
 
   const dispatch = useAppDispatch();
   const { event } = useAppSelector((state) => state.eventReducer);
@@ -73,18 +97,26 @@ export default function BottomPlayer() {
     (state) => state.currentIndexReducer
   );
 
+  const { tabBoolean } = useAppSelector((state) => state.reducerTabBoolean);
   const { pause, volume, active, duration, currentTime } = useAppSelector(
     (state) => state.playReducer
   );
 
-  let randomIndex = Math.floor(Math.random() * listTruck.length);
-  let randomMusic = listTruck[randomIndex];
+  let randomIndex = tabBoolean
+    ? Math.floor(Math.random() * listTruck.length)
+    : Math.floor(Math.random() * listAlbums.length);
+
+  let randomMusic = tabBoolean
+    ? listTruck[randomIndex]
+    : listAlbums[randomIndex];
 
   const [random, setRandom] = useState(false);
   const [loop, setLoop] = useState(false);
   const [allLoop, setAllLoop] = useState(false);
   const [next, setNext] = useState(false);
   const [prev, setPrev] = useState(false);
+  const [activeVolume, setActiveVolume] = useState(false);
+
   const { excerptPauseAction } = useExcerpAction();
 
   const {
@@ -147,20 +179,59 @@ export default function BottomPlayer() {
 
     dispatch(
       currentIndexAction(
-        listTruck.length - 1 === indexCurrent ? 0 : indexCurrent + 1
+        tabBoolean
+          ? listTruck.length - 1 === indexCurrent
+            ? 0
+            : indexCurrent + 1
+          : listAlbums.length - 1 === indexCurrent
+          ? 0
+          : indexCurrent + 1
       )
     );
 
     activeTrack(
-      listTruck[
-        event
-          ? listTruck.length - 1 === indexCurrent
-            ? 0
-            : indexCurrent + 1
-          : listTruck.length - 1 === indexCurrent
-          ? 0
-          : indexCurrent + 1
-      ]
+      tabBoolean
+        ? listTruck[
+            event
+              ? listTruck.length - 1 === indexCurrent
+                ? 0
+                : indexCurrent + 1
+              : listTruck.length - 1 === indexCurrent
+              ? 0
+              : indexCurrent + 1
+          ]
+        : listAlbums[
+            event
+              ? listAlbums.length - 1 === indexCurrent
+                ? 0
+                : indexCurrent + 1
+              : listAlbums.length - 1 === indexCurrent
+              ? 0
+              : indexCurrent + 1
+          ]
+    );
+
+    console.log(
+      tabBoolean
+        ? listTruck[
+            event
+              ? listTruck.length - 1 === indexCurrent
+                ? 0
+                : indexCurrent + 1
+              : listTruck.length - 1 === indexCurrent
+              ? 0
+              : indexCurrent + 1
+          ]
+        : listAlbums[
+            event
+              ? listAlbums.length - 1 === indexCurrent
+                ? 0
+                : indexCurrent + 1
+              : listAlbums.length - 1 === indexCurrent
+              ? 0
+              : indexCurrent + 1
+          ],
+      "IF"
     );
   };
 
@@ -169,18 +240,30 @@ export default function BottomPlayer() {
 
     dispatch(
       currentIndexAction(
-        indexCurrent === 0 ? listTruck.length - 1 : indexCurrent - 1
+        indexCurrent === 0
+          ? tabBoolean
+            ? listTruck.length - 1
+            : listAlbums.length - 1
+          : indexCurrent - 1
       )
     );
 
     activeTrack(
-      listTruck[
-        event
-          ? indexCurrent - 1
-          : indexCurrent === 0
-          ? listTruck.length - 1
-          : indexCurrent - 1
-      ]
+      tabBoolean
+        ? listTruck[
+            event
+              ? indexCurrent - 1
+              : indexCurrent === 0
+              ? listTruck.length - 1
+              : indexCurrent - 1
+          ]
+        : listAlbums[
+            event
+              ? indexCurrent - 1
+              : indexCurrent === 0
+              ? listAlbums.length - 1
+              : indexCurrent - 1
+          ]
     );
 
     dispatch(eventChange(false));
@@ -268,19 +351,34 @@ export default function BottomPlayer() {
 
             dispatch(
               currentIndexAction(
-                listTruck.length - 1 === indexCurrent ? 0 : indexCurrent + 1
-              )
-            );
-            activeTrack(
-              listTruck[
-                event
-                  ? listTruck.length - 1 === indexCurrent
-                    ? 0
-                    : indexCurrent + 1
-                  : listTruck.length - 1 === indexCurrent
+                tabBoolean
+                  ? listTruck.length - 1
+                  : listAlbums.length - 1 === indexCurrent
                   ? 0
                   : indexCurrent + 1
-              ]
+              )
+            );
+
+            activeTrack(
+              tabBoolean
+                ? listTruck[
+                    event
+                      ? listTruck.length - 1 === indexCurrent
+                        ? 0
+                        : indexCurrent + 1
+                      : listTruck.length - 1 === indexCurrent
+                      ? 0
+                      : indexCurrent + 1
+                  ]
+                : listAlbums[
+                    event
+                      ? listAlbums.length - 1 === indexCurrent
+                        ? 0
+                        : indexCurrent + 1
+                      : listAlbums.length - 1 === indexCurrent
+                      ? 0
+                      : indexCurrent + 1
+                  ]
             );
           }
         }
@@ -296,7 +394,7 @@ export default function BottomPlayer() {
     <Box
       position="fixed"
       bottom="0"
-      left="100px"
+      left={{ base: "0", md: "100px" }}
       right="0"
       bg="rgba(11, 11, 11, 0.49)"
       mx="auto"
@@ -313,8 +411,8 @@ export default function BottomPlayer() {
           className="time"
         />
       </Box>
-      <Box display="flex" justifyContent="space-between">
-        <Image src={Jax} maxW="74px" />
+      <Box display="flex" justifyContent="space-between" py="11px">
+        <Image src={Jax} maxW="74px" display={{ base: "none", md: "block" }} />
         <Box display="flex" alignItems="center">
           <Box mr="31px">
             <Button
@@ -370,12 +468,21 @@ export default function BottomPlayer() {
           </Box>
         </Box>
 
-        <Box mr="31px">
+        <Box
+          mr="31px"
+          display="flex"
+          flexDir={{ base: "row-reverse", md: "column" }}
+          alignItems="center"
+        >
           <Text textAlign="end" textColor="white" pb="5px" fontSize="12px">
             {startTimer()} / {currentTimerAudio()}
           </Text>
           <Box display="flex" alignItems="center">
-            <Box mr="9px" display="flex" alignItems="center">
+            <Box
+              mr="9px"
+              display={{ base: "none", md: "flex" }}
+              alignItems="center"
+            >
               {volume === 0 ? (
                 <SvgVolumeNull />
               ) : volume < 35 ? (
@@ -386,13 +493,28 @@ export default function BottomPlayer() {
                 <SvgVolumeFull />
               )}
             </Box>
+            <Box
+              display={{ base: "block", md: "none" }}
+              onClick={() => setActiveVolume(true)}
+              cursor="pointer"
+            >
+              <SvgVolumeMiddle />
+            </Box>
 
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={volume}
-              onChange={changeVolume}
+            <Box display={{ base: "none", md: "block" }} h="30px">
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={volume}
+                onChange={changeVolume}
+                style={{ marginTop: "-10px" }}
+              />
+            </Box>
+            <VolumePopup
+              className={activeVolume ? "transform" : ""}
+              setActiveVolume={setActiveVolume}
+              audio={audio}
             />
           </Box>
         </Box>

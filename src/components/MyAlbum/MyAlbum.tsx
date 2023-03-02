@@ -1,5 +1,5 @@
 import { Box, Container, Image } from "@chakra-ui/react";
-import { useAppDispatch } from "../../hooks/Index";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import Slider from "react-slick";
 
 import { useAction } from "../../hooks/useActions";
@@ -15,11 +15,10 @@ import kimBilet from "../../assets/img/kimBilet.png";
 import { SampleNextArrow } from "../ui/SampleNextArrow";
 import { SamplePrevArrow } from "../ui/SamplePrevArrow";
 import "./style.css";
-import { useRef, useState } from "react";
 
 export default function MyAlbum() {
-  const ref = useRef<any>();
-  const [next, setNext] = useState();
+  const { activeTrack } = useAction();
+  const dispatch = useAppDispatch();
 
   const listTruck = [
     {
@@ -83,9 +82,6 @@ export default function MyAlbum() {
     },
   ];
 
-  const { activeTrack } = useAction();
-  const dispatch = useAppDispatch();
-
   const OnChange = (data: ITrack, index: number) => {
     activeTrack(data);
     eventChange(true);
@@ -124,7 +120,7 @@ export default function MyAlbum() {
     <Container maxW="1220px">
       <Box minH="90vh">
         <Box mb="47px" w="100%">
-          <Slider {...settings} ref={(c: any) => setNext(c)}>
+          <Slider {...settings}>
             {imges.map((item, index) => (
               <Image
                 src={item.image}
