@@ -147,16 +147,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     return minutes + ":" + seconds;
   }
 
-  function currentTimerAudio() {
-    let minutes: any = Math.floor(duration / 60);
-    let seconds: any = duration % 60;
-
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-
-    return minutes + ":" + seconds;
-  }
-
   useEffect(() => {
     excerptPlayAction();
     audio.play();
@@ -168,30 +158,41 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
   return (
     <section style={{ marginBottom: "32px", background: "transparent" }}>
-      <Box display="flex" alignItems="end">
-        <Box maxW="176px" h="225px" mr="23px">
+      <Box
+        display="flex"
+        flexDir={{ base: "column", md: "row" }}
+        alignItems="end"
+        pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}
+      >
+        <Box
+          maxW="176px"
+          h="225px"
+          mr={{ base: "0", md: "23px" }}
+          mx={{ base: "auto", md: "0" }}
+          mb={{ base: "19px", md: "0" }}
+        >
           <Image src={ImageW} />
         </Box>
-        <Box w="100%">
-          <Text mb="32px" fontSize="38.57px" color="white">
+        <Box
+          w={{ base: "100%", md: "90%" }}
+          flexDir={{ base: "column", md: "row" }}
+          pl="10px"
+        >
+          <Text
+            mb="32px"
+            fontSize="38.57px"
+            color="white"
+            display={{ base: "none", md: "block" }}
+          >
             {active.name}
           </Text>
-          <Box display="flex" mb="32px" alignItems="center">
-            <input
-              type="range"
-              min={0}
-              max={duration}
-              value={currentTime}
-              onChange={changeCurrentTime}
-              className="time"
-            />
-            <Text w="120px" textAlign="end" textColor="white">
-              {startTimer()} / {currentTimerAudio()}
-            </Text>
-          </Box>
-
-          <Box display="flex" alignItems="center">
-            <Box mr="31px">
+          <Box
+            display="flex"
+            flexDir={{ base: "column", md: "row" }}
+            mb="32px"
+            alignItems="center"
+          >
+            <Box mb={{ base: "20px", md: "0" }} w="150px" display="flex">
               <Button
                 bg="transparent"
                 colorScheme="none"
@@ -219,44 +220,47 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               </Button>
             </Box>
 
-            <Box mr="31px" display="flex" alignItems="center">
-              <Box mr="9px" display="flex" alignItems="center">
-                {volume === 0 ? (
-                  <SvgVolumeNull />
-                ) : volume < 35 ? (
-                  <SvgVolumeSmall />
-                ) : volume < 70 ? (
-                  <SvgVolumeMiddle />
-                ) : (
-                  <SvgVolumeFull />
-                )}
-              </Box>
-
+            <Box w="100%" ml="auto" display="flex" alignItems="center">
               <input
                 type="range"
                 min={0}
-                max={100}
-                value={volume}
-                onChange={changeVolume}
+                max={duration}
+                value={currentTime}
+                onChange={changeCurrentTime}
+                className="time"
               />
+              <Text
+                w="60px"
+                textAlign="end"
+                fontSize={{ base: "12px", md: "16px" }}
+                textColor="white"
+              >
+                {startTimer()}
+              </Text>
             </Box>
-
-            <Box display="flex" justifyContent="space-between" ml="auto">
+          </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            flexDir={{ base: "column", md: "row" }}
+          >
+            <Box display="flex" flexDir={{ base: "column", sm: "row" }}>
               <Button
                 rounded="50px"
-                px="53px"
+                w={{ base: "55vw", sm: "39vw", md: "17vw" }}
                 py="9px"
                 fontSize="14px"
-                mr="11px"
+                mr={{ base: "0", sm: "10%", md: "11px" }}
                 bg="green"
                 textColor="white"
+                mb={{ base: "20px", sm: "0" }}
               >
                 Купить сейчас
               </Button>
               <Button
                 rounded="50px"
-                px="53px"
                 py="9px"
+                w={{ base: "55vw", sm: "39vw", md: "17vw" }}
                 fontSize="14px"
                 bg="transparent"
                 border="1px"

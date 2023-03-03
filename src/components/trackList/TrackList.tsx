@@ -7,6 +7,7 @@ import {
 } from "../../pages/allPlaylist/reducer/action-creator";
 import { ITrack } from "../../redux/types/Track";
 import MusicForList from "../ui/MusicForList";
+import "./style.scss";
 
 interface ITrackList {
   tracks: ITrack[];
@@ -14,8 +15,6 @@ interface ITrackList {
 }
 
 export default function TrackList({ tracks, allTracks }: ITrackList) {
-  const activePlay = useAppSelector((state) => state.playReducer.active);
-
   const { excerptActiveAction } = useExcerpAction();
   const { pauseTrack } = useAction();
   const dispatch = useAppDispatch();
@@ -30,12 +29,14 @@ export default function TrackList({ tracks, allTracks }: ITrackList) {
   return (
     <Container maxW="1220px">
       <Box
-        minH={!allTracks ? "90vh" : "100vh"}
+        h="437px"
         mx="auto"
         display="flex"
         flexDir="column"
-        justifyContent="center"
+        justifyContent="start"
         pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}
+        overflowY="scroll"
+        className="scroll"
       >
         <Box>
           <Box display="flex" justifyContent="space-between">

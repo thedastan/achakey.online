@@ -46,7 +46,7 @@ export default function AllPlaylist() {
   ];
 
   return (
-    <section>
+    <section style={{ minHeight: "70vh" }}>
       <Container maxW="1220px">
         <AudioPlayer listTruck={listTruck} />
         <TrackList tracks={listTruck} />
