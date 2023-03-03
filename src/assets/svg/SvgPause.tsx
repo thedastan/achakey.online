@@ -3,28 +3,30 @@ import { IProps } from "./Types";
 export default function SvgPause({ fill }: IProps) {
   return (
     <svg
-      width="33"
-      height="32"
-      viewBox="0 0 26 26"
+      width="45"
+      height="44"
+      viewBox="0 0 45 44"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clipPath="url(#clip0_239_31)">
-        <circle
-          cx="12.7994"
-          cy="12.7994"
-          r="12.2548"
-          stroke={fill}
-          strokeWidth="1.08931"
+      <g opacity="0.8">
+        <path
+          d="M14.168 14.0319C14.168 13.5065 14.5939 13.0806 15.1193 13.0806H17.022C17.5474 13.0806 17.9734 13.5065 17.9734 14.0319V31.1562C17.9734 31.6817 17.5474 32.1076 17.022 32.1076H15.1193C14.5939 32.1076 14.168 31.6817 14.168 31.1562V14.0319Z"
+          fill="#D9D9D9"
         />
-        <rect x="8" y="6" width="3" height="14" fill={fill} />
-        <rect x="15" y="6" width="3" height="14" fill={fill} />
+        <path
+          d="M26.5355 14.0319C26.5355 13.5065 26.9615 13.0806 27.4869 13.0806H29.3896C29.915 13.0806 30.3409 13.5065 30.3409 14.0319V31.1562C30.3409 31.6817 29.915 32.1076 29.3896 32.1076H27.4869C26.9615 32.1076 26.5355 31.6817 26.5355 31.1562V14.0319Z"
+          fill="#D9D9D9"
+        />
       </g>
-      <defs>
-        <clipPath id="clip0_239_31">
-          <rect width="25.5989" height="25.5989" fill={fill} />
-        </clipPath>
-      </defs>
+      <rect
+        x="0.134766"
+        width="44"
+        height="44"
+        rx="3.56757"
+        fill="white"
+        fillOpacity="0.1"
+      />
     </svg>
   );
 }

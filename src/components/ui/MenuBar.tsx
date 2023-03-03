@@ -63,7 +63,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
           }
         />
       ),
-      link: "/",
+      link: "/basket",
     },
   ];
 
@@ -86,7 +86,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
           ))}
         </Box>
       </Box>
-      <Box display={{ base: "block", md: "none" }}>
+      <Box display={{ base: "block", md: "none" }} zIndex="2">
         <Box
           position="fixed"
           bottom="21px"
@@ -115,8 +115,8 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       <Box
         w={{ base: "100%", md: "92%", xl: "95%" }}
         ml="auto"
-        // pb="50px"
-        bg="#1B1B1B"
+        pb="50px"
+        bg="#1D1D20"
       >
         {children}
       </Box>

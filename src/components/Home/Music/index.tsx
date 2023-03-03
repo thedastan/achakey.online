@@ -29,7 +29,7 @@ const Music: React.FC<MusicProps> = ({music}) => {
                     clickable: true,
                 }}
                 modules={[Pagination, FreeMode, Scrollbar, Mousewheel]}
-                className=" "
+                className="mySwiper"
             >
                 {
                     playlistData.map(el => (

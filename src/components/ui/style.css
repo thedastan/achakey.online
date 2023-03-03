@@ -1,3 +1,8 @@
 .slick-next {
     display: block;
 }
+
+.basket {
+    backdrop-filter: blur(13px);
+    background-color: rgba(168, 168, 168, 0.31);
+}

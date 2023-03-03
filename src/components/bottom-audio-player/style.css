@@ -1,0 +1,29 @@
+.blur {
+    backdrop-filter: blur(10px);
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    outline: none;
+    height: 4px;
+    overflow: hidden;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 6px;
+    height: 6px;
+    background: #5cd5eb;
+    border-radius: 50%;
+    box-shadow: -401px 0 0 400px #5cd5eb;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 6px;
+    height: 6px;
+    background: #14353b;
+    border-radius: 50%;
+    box-shadow: -401px 0 0 400px #5cd5eb;
+    z-index: 10;
+}

@@ -9,6 +9,8 @@ import { ITrack } from "../../redux/types/Track";
 import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 
 export default function MyTracks() {
+  const dispatch = useAppDispatch();
+
   const listTruck = [
     {
       _id: "1",
@@ -29,8 +31,6 @@ export default function MyTracks() {
 
   const { activeTrack } = useAction();
   const { excerptPauseAction } = useExcerpAction();
-
-  const dispatch = useAppDispatch();
 
   const OnChange = (data: ITrack, index: number) => {
     activeTrack(data);
