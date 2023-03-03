@@ -62,17 +62,8 @@ export default function Header() {
   );
 
   return (
-    <section
-      style={{
-        position: "fixed",
-        top: "0",
-        left: "0",
-        right: "0",
-        marginBottom: "65px",
-      }}
-      className="header"
-    >
-      <Box py="30px" bg="transparent">
+    <section>
+      <Box py="30px" bg="#1D1D20">
         <Container maxW="1220px">
           <InputGroup maxW="574px" mx="auto">
             <InputLeftElement pointerEvents="none" children={<SvgSearch />} />

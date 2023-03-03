@@ -115,8 +115,8 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       <Box
         w={{ base: "100%", md: "92%", xl: "95%" }}
         ml="auto"
-        // pb="50px"
-        bg="#1B1B1B"
+        pb="50px"
+        bg="#1D1D20"
       >
         {children}
       </Box>

@@ -22,7 +22,7 @@ export default function MyPlaylist() {
   return (
     <section>
       <Container maxW="1220px">
-        <Box pt="150px" pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}>
+        <Box pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}>
           <Box display="flex" mb="31px" zIndex="0">
             <Text
               cursor="pointer"

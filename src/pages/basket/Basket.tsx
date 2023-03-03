@@ -49,14 +49,14 @@ export default function Basket() {
 
   return (
     <section>
-      <Box w="100%" minH="90vh" pt="140px" pb="50px">
+      <Box w="100%" minH="90vh" pb="50px">
         <Container maxW="1220px">
           {!listTruck.length && (
             <Text
               textAlign="center"
               color="white"
               fontSize="48px"
-              pt={{ base: "40%", lg: "20%" }}
+              pt={{ base: "40%", lg: "20%", xl: "0" }}
             >
               Пусто...
             </Text>
