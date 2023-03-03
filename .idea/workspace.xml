@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2616a2ff-b565-4d75-9121-0302efa6c411" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/svg/SvgJaxText.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Home/Music/Disk/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Home/Music/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Home/Music/playListData.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Home/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/svg/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/svg/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/PageRouting.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/PageRouting.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/my-tracks/Mytracks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/my-tracks/Mytracks.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/MenuBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/MenuBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/main/Main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/main/Main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/myPlaylist/MyPlaylist.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/myPlaylist/MyPlaylist.tsx" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +19,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -50,6 +35,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
@@ -75,7 +61,7 @@
       <workItem from="1677509008086" duration="386000" />
       <workItem from="1677573675571" duration="7243000" />
       <workItem from="1677594884316" duration="28427000" />
-      <workItem from="1677745878201" duration="18575000" />
+
     </task>
     <servers />
   </component>

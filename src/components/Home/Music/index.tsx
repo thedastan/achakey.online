@@ -30,10 +30,6 @@ const Music: React.FC<MusicProps> = ({music}) => {
                 }}
                 modules={[Pagination, FreeMode, Scrollbar, Mousewheel]}
                 className="mySwiper"
-                style={{
-                    width: "100%",
-                    height: "100%"
-                }}
             >
                 {
                     playlistData.map(el => (
@@ -42,8 +38,7 @@ const Music: React.FC<MusicProps> = ({music}) => {
                                 <Box>
                                     <Image
                                         src={el.image}
-                                        width="777px"
-                                        height="800px"
+                                        width="50vw"
                                         alt="img"
                                     />
                                 </Box>
@@ -116,11 +111,11 @@ const Music: React.FC<MusicProps> = ({music}) => {
                 justifyContent="center"
                 pos="fixed"
                 zIndex="10"
-                top="93%"
+                top="94%"
                 right="0%"
                 alignItems="center"
                 bg="linear-gradient(90deg, #6F7BF7 0%, #00D1FF 101.67%);"
-                width="759px"
+                width="50vw"
                 height="52px">
                 <Text
                     color="white"
