@@ -1,9 +1,12 @@
-import { Box } from "@chakra-ui/react";
+import {Box} from "@chakra-ui/react";
 
 export default function Main() {
-  return (
-    <section>
-      <Box>Main</Box>
-    </section>
-  );
+
+    return (
+        <section >
+            <Box maxW="1220px">
+
+            </Box>
+        </section>
+    );
 }
