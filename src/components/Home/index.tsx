@@ -12,6 +12,7 @@ const Home = () => {
                  pl="100px"
             >
                 <Text
+                    maxW="100vw"
                     style={{
                         transform: music ? " translateY(-1500%)" : "translateY(100%)",
                         transition: music ? "2s" : "2s"
