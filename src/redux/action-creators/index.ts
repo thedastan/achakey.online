@@ -1,5 +1,5 @@
-import * as ExcerptActionCreators from "./excerptPlayer";
+import * as ActionTracks from "./Tracks";
 
 export default {
-  ...ExcerptActionCreators,
+  ...ActionTracks,
 };

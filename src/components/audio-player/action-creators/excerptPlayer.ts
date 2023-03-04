@@ -1,8 +1,8 @@
 import {
   ExcerptActionPlayer,
   ExcerptPlayerTypes,
-} from "../types/ excerptPlayer";
-import { ITrack } from "../types/Track";
+} from "../types/ExcerptPlayer";
+import { ITrack } from "../../../redux/types/Track";
 
 export const excerptPlayAction = (): ExcerptActionPlayer => {
   return { type: ExcerptPlayerTypes.EXCERPT_PLAY };

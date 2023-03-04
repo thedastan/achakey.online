@@ -1,20 +1,19 @@
 import { Box, Container, Text } from "@chakra-ui/react";
-import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { useAppDispatch } from "../../hooks/Index";
 import { useAction, useExcerpAction } from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
-} from "../../pages/allPlaylist/reducer/action-creator";
+} from "../../pages/all-playlist/reducer/action-creator";
 import { ITrack } from "../../redux/types/Track";
 import MusicForList from "../ui/MusicForList";
-import "./style.scss";
 
-interface ITrackList {
+interface IAlbums {
   tracks: ITrack[];
   allTracks?: boolean;
 }
 
-export default function TrackList({ tracks, allTracks }: ITrackList) {
+export default function ExcerptAlbums({ tracks, allTracks }: IAlbums) {
   const { excerptActiveAction } = useExcerpAction();
   const { pauseTrack } = useAction();
   const dispatch = useAppDispatch();

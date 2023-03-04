@@ -4,23 +4,21 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 import { playReducer } from "../components/bottom-audio-player/reducer/PlayerReducer";
-import { trackReducer } from "./reducer/TrackReducer";
-import { eventReducer } from "../pages/allPlaylist/reducer/reducer";
-import { currentIndexReducer } from "../pages/allPlaylist/reducer/reducer";
-import { FunctionForMusicReducer } from "../components/audio-player/reducer/reducer";
-import { excerptPlayerReducer } from "./reducer/excerptPlayerReducer";
+import { eventReducer } from "../pages/all-playlist/reducer/reducer";
+import { currentIndexReducer } from "../pages/all-playlist/reducer/reducer";
+import { excerptPlayerReducer } from "../components/audio-player/reducer/excerptPlayerReducer";
 import { searchChangeReducer } from "../components/header/reducer-search/reducer";
 import { reducerTabBoolean } from "../pages/myPlaylist/reducer/reducer";
+import { reducerTracks } from "./reducer/TracksReducer";
 
 const rootReducer = combineReducers({
   playReducer,
-  trackReducer,
   eventReducer,
   currentIndexReducer,
-  FunctionForMusicReducer,
   excerptPlayerReducer,
   searchChangeReducer,
   reducerTabBoolean,
+  reducerTracks,
 });
 
 export const setUpStore = () => {
