@@ -1,8 +1,4 @@
-import {
-  PlayerAction,
-  PlayerActionTypes,
-  PlayerState,
-} from "../../../redux/types/Player";
+import { PlayerAction, PlayerActionTypes, PlayerState } from "../types/Player";
 
 const initialState: PlayerState = {
   currentTime: 0,

@@ -1,9 +1,17 @@
 import { Container } from "@chakra-ui/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { API_ADDRESS } from "../../api/Index";
 
 import AudioPlayer from "../../components/audio-player/AudioPlayer";
-import TrackList from "../../components/trackList/TrackList";
+import ExcerptTrackList from "../../components/excerptTrackList/ExcerptTrackList";
+import { useAppSelector } from "../../hooks/Index";
+import { useTracksAction } from "../../hooks/useActions";
 
 export default function AllPlaylist() {
+  const { track } = useAppSelector((state) => state.reducerTracks);
+  const { getTrackAction } = useTracksAction();
+
   const listTruck = [
     {
       _id: "1",
@@ -45,11 +53,15 @@ export default function AllPlaylist() {
     },
   ];
 
+  useEffect(() => {
+    getTrackAction();
+  }, []);
+
   return (
     <section style={{ minHeight: "70vh" }}>
       <Container maxW="1220px">
         <AudioPlayer listTruck={listTruck} />
-        <TrackList tracks={listTruck} />
+        <ExcerptTrackList tracks={listTruck} allTracks />
       </Container>
     </section>
   );

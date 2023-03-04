@@ -1,19 +1,19 @@
+import axios from "axios";
 import { Dispatch } from "react";
 import { ITrackActionTypes, TrackAction } from "../types/Track";
-import axios from "axios";
 
-export const fetchTrack = () => {
+export const getTrackAction = () => {
   return async (dispatch: Dispatch<TrackAction>) => {
     try {
-      const response = await axios.get("");
+      const response = axios.get("http://138.68.108.37/music");
       dispatch({
         type: ITrackActionTypes.FETCH_TRACKS,
-        payload: response.data,
+        payload: (await response).data,
       });
-    } catch (e) {
+    } catch {
       dispatch({
         type: ITrackActionTypes.FETCH_TRACKS_ERROR,
-        payload: "Произошла ошибка при загрузке треков",
+        payload: "Что то пошло не так",
       });
     }
   };

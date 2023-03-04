@@ -1,10 +1,10 @@
-import { Box,  } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useAppDispatch } from "../../hooks/Index";
 import { useAction, useExcerpAction } from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
-} from "../../pages/allPlaylist/reducer/action-creator";
+} from "../../pages/all-playlist/reducer/action-creator";
 import { ITrack } from "../../redux/types/Track";
 import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 

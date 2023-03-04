@@ -1,15 +1,20 @@
 export interface ITrack {
-  _id?: string;
-  name?: string;
-  text?: string;
-  picture?: string;
   audio?: string;
-  excerpt?: string | number;
+  created_at?: string;
+  updated_at?: string;
+  id?: string;
+  name?: string;
+  image?: string;
+  artist?: string;
+  music_len?: string;
+  playlist?: boolean | number;
+  user?: any[];
   price?: string;
+  music_short_len?: string;
 }
 
 export interface TrackState {
-  track?: ITrack[];
+  track: ITrack[];
   error: string;
 }
 

@@ -2,7 +2,7 @@ import {
   ExcerptActionPlayer,
   ExcerptPlayerState,
   ExcerptPlayerTypes,
-} from "../types/ excerptPlayer";
+} from "../types/ExcerptPlayer";
 
 const initialState: ExcerptPlayerState = {
   active: null,

@@ -6,7 +6,7 @@ import { useAction } from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
-} from "../../pages/allPlaylist/reducer/action-creator";
+} from "../../pages/all-playlist/reducer/action-creator";
 import { ITrack } from "../../redux/types/Track";
 import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 import sebelep from "../../assets/img/sebelep.png";
