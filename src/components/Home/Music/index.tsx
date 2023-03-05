@@ -4,7 +4,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import {Pagination, FreeMode, Scrollbar, Mousewheel} from "swiper";
-import {Box, Image, Text, Button, Flex} from "@chakra-ui/react";
+import {Box, Image, Text, Button, Flex, SimpleGrid} from "@chakra-ui/react";
 import {BsPlayCircle} from "react-icons/bs"
 
 import {playlistData} from "./playListData";
@@ -34,11 +34,12 @@ const Music: React.FC<MusicProps> = ({music}) => {
                 {
                     playlistData.map(el => (
                         <SwiperSlide>
-                            <Box display="flex" justifyContent="space-between" alignItems="center">
+                            <SimpleGrid columns={[1,null,2]} maxW="1536px" display="flex"  justifyContent="space-between" alignItems="center">
                                 <Box>
                                     <Image
                                         src={el.image}
                                         width="50vw"
+                                        height="100vh"
                                         alt="img"
                                     />
                                 </Box>
@@ -102,7 +103,7 @@ const Music: React.FC<MusicProps> = ({music}) => {
                                         </Box>
                                     </Box>
                                 </Box>
-                            </Box>
+                            </SimpleGrid>
                         </SwiperSlide>
                     ))
                 }
@@ -115,7 +116,7 @@ const Music: React.FC<MusicProps> = ({music}) => {
                 right="0%"
                 alignItems="center"
                 bg="linear-gradient(90deg, #6F7BF7 0%, #00D1FF 101.67%);"
-                width="50vw"
+                width="49vw"
                 height="52px">
                 <Text
                     color="white"
