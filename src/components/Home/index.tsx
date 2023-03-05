@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Text, Button, Stack, Container} from "@chakra-ui/react";
+import {Box, Text, Button, Stack , Container} from "@chakra-ui/react";
 import SvgJaxText from "../../assets/svg/SvgJaxText"
 import Music from "./Music";
 
