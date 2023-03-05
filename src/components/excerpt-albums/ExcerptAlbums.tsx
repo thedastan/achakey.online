@@ -5,7 +5,7 @@ import {
   currentIndexAction,
   eventChange,
 } from "../../pages/all-playlist/reducer/action-creator";
-import { ITrack } from "../../redux/types/Track";
+import { ITrack } from "../../redux/types";
 import MusicForList from "../ui/MusicForList";
 
 interface IAlbums {

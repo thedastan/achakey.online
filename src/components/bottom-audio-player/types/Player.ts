@@ -1,7 +1,7 @@
-import { ITrack } from "../../../redux/types/Track";
+import { ITrack } from "../../../redux/types";
 
 export interface PlayerState {
-  active: null | ITrack;
+  active: ITrack | null;
   volume: number;
   duration: number;
   currentTime: number;
@@ -25,7 +25,7 @@ interface PauseAction {
 }
 interface SetActiveAction {
   type: PlayerActionTypes.SET_ACTIVE;
-  payload: ITrack;
+  payload: any;
 }
 interface SetDurationAction {
   type: PlayerActionTypes.SET_DURATION;

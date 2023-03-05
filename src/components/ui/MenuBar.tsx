@@ -1,9 +1,10 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Tooltip } from "@chakra-ui/react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import SvgAllTracks from "../../assets/svg/SvgAllTracks";
 import SvgBasket from "../../assets/svg/SvgBasket";
 import SvgHome from "../../assets/svg/SvgHome";
 import SvgTrack from "../../assets/svg/SvgTrack";
+import "./style.css";
 
 interface IPropsMenuBar {
   children?: any;
@@ -14,7 +15,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
 
   const list = [
     {
-      item: "",
+      item: "Главная",
       svg: (
         <SvgHome
           fill={
@@ -27,7 +28,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       link: "/",
     },
     {
-      item: "",
+      item: "Все треки",
       svg: (
         <SvgAllTracks
           fill={
@@ -40,7 +41,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       link: "/all-playlist",
     },
     {
-      item: "",
+      item: "Моя музыка",
       svg: (
         <SvgTrack
           fill={
@@ -53,7 +54,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       link: "/my-playlist",
     },
     {
-      item: "",
+      item: "Корзина",
       svg: (
         <SvgBasket
           fill={
@@ -80,8 +81,13 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       >
         <Box py="46px">
           {list.map((el, index) => (
-            <Box key={index} py="17.5px" pl="30px" pr="41px">
-              <Link to={el.link}>{el.svg}</Link>
+            <Box key={index} py="17.5px" pl="30px" pr="41px" display="flex">
+              <Link to={el.link} className="hover-text">
+                {el.svg}
+                <span className="tooltip-text" id="right">
+                  {el.item}
+                </span>
+              </Link>
             </Box>
           ))}
         </Box>
@@ -105,8 +111,10 @@ export default function MenuBar({ children }: IPropsMenuBar) {
             px="46px"
           >
             {list.map((el, index) => (
-              <Box key={index}>
-                <Link to={el.link}>{el.svg}</Link>
+              <Box key={index} textColor="white">
+                <Link to={el.link} title={el.item}>
+                  {el.svg}
+                </Link>
               </Box>
             ))}
           </Box>
@@ -115,7 +123,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       <Box
         w={{ base: "100%", md: "92%", xl: "95%" }}
         ml="auto"
-        pb="50px"
+        minH="90vh"
         bg="#1D1D20"
       >
         {children}

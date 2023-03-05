@@ -1,36 +1,26 @@
 import { Box } from "@chakra-ui/react";
-import { useAppDispatch } from "../../hooks/Index";
-import { useAction, useExcerpAction } from "../../hooks/useActions";
+import { Key, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import {
+  useAction,
+  useExcerpAction,
+  useTracksAction,
+} from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
 } from "../../pages/all-playlist/reducer/action-creator";
-import { ITrack } from "../../redux/types/Track";
+import { ITrack } from "../../redux/types";
 import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 
 export default function MyTracks() {
   const dispatch = useAppDispatch();
-
-  const listTruck = [
-    {
-      _id: "1",
-      name: "Наряд ангела",
-      audio: require("../../assets/audio/naryd_angela.mp3"),
-    },
-    {
-      _id: "2",
-      name: "Богатами",
-      audio: "https://dl2.mp3party.net/online/10092705.mp3",
-    },
-    {
-      _id: "3",
-      name: "Слишком плохой для тебя",
-      audio: require("../../assets/audio/rick.mp3"),
-    },
-  ];
-
+  const { fetchTracks } = useTracksAction();
   const { activeTrack } = useAction();
   const { excerptPauseAction } = useExcerpAction();
+  const { tracks } = useAppSelector(
+    (state: { musicReducer: any }) => state.musicReducer
+  );
 
   const OnChange = (data: ITrack, index: number) => {
     activeTrack(data);
@@ -39,9 +29,13 @@ export default function MyTracks() {
     excerptPauseAction();
   };
 
+  useEffect(() => {
+    fetchTracks();
+  }, []);
+
   return (
     <Box minH="90vh">
-      {listTruck.map((item, index) => (
+      {tracks.map((item: ITrack, index: Key | any) => (
         <ListForAlbumOrTracks
           music={item}
           key={index}

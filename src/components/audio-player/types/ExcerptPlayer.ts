@@ -1,4 +1,4 @@
-import { ITrack } from "../../../redux/types/Track";
+import { ITrack } from "../../../redux/types";
 
 export interface ExcerptPlayerState {
   active: null | ITrack;
