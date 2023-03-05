@@ -13,13 +13,9 @@ import SvgPause from "../../assets/svg/SvgPause";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import SvgPrev from "../../assets/svg/SvgPrev";
 import { useAction, useExcerpAction } from "../../hooks/useActions";
-import { ITrack } from "../../redux/types/Track";
 import ImageW from "../../assets/img/чарли пут 3.png";
-import SvgVolumeFull from "../../assets/svg/SvgVolumeFull";
-import SvgVolumeNull from "../../assets/svg/SvgVolumeNull";
-import SvgVolumeSmall from "../../assets/svg/SvgVolumeSmall";
-import SvgVolumeMiddle from "../../assets/svg/SvgVolumeMiddle";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { ITrack } from "../../redux/types";
 import "./style.scss";
 
 interface IlistMedia {
@@ -47,12 +43,11 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     excerptPlayAction,
     excerptCurrentTimeAction,
     excerptDurationAction,
-    excerptVolumeAction,
   } = useExcerpAction();
 
   const setAudio = () => {
     if (active) {
-      audio.src = active.audio;
+      audio.src = active.music_short;
       audio.volume = volume / 100;
       audio.onloadedmetadata = () => {
         excerptDurationAction(Math.ceil(audio.duration));
@@ -81,12 +76,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
       audio.pause();
       pauseTrack();
     }
-  };
-
-  const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-    audio.volume = Number(e.target.value) / 100;
-
-    excerptVolumeAction(Number(e.target.value));
   };
 
   const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -251,7 +240,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 py="9px"
                 fontSize="14px"
                 mr={{ base: "0", sm: "10%", md: "11px" }}
-                bg="green"
+                bg="blueDark"
                 textColor="white"
                 mb={{ base: "20px", sm: "0" }}
               >
@@ -264,8 +253,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 fontSize="14px"
                 bg="transparent"
                 border="1px"
-                borderColor="green"
-                color="green"
+                borderColor="blueDark"
+                color="blueDark"
               >
                 В корзину
               </Button>

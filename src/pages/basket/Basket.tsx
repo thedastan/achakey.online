@@ -49,7 +49,7 @@ export default function Basket() {
 
   return (
     <section>
-      <Box w="100%" minH="90vh" pb="50px">
+      <Box w="100%" minH="90vh" pb="50px" pt="140px">
         <Container maxW="1220px">
           {!listTruck.length && (
             <Text

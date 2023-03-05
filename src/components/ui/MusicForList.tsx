@@ -4,11 +4,12 @@ import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
 import { SvgPlayerGifDefault } from "../../assets/svg/SvgPlayerGifDefault";
 import { useAppSelector } from "../../hooks/Index";
 import trackImage from "../../assets/img/Ellipse.png";
+import { ITrack } from "../../redux/types";
 
 interface ITrackChange {
   onClick?: any;
   name?: string;
-  music?: any;
+  music?: ITrack;
   tracks?: boolean;
 }
 
@@ -39,19 +40,19 @@ export default function MuITrackListsicForList({
         onClick={() => onClick(music)}
       >
         {tracks && <Image src={trackImage} w="47px" mr="29px" />}
-        {active?.audio === music?.audio ? (
+        {active?.music === music?.music ? (
           <Box display="inline-block" w="32px" h="32px" pt="2px">
             {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
           </Box>
         ) : (
           <Box display="inline-block" w="32px">
             <SvgPlay
-              fill={active?.audio === music?.audio ? "#49DEFF" : "#FFFFFF"}
+              fill={active?.music === music?.music ? "#49DEFF" : "#FFFFFF"}
             />
           </Box>
         )}
         <Text
-          textColor={active?.audio === music?.audio ? "blue" : "white"}
+          textColor={active?.music === music?.music ? "blue" : "white"}
           fontSize="14px"
           ml="17.4px"
           cursor="pointer"
@@ -60,19 +61,19 @@ export default function MuITrackListsicForList({
         </Text>
       </Box>
       <Text color="white" display={{ base: "none", md: "block" }}>
-        {music?.excerpt}
+        {music?.music_len}
       </Text>
       <Text color="white" ml="50px">
         {music?.price}
       </Text>
       <Button
         border="1px"
-        borderColor={active?.audio === music?.audio ? "blue" : "white"}
+        borderColor={active?.music === music?.music ? "blue" : "white"}
         rounded="38px"
         fontSize="9px"
         h="23px"
         w="84px"
-        textColor={active?.audio === music.audio ? "blue" : "white"}
+        textColor={active?.music === music?.music ? "blue" : "white"}
         background="transparent"
         colorScheme="none"
       >

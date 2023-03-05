@@ -1,5 +1,5 @@
+import { IAlbums, ITrack } from "../../../redux/types";
 import { PlayerAction, PlayerActionTypes } from "../types/Player";
-import { ITrack } from "../../../redux/types/Track";
 
 export const playTrack = (): PlayerAction => {
   return { type: PlayerActionTypes.PLAY };
@@ -9,7 +9,7 @@ export const pauseTrack = (): PlayerAction => {
   return { type: PlayerActionTypes.PAUSE };
 };
 
-export const activeTrack = (payload: ITrack): PlayerAction => {
+export const activeTrack = (payload: ITrack | IAlbums): PlayerAction => {
   return { type: PlayerActionTypes.SET_ACTIVE, payload };
 };
 

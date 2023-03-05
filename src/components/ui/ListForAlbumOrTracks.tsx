@@ -5,11 +5,12 @@ import JaxImage from "../../assets/img/Jax.png";
 import { SvgPlayerGifDefault } from "../../assets/svg/SvgPlayerGifDefault";
 import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
 import SvgPlay from "../../assets/svg/SvgPlay";
+import { ITrack } from "../../redux/types";
 
 interface ITrackList {
   onClick?: any;
   name?: string;
-  music?: any;
+  music: ITrack;
   index?: string | number;
 }
 
@@ -21,6 +22,15 @@ export default function ListForAlbumOrTracks({
 }: ITrackList) {
   const { active, pause } = useAppSelector((state) => state.playReducer);
 
+  function currentTimerAudio() {
+    let minutes: any = Math.floor(Number(music.music_len) / 60);
+    let seconds: any = Number(music.music_len) % 60;
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    return minutes + ":" + seconds;
+  }
   return (
     <Box
       py="22px"
@@ -36,32 +46,39 @@ export default function ListForAlbumOrTracks({
         <Text mr={{ base: "10px", md: "30px" }} color="white">
           0{index}
         </Text>
-        <Image src={JaxImage} maxW="42px" mr={{ base: "9px", md: "23px" }} />
-        {active?.audio === music.audio ? (
+        <Image
+          src={music?.image}
+          maxW="42px"
+          mr={{ base: "9px", md: "23px" }}
+          rounded="4px"
+          objectFit="cover"
+        />
+        {active?.music === music?.music ? (
           <Box display="inline-block" w="32px" h="32px" pt="2px">
             {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
           </Box>
         ) : (
           <Box display="inline-block" w="32px">
             <SvgPlay
-              fill={active?.audio === music.audio ? "#49DEFF" : "#FFFFFF"}
+              fill={active?.music === music?.music ? "#49DEFF" : "#FFFFFF"}
             />
           </Box>
         )}
         <Text
-          textColor={active?.audio === music.audio ? "blue" : "white"}
+          textColor={active?.music === music?.music ? "blue" : "white"}
           fontSize="14px"
           ml={{ base: "8px", md: "17.4px" }}
           cursor="pointer"
         >
           {name}
+          {" [offical Audio]"}
         </Text>
       </Box>
       <Text
         color="white"
-        textColor={active?.audio === music.audio ? "blue" : "white"}
+        textColor={active?.music === music?.music ? "blue" : "white"}
       >
-        3:21
+        {currentTimerAudio()}
       </Text>
     </Box>
   );
