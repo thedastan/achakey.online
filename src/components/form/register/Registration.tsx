@@ -7,51 +7,65 @@ import {
   InputRightElement,
   Link,
   Text,
-} from '@chakra-ui/react'
-import React, { FC, useState } from 'react'
-import { FcGoogle } from 'react-icons/fc'
-import { BsApple } from 'react-icons/bs'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs'
+} from "@chakra-ui/react";
+import React, { FC, useState } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { BsApple } from "react-icons/bs";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 
 //local
-import { Inputs } from './formInterfaces'
+import { useModalforms, usePostRegistr } from "../../../hooks/useActions";
+import { useAppSelector } from "../../../hooks/Index";
+import { IInputRegister } from "../formInterfaces";
 
 const Registration: FC = () => {
-  const [passEye, setPassEye] = useState<boolean>(false)
-  const [secondPassEye, setSecondPassEye] = useState<boolean>(false)
+  const [passEye, setPassEye] = useState<boolean>(false);
+  const [secondPassEye, setSecondPassEye] = useState<boolean>(false);
+  const { fetchRegister } = usePostRegistr();
+  const { loginModal } = useModalforms();
+
+  const { loading, registerUser, error } = useAppSelector(
+    (state) => state.registerReducer
+  );
+
+  console.log(loading, registerUser, error);
 
   const handleClick = () => {
-    setPassEye(!passEye)
-  }
+    setPassEye(!passEye);
+  };
 
   const handleSecondClick = () => {
-    setSecondPassEye(!secondPassEye)
-  }
+    setSecondPassEye(!secondPassEye);
+  };
 
   const enterMethod = [
     {
       icon: <FcGoogle />,
-      text: 'Google',
+      text: "Google",
     },
     {
       icon: <BsApple />,
-      text: 'Apple',
+      text: "Apple",
     },
-  ]
+  ];
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<IInputRegister>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    alert(JSON.stringify(data, null, 2))
-  }
+  const onSubmit: SubmitHandler<IInputRegister> = (data) => {
+    fetchRegister(data);
+  };
+
+  const openLogin = () => {
+    loginModal();
+  };
 
   return (
-    <Box w="100%" px={{ sm: '20px' }}>
+    <Box w="100%" px={{ sm: "20px" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl>
           <Text
@@ -69,15 +83,15 @@ const Registration: FC = () => {
             py="5px"
             fontWeight="700"
             display="flex"
-            flexDirection={{ base: 'column', sm: 'row' }}
+            flexDirection={{ base: "column", sm: "row" }}
             justifyContent="space-between"
           >
             {enterMethod.map((el, idx) => (
               <Box
                 key={idx}
-                bg={idx === 0 ? '#ffffff' : '#141416'}
+                bg={idx === 0 ? "#ffffff" : "#141416"}
                 borderRadius="12px"
-                color={idx === 0 ? '#2A3654' : '#FCFCFD'}
+                color={idx === 0 ? "#2A3654" : "#FCFCFD"}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -104,60 +118,87 @@ const Registration: FC = () => {
           <Box mt="10px">
             <Box mb="10px">
               <Input
-                {...register('name', { required: 'введите имя' })}
+                {...register("username", { required: "введите имя" })}
+                id="username"
                 type="text"
                 placeholder="Имя*"
                 border="1px"
                 borderColor="#174079"
                 bg="#ffffff"
-                borderRadius={{ base: '10px', sm: '15px' }}
+                borderRadius={{ base: "10px", sm: "15px" }}
                 fontSize="14px"
-                py={{ base: '10px', sm: '25px' }}
+                py={{ base: "10px", sm: "25px" }}
                 color="#000000"
               />
               <Text
                 color="red.500"
                 fontSize="12px"
-                ml={{ base: '5px', sm: '14px' }}
+                ml={{ base: "5px", sm: "14px" }}
               >
-                {errors.name && errors.name?.message}
+                {errors.username && errors.username?.message}
               </Text>
             </Box>
             <Box mb="10px">
               <Input
-                {...register('emailOrNumber', {
-                  required: 'введите почту или номер',
+                {...register("email", {
+                  required: "введите почту",
                 })}
+                id="email"
                 type="text"
-                placeholder="Почта или номер*"
+                placeholder="Почта*"
                 border="1px"
                 borderColor="#174079"
                 bg="#ffffff"
-                borderRadius={{ base: '10px', sm: '15px' }}
+                borderRadius={{ base: "10px", sm: "15px" }}
                 fontSize="14px"
-                py={{ base: '10px', sm: '25px' }}
+                py={{ base: "10px", sm: "25px" }}
                 color="#000000"
               />
               <Text
                 color="red.500"
                 fontSize="12px"
-                ml={{ base: '5px', sm: '14px' }}
+                ml={{ base: "5px", sm: "14px" }}
               >
-                {errors.emailOrNumber && errors.emailOrNumber?.message}
+                {errors.email && errors.email?.message}
+              </Text>
+            </Box>
+            <Box mb="10px">
+              <Input
+                {...register("phone_number", {
+                  required: "введите номер",
+                })}
+                id="phone_number"
+                type="text"
+                placeholder="Номер*"
+                border="1px"
+                borderColor="#174079"
+                bg="#ffffff"
+                borderRadius={{ base: "10px", sm: "15px" }}
+                fontSize="14px"
+                py={{ base: "10px", sm: "25px" }}
+                color="#000000"
+              />
+              <Text
+                color="red.500"
+                fontSize="12px"
+                ml={{ base: "5px", sm: "14px" }}
+              >
+                {errors.phone_number && errors.phone_number?.message}
               </Text>
             </Box>
             <Box mb="10px">
               <InputGroup>
                 <Input
-                  {...register('password', { required: 'введите пароль' })}
-                  type={passEye ? 'text' : 'password'}
+                  {...register("password", { required: "введите пароль" })}
+                  id="password"
+                  type={passEye ? "text" : "password"}
                   placeholder="Пароль*"
                   border="1px"
                   borderColor="#174079"
                   bg="#ffffff"
-                  borderRadius={{ base: '10px', sm: '15px' }}
+                  borderRadius={{ base: "10px", sm: "15px" }}
                   fontSize="14px"
-                  py={{ base: '10px', sm: '25px' }}
+                  py={{ base: "10px", sm: "25px" }}
                   color="#000000"
                 />
                 <InputRightElement width="3rem" h="100%">
@@ -167,7 +208,7 @@ const Registration: FC = () => {
                     display="flex"
                     alignItems="center"
                     cursor="pointer"
-                    fontSize={{ base: '20px', sm: '25px' }}
+                    fontSize={{ base: "20px", sm: "25px" }}
                     onClick={handleClick}
                   >
                     {passEye ? <BsEyeSlashFill /> : <BsEyeFill />}
@@ -177,7 +218,7 @@ const Registration: FC = () => {
               <Text
                 color="red.500"
                 fontSize="12px"
-                ml={{ base: '5px', sm: '14px' }}
+                ml={{ base: "5px", sm: "14px" }}
               >
                 {errors.password && errors.password?.message}
               </Text>
@@ -185,17 +226,18 @@ const Registration: FC = () => {
             <Box mb="10px">
               <InputGroup>
                 <Input
-                  {...register('repeatPassword', {
-                    required: 'повторите пароль',
+                  {...register("password_confirm", {
+                    required: "повторите пароль",
                   })}
-                  type={secondPassEye ? 'text' : 'password'}
+                  id="password_confirm"
+                  type={secondPassEye ? "text" : "password"}
                   placeholder="Подтвердите пароль*"
                   border="1px"
                   borderColor="#174079"
                   bg="#ffffff"
-                  borderRadius={{ base: '10px', sm: '15px' }}
+                  borderRadius={{ base: "10px", sm: "15px" }}
                   fontSize="14px"
-                  py={{ base: '10px', sm: '25px' }}
+                  py={{ base: "10px", sm: "25px" }}
                   color="#000000"
                 />
                 <InputRightElement width="3rem" h="100%">
@@ -205,7 +247,7 @@ const Registration: FC = () => {
                     display="flex"
                     alignItems="center"
                     cursor="pointer"
-                    fontSize={{ base: '20px', sm: '25px' }}
+                    fontSize={{ base: "20px", sm: "25px" }}
                     onClick={handleSecondClick}
                   >
                     {secondPassEye ? <BsEyeSlashFill /> : <BsEyeFill />}
@@ -215,14 +257,15 @@ const Registration: FC = () => {
               <Text
                 color="red.500"
                 fontSize="12px"
-                ml={{ base: '5px', sm: '14px' }}
+                ml={{ base: "5px", sm: "14px" }}
               >
-                {errors.repeatPassword && errors.repeatPassword?.message}
+                {errors.password_confirm && errors.password_confirm?.message}
               </Text>
             </Box>
           </Box>
           <Button
-            mt={{ base: '10px', sm: '15px' }}
+            isLoading={loading}
+            mt={{ base: "10px", sm: "15px" }}
             type="submit"
             bg="#2A3654"
             color="white"
@@ -230,7 +273,7 @@ const Registration: FC = () => {
             w="100%"
             py="25px"
             colorScheme="blue"
-            fontSize={{ base: '14px', sm: '18px' }}
+            fontSize={{ base: "14px", sm: "18px" }}
             borderRadius="14px"
           >
             Зарегистрироваться
@@ -239,7 +282,7 @@ const Registration: FC = () => {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            flexDirection={{ base: 'column', sm: 'row' }}
+            flexDirection={{ base: "column", sm: "row" }}
             my="10px"
             fontFamily="Poppins"
             fontWeight="400"
@@ -248,12 +291,14 @@ const Registration: FC = () => {
             <Text color="#353535" pr="5px">
               У вас уже есть аккаунт?
             </Text>
-            <Link color="rgba(59,113,254,1)">Авторизоваться</Link>
+            <Link color="rgba(59,113,254,1)" onClick={openLogin}>
+              Авторизоваться
+            </Link>
           </Box>
         </FormControl>
       </form>
     </Box>
-  )
-}
+  );
+};
 
-export default Registration
+export default Registration;

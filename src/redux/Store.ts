@@ -10,6 +10,9 @@ import { excerptPlayerReducer } from "../components/audio-player/reducer/excerpt
 import { searchChangeReducer } from "../components/header/reducer-search/reducer";
 import { reducerTabBoolean } from "../pages/myPlaylist/reducer/reducer";
 import { reducerTracks } from "./reducer/TracksReducer";
+import { registerReducer } from "../components/form/register/reducer/RegistrReducer";
+import { reducerModalForm } from "./../components/form/modal/reducer/modalFormReducer";
+import { reducerAuth } from "./../components/form/auth/reducer/AuthReducer";
 
 const rootReducer = combineReducers({
   playReducer,
@@ -19,6 +22,9 @@ const rootReducer = combineReducers({
   searchChangeReducer,
   reducerTabBoolean,
   reducerTracks,
+  registerReducer,
+  reducerModalForm,
+  reducerAuth,
 });
 
 export const setUpStore = () => {
