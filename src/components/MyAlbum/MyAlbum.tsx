@@ -6,7 +6,7 @@ import { useAction, useTracksAction } from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
-} from "../../pages/all-playlist/reducer/action-creator";
+} from "../all-playlist/reducer/action-creator";
 import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 import { SampleNextArrow } from "../ui/SampleNextArrow";
 import { SamplePrevArrow } from "../ui/SamplePrevArrow";

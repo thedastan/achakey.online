@@ -38,7 +38,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
           }
         />
       ),
-      link: "/all-playlist",
+      link: "/excerpts",
     },
     {
       item: "Моя музыка",

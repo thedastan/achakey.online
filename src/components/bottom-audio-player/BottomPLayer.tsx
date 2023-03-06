@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import {
   currentIndexAction,
   eventChange,
-} from "../../pages/all-playlist/reducer/action-creator";
+} from "../all-playlist/reducer/action-creator";
 import SvgActiveLoop from "../../assets/svg/SvgActiveLoop";
 import SvgLoop from "../../assets/svg/SvgLoop";
 import SvgNext from "../../assets/svg/SvgNext";
