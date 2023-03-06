@@ -13,6 +13,7 @@ import { reducerTracks } from "./reducer/TracksReducer";
 import { registerReducer } from "../components/form/register/reducer/RegistrReducer";
 import { reducerModalForm } from "./../components/form/modal/reducer/modalFormReducer";
 import { reducerAuth } from "./../components/form/auth/reducer/AuthReducer";
+import { musicReducer } from "./reducer/index";
 
 const rootReducer = combineReducers({
   playReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   registerReducer,
   reducerModalForm,
   reducerAuth,
+  musicReducer,
 });
 
 export const setUpStore = () => {

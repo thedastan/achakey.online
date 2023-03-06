@@ -1,18 +1,33 @@
 import axios from "axios";
 import { Dispatch } from "react";
-import { ITrackActionTypes, TrackAction } from "../types/Track";
+import { API_ADDRESS } from "../../api/Index";
+import { ActionTypes, TypeAction } from "../types";
 
-export const getTrackAction = () => {
-  return async (dispatch: Dispatch<TrackAction>) => {
+export const fetchTracks = () => {
+  return async (dispatch: Dispatch<TypeAction>) => {
     try {
-      const response = axios.get("http://138.68.108.37/music");
+      const response = await axios.get(`${API_ADDRESS}music/`);
+      dispatch({ type: ActionTypes.FETCH_TRACKS, payload: response.data });
+    } catch (e) {
       dispatch({
-        type: ITrackActionTypes.FETCH_TRACKS,
-        payload: (await response).data,
+        type: ActionTypes.FETCH_TRACKS_ERROR,
+        payload: "Произошла ошибка при загрузке треков",
       });
-    } catch {
+    }
+  };
+};
+
+export const fetchAlbums = () => {
+  return async (dispatch: Dispatch<TypeAction>) => {
+    try {
+      const response = await axios.get(`${API_ADDRESS}playlist/`);
       dispatch({
-        type: ITrackActionTypes.FETCH_TRACKS_ERROR,
+        type: ActionTypes.FETCH_ALBUMS,
+        payload: response.data,
+      });
+    } catch (e) {
+      dispatch({
+        type: ActionTypes.FETCH_ALBUMS_ERROR,
         payload: "Что то пошло не так",
       });
     }

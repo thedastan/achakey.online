@@ -4,7 +4,7 @@ import MyTracks from "../../components/my-tracks/Mytracks";
 import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
 import JaxImage from "../../assets/img/Jax.png";
 import MyAlbum from "../../components/MyAlbum/MyAlbum";
-import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { useAppDispatch } from "../../hooks/Index";
 import { tabBooleanAction } from "./action-creators/action";
 
 enum AlbumOrTracks {
@@ -21,7 +21,7 @@ export default function MyPlaylist() {
 
   return (
     <section>
-      <Container maxW="1220px">
+      <Container maxW="1220px" pt="140px">
         <Box pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}>
           <Box display="flex" mb="31px" zIndex="0">
             <Text
@@ -51,7 +51,7 @@ export default function MyPlaylist() {
             </Text>
           </Box>
           <Box display="flex">
-            <Box w={{ base: "90vw", lg: "699px" }} h="auto">
+            <Box w={{ base: "90vw", lg: "630px" }} h="auto">
               {isTracks ? <MyTracks /> : <MyAlbum />}
             </Box>
             <Box
