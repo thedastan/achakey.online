@@ -32,7 +32,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       svg: (
         <SvgAllTracks
           fill={
-            window.location.pathname === "/all-playlist"
+            window.location.pathname === "/excerpts"
               ? "white"
               : "rgba(255, 255, 255, 0.4)"
           }
