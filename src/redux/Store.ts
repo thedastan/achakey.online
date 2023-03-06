@@ -9,6 +9,10 @@ import { currentIndexReducer } from "../pages/all-playlist/reducer/reducer";
 import { excerptPlayerReducer } from "../components/audio-player/reducer/excerptPlayerReducer";
 import { searchChangeReducer } from "../components/header/reducer-search/reducer";
 import { reducerTabBoolean } from "../pages/myPlaylist/reducer/reducer";
+import { reducerTracks } from "./reducer/TracksReducer";
+import { registerReducer } from "../components/form/register/reducer/RegistrReducer";
+import { reducerModalForm } from "./../components/form/modal/reducer/modalFormReducer";
+import { reducerAuth } from "./../components/form/auth/reducer/AuthReducer";
 import { musicReducer } from "./reducer/index";
 
 const rootReducer = combineReducers({
@@ -18,6 +22,10 @@ const rootReducer = combineReducers({
   excerptPlayerReducer,
   searchChangeReducer,
   reducerTabBoolean,
+  reducerTracks,
+  registerReducer,
+  reducerModalForm,
+  reducerAuth,
   musicReducer,
 });
 
