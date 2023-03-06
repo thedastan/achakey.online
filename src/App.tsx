@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import AllAlbums from "./pages/all-albums/AllAlbums";
-import { Basket, AllPlaylist, Home, MyPlaylist } from "./pages/Index";
+import ExcerptPlayList from "./pages/excerpt-playlist/ExcerptPlayList";
+import { Basket, Home, MyPlaylist } from "./pages/Index";
 
 function App() {
   return (
@@ -9,8 +9,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/basket" element={<Basket />} />
         <Route path="/my-playlist" element={<MyPlaylist />} />
-        <Route path="/all-playlist/" element={<AllPlaylist />} />
-        <Route path="/all-albums" element={<AllAlbums />} />
+        <Route path="/excerpts/" element={<ExcerptPlayList />} />
       </Routes>
     </div>
   );

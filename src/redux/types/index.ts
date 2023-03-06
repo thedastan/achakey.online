@@ -8,12 +8,6 @@ export enum ActionTypes {
 
 //Types
 export interface ITrack {
-  map(
-    arg0: (
-      item: ITrack,
-      index: import("react").Key | null | undefined
-    ) => JSX.Element
-  ): import("react").ReactNode;
   audio?: string;
   created_at?: string;
   updated_at?: string;
@@ -31,7 +25,6 @@ export interface ITrack {
 }
 
 export interface IAlbums {
-  map(arg0: (el: any) => any): any;
   id?: string;
   name: string;
   total_price: string;
