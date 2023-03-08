@@ -1,13 +1,11 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Text } from "@chakra-ui/layout";
 import { Image } from "@chakra-ui/react";
-import { useEffect } from "react";
 
 import {
   currentIndexAction,
   eventChange,
-} from "../../pages/all-playlist/reducer/action-creator";
-
+} from "../all-playlist/reducer/action-creator";
 import SvgNext from "../../assets/svg/SvgNext";
 import SvgPause from "../../assets/svg/SvgPause";
 import SvgPlay from "../../assets/svg/SvgPlay";
@@ -16,13 +14,13 @@ import { useAction, useExcerpAction } from "../../hooks/useActions";
 import ImageW from "../../assets/img/чарли пут 3.png";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { ITrack } from "../../redux/types";
+import { changeAction } from "../../audio-player-excerpt/action";
 import "./style.scss";
+import { useEffect } from "react";
 
 interface IlistMedia {
   listTruck?: ITrack[] | any;
 }
-
-let audio: HTMLAudioElement | any;
 
 export default function AudioPlayer({ listTruck }: IlistMedia) {
   const dispatch = useAppDispatch();
@@ -31,7 +29,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     (state) => state.currentIndexReducer
   );
 
-  const { pause, volume, active, duration, currentTime } = useAppSelector(
+  const { pause, active, duration, currentTime } = useAppSelector(
     (state) => state.excerptPlayerReducer
   );
 
@@ -42,44 +40,20 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     excerptPauseAction,
     excerptPlayAction,
     excerptCurrentTimeAction,
-    excerptDurationAction,
   } = useExcerpAction();
-
-  const setAudio = () => {
-    if (active) {
-      audio.src = active.music_short;
-      audio.volume = volume / 100;
-      audio.onloadedmetadata = () => {
-        excerptDurationAction(Math.ceil(audio.duration));
-      };
-      audio.ontimeupdate = () => {
-        excerptCurrentTimeAction(Math.ceil(audio.currentTime));
-      };
-    }
-  };
-
-  useEffect(() => {
-    if (!audio) {
-      audio = new Audio();
-    } else {
-      setAudio();
-    }
-  }, [active]);
 
   const play = () => {
     if (pause) {
       excerptPlayAction();
-      audio.play();
       pauseTrack();
     } else {
       excerptPauseAction();
-      audio.pause();
       pauseTrack();
     }
   };
 
   const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    audio.currentTime = Number(e.target.value);
+    dispatch(changeAction(Number(e.target.value)));
 
     excerptCurrentTimeAction(Number(e.target.value));
   };
@@ -135,11 +109,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
     return minutes + ":" + seconds;
   }
-
-  useEffect(() => {
-    excerptPlayAction();
-    audio.play();
-  }, [active]);
 
   if (!active) {
     return null;

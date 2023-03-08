@@ -88,6 +88,7 @@ export default function Basket() {
                   py="14px"
                   fontSize="16px"
                   fontWeight="600"
+                  position="static"
                 >
                   Оплатить все
                 </Button>

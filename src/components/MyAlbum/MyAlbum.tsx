@@ -1,4 +1,4 @@
-import { Box, Container, Image, Text } from "@chakra-ui/react";
+import { Box, Image } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import Slider from "react-slick";
 
@@ -6,7 +6,7 @@ import { useAction, useTracksAction } from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
-} from "../../pages/all-playlist/reducer/action-creator";
+} from "../all-playlist/reducer/action-creator";
 import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 import { SampleNextArrow } from "../ui/SampleNextArrow";
 import { SamplePrevArrow } from "../ui/SamplePrevArrow";
@@ -30,7 +30,6 @@ export default function MyAlbum() {
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: albums.length <= 2 ? 2 : 3,
     slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -60,35 +59,33 @@ export default function MyAlbum() {
   }, []);
 
   return (
-    <Container maxW="1220px">
-      <Box minH="90vh">
-        <Box mb="47px" w="100%">
-          <Slider {...settings}>
-            {albums.map((el, index) => (
-              <Box onClick={() => setIndexTab(index)}>
-                <Image
-                  src={el.image}
-                  maxW={{ base: "109px", md: "160px", lg: "210px" }}
-                  h={{ base: "91px", md: "130px", lg: "170px" }}
-                  rounded="12px"
-                  objectFit="cover"
-                />
-              </Box>
-            ))}
-          </Slider>
-        </Box>
-        <Box>
-          {albums[indexTab].music.map((item, index) => (
-            <ListForAlbumOrTracks
-              music={item}
-              key={index}
-              index={index + 1}
-              name={item.name}
-              onClick={() => OnChange(item, index)}
-            />
+    <Box minH="90vh">
+      <Box mb="47px" w="100%">
+        <Slider {...settings}>
+          {albums.map((el, index) => (
+            <Box onClick={() => setIndexTab(index)}>
+              <Image
+                src={el.image}
+                maxW={{ base: "109px", md: "160px", lg: "210px" }}
+                h={{ base: "91px", md: "130px", lg: "170px" }}
+                rounded="12px"
+                objectFit="cover"
+              />
+            </Box>
           ))}
-        </Box>
+        </Slider>
       </Box>
-    </Container>
+      <Box>
+        {albums[indexTab].music.map((item, index) => (
+          <ListForAlbumOrTracks
+            music={item}
+            key={index}
+            index={index + 1}
+            name={item.name}
+            onClick={() => OnChange(item, index)}
+          />
+        ))}
+      </Box>
+    </Box>
   );
 }
