@@ -74,14 +74,8 @@ export default function BottomPlayer() {
   const [prev, setPrev] = useState(false);
   const { excerptPauseAction } = useExcerpAction();
 
-  const {
-    activeTrack,
-    pauseTrack,
-    playTrack,
-    setCurrentTime,
-    setDuration,
-    setVolume,
-  } = useAction();
+  const { activeTrack, pauseTrack, playTrack, setCurrentTime, setVolume } =
+    useAction();
 
   const play = () => {
     if (pause) {
