@@ -35,6 +35,9 @@ export default function BottomPlayer() {
   const { albums: objAlbum, tracks: listTruck } = useAppSelector(
     (state) => state.musicReducer
   );
+  const albumIndex = useAppSelector(
+    (state) => state.reducerIndexForAlbums.album
+  );
   const { fetchAlbums, fetchTracks } = useTracksAction();
 
   const listAlbums = objAlbum.map((el) => el);
@@ -61,12 +64,12 @@ export default function BottomPlayer() {
       ? Math.floor(Math.random() * listTruck.length)
       : indexCurrent
     : currentTime === duration
-    ? Math.floor(Math.random() * listAlbums[0]?.music.length)
+    ? Math.floor(Math.random() * listAlbums[albumIndex]?.music.length)
     : indexCurrent;
 
   let randomMusic = tabBoolean
     ? listTruck[randomIndex]
-    : listAlbums[0].music[randomIndex];
+    : listAlbums[albumIndex]?.music[randomIndex];
 
   const [random, setRandom] = useState(false);
   const [allLoop, setAllLoop] = useState(false);
@@ -86,8 +89,6 @@ export default function BottomPlayer() {
       excerptPauseAction();
     }
   };
-
-  console.log(indexCurrent, "rIndex");
 
   const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(changeVolumeAction(Number(e.target.value)));
@@ -128,12 +129,12 @@ export default function BottomPlayer() {
               ? 0
               : indexCurrent + 1
           ]
-        : listAlbums[0].music[
+        : listAlbums[albumIndex].music[
             event
-              ? listAlbums[0].music.length - 1 === indexCurrent
+              ? listAlbums[albumIndex].music.length - 1 === indexCurrent
                 ? 0
                 : indexCurrent + 1
-              : listAlbums[0].music.length - 1 === indexCurrent
+              : listAlbums[albumIndex].music.length - 1 === indexCurrent
               ? 0
               : indexCurrent + 1
           ]
@@ -162,11 +163,11 @@ export default function BottomPlayer() {
               ? listTruck.length - 1
               : indexCurrent - 1
           ]
-        : listAlbums[0].music[
+        : listAlbums[albumIndex].music[
             event
               ? indexCurrent - 1
               : indexCurrent === 0
-              ? listAlbums[0].music.length - 1
+              ? listAlbums[albumIndex].music.length - 1
               : indexCurrent - 1
           ]
     );
@@ -258,12 +259,12 @@ export default function BottomPlayer() {
                       ? 0
                       : indexCurrent + 1
                   ]
-                : listAlbums[0].music[
+                : listAlbums[albumIndex].music[
                     event
-                      ? listAlbums[0].music.length - 1 === indexCurrent
+                      ? listAlbums[albumIndex].music.length - 1 === indexCurrent
                         ? 0
                         : indexCurrent + 1
-                      : listAlbums[0].music.length - 1 === indexCurrent
+                      : listAlbums[albumIndex].music.length - 1 === indexCurrent
                       ? 0
                       : indexCurrent + 1
                   ]

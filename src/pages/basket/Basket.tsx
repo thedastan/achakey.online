@@ -1,7 +1,12 @@
 import { Box, Button, Container, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
 import BasketListProduct from "../../components/ui/BasketListProduct";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { fetchBasket } from "./action-creators";
 
 export default function Basket() {
+  const dispatch = useAppDispatch();
+  const { basket } = useAppSelector((state) => state.reducerBasket);
   const listTruck: any[] = [
     {
       _id: "1",
@@ -43,6 +48,11 @@ export default function Basket() {
     },
   ];
 
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchBasket());
+  }, []);
+
   const total = listTruck.reduce((acc, el) => {
     return acc + +el.price;
   }, 0);
@@ -69,7 +79,17 @@ export default function Basket() {
                 price={item.price}
               />
             ))}
-
+            {basket.map((el, index) => (
+              <Box key={index}>
+                {el.order_item.map((item, index) => (
+                  <BasketListProduct
+                    key={index}
+                    name={item.music}
+                    price={"90"}
+                  />
+                ))}
+              </Box>
+            ))}
             {listTruck.length && (
               <Box
                 display="flex"

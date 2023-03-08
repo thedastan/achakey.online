@@ -28,6 +28,9 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   const { currentIndex: indexCurrent } = useAppSelector(
     (state) => state.currentIndexReducer
   );
+  const { albumForExcerpt } = useAppSelector(
+    (state) => state.reducerIndexForAlbums
+  );
 
   const { pause, active, duration, currentTime } = useAppSelector(
     (state) => state.excerptPlayerReducer
@@ -120,7 +123,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
         display="flex"
         flexDir={{ base: "column", md: "row" }}
         alignItems="end"
-        pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}
       >
         <Box
           maxW="176px"
@@ -129,7 +131,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           mx={{ base: "auto", md: "0" }}
           mb={{ base: "19px", md: "0" }}
         >
-          <Image src={ImageW} />
+          <Image src={active.image} />
         </Box>
         <Box
           w={{ base: "100%", md: "90%" }}

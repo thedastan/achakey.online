@@ -13,6 +13,7 @@ import { SamplePrevArrow } from "../ui/SamplePrevArrow";
 import "./style.css";
 import { useEffect, useState } from "react";
 import { ITrack } from "../../redux/types";
+import { indexForAlbums } from "./action-creators";
 
 export default function MyAlbum() {
   const [indexTab, setIndexTab] = useState<number>(0);
@@ -25,6 +26,11 @@ export default function MyAlbum() {
     activeTrack(data);
     eventChange(true);
     dispatch(currentIndexAction(index));
+  };
+
+  const onChangeIndex = (index: number) => {
+    dispatch(indexForAlbums(index));
+    setIndexTab(index);
   };
 
   const settings = {
@@ -63,7 +69,7 @@ export default function MyAlbum() {
       <Box mb="47px" w="100%">
         <Slider {...settings}>
           {albums.map((el, index) => (
-            <Box onClick={() => setIndexTab(index)}>
+            <Box onClick={() => onChangeIndex(index)}>
               <Image
                 src={el.image}
                 maxW={{ base: "109px", md: "160px", lg: "210px" }}
@@ -76,7 +82,7 @@ export default function MyAlbum() {
         </Slider>
       </Box>
       <Box>
-        {albums[indexTab].music.map((item, index) => (
+        {albums[indexTab]?.music.map((item, index) => (
           <ListForAlbumOrTracks
             music={item}
             key={index}
