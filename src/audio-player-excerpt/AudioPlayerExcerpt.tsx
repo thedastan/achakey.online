@@ -11,7 +11,7 @@ import { useExcerpAction } from "../hooks/useActions";
 
 let audio: any;
 
-export default function Navigation() {
+export default function AudioPlayerExcerpt() {
   const { change } = useAppSelector((state) => state.reducerChange);
   const { volume, active, pause, currentTime, duration } = useAppSelector(
     (state) => state.excerptPlayerReducer
@@ -64,8 +64,6 @@ export default function Navigation() {
     audio.currentTime = Number(change);
     excerptCurrentTimeAction(Number(change));
   }, [change]);
-
-  console.log(pause, "exP");
 
   return <Box></Box>;
 }

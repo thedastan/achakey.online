@@ -29,8 +29,6 @@ const Registration: FC = () => {
     (state) => state.registerReducer
   );
 
-  console.log(loading, registerUser, error);
-
   const handleClick = () => {
     setPassEye(!passEye);
   };

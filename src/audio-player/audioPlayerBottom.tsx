@@ -90,7 +90,5 @@ export default function AudioPlayerBottom() {
         });
   }, [loop]);
 
-  console.log(pause, "P");
-
   return <div></div>;
 }
