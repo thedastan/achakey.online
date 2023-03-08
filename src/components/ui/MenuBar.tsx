@@ -1,9 +1,12 @@
 import { Box, Tooltip } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import SvgAllTracks from "../../assets/svg/SvgAllTracks";
 import SvgBasket from "../../assets/svg/SvgBasket";
 import SvgHome from "../../assets/svg/SvgHome";
 import SvgTrack from "../../assets/svg/SvgTrack";
+import { useAppSelector } from "../../hooks/Index";
+import { useAction, useExcerpAction } from "../../hooks/useActions";
 import "./style.css";
 
 interface IPropsMenuBar {
@@ -12,6 +15,7 @@ interface IPropsMenuBar {
 
 export default function MenuBar({ children }: IPropsMenuBar) {
   const naivigate = useNavigate();
+  const { active } = useAppSelector((state) => state.playReducer);
 
   const list = [
     {
@@ -95,11 +99,12 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       <Box display={{ base: "block", md: "none" }} zIndex="2">
         <Box
           position="fixed"
-          bottom="21px"
+          bottom={active ? "60px" : "21px"}
           left="0"
           right="0"
           display="flex"
           justifyContent="center"
+          zIndex="2"
         >
           <Box
             py="15px"

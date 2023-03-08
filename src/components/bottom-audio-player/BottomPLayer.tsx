@@ -23,11 +23,13 @@ import {
   useExcerpAction,
   useTracksAction,
 } from "../../hooks/useActions";
-import Jax from "../../assets/img/Жакс.png";
-import VolumePopup from "./popup/VolumePopup";
 import "./style.css";
+import {
+  changeTimeAction,
+  changeVolumeAction,
+  loopAction,
+} from "../../audio-player/action-creators";
 
-let audio: HTMLAudioElement | any;
 export default function BottomPlayer() {
   const { tabBoolean } = useAppSelector((state) => state.reducerTabBoolean);
   const { albums: objAlbum, tracks: listTruck } = useAppSelector(
@@ -43,6 +45,9 @@ export default function BottomPlayer() {
   }, []);
   const dispatch = useAppDispatch();
   const { event } = useAppSelector((state) => state.eventReducer);
+  const { loop } = useAppSelector(
+    (state) => state.reducerChangeTimePlayerBottom
+  );
   const { currentIndex: indexCurrent } = useAppSelector(
     (state) => state.currentIndexReducer
   );
@@ -52,71 +57,46 @@ export default function BottomPlayer() {
   );
 
   let randomIndex = tabBoolean
-    ? Math.floor(Math.random() * listTruck.length)
-    : Math.floor(Math.random() * listAlbums[0]?.music.length);
+    ? currentTime === duration
+      ? Math.floor(Math.random() * listTruck.length)
+      : indexCurrent
+    : currentTime === duration
+    ? Math.floor(Math.random() * listAlbums[0]?.music.length)
+    : indexCurrent;
 
   let randomMusic = tabBoolean
     ? listTruck[randomIndex]
-    : listAlbums[randomIndex];
+    : listAlbums[0].music[randomIndex];
 
   const [random, setRandom] = useState(false);
-  const [loop, setLoop] = useState(false);
   const [allLoop, setAllLoop] = useState(false);
   const [next, setNext] = useState(false);
   const [prev, setPrev] = useState(false);
-  const [activeVolume, setActiveVolume] = useState(false);
   const { excerptPauseAction } = useExcerpAction();
 
-  const {
-    activeTrack,
-    pauseTrack,
-    playTrack,
-    setCurrentTime,
-    setDuration,
-    setVolume,
-  } = useAction();
-
-  const setAudio = () => {
-    if (active) {
-      audio.src = active.music;
-      audio.volume = volume / 100;
-      audio.onloadedmetadata = () => {
-        setDuration(Math.ceil(audio.duration));
-      };
-      audio.ontimeupdate = () => {
-        setCurrentTime(Math.ceil(audio.currentTime));
-      };
-    }
-  };
-
-  useEffect(() => {
-    if (!audio) {
-      audio = new Audio();
-    } else {
-      setAudio();
-    }
-  }, [active]);
+  const { activeTrack, pauseTrack, playTrack, setCurrentTime, setVolume } =
+    useAction();
 
   const play = () => {
     if (pause) {
       playTrack();
-      audio.play();
       excerptPauseAction();
     } else {
       pauseTrack();
-      audio.pause();
       excerptPauseAction();
     }
   };
 
+  console.log(indexCurrent, "rIndex");
+
   const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-    audio.volume = Number(e.target.value) / 100;
+    dispatch(changeVolumeAction(Number(e.target.value)));
 
     setVolume(Number(e.target.value));
   };
 
   const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    audio.currentTime = Number(e.target.value);
+    dispatch(changeTimeAction(Number(e.target.value)));
 
     setCurrentTime(Number(e.target.value));
   };
@@ -194,23 +174,23 @@ export default function BottomPlayer() {
     dispatch(eventChange(false));
   };
 
-  const OnClickRandom = () => {
-    playTrack();
-    setRandom(!random);
-    setAllLoop(false);
-    setLoop(false);
-  };
-
   const loopActive = () => {
     if (allLoop) {
-      setLoop(true);
+      dispatch(loopAction(true));
       setAllLoop(false);
+      setRandom(false);
     } else if (loop) {
       setAllLoop(false);
-      setLoop(false);
+      dispatch(loopAction(false));
+      setRandom(true);
+    } else if (random) {
+      setRandom(false);
+      setAllLoop(false);
+      dispatch(loopAction(false));
     } else {
       setAllLoop(true);
-      setLoop(false);
+      dispatch(loopAction(false));
+      setRandom(false);
     }
   };
 
@@ -242,11 +222,6 @@ export default function BottomPlayer() {
   }, [next, prev]);
 
   useEffect(() => {
-    playTrack();
-    audio.play();
-  }, [active]);
-
-  useEffect(() => {
     if (random) {
       if (currentTime === duration) {
         dispatch(currentIndexAction(randomIndex));
@@ -254,18 +229,6 @@ export default function BottomPlayer() {
       }
     }
   }, [currentTime, random]);
-
-  useEffect(() => {
-    loop
-      ? audio.addEventListener("ended", () => {
-          playTrack();
-          audio.play();
-        })
-      : audio.addEventListener("ended", () => {
-          audio.currentTime = 0;
-          audio.pause();
-        });
-  }, [loop]);
 
   useEffect(() => {
     if (!next || prev) {
@@ -284,27 +247,27 @@ export default function BottomPlayer() {
               )
             );
 
-            // activeTrack(
-            //   tabBoolean
-            //     ? listTruck[
-            //         event
-            //           ? listTruck.length - 1 === indexCurrent
-            //             ? 0
-            //             : indexCurrent + 1
-            //           : listTruck.length - 1 === indexCurrent
-            //           ? 0
-            //           : indexCurrent + 1
-            //       ]
-            //     : listAlbums[
-            //         event
-            //           ? listAlbums.length - 1 === indexCurrent
-            //             ? 0
-            //             : indexCurrent + 1
-            //           : listAlbums.length - 1 === indexCurrent
-            //           ? 0
-            //           : indexCurrent + 1
-            //       ]
-            // );
+            activeTrack(
+              tabBoolean
+                ? listTruck[
+                    event
+                      ? listTruck.length - 1 === indexCurrent
+                        ? 0
+                        : indexCurrent + 1
+                      : listTruck.length - 1 === indexCurrent
+                      ? 0
+                      : indexCurrent + 1
+                  ]
+                : listAlbums[0].music[
+                    event
+                      ? listAlbums[0].music.length - 1 === indexCurrent
+                        ? 0
+                        : indexCurrent + 1
+                      : listAlbums[0].music.length - 1 === indexCurrent
+                      ? 0
+                      : indexCurrent + 1
+                  ]
+            );
           }
         }
       }
@@ -325,6 +288,7 @@ export default function BottomPlayer() {
       mx="auto"
       rounded="0px"
       className="blur"
+      p="0"
     >
       <Box display="flex" alignItems="center">
         <input
@@ -336,21 +300,15 @@ export default function BottomPlayer() {
           className="input"
         />
       </Box>
-      <Box display="flex" justifyContent="space-between" py="11px">
-        <Image src={Jax} maxW="74px" display={{ base: "none", md: "block" }} />
+      <Box display="flex" justifyContent="space-between">
+        <Image
+          src={active.image}
+          maxW="74px"
+          h="74px"
+          display={{ base: "none", md: "block" }}
+        />
         <Box display="flex" alignItems="center">
           <Box mr="31px">
-            <Button
-              onClick={OnClickRandom}
-              bg="transparent"
-              rounded="50px"
-              p="0"
-              mr="5px"
-              colorScheme="none"
-              className="random"
-            >
-              <SvgRandom fill={random ? "#0EEB24" : "white"} />
-            </Button>
             <Button
               bg="transparent"
               colorScheme="none"
@@ -384,10 +342,20 @@ export default function BottomPlayer() {
               ml="5px"
               colorScheme="none"
             >
-              {!loop ? (
+              {/* {!loop ? (
                 <SvgLoop fill={allLoop ? "#0EEB24" : "white"} />
               ) : (
                 <SvgActiveLoop />
+              )} */}
+
+              {allLoop ? (
+                <SvgLoop fill={allLoop && "#0EEB24"} />
+              ) : loop ? (
+                <SvgActiveLoop />
+              ) : random ? (
+                <SvgRandom fill={random ? "#0EEB24" : "white"} />
+              ) : (
+                <SvgLoop fill={"white"} />
               )}
             </Button>
           </Box>
@@ -418,14 +386,6 @@ export default function BottomPlayer() {
                 <SvgVolumeFull />
               )}
             </Box>
-            <Box
-              display={{ base: "block", md: "none" }}
-              onClick={() => setActiveVolume(true)}
-              cursor="pointer"
-            >
-              <SvgVolumeMiddle />
-            </Box>
-
             <Box display={{ base: "none", md: "block" }} h="30px">
               <input
                 type="range"
@@ -436,11 +396,6 @@ export default function BottomPlayer() {
                 style={{ marginTop: "-10px" }}
               />
             </Box>
-            <VolumePopup
-              className={activeVolume ? "transform" : ""}
-              setActiveVolume={setActiveVolume}
-              audio={audio}
-            />
           </Box>
         </Box>
       </Box>

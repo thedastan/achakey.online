@@ -28,8 +28,8 @@ export default function MyPlaylist() {
               cursor="pointer"
               fontWeight="600"
               color={isTracks ? "white" : "rgba(255, 255, 255, 0.4)"}
-              mr="69px"
-              fontSize="24px"
+              mr={{ base: "35px", md: "50px", lg: "69px" }}
+              fontSize={{ base: "18px", md: "20px", lg: "24px" }}
               onClick={() => {
                 setActive(AlbumOrTracks.TRACKS);
                 dispatch(tabBooleanAction(true));
@@ -41,7 +41,7 @@ export default function MyPlaylist() {
               cursor="pointer"
               fontWeight="600"
               color={isAlbum ? "white" : "rgba(255, 255, 255, 0.4)"}
-              fontSize="24px"
+              fontSize={{ base: "18px", md: "20px", lg: "24px" }}
               onClick={() => {
                 setActive(AlbumOrTracks.ALBUM);
                 dispatch(tabBooleanAction(false));
