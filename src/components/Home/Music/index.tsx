@@ -4,7 +4,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import {Pagination, FreeMode, Scrollbar, Mousewheel} from "swiper";
-import {Box, Image, Text, Button, Flex} from "@chakra-ui/react";
+import {Box, Image, Text, Button, Flex, Grid, Stack, Container} from "@chakra-ui/react";
 import {BsPlayCircle} from "react-icons/bs"
 
 import {playlistData} from "./playListData";
@@ -15,8 +15,9 @@ interface MusicProps {
 
 
 const Music: React.FC<MusicProps> = ({music}) => {
+
     return (
-        <div className="music" style={{display: music ? "block" : "none", background: "#3E3E3E"}}>
+        <Box maxW="1536px" className="music" style={{display: music ? "block" : "none", background: "#3E3E3E"}}>
             <Disk music={music}/>
             <Swiper
                 direction={"vertical"}
@@ -34,18 +35,29 @@ const Music: React.FC<MusicProps> = ({music}) => {
                 {
                     playlistData.map(el => (
                         <SwiperSlide>
-                            <Box display="flex" justifyContent="space-between" alignItems="center">
+                            <Box display="flex" justifyContent={"space-between"} alignItems="center"
+                                 flexDir={{base: "column", md: "column", lg: "row", xl: "row"}}
+                            >
                                 <Box>
                                     <Image
                                         src={el.image}
-                                        width="50vw"
+                                        width={["80vw", "80vw", "60vw", "50vw", "50vw"]}
+                                        height={["36vh", "40vh", "40vh", "100vh", "100vh"]}
+                                        borderRadius={{base: "20px", sm: "20px", md: "20px", lg: "0", xl: "0"}}
+                                        m={["40px", "30px", "20px", "0", "0"]}
                                         alt="img"
                                     />
                                 </Box>
-                                <Box maxW="600px" pr="200px">
-                                    <Text as="h1" fontFamily="sans" fontSize="4xl" color="white">{el.name}</Text>
+                                <Container
+                                    maxW={[ "75vw", "76vw", "45vw", "38vw", "520px"]}
+                                    pr={["0", "0", "0", "0", "60px"]}
+                                >
+                                    <Text as="h1" fontFamily="sans" fontSize={["20px", "25px", "30px", "35px", "38px"]}
+                                          color="white">{el.name}</Text>
                                     <Flex alignItems="center" my="10">
-                                        <BsPlayCircle fontSize="40px" color="white"/>
+                                        <Box fontSize="40px">
+                                            <BsPlayCircle color="white"/>
+                                        </Box>
                                         <Box display="flex" alignItems="center">
                                             <input type="range" style={{
                                                 margin: "0 20px 0 20px",
@@ -54,18 +66,18 @@ const Music: React.FC<MusicProps> = ({music}) => {
                                             <Text as="span"
                                                   fontFamily="sans"
                                                   fontWeight="semibold"
-                                                  fontSize="sm"
+                                                  fontSize="14px"
                                                   color="rgba(255,255,255,0.34)">Отрывок</Text>
                                         </Box>
                                     </Flex>
                                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                                        <Box>
+                                        <Stack direction="row" spacing={4} align="center">
                                             <Button
                                                 bg="none"
                                                 fontFamily="sans"
                                                 fontSize="14px"
-                                                width="207px"
-                                                height="35px"
+                                                px={["45px", "45px", "35px", "40px", "45px"]}
+                                                py="9px"
                                                 border="1px"
                                                 borderColor="white"
                                                 borderRadius="md"
@@ -78,15 +90,13 @@ const Music: React.FC<MusicProps> = ({music}) => {
                                             >Купить
                                                 сейчас
                                             </Button>
-                                        </Box>
-                                        <Box>
                                             <Button
                                                 border="1px"
                                                 bg="none"
                                                 fontFamily="sans"
                                                 fontSize="14px"
-                                                width="207px"
-                                                height="35px"
+                                                px={["28px", "30px", "35px", "48px", "53px"]}
+                                                py="9px"
                                                 borderColor="white"
                                                 borderRadius="md"
                                                 color="white"
@@ -99,9 +109,9 @@ const Music: React.FC<MusicProps> = ({music}) => {
                                             >Весь
                                                 плейлист
                                             </Button>
-                                        </Box>
+                                        </Stack>
                                     </Box>
-                                </Box>
+                                </Container>
                             </Box>
                         </SwiperSlide>
                     ))
@@ -132,7 +142,7 @@ const Music: React.FC<MusicProps> = ({music}) => {
                     px="14px"
                     fontSize="19px">Зарегистрироваться</Text>
             </Flex>
-        </div>
+        </Box>
     );
 };
 

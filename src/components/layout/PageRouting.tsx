@@ -27,7 +27,7 @@ export default function PageRouting({ children }: IMain) {
         </main>
       </MenuBar>
       {window.location.pathname === "/all-playlist" && <Footer />}
-      {window.location.pathname === "/" && <Footer />}
+      {/*{window.location.pathname === "/" && <Footer />}*/}
       {window.location.pathname === "/basket" && <Footer />}
     </>
   );
