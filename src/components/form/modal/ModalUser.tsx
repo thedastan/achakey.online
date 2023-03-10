@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { useAppSelector } from "../../../hooks/Index";
 import ModalComponent from "../../ui/ModalComponent";
 import Authoration from "../auth/Authoration";
-import ForgotPassword from "../ForgotPassword";
+import ForgotPassword from "../forgotPassword/ForgotPassword";
 import Registration from "../register/Registration";
 
 type IModal = {
