@@ -1,4 +1,4 @@
-import { Box, Text, Image, Button } from "@chakra-ui/react";
+  import { Box, Text, Image, Button } from "@chakra-ui/react";
 
 export default function NotFound() {
   return (
