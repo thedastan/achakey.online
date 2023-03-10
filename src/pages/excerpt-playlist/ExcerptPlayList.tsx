@@ -2,7 +2,7 @@ import { Box, Container, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
 import { AllPlaylist } from "../Index";
-import AllAlbums from "../../components/all-albums/AllAlbums";
+import AllAlbums from "../../components/albums/AllAlbums";
 
 enum AlbumOrTracks {
   ALBUM = "ALBUM",
@@ -30,7 +30,7 @@ export default function ExcerptPlayList() {
                 setActive(AlbumOrTracks.TRACKS);
               }}
             >
-              Моя музыка
+              Все треки
             </Text>
             <Text
               cursor="pointer"
@@ -41,7 +41,7 @@ export default function ExcerptPlayList() {
                 setActive(AlbumOrTracks.ALBUM);
               }}
             >
-              Моя альбом
+              Альбомы
             </Text>
           </Box>
           <Box display="flex">

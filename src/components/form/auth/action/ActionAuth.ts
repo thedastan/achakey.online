@@ -13,10 +13,12 @@ export const fetchAuthLogin = (user: IInputAuth) => {
       });
       dispatch({
         type: IFormsTypes.LOGIN_USER,
-        payload: res.data,  
+        payload: res.data,
       });
-      localStorage.setItem("accessToken", res.data.access);
-      alert('Добро пожаловать!')
+      localStorage.setItem("accessToken", JSON.stringify(res.data.access));
+      localStorage.setItem("refreshToken", JSON.stringify(res.data.refresh));
+      localStorage.setItem("user-id", `"${res.data.id}"`);
+      alert("Добро пожаловать!");
     } catch (e: any) {
       alert(JSON.stringify(e.response.data, null, 2));
       dispatch({

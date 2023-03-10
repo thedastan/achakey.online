@@ -6,7 +6,7 @@ import { useAction, useTracksAction } from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
-} from "../all-playlist/reducer/action-creator";
+} from "../playlist/reducer/action-creator";
 import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 import { SampleNextArrow } from "../ui/SampleNextArrow";
 import { SamplePrevArrow } from "../ui/SamplePrevArrow";
@@ -69,7 +69,7 @@ export default function MyAlbum() {
       <Box mb="47px" w="100%">
         <Slider {...settings}>
           {albums.map((el, index) => (
-            <Box onClick={() => onChangeIndex(index)}>
+            <Box key={index} onClick={() => onChangeIndex(index)}>
               <Image
                 src={el.image}
                 maxW={{ base: "109px", md: "160px", lg: "210px" }}

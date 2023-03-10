@@ -11,8 +11,8 @@ export const PUBLIC_API = axios.create({
 });
 
 API.interceptors.request.use((config: any) => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
+  config.headers.Authorization = `Bearer ${JSON.parse(
+    localStorage.getItem("accessToken") || ""
   )}`;
   return config;
 });
@@ -26,9 +26,12 @@ API.interceptors.response.use(
     if (err.response.status === 401 && !err.config._isRetry) {
       originalRequest._isRetry = true;
       try {
-        const response = await axios.post(`${API_ADDRESS}account/token/refresh/`, {
-          refresh_token: localStorage.getItem("refreshToken"),
-        });
+        const response = await axios.post(
+          `${API_ADDRESS}account/token/refresh/`,
+          {
+            refresh: localStorage.getItem("refreshToken"),
+          }
+        );
         localStorage.setItem("accessToken", response.data.access);
         localStorage.setItem("accessToken", response.data.access);
         return API.request(originalRequest);
