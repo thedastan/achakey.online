@@ -1,8 +1,8 @@
 import { Box, Button, FormControl, Input, Link, Text } from "@chakra-ui/react";
 import React, { FC } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { IForgotPasword } from "./formInterfaces";
-import { useModalforms } from "./../../hooks/useActions";
+import { IForgotPasword } from "../formInterfaces";
+import { useModalforms } from "../../../hooks/useActions";
 
 const ForgotPassword: FC = () => {
   const {
@@ -29,20 +29,24 @@ const ForgotPassword: FC = () => {
             <Input
               {...register("phone", { required: "введите номер" })}
               type="tel"
-              placeholder="Номер телефона*"
+              sx={{
+                "&::placeholder": {
+                  color: "#AAAAAA",
+                  fontSize: "14px",
+                  fontWeight: "medium",
+                },
+              }}
+              placeholder="Почта или номер телефона*"
               border="1px"
-              borderColor="#174079"
+              borderColor="#AAAAAA"
+              focusBorderColor="#174079"
               bg="#ffffff"
               borderRadius={{ base: "10px", sm: "15px" }}
               fontSize="14px"
               py={{ base: "10px", sm: "25px" }}
-              color="#000000"
+              color="#AAAAAA"
             />
-            <Text
-              color="red.500"
-              fontSize="12px"
-              ml={{ base: "5px", sm: "14px" }}
-            >
+            <Text color="red" fontSize="12px" ml={{ base: "5px", sm: "14px" }}>
               {errors.phone && errors.phone?.message}
             </Text>
           </Box>
@@ -52,6 +56,7 @@ const ForgotPassword: FC = () => {
             bg="#2A3654"
             color="white"
             fontWeight="600"
+            fontFamily="revert"
             w="100%"
             py="25px"
             colorScheme="blue"
@@ -66,7 +71,7 @@ const ForgotPassword: FC = () => {
             alignItems="center"
             flexDirection={{ base: "column", sm: "row" }}
             my="10px"
-            fontFamily="Poppins"
+            fontFamily="sans"
             fontWeight="400"
             fontSize="14px"
           >

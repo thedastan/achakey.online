@@ -12,7 +12,7 @@ import React, { FC, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //local
