@@ -14,6 +14,7 @@ export const theme = extendTheme({
     heading: "Georgia, serif",
     mono: "Menlo, monospace",
     sans: "Roboto, sans-serif",
+    revert: "SF Pro Text, sans-serif",
   },
   fontSizes: {
     xs: "0.75rem",
