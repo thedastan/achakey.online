@@ -18,6 +18,7 @@ export default function Popup({ children, top }: IPopup) {
       mx="auto"
       roundedBottom="5px"
       px={{ base: "20px", sm: "10px", md: "0" }}
+      zIndex="2"
     >
       <Box bg="white" roundedBottom="5px">
         {children}

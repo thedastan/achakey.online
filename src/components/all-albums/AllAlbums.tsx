@@ -1,5 +1,6 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 import { useAppSelector } from "../../hooks/Index";
 import { useTracksAction } from "../../hooks/useActions";
@@ -12,6 +13,8 @@ export default function AllAlbums() {
     fetchTracks();
   }, []);
 
+  console.log();
+
   return (
     <section style={{ minHeight: "70vh" }}>
       <Box>
@@ -22,12 +25,17 @@ export default function AllAlbums() {
           minH="241px"
           mb="45px"
         ></Box>
-        <Box display="flex" flexWrap="wrap">
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          justifyContent={{ base: "center", md: "space-between" }}
+        >
           {albums.map((el, index) => (
             <Box
               key={index}
               maxW="259px"
-              mr={albums.length - 1 === index ? "0" : "43px"}
+              mr={albums.length - 1 === index ? "0" : { base: "0", md: "43px" }}
+              mx={{ base: "10px", md: "0" }}
               objectFit="cover"
               h="auto"
               mb="45px"
@@ -44,18 +52,20 @@ export default function AllAlbums() {
                 roundedBottom="14px"
                 h="93px"
               >
-                <Text
-                  textColor="white"
-                  fontWeight="500"
-                  fontSize="22px"
-                  pl="24px"
-                  pt="27px"
-                >
-                  {el.name}
-                </Text>
-                <Text pl="24px" color="white" opacity="0.5">
-                  {`${el.music.length}`} треков
-                </Text>
+                <NavLink to={`details/${el.id}`}>
+                  <Text
+                    textColor="white"
+                    fontWeight="500"
+                    fontSize="22px"
+                    pl="24px"
+                    pt="27px"
+                  >
+                    {el.name}
+                  </Text>
+                  <Text pl="24px" color="white" opacity="0.5">
+                    {`${el.music.length}`} треков
+                  </Text>
+                </NavLink>
               </Box>
             </Box>
           ))}

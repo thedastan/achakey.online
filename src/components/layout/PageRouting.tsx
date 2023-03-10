@@ -4,8 +4,7 @@ import Header from "../header/Header";
 import MenuBar from "../ui/MenuBar";
 
 import { searchResult } from "../header/action-creators/Action";
-import { useAppDispatch, useAppSelector } from "../../hooks/Index";
-import { useState } from "react";
+import { useAppDispatch } from "../../hooks/Index";
 interface IMain {
   children: JSX.Element;
 }
@@ -26,8 +25,9 @@ export default function PageRouting({ children }: IMain) {
           {children}
         </main>
       </MenuBar>
+      {window.location.pathname === "/all-playlist" && <Footer />}
+      {/*{window.location.pathname === "/" && <Footer />}*/}
       {window.location.pathname === "/excerpts" && <Footer />}
-      {window.location.pathname === "/" && <Footer />}
       {window.location.pathname === "/basket" && <Footer />}
     </>
   );

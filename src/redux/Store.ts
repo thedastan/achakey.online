@@ -13,6 +13,11 @@ import { registerReducer } from "../components/form/register/reducer/RegistrRedu
 import { reducerModalForm } from "./../components/form/modal/reducer/modalFormReducer";
 import { reducerAuth } from "./../components/form/auth/reducer/AuthReducer";
 import { musicReducer } from "./reducer/index";
+import { reducerChange } from "../audio-player-excerpt/reducer/index";
+import { reducerChangeTimePlayerBottom } from "../audio-player/reducer/index";
+import { reducerBasket } from "../pages/basket/reducer/index";
+import { reducerIndexForAlbums } from "../components/MyAlbum/reducer/index";
+import { reducerDetailsAlbums } from "../pages/details-albums/reducer/index";
 
 const rootReducer = combineReducers({
   playReducer,
@@ -25,6 +30,11 @@ const rootReducer = combineReducers({
   reducerModalForm,
   reducerAuth,
   musicReducer,
+  reducerChange,
+  reducerChangeTimePlayerBottom,
+  reducerBasket,
+  reducerIndexForAlbums,
+  reducerDetailsAlbums,
 });
 
 export const setUpStore = () => {
