@@ -42,7 +42,7 @@ export default function Header() {
     <Box pos="absolute" top="0" left="0" right="0" py="30px" bg="transparent">
       <ModalUserAuth isOpen={isOpen} onClose={onClose} />
       <Container maxW="1220px" pos="relative" display="flex">
-        <InputGroup maxW="574px" mx="auto" outlineColor="blue">
+        <InputGroup maxW="574px" zIndex="10" mx="auto" outlineColor="blue">
           <InputLeftElement
             pointerEvents="none"
             outlineColor="blue"
@@ -81,16 +81,17 @@ export default function Header() {
             </Box>
           </Popup>
         )}
-        <Box display="flex" alignItems="center">
+        <Box zIndex="10" display="flex" alignItems="center">
           <Box>
             <Link to={"/"}>
-              <Image src={LogoAchakey} alt="Logo" />
+              <Image  src={LogoAchakey} alt="Logo" />
             </Link>
           </Box>
           <Button
             ml="20px"
             px="30px"
             bg="white"
+            zIndex="10"
             fontFamily="Roboto"
             fontWeight="600"
             fontSize="16px"

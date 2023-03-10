@@ -14,6 +14,9 @@ interface IPropsMenuBar {
 }
 
 export default function MenuBar({ children }: IPropsMenuBar) {
+    const handleRefresh = () => {
+        window.location.reload();
+    };
   const naivigate = useNavigate();
   const { active } = useAppSelector((state) => state.playReducer);
 
@@ -22,6 +25,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       item: "Главная",
       svg: (
         <SvgHome
+
           fill={
             window.location.pathname === "/"
               ? "white"
@@ -37,6 +41,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
         <SvgAllTracks
           fill={
             window.location.pathname === "/excerpts"
+
               ? "white"
               : "rgba(255, 255, 255, 0.4)"
           }

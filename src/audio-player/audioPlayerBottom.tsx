@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { pauseTrack } from "../components/bottom-audio-player/action-creators/Player";
-import { useAppDispatch, useAppSelector } from "../hooks/Index";
+import { useAppSelector } from "../hooks/Index";
 import {
   useAction,
   useExcerpAction,
