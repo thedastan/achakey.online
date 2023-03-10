@@ -52,7 +52,7 @@ const Authoration: FC = () => {
   };
 
   useEffect(() => {
-    if (authUser) {
+    if (authUser.id) {
       navigate("/basket");
     }
   }, [authUser, navigate]);
