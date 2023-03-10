@@ -5,6 +5,10 @@ import { SvgPlayerGifDefault } from "../../assets/svg/SvgPlayerGifDefault";
 import { useAppSelector } from "../../hooks/Index";
 import trackImage from "../../assets/img/Ellipse.png";
 import { ITrack } from "../../redux/types";
+import { useActionBasket, useActionUser } from "../../hooks/useActions";
+import { useEffect } from "react";
+import { getUserId } from "../helper";
+import API from "../../api/Index";
 
 interface ITrackChange {
   onClick?: any;
@@ -22,6 +26,28 @@ export default function MuITrackListsicForList({
   const { active, pause } = useAppSelector(
     (state) => state.excerptPlayerReducer
   );
+  const { user } = useAppSelector((state) => state.reducerUser);
+
+  const { postBasketItem } = useActionBasket();
+  const { fetchUser } = useActionUser();
+
+  const PostBasketItem = async (element: any) => {
+    try {
+      const response = await API.post("account/cart_item/", {
+        cart: getUserId(),
+        music: element,
+      });
+
+      alert(JSON.parse(response.data));
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <Box
@@ -32,6 +58,13 @@ export default function MuITrackListsicForList({
       justifyContent="space-between"
       alignContent="center"
       background="transparent"
+      _hover={
+        {
+          // background: "rgba(255, 255, 255, 0.08)",
+          // rounded: "8px",
+          // borderColor: "transparent",
+        }
+      }
     >
       <Box
         display="flex"
@@ -67,6 +100,7 @@ export default function MuITrackListsicForList({
         {music?.price}
       </Text>
       <Button
+        onClick={() => PostBasketItem(music)}
         border="1px"
         borderColor={active?.music === music?.music ? "blue" : "white"}
         rounded="38px"

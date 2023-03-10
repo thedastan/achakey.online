@@ -3,12 +3,12 @@ import { Box, Button, Image, Text } from "@chakra-ui/react";
 import SvgCross from "../../assets/svg/SvgCross";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import Jax from "../../assets/img/Жакс.png";
-import "./style.css";
+import "./style.scss";
 
 interface IBasketProps {
   name: string;
   image?: any;
-  price: string;
+  price: number;
 }
 
 export default function BasketListProduct({
@@ -34,14 +34,11 @@ export default function BasketListProduct({
       >
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Image
-            src={Jax}
+            src={image}
             maxW="47px"
             rounded="50%"
             mr={{ base: "10px", md: "26px" }}
           />
-          <Box display={{ base: "none", md: "block" }}>
-            <SvgPlay fill="white" />
-          </Box>
           <Text
             pl={{ base: "0", md: "17px" }}
             fontSize="14.53px"

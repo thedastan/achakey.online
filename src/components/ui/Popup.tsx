@@ -3,8 +3,6 @@ import { Box } from "@chakra-ui/react";
 interface IPopup {
   children: JSX.Element;
   top: string;
-  //   active: boolean;
-  //   setActive: (value: boolean) => void;
 }
 
 export default function Popup({ children, top }: IPopup) {

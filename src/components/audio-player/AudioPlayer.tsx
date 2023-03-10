@@ -1,29 +1,32 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Text } from "@chakra-ui/layout";
 import { Image } from "@chakra-ui/react";
+import { useState } from "react";
 
 import {
   currentIndexAction,
   eventChange,
-} from "../all-playlist/reducer/action-creator";
+} from "../playlist/reducer/action-creator";
+import { useAction, useExcerpAction } from "../../hooks/useActions";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { ITrack } from "../../redux/types";
+import { changeAction } from "../../global-audio-player-excerpt/action";
+import { OrderPopup } from "../ui/OrderPopup";
+
 import SvgNext from "../../assets/svg/SvgNext";
 import SvgPause from "../../assets/svg/SvgPause";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import SvgPrev from "../../assets/svg/SvgPrev";
-import { useAction, useExcerpAction } from "../../hooks/useActions";
-import ImageW from "../../assets/img/чарли пут 3.png";
-import { useAppDispatch, useAppSelector } from "../../hooks/Index";
-import { ITrack } from "../../redux/types";
-import { changeAction } from "../../audio-player-excerpt/action";
-import "./style.scss";
-import { useEffect } from "react";
 
+import "./style.scss";
+import "../ui/style.scss";
 interface IlistMedia {
   listTruck?: ITrack[] | any;
 }
 
 export default function AudioPlayer({ listTruck }: IlistMedia) {
   const dispatch = useAppDispatch();
+  const [openPopup, setOpenPopup] = useState(false);
   const { event } = useAppSelector((state) => state.eventReducer);
   const { currentIndex: indexCurrent } = useAppSelector(
     (state) => state.currentIndexReducer
@@ -113,12 +116,22 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     return minutes + ":" + seconds;
   }
 
+  // function postCartItem(item: any) {
+  //   dispatch(postCartItem(item));
+  // }
+
   if (!active) {
     return null;
   }
 
   return (
-    <section style={{ marginBottom: "32px", background: "transparent" }}>
+    <section
+      style={{
+        marginBottom: "32px",
+        background: "transparent",
+        position: "relative",
+      }}
+    >
       <Box
         display="flex"
         flexDir={{ base: "column", md: "row" }}
@@ -206,6 +219,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           >
             <Box display="flex" flexDir={{ base: "column", sm: "row" }}>
               <Button
+                onClick={() => setOpenPopup(true)}
                 rounded="50px"
                 w={{ base: "55vw", sm: "39vw", md: "17vw" }}
                 py="9px"
@@ -231,6 +245,12 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               </Button>
             </Box>
           </Box>
+        </Box>
+        <Box mx="auto" maxW="700px">
+          <OrderPopup
+            setOpenPopup={setOpenPopup}
+            className={openPopup ? "transform" : ""}
+          />
         </Box>
       </Box>
     </section>

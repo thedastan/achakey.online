@@ -4,8 +4,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 import { playReducer } from "../components/bottom-audio-player/reducer/PlayerReducer";
-import { eventReducer } from "../components/all-playlist/reducer/reducer";
-import { currentIndexReducer } from "../components/all-playlist/reducer/reducer";
+import { eventReducer } from "../components/playlist/reducer/reducer";
+import { currentIndexReducer } from "../components/playlist/reducer/reducer";
 import { excerptPlayerReducer } from "../components/audio-player/reducer/excerptPlayerReducer";
 import { searchChangeReducer } from "../components/header/reducer-search/reducer";
 import { reducerTabBoolean } from "../pages/myPlaylist/reducer/reducer";
@@ -13,11 +13,12 @@ import { registerReducer } from "../components/form/register/reducer/RegistrRedu
 import { reducerModalForm } from "./../components/form/modal/reducer/modalFormReducer";
 import { reducerAuth } from "./../components/form/auth/reducer/AuthReducer";
 import { musicReducer } from "./reducer/index";
-import { reducerChange } from "../audio-player-excerpt/reducer/index";
-import { reducerChangeTimePlayerBottom } from "../audio-player/reducer/index";
+import { reducerChange } from "../global-audio-player-excerpt/reducer/index";
+import { reducerChangeTimePlayerBottom } from "../global-audio-player/reducer/index";
 import { reducerBasket } from "../pages/basket/reducer/index";
 import { reducerIndexForAlbums } from "../components/MyAlbum/reducer/index";
 import { reducerDetailsAlbums } from "../pages/details-albums/reducer/index";
+import { reducerUser } from "../components/user/reducer/index";
 
 const rootReducer = combineReducers({
   playReducer,
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   reducerBasket,
   reducerIndexForAlbums,
   reducerDetailsAlbums,
+  reducerUser,
 });
 
 export const setUpStore = () => {
