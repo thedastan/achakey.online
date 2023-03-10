@@ -4,7 +4,7 @@ import MyTracks from "../../components/my-tracks/Mytracks";
 import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
 import JaxImage from "../../assets/img/Jax.png";
 import MyAlbum from "../../components/MyAlbum/MyAlbum";
-import { useAppDispatch } from "../../hooks/Index";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { tabBooleanAction } from "./action-creators/action";
 
 enum AlbumOrTracks {
@@ -15,7 +15,7 @@ enum AlbumOrTracks {
 export default function MyPlaylist() {
   const dispatch = useAppDispatch();
   const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
-
+  const { tracks } = useAppSelector((state) => state.musicReducer);
   const isAlbum = isActive === AlbumOrTracks.ALBUM;
   const isTracks = isActive === AlbumOrTracks.TRACKS;
 

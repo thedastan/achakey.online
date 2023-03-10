@@ -5,6 +5,7 @@ import MenuBar from "../ui/MenuBar";
 
 import { searchResult } from "../header/action-creators/Action";
 import { useAppDispatch } from "../../hooks/Index";
+
 interface IMain {
   children: JSX.Element;
 }

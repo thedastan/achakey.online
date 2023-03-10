@@ -9,7 +9,7 @@ import {
 import {
   currentIndexAction,
   eventChange,
-} from "../all-playlist/reducer/action-creator";
+} from "../playlist/reducer/action-creator";
 import { ITrack } from "../../redux/types";
 import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 
@@ -18,9 +18,7 @@ export default function MyTracks() {
   const { fetchTracks } = useTracksAction();
   const { activeTrack } = useAction();
   const { excerptPauseAction } = useExcerpAction();
-  const { tracks } = useAppSelector(
-    (state: { musicReducer: any }) => state.musicReducer
-  );
+  const { tracks } = useAppSelector((state) => state.musicReducer);
 
   const OnChange = (data: ITrack, index: number) => {
     activeTrack(data);

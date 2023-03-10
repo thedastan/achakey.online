@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import {
   currentIndexAction,
   eventChange,
-} from "../all-playlist/reducer/action-creator";
+} from "../playlist/reducer/action-creator";
 import SvgActiveLoop from "../../assets/svg/SvgActiveLoop";
 import SvgLoop from "../../assets/svg/SvgLoop";
 import SvgNext from "../../assets/svg/SvgNext";
@@ -28,7 +28,7 @@ import {
   changeTimeAction,
   changeVolumeAction,
   loopAction,
-} from "../../audio-player/action-creators";
+} from "../../global-audio-player/action-creators";
 
 export default function BottomPlayer() {
   const { tabBoolean } = useAppSelector((state) => state.reducerTabBoolean);

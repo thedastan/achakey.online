@@ -7,6 +7,8 @@ import actionTracks from "../redux/action-creators/index";
 import actionPostRegistr from "../components/form/register/action";
 import actionModalForms from "../components/form/modal/action";
 import actionPostAuth from "../components/form/auth/action";
+import actionBasket from "../pages/basket/action-creators/index";
+import actionUser from "../components/user/action-creators/index";
 import { useAppDispatch } from "./Index";
 
 export const useAction = () => {
@@ -37,4 +39,14 @@ export const usePostAuth = () => {
 export const useModalforms = () => {
   const dispatch = useAppDispatch();
   return bindActionCreators(actionModalForms, dispatch);
+};
+
+export const useActionBasket = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(actionBasket, dispatch);
+};
+
+export const useActionUser = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(actionUser, dispatch);
 };

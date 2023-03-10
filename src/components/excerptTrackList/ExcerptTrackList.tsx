@@ -4,7 +4,7 @@ import { useAction, useExcerpAction } from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
-} from "../all-playlist/reducer/action-creator";
+} from "../playlist/reducer/action-creator";
 import { ITrack } from "../../redux/types";
 import MusicForList from "../ui/MusicForList";
 

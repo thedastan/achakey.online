@@ -1,67 +1,29 @@
 import { Box, Button, Container, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
+import BasketListAlbums from "../../components/ui/BasketListForAlbums";
 import BasketListProduct from "../../components/ui/BasketListProduct";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
-import { fetchBasket } from "./action-creators";
+import { useActionBasket } from "../../hooks/useActions";
+import { ITrack } from "../../redux/types";
 
 export default function Basket() {
-  const dispatch = useAppDispatch();
+  const { fetchBasket, fetchBasketItem } = useActionBasket();
   const { basket } = useAppSelector((state) => state.reducerBasket);
-  const listTruck: any[] = [
-    {
-      _id: "1",
-      name: "Волчий вой",
-      audio:
-        "https://muzes.net/uploads/music/2022/10/Ulukmanapo_Volchij_voj.mp3",
-      excerpt: "00:30",
-      price: "90",
-    },
-    {
-      _id: "2",
-      name: "la liga",
-      audio: "https://dl2.mp3party.net/online/10068051.mp3",
-      excerpt: "00:30",
-      price: "90",
-    },
-    {
-      _id: "3",
-      name: "Герой",
-      audio:
-        "https://uztop.net/uploads/music/2023/02/FREEMAN_996_Geroj_OST_RAZBOI.mp3",
-      excerpt: "00:30",
-      price: "90",
-    },
-    {
-      _id: "10",
-      name: "Ойлорумда",
-      audio:
-        "https://mp3fly.net/uploads/files/mp3/02-2021/1613108060_Bakr_-_Oylorumda.mp3",
-      excerpt: "00:30",
-      price: "90",
-    },
-    {
-      _id: "5",
-      name: "Силуэт",
-      audio: require("../../assets/audio/bakr-tvoj-siluet-igraet-na-glazah.mp3"),
-      excerpt: "00:30",
-      price: "90",
-    },
-  ];
+
+  function deletedBasket() {}
 
   useEffect(() => {
-    //@ts-ignore
-    dispatch(fetchBasket());
+    fetchBasket();
+    fetchBasketItem();
   }, []);
 
-  const total = listTruck.reduce((acc, el) => {
-    return acc + +el.price;
-  }, 0);
+  const total = 540;
 
   return (
     <section>
       <Box w="100%" minH="90vh" pb="50px" pt="140px">
         <Container maxW="1220px">
-          {!listTruck.length && (
+          {!basket.length && (
             <Text
               textAlign="center"
               color="white"
@@ -72,25 +34,36 @@ export default function Basket() {
             </Text>
           )}
           <Box pl={{ base: "0", md: "5%", xl: "0" }}>
-            {listTruck.map((item, index) => (
-              <BasketListProduct
-                key={index}
-                name={item.name}
-                price={item.price}
-              />
+            {basket.map((item, index) => (
+              <div key={index}>
+                {item.cart.map((el, index) => (
+                  <div key={index}>
+                    <BasketListProduct
+                      key={index}
+                      name={String(el.music?.name)}
+                      image={el.music?.image}
+                      price={Number(el.music?.price)}
+                    />
+                  </div>
+                ))}
+              </div>
             ))}
-            {basket.map((el, index) => (
-              <Box key={index}>
-                {el.order_item.map((item, index) => (
-                  <BasketListProduct
+
+            {basket.map((item, index) => (
+              <div key={index}>
+                {item.cart.map((el, index) => (
+                  <BasketListAlbums
                     key={index}
-                    name={item.music}
-                    price={"90"}
+                    name={String(el.playlist?.name)}
+                    image={el.playlist?.image}
+                    price={el.playlist?.total_price}
+                    music={el.playlist?.music}
                   />
                 ))}
-              </Box>
+              </div>
             ))}
-            {listTruck.length && (
+
+            {basket.length && (
               <Box
                 display="flex"
                 justifyContent="space-between"

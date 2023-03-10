@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import "./style.css";
+import "./style.scss";
 
 interface IPropsNext {
   className?: string;
