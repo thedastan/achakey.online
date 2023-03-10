@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import {
@@ -11,20 +11,21 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 import { useModalforms } from "../../../hooks/useActions";
-import { IInputAuth } from "../formInterfaces";
 import { usePostAuth } from "./../../../hooks/useActions";
 import { useAppSelector } from "../../../hooks/Index";
+import { IInputAuth } from "../formInterfaces";
 
 const Authoration: FC = () => {
+  const navigate = useNavigate();
   const [passEye, setPassEye] = useState(false);
 
   const { fetchAuthLogin } = usePostAuth();
   const { loading, error, authUser } = useAppSelector(
     (state) => state.reducerAuth
   );
-  console.log(authUser, error, loading);
 
   const { registerModal, forgotPassModal } = useModalforms();
 
@@ -50,6 +51,12 @@ const Authoration: FC = () => {
     forgotPassModal();
   };
 
+  useEffect(() => {
+    if (authUser) {
+      navigate("/basket");
+    }
+  }, [authUser, navigate]);
+
   return (
     <Box w="100%" px={{ sm: "20px" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -62,13 +69,21 @@ const Authoration: FC = () => {
               id="emailOrNumber"
               type="text"
               placeholder="Почта или номер*"
+              sx={{
+                "&::placeholder": {
+                  color: "#AAAAAA",
+                  fontSize: "14px",
+                  fontWeight: "medium",
+                },
+              }}
               border="1px"
-              borderColor="#174079"
+              borderColor="#AAAAAA"
+              focusBorderColor="#174079"
               bg="#ffffff"
               borderRadius={{ base: "10px", sm: "15px" }}
               fontSize="14px"
               py={{ base: "10px", sm: "25px" }}
-              color="#000000"
+              color="#174079"
             />
             <Text
               color="red.500"
@@ -85,13 +100,21 @@ const Authoration: FC = () => {
                 id="password"
                 type={passEye ? "text" : "password"}
                 placeholder="Пароль*"
+                sx={{
+                  "&::placeholder": {
+                    color: "#AAAAAA",
+                    fontSize: "14px",
+                    fontWeight: "medium",
+                  },
+                }}
                 border="1px"
-                borderColor="#174079"
+                borderColor="#AAAAAA"
+                focusBorderColor="#174079"
                 bg="#ffffff"
                 borderRadius={{ base: "10px", sm: "15px" }}
                 fontSize="14px"
                 py={{ base: "10px", sm: "25px" }}
-                color="#000000"
+                color="#174079"
               />
               <InputRightElement width="3rem" h="100%">
                 <Box
@@ -117,7 +140,7 @@ const Authoration: FC = () => {
           </Box>
           <Box
             my="10px"
-            fontFamily="Poppins"
+            fontFamily="sans"
             fontWeight="400"
             fontSize="14px"
             display="flex"
@@ -136,9 +159,10 @@ const Authoration: FC = () => {
             isLoading={loading}
             mt={{ base: "10px", sm: "15px" }}
             type="submit"
-            bg="#2A3654"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+            bg="#2A3654"
             color="white"
             fontWeight="600"
+            fontFamily="revert"
             w="100%"
             py="25px"
             colorScheme="blue"
@@ -153,7 +177,7 @@ const Authoration: FC = () => {
             alignItems="center"
             flexDirection={{ base: "column", sm: "row" }}
             my="10px"
-            fontFamily="Poppins"
+            fontFamily="sans"
             fontWeight="400"
             fontSize="14px"
           >

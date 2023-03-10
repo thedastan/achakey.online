@@ -4,15 +4,15 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-} from '@chakra-ui/react'
-import React, { FC, ReactNode } from 'react'
+} from "@chakra-ui/react";
+import React, { FC, ReactNode } from "react";
 
 type IPorps = {
-  isOpen: boolean
-  onClose: () => void
-  children: ReactNode
-  headerText: string
-}
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+  headerText: string;
+};
 
 const ModalComponent: FC<IPorps> = ({
   isOpen,
@@ -31,18 +31,19 @@ const ModalComponent: FC<IPorps> = ({
         <ModalOverlay />
         <ModalContent
           bg="rgba(252,252,253,0.7)"
-          maxW={['90%', '80%', '560px']}
-          px={{ base: '0', md: '50px' }}
-          py="20px"
+          maxW={["90%", "80%", "560px"]}
+          px={{ base: "0", md: "50px" }}
+          py="10px"
           borderRadius="21px"
         >
           <ModalHeader
             textAlign="center"
-            fontFamily="Roboto"
+            fontFamily="sans"
             fontWeight="700"
-            fontSize={{ base: '28px', sm: '40px' }}
+            fontSize={{ base: "28px", sm: "40px" }}
             color="#2A3654"
-            lineHeight="40px"
+            lineHeight={{ base: "30px", sm: "42px" }}
+            letterSpacing="-0.4px"
           >
             {headerText}
           </ModalHeader>
@@ -50,7 +51,7 @@ const ModalComponent: FC<IPorps> = ({
         </ModalContent>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default ModalComponent
+export default ModalComponent;
