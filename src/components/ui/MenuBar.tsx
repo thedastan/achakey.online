@@ -138,35 +138,69 @@ export default function MenuBar({ children }: IPropsMenuBar) {
           ))}
         </Box>
       </Box>
-      <Box display={{ base: "block", md: "none" }} zIndex="2">
-        <Box
-          position="fixed"
-          bottom={active ? "60px" : "21px"}
-          left="0"
-          right="0"
-          display="flex"
-          justifyContent="center"
-          zIndex="2"
-        >
-          <Box
-            py="15px"
-            rounded="59px"
-            w="90vw"
-            display="flex"
-            justifyContent="space-between"
-            bg="#0B0B0B"
-            px="46px"
-          >
-            {list.map((el, index) => (
-              <Box key={index} textColor="white">
-                <Link to={el.link} title={el.item}>
-                  {el.svg}
-                </Link>
-              </Box>
-            ))}
-          </Box>
-        </Box>
-      </Box>
+        {!getAccessToken() ? (
+            <Box display="none">
+                <Box display={{ base: "block", md: "none" }} zIndex="2">
+                    <Box
+                        position="fixed"
+                        bottom={active ? "60px" : "21px"}
+                        left="0"
+                        right="0"
+                        display="flex"
+                        justifyContent="center"
+                        zIndex="2"
+                    >
+                        <Box
+                            py="15px"
+                            rounded="59px"
+                            w="90vw"
+                            display="flex"
+                            justifyContent="space-between"
+                            bg="#0B0B0B"
+                            px="46px"
+                        >
+                            {list.map((el, index) => (
+                                <Box key={index} textColor="white">
+                                    <Link to={el.link} title={el.item}>
+                                        {el.svg}
+                                    </Link>
+                                </Box>
+                            ))}
+                        </Box>
+                    </Box>
+                </Box>
+            </Box>
+        ) : (
+            <Box display={{ base: "block", md: "none" }} zIndex="2">
+                <Box
+                    position="fixed"
+                    bottom={active ? "60px" : "21px"}
+                    left="0"
+                    right="0"
+                    display="flex"
+                    justifyContent="center"
+                    zIndex="2"
+                >
+                    <Box
+                        py="15px"
+                        rounded="59px"
+                        w="90vw"
+                        display="flex"
+                        justifyContent="space-between"
+                        bg="#0B0B0B"
+                        px="46px"
+                    >
+                        {list.map((el, index) => (
+                            <Box key={index} textColor="white">
+                                <Link to={el.link} title={el.item}>
+                                    {el.svg}
+                                </Link>
+                            </Box>
+                        ))}
+                    </Box>
+                </Box>
+            </Box>
+        )}
       <Box
         w={{ base: "100%", md: "92%", xl: "95%" }}
         ml="auto"
