@@ -15,7 +15,6 @@ export const searchChangeReducer = (
   switch (action.type) {
     case SearchTypes.SERACH_CHANGE:
       return { ...state, searchChange: action.payload };
-
     default:
       return state;
   }

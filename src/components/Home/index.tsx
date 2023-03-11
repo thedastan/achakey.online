@@ -1,20 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Box, Text, Button, Stack, Container} from "@chakra-ui/react";
 import Music from "./Music";
-import RegisterMobile from "./Music/RegisterMobile";
 import {HiOutlineChevronDoubleDown} from "react-icons/hi";
 
 
 const Home = () => {
     const [musicPlay, setMusicPlay] = useState<boolean>(false);
-    const [postHover, setPostHover] = useState<boolean>(false)
-
-    useEffect(() => {
-        setTimeout(() => {
-            setPostHover(true)
-        }, 1000)
-    }, [])
-
     return (
         <Container maxW="1536px" className="bg">
             <Box
@@ -54,7 +45,7 @@ const Home = () => {
                     <br/>
                     Новые альбомы
                 </Text>
-                <Stack pos="relative" direction="row" spacing={4} align="center">
+                <Stack  direction="row" spacing={4} align="center">
                     <Button
                         className="btn"
                         colorScheme="transparent"
@@ -74,7 +65,6 @@ const Home = () => {
                 </Stack>
                 <Music musicPlay={musicPlay}/>
             </Box>
-            <RegisterMobile setPostHover={setPostHover} postHover={postHover}/>
         </Container>
     );
 };
