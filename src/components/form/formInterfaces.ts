@@ -13,8 +13,9 @@ export interface IInputAuth {
   password: string;
 }
 
-export interface IForgotPasword {
-  phone: string;
+export interface IForgotPassword {
+  phone?: string;
+  email?: string;
 }
 
 export interface IAuthForgot {
@@ -27,7 +28,6 @@ export interface IValidateRegister {
   errorEmail: string;
   errorPhone: string;
 }
-
 export interface IStateRegister {
   loading: boolean;
   error: any | string;
@@ -41,6 +41,12 @@ export interface IStateAuth {
   authUser: IInputAuth;
 }
 
+export interface IStateForgotPassword {
+  loading: boolean;
+  error: any | string;
+  forgotPassword: IForgotPassword;
+}
+
 export enum IFormsTypes {
   REGISTER_USER = "REGISTER_USER",
   LOGIN_USER = "LOGIN_USER",
@@ -48,6 +54,8 @@ export enum IFormsTypes {
   LOADING_REGISTER = "LOADING_REGISTER",
   ERROR_USER = "ERROR_USER",
   VALIDATE_REGISTER = "VALIDATE_REGISTER",
+  FORGOT_PASSWORD = "FORGOT_PASSWORD",
+  FORGOT_LOADING = "FORGOT_LOADING",
 }
 
 interface ILoadingUser {
@@ -78,10 +86,21 @@ interface ILogin {
   payload: IInputAuth;
 }
 
+interface IForgotPasswordLoading {
+  type: IFormsTypes.FORGOT_LOADING;
+}
+
+interface IForgotPasswordSUccess {
+  type: IFormsTypes.FORGOT_PASSWORD;
+  payload: IForgotPassword;
+}
+
 export type IForms =
   | IRegister
   | ILogin
   | ILoadingUser
   | IErrorUser
   | ILoadingRegister
-  | IErrorValidationRegister;
+  | IErrorValidationRegister
+  | IForgotPasswordLoading
+  | IForgotPasswordSUccess;

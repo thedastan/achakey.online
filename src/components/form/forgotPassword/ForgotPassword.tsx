@@ -1,20 +1,49 @@
 import { Box, Button, FormControl, Input, Link, Text } from "@chakra-ui/react";
-import React, { FC } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { IForgotPasword } from "../formInterfaces";
-import { useModalforms } from "../../../hooks/useActions";
+import React, { FC, useState, ChangeEvent, FormEvent } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAppSelector } from "../../../hooks/Index";
+
+import { useActionForgot, useModalforms } from "../../../hooks/useActions";
+import { isEmail, isPhone } from "../../helpers/helperFunction";
+import { IForgotPassword } from "../formInterfaces";
 
 const ForgotPassword: FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IForgotPasword>();
+  const [errors, setError] = useState<string>("");
+  const [emailPhone, setEmailPhone] = useState<IForgotPassword>({
+    email: "",
+    phone: "",
+  });
+
+  const { loading, error, forgotPassword } = useAppSelector(
+    (state) => state.forgotPasswordReducer
+  );
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let phoneOrEmail = e.target.value;
+    if (isEmail(phoneOrEmail)) {
+      setEmailPhone({ email: phoneOrEmail, phone: "" });
+      setError("");
+    } else if (isPhone(phoneOrEmail)) {
+      setEmailPhone({ email: "", phone: phoneOrEmail });
+      setError("");
+    } else {
+      setEmailPhone({ email: "", phone: "" });
+      setError("Введите почту или номер телефона");
+    }
+  };
 
   const { registerModal } = useModalforms();
+  const { fetchForgotPassword } = useActionForgot();
 
-  const onSubmit: SubmitHandler<IForgotPasword> = (data) => {
-    alert(JSON.stringify(data, null, 2));
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (emailPhone.email?.length || emailPhone.phone?.length) {
+      setError("");
+      fetchForgotPassword(emailPhone);
+    } else {
+      setError("Введите почту или номер телефона");
+    }
   };
 
   const openRegister = () => {
@@ -23,12 +52,13 @@ const ForgotPassword: FC = () => {
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ToastContainer />
+      <form onSubmit={onSubmit}>
         <FormControl>
           <Box mb="10px">
             <Input
-              {...register("phone", { required: "введите номер" })}
-              type="tel"
+              type="text"
+              onChange={handleChange}
               sx={{
                 "&::placeholder": {
                   color: "#AAAAAA",
@@ -44,13 +74,19 @@ const ForgotPassword: FC = () => {
               borderRadius={{ base: "10px", sm: "15px" }}
               fontSize="14px"
               py={{ base: "10px", sm: "25px" }}
-              color="#AAAAAA"
+              color="#174079"
             />
-            <Text color="red" fontSize="12px" ml={{ base: "5px", sm: "14px" }}>
-              {errors.phone && errors.phone?.message}
+            <Text
+              color="red"
+              fontSize="12px"
+              fontFamily="500"
+              ml={{ base: "5px", sm: "14px" }}
+            >
+              {errors}
             </Text>
           </Box>
           <Button
+            isLoading={loading}
             mt={{ base: "10px", sm: "15px" }}
             type="submit"
             bg="#2A3654"
