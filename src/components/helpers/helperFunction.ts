@@ -4,6 +4,6 @@ export const isEmail = (value: string) => {
 };
 
 export const isPhone = (value: string) => {
-  const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+  const phoneRegex = /^\+[1-9]\d{1,14}$/;
   return phoneRegex.test(value);
 };

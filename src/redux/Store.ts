@@ -19,6 +19,7 @@ import { reducerBasket } from "../pages/basket/reducer/index";
 import { reducerIndexForAlbums } from "../components/MyAlbum/reducer/index";
 import { reducerDetailsAlbums } from "../pages/details-albums/reducer/index";
 import { reducerUser } from "../components/user/reducer/index";
+import { forgotPasswordReducer } from "../components/form/forgotPassword/reducer/forgotPasswordReducer";
 
 const rootReducer = combineReducers({
   playReducer,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   reducerIndexForAlbums,
   reducerDetailsAlbums,
   reducerUser,
+  forgotPasswordReducer,
 });
 
 export const setUpStore = () => {
