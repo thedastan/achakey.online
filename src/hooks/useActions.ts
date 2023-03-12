@@ -56,6 +56,7 @@ export const useActionUser = () => {
 export const useActionForgot = () => {
   const dispatch = useAppDispatch();
   return bindActionCreators(actionForgotPassword, dispatch);
+};
 
 export const useActionOrder = () => {
   const dispatch = useAppDispatch();
