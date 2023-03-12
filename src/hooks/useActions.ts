@@ -9,6 +9,7 @@ import actionModalForms from "../components/form/modal/action";
 import actionPostAuth from "../components/form/auth/action";
 import actionBasket from "../pages/basket/action-creators/index";
 import actionUser from "../components/user/action-creators/index";
+import actionOrder from "../components/order/action-creators/index";
 import { useAppDispatch } from "./Index";
 
 export const useAction = () => {
@@ -49,4 +50,9 @@ export const useActionBasket = () => {
 export const useActionUser = () => {
   const dispatch = useAppDispatch();
   return bindActionCreators(actionUser, dispatch);
+};
+
+export const useActionOrder = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(actionOrder, dispatch);
 };

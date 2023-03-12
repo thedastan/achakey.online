@@ -6,9 +6,8 @@ import { useAppSelector } from "../../hooks/Index";
 import trackImage from "../../assets/img/Ellipse.png";
 import { ITrack } from "../../redux/types";
 import { useActionBasket, useActionUser } from "../../hooks/useActions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUserId } from "../helper";
-import API from "../../api/Index";
 
 interface ITrackChange {
   onClick?: any;
@@ -17,37 +16,60 @@ interface ITrackChange {
   tracks?: boolean;
 }
 
+interface ICartArray {
+  cart: string;
+  music: number;
+  album: number;
+}
+interface ICart {
+  total_price: string | number;
+  user: string;
+  cart_item: ICartArray[];
+}
+
 export default function MuITrackListsicForList({
   onClick,
   name,
   music,
   tracks,
 }: ITrackChange) {
+  const [title, setTitle] = useState("+ в корзину");
   const { active, pause } = useAppSelector(
     (state) => state.excerptPlayerReducer
   );
-  const { user } = useAppSelector((state) => state.reducerUser);
+  const { basket } = useAppSelector((state) => state.reducerBasket);
 
-  const { postBasketItem } = useActionBasket();
-  const { fetchUser } = useActionUser();
+  const { postBasketItem, fetchBasket } = useActionBasket();
 
   const PostBasketItem = async (element: any) => {
-    try {
-      const response = await API.post("account/cart_item/", {
-        cart: getUserId(),
-        music: element,
-      });
+    const cart: ICart = {
+      user: getUserId(),
+      total_price: element.price,
+      cart_item: [
+        {
+          music: element?.id,
+          cart: getUserId(),
+          album: 1,
+        },
+      ],
+    };
 
-      alert(JSON.parse(response.data));
-      return response.data;
-    } catch (e) {
-      console.log(e);
-    }
+    basket.forEach((obj1) => music?.id !== obj1.id && postBasketItem(cart));
   };
 
+  function filterTraks() {
+    basket.forEach((obj1) =>
+      music?.id === obj1.id ? setTitle("в корзине") : setTitle("+ в корзину")
+    );
+  }
+
   useEffect(() => {
-    fetchUser();
+    fetchBasket();
   }, []);
+
+  useEffect(() => {
+    filterTraks();
+  }, [music, title, basket]);
 
   return (
     <Box
@@ -58,13 +80,6 @@ export default function MuITrackListsicForList({
       justifyContent="space-between"
       alignContent="center"
       background="transparent"
-      _hover={
-        {
-          // background: "rgba(255, 255, 255, 0.08)",
-          // rounded: "8px",
-          // borderColor: "transparent",
-        }
-      }
     >
       <Box
         display="flex"
@@ -73,19 +88,25 @@ export default function MuITrackListsicForList({
         onClick={() => onClick(music)}
       >
         {tracks && <Image src={trackImage} w="47px" mr="29px" />}
-        {active?.music === music?.music ? (
+        {active?.music_short === music?.music_short ? (
           <Box display="inline-block" w="32px" h="32px" pt="2px">
             {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
           </Box>
         ) : (
           <Box display="inline-block" w="32px">
             <SvgPlay
-              fill={active?.music === music?.music ? "#49DEFF" : "#FFFFFF"}
+              fill={
+                active?.music_short === music?.music_short
+                  ? "#49DEFF"
+                  : "#FFFFFF"
+              }
             />
           </Box>
         )}
         <Text
-          textColor={active?.music === music?.music ? "blue" : "white"}
+          textColor={
+            active?.music_short === music?.music_short ? "blue" : "white"
+          }
           fontSize="14px"
           ml="17.4px"
           cursor="pointer"
@@ -94,7 +115,7 @@ export default function MuITrackListsicForList({
         </Text>
       </Box>
       <Text color="white" display={{ base: "none", md: "block" }}>
-        {music?.music_len}
+        {music?.music_short_len}
       </Text>
       <Text color="white" ml="50px">
         {music?.price}
@@ -102,16 +123,20 @@ export default function MuITrackListsicForList({
       <Button
         onClick={() => PostBasketItem(music)}
         border="1px"
-        borderColor={active?.music === music?.music ? "blue" : "white"}
+        borderColor={
+          active?.music_short === music?.music_short ? "blue" : "white"
+        }
         rounded="38px"
         fontSize="9px"
         h="23px"
         w="84px"
-        textColor={active?.music === music?.music ? "blue" : "white"}
+        textColor={
+          active?.music_short === music?.music_short ? "blue" : "white"
+        }
         background="transparent"
         colorScheme="none"
       >
-        + в корзину
+        {title}
       </Button>
     </Box>
   );

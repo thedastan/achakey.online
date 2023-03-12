@@ -11,7 +11,7 @@ import { useAction, useExcerpAction } from "../../hooks/useActions";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { ITrack } from "../../redux/types";
 import { changeAction } from "../../global-audio-player-excerpt/action";
-import { OrderPopup } from "../ui/OrderPopup";
+import { OrderPopup } from "../order/OrderPopup";
 
 import SvgNext from "../../assets/svg/SvgNext";
 import SvgPause from "../../assets/svg/SvgPause";
