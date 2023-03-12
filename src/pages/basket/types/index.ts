@@ -1,3 +1,5 @@
+import { OrderType } from "../../../components/order/types/order";
+
 export enum BasketTypes {
   BASKET = "BASKET",
   BASKET_ITEM = "BASKET_ITEM",
@@ -9,7 +11,7 @@ interface IOrderItem {
   cart: number | null;
   id: number | null;
   music?: IMusicForBasket;
-  playlist?: IPlayList;
+  album?: IPlayList;
 }
 
 interface IMusicForBasket {
@@ -17,15 +19,13 @@ interface IMusicForBasket {
   name?: string;
   image?: string;
   artist?: string;
-  music_len?: string;
-  playlist?: boolean | number;
+  music_short_len?: string;
   user?: any[];
   price?: string;
-  music_short_len?: string;
-  music?: string;
   music_short?: string;
+  created_at?: string;
+  updated_at?: string;
 }
-
 interface IPlayList {
   id: number | null;
   image: string;
@@ -33,25 +33,18 @@ interface IPlayList {
   total_price: string;
   name: string;
 }
-
-interface IMusicAndPlaylist {
-  cart: number | null;
-  id: number | null;
-  music?: IMusicForBasket;
-  playlist?: IPlayList;
-}
-
 export interface BasketState {
   error: string;
   basket: IBasketTypes[];
   basketIte: IOrderItem;
+  order: OrderType;
 }
 
 export interface IBasketTypes {
   id?: string | number;
   user: string;
   total_price?: string;
-  cart: IOrderItem[];
+  cart_item: IOrderItem[];
   created_at?: string;
 }
 
@@ -75,10 +68,18 @@ interface IPlayListForList {
   };
 }
 
-export interface IOrderItemForPost {
+interface ICart_item {
   cart: string;
-  music?: IMusicForPost;
-  playlist?: IPlayListForList;
+  music: number;
+  album: number;
+}
+
+export interface IOrderItemForPost {
+  total_price: string | number;
+  user: string;
+  cart_item: ICart_item[];
+  // music?: IMusicForPost;
+  // playlist?: IPlayListForList;
 }
 
 interface ActionsIBasket {

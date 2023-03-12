@@ -1,0 +1,12 @@
+.order {
+  transform: translateY(150vw);
+  transition: all 0.55s;
+  opacity: 0;
+  margin: 0 auto;
+
+  &.transform {
+    transform: translateY(0);
+    opacity: 1;
+    margin: 0 auto;
+  }
+}

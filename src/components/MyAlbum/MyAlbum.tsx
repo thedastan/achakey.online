@@ -18,9 +18,9 @@ import { indexForAlbums } from "./action-creators";
 export default function MyAlbum() {
   const [indexTab, setIndexTab] = useState<number>(0);
   const { activeTrack } = useAction();
-  const { fetchAlbums } = useTracksAction();
+  const { fetchMyAlbums } = useTracksAction();
   const dispatch = useAppDispatch();
-  const { albums } = useAppSelector((state) => state.musicReducer);
+  const { myAlbums } = useAppSelector((state) => state.musicReducer);
 
   const OnChange = (data: ITrack, index: number) => {
     activeTrack(data);
@@ -43,7 +43,7 @@ export default function MyAlbum() {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: albums.length <= 2 ? 2 : 3,
+          slidesToShow: myAlbums.length <= 2 ? 2 : 3,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
@@ -61,14 +61,14 @@ export default function MyAlbum() {
   };
 
   useEffect(() => {
-    fetchAlbums();
+    fetchMyAlbums();
   }, []);
 
   return (
     <Box minH="90vh">
       <Box mb="47px" w="100%">
         <Slider {...settings}>
-          {albums.map((el, index) => (
+          {myAlbums.map((el, index) => (
             <Box key={index} onClick={() => onChangeIndex(index)}>
               <Image
                 src={el.image}
@@ -82,7 +82,7 @@ export default function MyAlbum() {
         </Slider>
       </Box>
       <Box>
-        {albums[indexTab]?.music.map((item, index) => (
+        {myAlbums[indexTab]?.music.map((item, index) => (
           <ListForAlbumOrTracks
             music={item}
             key={index}

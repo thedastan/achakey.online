@@ -28,7 +28,7 @@ export default function AllAlbums() {
         <Box
           display="flex"
           flexWrap="wrap"
-          justifyContent={{ base: "center", md: "space-between" }}
+          justifyContent={{ base: "center", sm: "start" }}
         >
           {albums.map((el, index) => (
             <Box

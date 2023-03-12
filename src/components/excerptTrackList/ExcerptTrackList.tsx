@@ -1,4 +1,4 @@
-import { Box, Container, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useAppDispatch } from "../../hooks/Index";
 import { useAction, useExcerpAction } from "../../hooks/useActions";
 import {
