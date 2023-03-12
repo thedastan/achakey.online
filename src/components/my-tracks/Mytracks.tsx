@@ -1,3 +1,4 @@
+
 import { Box } from "@chakra-ui/react";
 import { Key, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
@@ -15,10 +16,10 @@ import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 
 export default function MyTracks() {
   const dispatch = useAppDispatch();
-  const { fetchTracks } = useTracksAction();
+  const { fetchMyTracks } = useTracksAction();
   const { activeTrack } = useAction();
   const { excerptPauseAction } = useExcerpAction();
-  const { tracks } = useAppSelector((state) => state.musicReducer);
+  const { myTracks } = useAppSelector((state) => state.musicReducer);
 
   const OnChange = (data: ITrack, index: number) => {
     activeTrack(data);
@@ -28,12 +29,12 @@ export default function MyTracks() {
   };
 
   useEffect(() => {
-    fetchTracks();
+    fetchMyTracks();
   }, []);
 
   return (
     <Box minH="90vh">
-      {tracks.map((item: ITrack, index: Key | any) => (
+      {myTracks.map((item: ITrack, index: Key | any) => (
         <ListForAlbumOrTracks
           music={item}
           key={index}

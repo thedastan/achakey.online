@@ -1,16 +1,15 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import { useAppSelector } from "../../hooks/Index";
 
-import JaxImage from "../../assets/img/Jax.png";
 import { SvgPlayerGifDefault } from "../../assets/svg/SvgPlayerGifDefault";
 import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
 import SvgPlay from "../../assets/svg/SvgPlay";
-import { ITrack } from "../../redux/types";
+import { IMyTrack } from "../../redux/types";
 
 interface ITrackList {
   onClick?: any;
   name?: string;
-  music: ITrack;
+  music: IMyTrack;
   index?: string | number;
 }
 
@@ -31,7 +30,7 @@ export default function ListForAlbumOrTracks({
 
     return minutes + ":" + seconds;
   }
-  
+
   return (
     <Box
       py="22px"

@@ -1,6 +1,7 @@
-import axios from "axios";
 import { Dispatch } from "redux";
+
 import API from "../../../api/Index";
+import { OrderTypes } from "../../../components/order/types/order";
 import { ActionBasket, BasketTypes, IOrderItemForPost } from "../types";
 
 export const fetchBasket = () => {
@@ -21,10 +22,10 @@ export const fetchBasket = () => {
   };
 };
 
-export const fetchBasketItem = () => {
+export const fetchBasketItem = (id: string | number | null) => {
   return async (dispatch: Dispatch<ActionBasket>) => {
     try {
-      const response = await API.get(`account/cart_item/`);
+      const response = await API.get(`account/cart/${id}`);
 
       dispatch({
         type: BasketTypes.BASKET_ITEM,
@@ -42,7 +43,7 @@ export const fetchBasketItem = () => {
 export const postBasketItem = (cart: IOrderItemForPost) => {
   return async (dispatch: Dispatch<ActionBasket>) => {
     try {
-      const response = await API.post(`account/cart_item/`, { ...cart });
+      const response = await API.post(`account/cart/`, { ...cart });
 
       dispatch({
         type: BasketTypes.BASKET_ITEM_FOR_POST,

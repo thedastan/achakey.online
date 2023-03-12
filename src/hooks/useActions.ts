@@ -10,6 +10,7 @@ import actionPostAuth from "../components/form/auth/action";
 import actionForgotPassword from "../components/form/forgotPassword/action";
 import actionBasket from "../pages/basket/action-creators/index";
 import actionUser from "../components/user/action-creators/index";
+import actionOrder from "../components/order/action-creators/index";
 import { useAppDispatch } from "./Index";
 
 export const useAction = () => {
@@ -55,4 +56,8 @@ export const useActionUser = () => {
 export const useActionForgot = () => {
   const dispatch = useAppDispatch();
   return bindActionCreators(actionForgotPassword, dispatch);
+
+export const useActionOrder = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(actionOrder, dispatch);
 };

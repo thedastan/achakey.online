@@ -6,13 +6,22 @@ const initialState: BasketState = {
     cart: null,
     id: null,
     music: {},
-    playlist: {
+    album: {
       id: null,
       image: "",
       music: [],
       name: "",
       total_price: "",
     },
+  },
+  order: {
+    user: "",
+    created_at: "",
+    id: "",
+    order_item: [],
+    status: "",
+    total_price: "",
+    updated_at: "",
   },
   error: "",
 };
