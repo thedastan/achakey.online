@@ -10,19 +10,21 @@ const RegisterDesktop = () => {
     const openModal = () => {
         onOpen();
         loginModal();
-    };
+    }
     return (
         <Box
             display={{base: "none", sm:"none", md:"none", lg: "flex" ,xl: "flex"}}
             justifyContent="center"
             pos="fixed"
-            zIndex="10"
-            top="94%"
             right="0%"
+            bottom="0%"
+            zIndex="auto"
             alignItems="center"
             bg="linear-gradient(90deg, #6F7BF7 0%, #00D1FF 101.67%);"
             width="50vw"
-            height="52px">
+            height="52px"
+            className="reg"
+        >
             <ModalUserAuth isOpen={isOpen} onClose={onClose}/>
             <Text
                 color="white"
@@ -56,7 +58,6 @@ const RegisterDesktop = () => {
                     fontSize="xl"
                 >Зарегистрироваться</Button>
             )}
-
         </Box>
     );
 };

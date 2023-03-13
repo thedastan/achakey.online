@@ -1,4 +1,4 @@
-export const SvgAvatart = () => {
+export const SvgAvatar = () => {
   return (
     <svg
       width="30"
