@@ -60,9 +60,10 @@ export default function MyPlaylist() {
               mx={{ base: "auto", md: "none" }}
               display={{ base: "none", lg: "block" }}
               pl="20px"
+              zIndex="5"
             >
               <Image src={JaxImage} w="300px" mb="18px" />
-              <Box overflowY="auto" maxH="400px" textColor="white">
+              <Box overflowY="auto" maxH="400px"  textColor="white">
                 <Text>
                   Менин ойлорумда сенин атың чөгуп калды Жана жүрөгүмдө, о-уо-о
                   Менин жүрөгүмдөн абдан жылуу оорун алдың Жана көкурөгумдөн,

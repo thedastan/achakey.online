@@ -5,6 +5,8 @@ import NotFound from "./components/404/NotFound";
 import DetailsAlbums from "./pages/details-albums/DetailsAlbums";
 import ExcerptPlayList from "./pages/excerpt-playlist/ExcerptPlayList";
 import { Basket, Home, MyPlaylist } from "./pages/Index";
+import PrivacyPolicy from "./components/footer/PrivacyPolicy";
+import PublicOffer from "./components/footer/PublicOffer";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/excerpts" element={<ExcerptPlayList />} />
         <Route path="/my-playlist" element={<MyPlaylist />} />
         <Route path="/excerpts/details/:id" element={<DetailsAlbums />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
+          <Route path="/public-offer" element={<PublicOffer/>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
