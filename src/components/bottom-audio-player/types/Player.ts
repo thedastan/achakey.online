@@ -1,7 +1,7 @@
-import { ITrack } from "../../../redux/types";
+import { IMyTrack } from "../../../redux/types";
 
 export interface PlayerState {
-  active: ITrack | null;
+  active: IMyTrack | null;
   volume: number;
   duration: number;
   currentTime: number;

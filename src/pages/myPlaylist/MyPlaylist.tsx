@@ -15,7 +15,6 @@ enum AlbumOrTracks {
 export default function MyPlaylist() {
   const dispatch = useAppDispatch();
   const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
-  const { tracks } = useAppSelector((state) => state.musicReducer);
   const isAlbum = isActive === AlbumOrTracks.ALBUM;
   const isTracks = isActive === AlbumOrTracks.TRACKS;
 
