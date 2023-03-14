@@ -1,13 +1,21 @@
 import React, {useEffect, useState} from "react";
-import {Box, Text, Button, Stack, Container} from "@chakra-ui/react";
+import {Box, Text, Button, Stack, Container, useBreakpointValue} from "@chakra-ui/react";
 import Music from "./Music";
 import {HiOutlineChevronDoubleDown} from "react-icons/hi";
 
-
 const Home = () => {
     const [musicPlay, setMusicPlay] = useState<boolean>(false);
+    const breakpoints = useBreakpointValue({
+        base: "base",
+        sm: "sm",
+        md: "md",
+        lg: "lg",
+        xl: "xl",
+        "2xl": "2xl",
+    });
+
     return (
-        <Container maxW="1536px" className="bg">
+        <Container maxW="1536px" className="home-bg">
             <Box
                 pt={{base: "50px", sm: "70px", md: "150px"}}
                 pl={{base: "20px", sm: "60px", md: "100px"}}
@@ -19,6 +27,7 @@ const Home = () => {
                     fontWeight="400"
                     fontSize={{base: "4xl", sm: "5xl", md: "6xl"}}
                     color="white"
+                    zIndex="25"
                     style={{
                         transform: musicPlay ? " translateY(-1500%)" : "translateY(100%)",
                         transition: musicPlay ? "2s" : "2s",
@@ -34,6 +43,7 @@ const Home = () => {
                     my={{base: "30px", sm: "40px", md: "40px"}}
                     px="20px"
                     borderLeft="3px solid #49DEFF"
+                    zIndex="25"
                     style={{
                         transform: musicPlay ? " translateY(-1400%)" : "translateY(65%)",
                         transition: musicPlay ? "2s" : "2s",
@@ -53,12 +63,13 @@ const Home = () => {
                         color="white"
                         fontSize="15px"
                         py="25px"
-                        px="63px"
+                        px={breakpoints === "base" && "sm"  ? "33px" : "63px" }
                         onClick={() => setMusicPlay(true)}
                         style={{
                             transform: musicPlay ? " translateY(-1300%)" : "translateY(100%)",
                             transition: musicPlay ? "2s" : "2s",
                         }}
+                        rightIcon={<HiOutlineChevronDoubleDown className="em"/>}
                         >
                         Перейти к трекам<em></em>
                     </Button>

@@ -32,3 +32,22 @@ export const fetchRegister = (user: IInputRegister) => {
     }
   };
 };
+
+export const fetchRegisterGoogle = (auth_token: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch({
+        type: IFormsTypes.LOADING_REGISTER,
+      });
+      const res = await PUBLIC_API.post(`auth/google/`, {
+        auth_token,
+      });
+      console.log(res.data);
+    } catch (e: any) {
+      dispatch({
+        type: IFormsTypes.ERROR_USER,
+        payload: e.message,
+      });
+    }
+  };
+};
