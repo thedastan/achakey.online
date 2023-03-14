@@ -28,7 +28,7 @@ const Home = () => {
                     fontWeight="400"
                     fontSize={{base: "4xl", sm: "5xl", md: "6xl"}}
                     color="white"
-                    zIndex="25"
+                    zIndex="2"
                     style={{
                         transform: musicPlay ? " translateY(-1500%)" : "translateY(100%)",
                         transition: musicPlay ? "2s" : "2s",
@@ -44,7 +44,6 @@ const Home = () => {
                     my={{base: "30px", sm: "40px", md: "40px"}}
                     px="20px"
                     borderLeft="3px solid #49DEFF"
-                    zIndex="25"
                     style={{
                         transform: musicPlay ? " translateY(-1400%)" : "translateY(65%)",
                         transition: musicPlay ? "2s" : "2s",
