@@ -34,7 +34,7 @@ export default function Basket() {
 
   return (
     <section>
-      <Box w="100%" minH="90vh" pb="50px" pt="140px" position="relative">
+      <Box w="100%" minH="90vh" pb="50px" pt="140px">
         <Container maxW="1220px">
           {!lengthBasket[0] && (
             <Text

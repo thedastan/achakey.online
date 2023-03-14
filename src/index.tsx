@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+//@ts-ignore
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import { theme } from "./components/layout/Index";

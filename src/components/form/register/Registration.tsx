@@ -13,6 +13,7 @@ import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { ToastContainer } from "react-toastify";
+//@ts-ignore
 import { useGoogleLogin } from "@react-oauth/google";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -52,7 +53,7 @@ const Registration: FC = () => {
   );
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
+    onSuccess: (tokenResponse: any) => {
       if (tokenResponse.access_token) {
         console.log(tokenResponse);
         fetchRegisterGoogle(tokenResponse.access_token);

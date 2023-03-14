@@ -43,7 +43,7 @@ export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
       right="0"
       top="0"
       maxW="688px"
-      pos="absolute"
+      pos="fixed"
       zIndex="4"
       bg="#E0E0E0"
       rounded="20px"
