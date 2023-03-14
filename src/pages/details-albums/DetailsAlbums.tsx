@@ -16,6 +16,7 @@ export default function DetailsAlbums() {
   useEffect(() => {
     //@ts-ignore
     dispatch(fetchAlbumsDetails(id));
+    localStorage.setItem("id-album", JSON.stringify(id));
   }, []);
 
   console.log(albums);

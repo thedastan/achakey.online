@@ -8,6 +8,7 @@ import { ITrack } from "../../redux/types";
 import { useActionBasket, useActionUser } from "../../hooks/useActions";
 import { useEffect, useState } from "react";
 import { getUserId } from "../helper";
+import { IBasketTypes } from "../../pages/basket/types";
 
 interface ITrackChange {
   onClick?: any;
@@ -18,8 +19,8 @@ interface ITrackChange {
 
 interface ICartArray {
   cart: string;
-  music: number;
-  album: number;
+  music?: number | null;
+  album?: number | null;
 }
 interface ICart {
   total_price: string | number;
@@ -27,7 +28,7 @@ interface ICart {
   cart_item: ICartArray[];
 }
 
-export default function MuITrackListsicForList({
+export default function MusicForList({
   onClick,
   name,
   music,
@@ -49,18 +50,34 @@ export default function MuITrackListsicForList({
         {
           music: element?.id,
           cart: getUserId(),
-          album: 1,
+          album: null,
         },
       ],
     };
 
-    basket.forEach((obj1) => music?.id !== obj1.id && postBasketItem(cart));
+    basket.forEach((obj1: IBasketTypes) => {
+      if (
+        obj1.cart_item.every((el) => {
+          return cart.cart_item.some((item) => item.music !== el.music?.id);
+        })
+      ) {
+        postBasketItem(cart);
+        alert("Success");
+      } else {
+        alert("NO");
+      }
+    });
+    fetchBasket();
   };
 
   function filterTraks() {
-    basket.forEach((obj1) =>
-      music?.id === obj1.id ? setTitle("в корзине") : setTitle("+ в корзину")
-    );
+    basket.forEach((obj1) => {
+      if (obj1.cart_item.find((el) => el.music?.id === music?.id)) {
+        setTitle("в корзине");
+      } else {
+        setTitle("+ в корзину");
+      }
+    });
   }
 
   useEffect(() => {

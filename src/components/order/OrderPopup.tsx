@@ -1,8 +1,10 @@
 import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
+import API from "../../api/Index";
 import SvgCross from "../../assets/svg/SvgCross";
 import { useAppSelector } from "../../hooks/Index";
 import { useActionOrder } from "../../hooks/useActions";
+import OrderListAlbums from "./orderListForAlbum";
 import "./style.scss";
 
 interface IOrderPopup {
@@ -13,26 +15,26 @@ interface IOrderPopup {
 export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
   const { fetchOrder } = useActionOrder();
   const { order } = useAppSelector((state) => state.reducerOrder);
-  const { tracks } = useAppSelector((state) => state.musicReducer);
 
   function handleClickClose() {
     setOpenPopup(false);
   }
 
-  // const orderFilter = order.map((el) => el.order_item?.map((i) => i.music.id));
-
-  // function filterOrder(Order: any) {
-  //   orderFilter.map((el) => el === tracks[Number(el) - 1].id);
-  // }
+  const deletedorder = async (id: string) => {
+    try {
+      const responce = await API.delete(`order/${id}`);
+      fetchOrder();
+      return alert(`RESPOMCE ${responce}`);
+    } catch (e) {
+      alert("Rejected");
+      fetchOrder();
+    }
+    fetchOrder();
+  };
 
   useEffect(() => {
     fetchOrder();
   }, []);
-
-  // console.log(
-  //   tracks.map((el) => orderFilter.map((i) => i === el.id)),
-  //   "orderFilter"
-  // );
 
   return (
     <Box
@@ -54,49 +56,74 @@ export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
 
         <Box mx="29px" mb="30px">
           {order.map((item, index) => (
-            <Box
-              key={index}
-              bg="white"
-              rounded="10px"
-              my="5px"
-              py="12px"
-              px="25px"
-            >
+            <Box key={index}>
               {item.order_item?.map((el, index) => (
-                <Box
-                  key={index}
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    w={{ base: "155px", sm: "170px" }}
-                  >
-                    <Image src={el?.music?.image} w="35px" rounded="50%" />
-                    <Text fontSize="12px" fontWeight="400">
-                      {el?.music?.name}
-                    </Text>
-                  </Box>
-                  <Text fontWeight="400" fontSize="12px">
-                    {el?.music?.price}c
-                  </Text>
-                  <Button
-                    bg="transparent"
-                    colorScheme="none"
-                    px="0"
-                    py="0"
-                    color="#C10404"
-                    fontSize="12px"
-                    fontWeight="400"
-                  >
-                    Удалить
-                  </Button>
-                </Box>
+                <div key={index}>
+                  {el.music !== null && (
+                    <Box bg="white" rounded="10px" my="5px" py="12px" px="25px">
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Box
+                          display="flex"
+                          justifyContent="space-between"
+                          alignItems="center"
+                          w={{ base: "155px", sm: "170px" }}
+                        >
+                          <Image
+                            src={el?.music?.image}
+                            w="35px"
+                            rounded="50%"
+                          />
+                          <Text fontSize="12px" fontWeight="400">
+                            {el?.music?.name}
+                          </Text>
+                        </Box>
+                        <Text fontWeight="400" fontSize="12px">
+                          {el?.music?.price}c
+                        </Text>
+                        <Button
+                          onClick={() => deletedorder(`${item.id}`)}
+                          bg="transparent"
+                          colorScheme="none"
+                          px="0"
+                          py="0"
+                          color="#C10404"
+                          fontSize="12px"
+                          fontWeight="400"
+                        >
+                          Удалить
+                        </Button>
+                      </Box>
+                    </Box>
+                  )}
+                </div>
               ))}
             </Box>
+          ))}
+          {order?.map((item, index) => (
+            <div key={index}>
+              {
+                <Box>
+                  {item?.order_item?.map((el, index) => (
+                    <Box key={index}>
+                      {el.album !== null && (
+                        <OrderListAlbums
+                          deleted={deletedorder}
+                          id={String(item.id)}
+                          music={el.album?.music}
+                          image={el.album?.image}
+                          name={el.album?.name}
+                          price={el.album?.total_price}
+                        />
+                      )}
+                    </Box>
+                  ))}
+                </Box>
+              }
+            </div>
           ))}
         </Box>
 

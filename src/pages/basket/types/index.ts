@@ -14,7 +14,7 @@ interface IOrderItem {
   album?: IPlayList;
 }
 
-interface IMusicForBasket {
+export interface IMusicForBasket {
   id?: string;
   name?: string;
   image?: string;
@@ -26,7 +26,7 @@ interface IMusicForBasket {
   created_at?: string;
   updated_at?: string;
 }
-interface IPlayList {
+export interface IPlayList {
   id: number | null;
   image: string;
   music: IMusicForBasket[];
@@ -70,8 +70,8 @@ interface IPlayListForList {
 
 interface ICart_item {
   cart: string;
-  music: number;
-  album: number;
+  music?: number | null;
+  album?: number | null;
 }
 
 export interface IOrderItemForPost {
