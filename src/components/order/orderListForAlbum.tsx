@@ -1,14 +1,7 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
-import { useState } from "react";
+
 import SvgCross from "../../assets/svg/SvgCross";
-import SvgPlay from "../../assets/svg/SvgPlay";
-import { useAppSelector } from "../../hooks/Index";
-import { useActionOrder } from "../../hooks/useActions";
 import { IMusicForBasket, IPlayList } from "../../pages/basket/types";
-import { ITrack } from "../../redux/types";
-import { getUserId } from "../helper";
-import { OrderPopup } from "../order/OrderPopup";
-import { OrderPost } from "../order/types/order";
 
 interface IBasketAlbums {
   image?: string;
@@ -16,11 +9,11 @@ interface IBasketAlbums {
   price?: string;
   music?: IMusicForBasket[];
   deleted: (value: string) => void;
-  id: string;
-  albums: IPlayList | undefined;
+  id?: string;
+  albums?: IPlayList | undefined;
 }
 
-export default function BasketListAlbums({
+export default function OrderListAlbums({
   image,
   name,
   price,
@@ -29,52 +22,6 @@ export default function BasketListAlbums({
   deleted,
   id,
 }: IBasketAlbums) {
-  const { fetchOrderPost, fetchOrder } = useActionOrder();
-  const [openPopup, setOpenPopup] = useState(false);
-  const Order = useAppSelector((state) => state.reducerOrder.order);
-
-  const postOrder = async (cart: any) => {
-    const order: OrderPost = {
-      user: getUserId(),
-      total_price: null,
-      status: null,
-      order_item: [
-        {
-          order: getUserId(),
-          music: null,
-          album: cart?.id,
-        },
-      ],
-    };
-
-    {
-      Order.forEach((el) => {
-        if (
-          el?.order_item?.every((i) =>
-            order.order_item.some((e) => e.album === i?.album?.id)
-          )
-        ) {
-          // alert("No");
-        } else {
-          // fetchOrderPost(order);
-          // alert("Success");
-        }
-      });
-    }
-
-    console.log(
-      Order.forEach((el) => {
-        el?.order_item?.every((i) =>
-          order.order_item.some((e) => e.album === i?.album?.id)
-        );
-      }),
-      "ORDER"
-    );
-
-    setOpenPopup(true);
-    fetchOrder();
-  };
-
   return (
     <Box
       className="basket"
@@ -116,23 +63,8 @@ export default function BasketListAlbums({
           <Text fontSize="12px" color="white">
             {price}c
           </Text>
-          <Button
-            onClick={() => postOrder(albums)}
-            ml={{ base: "2%", md: "18%" }}
-            border="1px"
-            borderColor="white"
-            rounded="38px"
-            fontSize="9px"
-            h="23px"
-            w="84px"
-            background="transparent"
-            colorScheme="none"
-            zIndex="0"
-          >
-            Оплатить
-          </Button>
           <Box cursor="pointer" onClick={() => deleted(`${id}`)}>
-            <SvgCross />
+          <SvgCross />
           </Box>
         </Box>
       </Box>
@@ -181,17 +113,13 @@ export default function BasketListAlbums({
               alignItems="center"
               w={{ base: "50%", lg: "32%" }}
             >
-              <Text fontSize="12px" color="white">
+              <Text fontSize="12px" textAlign="end" color="white">
                 {el.price}c
               </Text>
             </Box>
           </Box>
         ))}
       </Box>
-      <OrderPopup
-        className={openPopup ? "transform" : ""}
-        setOpenPopup={setOpenPopup}
-      />
     </Box>
   );
 }

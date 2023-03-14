@@ -6,3 +6,7 @@ export const getAccessToken = () => {
 export const getUserId = () => {
   return JSON.parse(localStorage.getItem("user-id") as string);
 };
+
+export const getIdAlums = () => {
+  return JSON.parse(localStorage.getItem("id-album") as string);
+};

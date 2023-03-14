@@ -13,6 +13,7 @@ import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { ToastContainer } from "react-toastify";
+import { useGoogleLogin } from "@react-oauth/google";
 import "react-toastify/dist/ReactToastify.css";
 
 //local
@@ -43,12 +44,21 @@ const Registration: FC = () => {
     },
   ];
 
-  const { fetchRegister } = usePostRegistr();
+  const { fetchRegister, fetchRegisterGoogle } = usePostRegistr();
   const { loginModal } = useModalforms();
 
   const { loading, registerUser, error } = useAppSelector(
     (state) => state.registerReducer
   );
+
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      if (tokenResponse.access_token) {
+        console.log(tokenResponse);
+        fetchRegisterGoogle(tokenResponse.access_token);
+      }
+    },
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let emailOrPhone = e.target.value;
@@ -153,6 +163,11 @@ const Registration: FC = () => {
                 py="0.6rem"
                 px="2.2rem"
                 cursor="pointer"
+                onClick={() => {
+                  if (idx === 0) {
+                    login();
+                  }
+                }}
               >
                 {el.icon}
                 <Text ml="5px">{el.text}</Text>

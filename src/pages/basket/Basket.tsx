@@ -1,48 +1,42 @@
 import { Box, Button, Container, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import API from "../../api/Index";
+import { useEffect } from "react";
+
 import BasketListAlbums from "../../components/ui/BasketListForAlbums";
 import BasketListProduct from "../../components/ui/BasketListProduct";
+import API from "../../api/Index";
 import { useAppSelector } from "../../hooks/Index";
 import { useActionBasket } from "../../hooks/useActions";
-import { ITrack } from "../../redux/types";
 
 export default function Basket() {
   const { fetchBasket } = useActionBasket();
   const { basket } = useAppSelector((state) => state.reducerBasket);
-  const { tracks } = useAppSelector((state) => state.musicReducer);
 
-  // console.log(basketResult);
+  const lengthBasket = basket.map((el) => el.cart_item.length);
+
   const deletedBasket = async (id: string) => {
     try {
       const responce = await API.delete(`account/cart/${id}`);
-
+      fetchBasket();
       return alert(`RESPOMCE ${responce}`);
     } catch (e) {
       alert("Rejected");
+      fetchBasket();
     }
+    fetchBasket();
   };
-
-  function findBasketProduct() {
-    // tracks.filter((el, index) =>
-    //   index + 1 === basket[Number(el.id)]?.cart_item[Number(el.id)]?.music
-    //     ? setBasketResult([el])
-    //     : basket[Number(el.id)]?.cart_item
-    // );
-  }
 
   useEffect(() => {
     fetchBasket();
   }, []);
 
   const total = 540;
-  console.log(basket);
+  console.log(basket, "BASKET");
 
   return (
     <section>
       <Box w="100%" minH="90vh" pb="50px" pt="140px" position="relative">
         <Container maxW="1220px">
-          {!basket.length && (
+          {!lengthBasket[0] && (
             <Text
               textAlign="center"
               color="white"
@@ -57,35 +51,47 @@ export default function Basket() {
               <div key={index}>
                 {item.cart_item.map((el, index) => (
                   <div key={index}>
-                    <BasketListProduct
-                      key={index}
-                      name={String(el.music?.name)}
-                      image={el.music?.image}
-                      price={Number(el.music?.price)}
-                      id={String(el?.id)}
-                      deleted={deletedBasket}
-                      music={el.music}
-                    />
+                    {el.music !== null && (
+                      <BasketListProduct
+                        key={index}
+                        name={String(el.music?.name)}
+                        image={el.music?.image}
+                        price={Number(el.music?.price)}
+                        id={String(el?.id)}
+                        deleted={deletedBasket}
+                        music={el.music}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
             ))}
 
-            {/* {basket?.map((item, index) => (
+            {basket?.map((item, index) => (
               <div key={index}>
-                {item.cart_item.map((el, index) => (
-                  <BasketListAlbums
-                    key={index}
-                    name={String(el.album?.name)}
-                    image={el.album?.image}
-                    price={el.album?.total_price}
-                    music={el.album?.music}
-                  />
-                ))}
+                {
+                  <Box>
+                    {item.cart_item.map((el, index) => (
+                      <Box key={index}>
+                        {el.album !== null && (
+                          <BasketListAlbums
+                            albums={el?.album}
+                            id={String(el.id)}
+                            deleted={deletedBasket}
+                            music={el.album?.music}
+                            image={el.album?.image}
+                            name={el.album?.name}
+                            price={el.album?.total_price}
+                          />
+                        )}
+                      </Box>
+                    ))}
+                  </Box>
+                }
               </div>
-            ))} */}
+            ))}
 
-            {basket.length && (
+            {lengthBasket[0] && (
               <Box
                 display="flex"
                 justifyContent="space-between"

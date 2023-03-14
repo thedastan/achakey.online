@@ -36,8 +36,8 @@ export interface OrderPost {
 
 interface OrderItemPost {
   order: string;
-  album?: number | string;
-  music?: number | string;
+  album?: number | string | null;
+  music?: number | string | null;
 }
 
 interface OrderMusicTypes {

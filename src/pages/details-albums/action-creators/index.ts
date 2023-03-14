@@ -6,7 +6,7 @@ import { ActionsDetailsAlbum, ActionTypes } from "../types";
 export const fetchAlbumsDetails = (id: string | number) => {
   return async (dispatch: Dispatch<ActionsDetailsAlbum>) => {
     try {
-      const response = await axios.get(`${API_ADDRESS}playlist/${id}`);
+      const response = await axios.get(`${API_ADDRESS}album/${id}`);
 
       dispatch({
         type: ActionTypes.FETCH_ALBUMS_DETAILS,

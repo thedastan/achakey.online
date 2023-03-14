@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Dispatch } from "react";
-import API, { API_ADDRESS } from "../../api/Index";
+import API, { API_ADDRESS, PUBLIC_API } from "../../api/Index";
 import { ActionTypes, TypeAction } from "../types";
 
 export const fetchTracks = () => {
