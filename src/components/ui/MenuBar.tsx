@@ -113,7 +113,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
                         </Box>
                     ))}
                     {list.slice(2, 4).map((el, index) => (
-                        <Box key={index}  py="17.5px" pl="30px" pr="41px" display="flex">
+                        <Box key={index} py="17.5px" pl="30px" pr="41px" display="flex">
                             <Link to={el.link} className="hover-text">
                                 {el.svg}
                                 <span className="tooltip-text" id="right">
@@ -124,69 +124,35 @@ export default function MenuBar({children}: IPropsMenuBar) {
                     ))}
                 </Box>
             </Box>
-            {!getAccessToken() ? (
-                <Box display="none">
-                    <Box display={{base: "block", md: "none"}} zIndex="2">
-                        <Box
-                            position="fixed"
-                            bottom={active ? "60px" : "21px"}
-                            left="0"
-                            right="0"
-                            display="flex"
-                            justifyContent="center"
-                            zIndex="2"
-                        >
-                            <Box
-                                py="15px"
-                                rounded="59px"
-                                w="90vw"
-                                display="flex"
-                                justifyContent="space-between"
-                                bg="#0B0B0B"
-                                px="46px"
-                            >
-                                {list.map((el, index) => (
-                                    <Box key={index} onClick={handleRefresh} textColor="white">
-                                        <Link to={el.link} title={el.item}>
-                                            {el.svg}
-                                        </Link>
-                                    </Box>
-                                ))}
-                            </Box>
-                        </Box>
-                    </Box>
-                </Box>
-            ) : (
-                <Box display={{base: "block", md: "none"}} zIndex="2">
+            <Box display={{base: "block", md: "none"}} zIndex="2">
+                <Box
+                    position="fixed"
+                    bottom={active ? "60px" : "21px"}
+                    left="0"
+                    right="0"
+                    display="flex"
+                    justifyContent="center"
+                    zIndex="2"
+                >
                     <Box
-                        position="fixed"
-                        bottom={active ? "60px" : "21px"}
-                        left="0"
-                        right="0"
+                        py="15px"
+                        rounded="59px"
+                        w="90vw"
                         display="flex"
-                        justifyContent="center"
-                        zIndex="2"
+                        justifyContent="space-between"
+                        bg="#0B0B0B"
+                        px="46px"
                     >
-                        <Box
-                            py="15px"
-                            rounded="59px"
-                            w="90vw"
-                            display="flex"
-                            justifyContent="space-between"
-                            bg="#0B0B0B"
-                            px="46px"
-                        >
-                            {list.map((el, index) => (
-                                <Box key={index} onClick={handleRefresh} textColor="white">
-                                    <Link to={el.link} title={el.item}>
-                                        {el.svg}
-                                    </Link>
-                                </Box>
-                            ))}
-                        </Box>
+                        {list.map((el, index) => (
+                            <Box key={index} onClick={handleRefresh} textColor="white">
+                                <Link to={el.link} title={el.item}>
+                                    {el.svg}
+                                </Link>
+                            </Box>
+                        ))}
                     </Box>
                 </Box>
-            )}
+            </Box>
             <Box
                 w={{base: "100%", md: "92%", xl: "95%"}}
                 ml="auto"

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Box, Text, Button, Stack, Container, useBreakpointValue} from "@chakra-ui/react";
 import Music from "./Music";
 import {HiOutlineChevronDoubleDown} from "react-icons/hi";
+import "./style.css"
 
 const Home = () => {
     const [musicPlay, setMusicPlay] = useState<boolean>(false);

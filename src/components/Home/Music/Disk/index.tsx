@@ -1,7 +1,7 @@
 import React from 'react';
 import disk from "../../../../assets/img/Disk.png"
 import {Image, Box, useBreakpointValue} from "@chakra-ui/react";
-
+import "./style.css"
 interface MusicProps {
     musicPlay: boolean
 }
