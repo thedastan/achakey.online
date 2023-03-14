@@ -19,12 +19,11 @@ import "swiper/css/pagination";
 
 import {useAppSelector} from "../../../hooks/Index";
 import {useModalforms, useTracksAction} from "../../../hooks/useActions";
-import RegisterDesktop from "./RigisterDesktop";
 import {playlistData} from "./playListData";
 import {Link} from "react-router-dom";
 import ModalUserAuth from "../../form/modal/ModalUser";
-import {getAccessToken} from "../../helper";
 import Footer from "../../footer/Footer";
+import "./style.css"
 
 interface MusicProps {
     musicPlay: boolean;
@@ -207,7 +206,6 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                         </SwiperSlide>
                     </Box>
                 ))}
-                {!getAccessToken() ? (<RegisterDesktop/>) : (<Box display="none"><RegisterDesktop/></Box>)}
             </Swiper>
         </Box>
     );

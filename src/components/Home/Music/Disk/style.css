@@ -1,0 +1,20 @@
+
+.disk {
+    position: fixed;
+    top: 40%;
+    left: 43%;
+    z-index: 100;
+    animation: down 5s linear infinite;
+}
+
+
+@keyframes down {
+    from {
+        transform: rotate(0deg)
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
