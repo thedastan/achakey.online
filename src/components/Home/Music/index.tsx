@@ -24,6 +24,7 @@ import {Link} from "react-router-dom";
 import ModalUserAuth from "../../form/modal/ModalUser";
 import Footer from "../../footer/Footer";
 import "./style.css"
+import {getAccessToken} from "../../helper";
 
 interface MusicProps {
     musicPlay: boolean;
@@ -90,8 +91,9 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                 <Box zIndex="-1">
                                     <Image
                                         src={el.image}
-                                        width={["80vw", "70vw", "60vw", "50vw", "50vw"]}
-                                        height={["30vh", "26vh", "40vh", "100vh", "100vh"]}
+                                        objectFit='cover'
+                                        width={["90vw", "60vw", "50vw", "50vw", "50vw"]}
+                                        height={["35vh", "35vh", "40vh", "100vh", "100vh"]}
                                         borderRadius={{
                                             base: "20px",
                                             sm: "20px",
@@ -99,23 +101,26 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                             lg: "0",
                                             xl: "0",
                                         }}
-                                        m={["40px", "30px", "20px", "0", "0"]}
+                                        m={["40px", "15px", "20px", "0", "0"]}
+                                        mt={["90px","80px","80px","0","0"]}
                                         alt="img"
                                     />
                                 </Box>
                                 <Container
-                                    maxW={["75vw", "76vw", "45vw", "38vw", "34vw"]}
+                                    maxW={["75vw", "70vw", "45vw", "38vw", "34vw"]}
                                     pr={["0", "0", "0", "0", "60px"]}
+                                    ml={["15%","20%","28%","7%","10%"]}
                                 >
                                     <Text
                                         as="h1"
                                         fontFamily="sans"
-                                        fontSize={["20px", "25px", "30px", "35px", "38px"]}
+                                        fontSize={["22px", "32px", "30px", "35px", "38px"]}
+                                        fontWeight="900"
                                         color="white"
                                     >
                                         {el.name}
                                     </Text>
-                                    <Flex alignItems="center" my={breakpoints === "base" && "sm" ? "5" : "10"} >
+                                    <Flex alignItems="center" my={breakpoints === "base" && "sm" && "md" ? "5" : "7"} >
                                         <Box fontSize="40px">
                                             <BsPlayCircle color="white"/>
                                         </Box>
@@ -157,26 +162,48 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                         alignItems="center"
                                     >
                                             <Stack direction="row" spacing={4} align="center">
-                                                <Link to="/basket">
-                                                    <Button
-                                                        bg="none"
-                                                        fontFamily="sans"
-                                                        fontSize="14px"
-                                                        px={["3vw", "3vw", "5vw", "4vw", "3vw"]}
-                                                        py="9px"
-                                                        border="1px"
-                                                        borderColor="white"
-                                                        borderRadius="md"
-                                                        color="white"
-                                                        _hover={{
-                                                            color: "#49DEFF",
-                                                            borderColor: "#49DEFF",
-                                                            background: "none",
-                                                        }}
-                                                    >
-                                                        В корзину
-                                                    </Button>
-                                                </Link>
+                                                {!getAccessToken() ? (
+                                                        <Button
+                                                            bg="none"
+                                                            fontFamily="sans"
+                                                            fontSize="14px"
+                                                            px={["3vw", "3vw", "5vw", "4vw", "3vw"]}
+                                                            py="9px"
+                                                            border="1px"
+                                                            borderColor="white"
+                                                            borderRadius="md"
+                                                            color="white"
+                                                            _hover={{
+                                                                color: "#49DEFF",
+                                                                borderColor: "#49DEFF",
+                                                                background: "none",
+                                                            }}
+                                                            onClick={openModal}
+                                                        >
+                                                            В корзину
+                                                        </Button>
+                                                ) : (
+                                                    <Link to="/basket">
+                                                        <Button
+                                                            bg="none"
+                                                            fontFamily="sans"
+                                                            fontSize="14px"
+                                                            px={["3vw", "3vw", "5vw", "4vw", "3vw"]}
+                                                            py="9px"
+                                                            border="1px"
+                                                            borderColor="white"
+                                                            borderRadius="md"
+                                                            color="white"
+                                                            _hover={{
+                                                                color: "#49DEFF",
+                                                                borderColor: "#49DEFF",
+                                                                background: "none",
+                                                            }}
+                                                        >
+                                                            В корзину
+                                                        </Button>
+                                                    </Link>
+                                                )}
                                                 <Link to="/excerpts">
                                                     <Button
                                                         border="1px"

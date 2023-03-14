@@ -94,15 +94,15 @@ export default function MenuBar({children}: IPropsMenuBar) {
                 bottom="0"
                 bg={
                     window.location.pathname === "/"
-                        ? "linear-gradient(90deg, #000000 22.36%, rgba(0, 0, 0, 0) 93.34%)"
+                        ? "linear-gradient(90deg, #000000 22.36%, rgba(0, 0, 0, 0) 50.34%)"
                         : "#0B0B0B"
                 }
-                zIndex="2"
+                zIndex="1"
                 display={{base: "none", md: "block"}}
                 w={window.location.pathname === "/" ? "25%" : "96px"}
             >
                 <Box py="46px">
-                    {list.slice(0, 2).map((el, index) => (
+                    {list.slice(0,1).map((el, index) => (
                         <Box key={index} onClick={handleRefresh} py="17.5px" pl="30px" pr="41px" display="flex">
                             <Link to={el.link} className="hover-text">
                                 {el.svg}
@@ -112,7 +112,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
                             </Link>
                         </Box>
                     ))}
-                    {list.slice(2, 4).map((el, index) => (
+                    {list.slice(1, 4).map((el, index) => (
                         <Box key={index} py="17.5px" pl="30px" pr="41px" display="flex">
                             <Link to={el.link} className="hover-text">
                                 {el.svg}
@@ -143,8 +143,15 @@ export default function MenuBar({children}: IPropsMenuBar) {
                         bg="#0B0B0B"
                         px="46px"
                     >
-                        {list.map((el, index) => (
+                        {list.slice(0,1).map((el, index) => (
                             <Box key={index} onClick={handleRefresh} textColor="white">
+                                <Link to={el.link} title={el.item}>
+                                    {el.svg}
+                                </Link>
+                            </Box>
+                        ))}
+                        {list.slice(1,4).map((el, index) => (
+                            <Box key={index}  textColor="white">
                                 <Link to={el.link} title={el.item}>
                                     {el.svg}
                                 </Link>

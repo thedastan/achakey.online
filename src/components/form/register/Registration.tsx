@@ -52,7 +52,7 @@ const Registration: FC = () => {
   );
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
+    onSuccess: (tokenResponse: { access_token: string; }) => {
       if (tokenResponse.access_token) {
         console.log(tokenResponse);
         fetchRegisterGoogle(tokenResponse.access_token);
