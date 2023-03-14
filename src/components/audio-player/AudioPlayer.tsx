@@ -1,13 +1,17 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Text } from "@chakra-ui/layout";
 import { Image } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   currentIndexAction,
   eventChange,
 } from "../playlist/reducer/action-creator";
-import { useAction, useExcerpAction } from "../../hooks/useActions";
+import {
+  useAction,
+  useActionBasket,
+  useExcerpAction,
+} from "../../hooks/useActions";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { ITrack } from "../../redux/types";
 import { changeAction } from "../../global-audio-player-excerpt/action";
@@ -20,19 +24,38 @@ import SvgPrev from "../../assets/svg/SvgPrev";
 
 import "./style.scss";
 import "../ui/style.scss";
+import { getIdAlums, getUserId } from "../helper";
+import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
 interface IlistMedia {
   listTruck?: ITrack[] | any;
 }
 
+interface ITrackChange {
+  onClick?: any;
+  name?: string;
+  music?: ITrack;
+  tracks?: boolean;
+}
+
+interface ICartArray {
+  cart: string;
+  music?: number | null;
+  album?: number | null | any;
+}
+interface ICart {
+  total_price: string | number;
+  user: string;
+  cart_item: ICartArray[];
+}
+
 export default function AudioPlayer({ listTruck }: IlistMedia) {
   const dispatch = useAppDispatch();
+  const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
+
   const [openPopup, setOpenPopup] = useState(false);
   const { event } = useAppSelector((state) => state.eventReducer);
   const { currentIndex: indexCurrent } = useAppSelector(
     (state) => state.currentIndexReducer
-  );
-  const { albumForExcerpt } = useAppSelector(
-    (state) => state.reducerIndexForAlbums
   );
 
   const { pause, active, duration, currentTime } = useAppSelector(
@@ -40,6 +63,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   );
 
   const { pauseTrack } = useAction();
+  const { postBasketItem } = useActionBasket();
 
   const {
     excerptActiveAction,
@@ -116,9 +140,28 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     return minutes + ":" + seconds;
   }
 
-  // function postCartItem(item: any) {
-  //   dispatch(postCartItem(item));
-  // }
+  function postCartAlbum() {
+    const cart: ICart = {
+      user: getUserId(),
+      total_price: Number(active?.price),
+      cart_item: [
+        {
+          music: null,
+          cart: getUserId(),
+          album: albums?.id,
+        },
+      ],
+    };
+
+    postBasketItem(cart);
+  }
+
+  console.log(active?.price);
+
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchAlbumsDetails(getIdAlums()));
+  }, []);
 
   if (!active) {
     return null;
@@ -232,6 +275,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 Купить сейчас
               </Button>
               <Button
+                onClick={postCartAlbum}
                 rounded="50px"
                 py="9px"
                 w={{ base: "55vw", sm: "39vw", md: "17vw" }}

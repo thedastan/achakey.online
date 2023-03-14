@@ -7,7 +7,7 @@ import { useActionOrder } from "../../hooks/useActions";
 import { ITrack } from "../../redux/types";
 import { getUserId } from "../helper";
 import { OrderPopup } from "../order/OrderPopup";
-import { OrderPost } from "../order/types/order";
+import { OrderPost, OrderType } from "../order/types/order";
 import "./style.scss";
 
 interface IBasketProps {
@@ -31,7 +31,7 @@ export default function BasketListProduct({
   const Order = useAppSelector((state) => state.reducerOrder.order);
   const [openPopup, setOpenPopup] = useState(false);
 
-  const postOrder = async (cart: ITrack | undefined) => {
+  const postOrder = async (cart?: ITrack) => {
     const order: OrderPost = {
       user: getUserId(),
       total_price: null,
@@ -40,20 +40,34 @@ export default function BasketListProduct({
         {
           order: getUserId(),
           music: cart?.id,
-          album: 1,
+          album: null,
         },
       ],
     };
 
-    {
-      Order.map((el) =>
-        el.order_item?.find((i) => i.music.id === order.order_item[0].music)
-      ).length
-        ? console.log("")
-        : fetchOrderPost(order);
-    }
+    Order.forEach((obj1: OrderType) => {
+      if (obj1.order_item?.length) {
+        if (
+          obj1.order_item?.every((el) => {
+            return order.order_item.find(
+              (item) => item.music !== el?.music?.id
+            );
+          })
+        ) {
+          alert("Success");
+          fetchOrderPost(order);
+        } else {
+          alert("NO");
+        }
+      } else {
+        fetchOrderPost(order);
+        setOpenPopup(true);
+      }
+    });
+    // fetchOrderPost(order);
     setOpenPopup(true);
     fetchOrder();
+    console.log(order);
   };
 
   useEffect(() => {
