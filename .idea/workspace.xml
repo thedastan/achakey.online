@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3ff7048a-98f0-4ab9-a8b0-dbf0db1bd468" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Home/Music/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home/Music/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/header/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/header/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/header/style.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/helper/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/helper/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/myPlaylist/MyPlaylist.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/myPlaylist/MyPlaylist.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/MenuBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/MenuBar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
