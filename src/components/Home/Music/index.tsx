@@ -115,7 +115,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                     <Text
                                         as="h1"
                                         fontFamily="sans"
-                                        fontSize={["22px", "32px", "30px", "35px", "38px"]}
+                                        fontSize={["25px", "32px", "32px", "35px", "38px"]}
                                         fontWeight="900"
                                         color="white"
                                     >
