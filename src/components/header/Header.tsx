@@ -3,10 +3,11 @@ import {
     Button,
     Container,
     Image,
+    Text,
     useBreakpointValue,
     useDisclosure,
 } from "@chakra-ui/react";
-import {Link} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 
 import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
 import {useModalforms} from "../../hooks/useActions";
@@ -19,6 +20,7 @@ import {useEffect, useState} from "react";
 
 export default function Header() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate()
     const {loginModal} = useModalforms();
     const {isOpen, onOpen, onClose} = useDisclosure();
 
@@ -28,6 +30,13 @@ export default function Header() {
     const searchResultArray = tracks.filter((el) =>
         el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
     );
+
+    const logoutAccount = () =>{
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        navigate('/')
+        window.location.reload();
+    }
 
     const openModal = () => {
         onOpen();
@@ -85,8 +94,26 @@ export default function Header() {
                             </Link>
                         </Box>
 
-                        <Box zIndex="21" w="30px" h="30px" rounded="50%">
-                            <SvgAvatar/>
+                        <Box zIndex="21" w="30px" h="30px" rounded="50%" position="relative" cursor="pointer" className="avatar__login">
+                            <SvgAvatar />
+                            <Box position="absolute" display="none" bg="transparent" top="0" right="0" mr="30px" className="avatar__login__menu">
+                                <Box display="flex" flexDir="column" alignItems="flex-end">
+                                    <Box bg="#646464" color="white" borderRadius="4px" py="8px" px="25px" fontFamily="sans" fontSize="12px">Аккаунт</Box>
+                                    <Box bg="white" mt="10px" fontFamily="sans" py="5px" borderRadius="5px" fontWeight="500" color="#000000" fontSize="12px">
+                                        <Box borderBottom="1px" p="10px" borderColor="rgba(210,210,210,0.62)">
+                                            <Text textAlign="center" fontSize="14px">Malika</Text>
+                                            <Text color="#6B6B6B" my="5px">tashievamalikaa@gmail.com</Text>
+                                        </Box>
+                                        <Box borderBottom="1px" px="10px" borderColor="rgba(210,210,210,0.62)">
+                                            <Text p="5px" my="6px"><NavLink to="/accountManagement">Управление аккаунтом</NavLink></Text>
+                                            <Text p="5px" my="6px">Изменить пароль</Text>
+                                        </Box>
+                                        <Box p="8px">
+                                            <Text p="5px" onClick={logoutAccount}>Выйти</Text>
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            </Box>
                         </Box>
                     </Box>
 
