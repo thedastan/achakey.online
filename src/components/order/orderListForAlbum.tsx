@@ -1,6 +1,5 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
 
-import SvgCross from "../../assets/svg/SvgCross";
 import { IMusicForBasket, IPlayList } from "../../pages/basket/types";
 
 interface IBasketAlbums {
@@ -9,7 +8,7 @@ interface IBasketAlbums {
   price?: string;
   music?: IMusicForBasket[];
   deleted: (value: string) => void;
-  id?: string;
+  id?: number;
   albums?: IPlayList | undefined;
 }
 
@@ -24,7 +23,7 @@ export default function OrderListAlbums({
 }: IBasketAlbums) {
   return (
     <Box
-      className="basket"
+      bg="white"
       rounded="13px"
       maxW="950px"
       mx="auto"
@@ -49,7 +48,7 @@ export default function OrderListAlbums({
             pl={{ base: "0", md: "17px" }}
             fontSize="20px"
             fontWeight="400"
-            color="white"
+            color="black"
           >
             Альбом: {name}
           </Text>
@@ -63,9 +62,18 @@ export default function OrderListAlbums({
           <Text fontSize="12px" color="white">
             {price}c
           </Text>
-          <Box cursor="pointer" onClick={() => deleted(`${id}`)}>
-          <SvgCross />
-          </Box>
+          <Button
+            onClick={() => deleted(`${id}`)}
+            bg="transparent"
+            colorScheme="none"
+            px="0"
+            py="0"
+            color="#C10404"
+            fontSize="12px"
+            fontWeight="400"
+          >
+            Удалить
+          </Button>
         </Box>
       </Box>
       <Box>
@@ -93,7 +101,7 @@ export default function OrderListAlbums({
                   pl={{ base: "0", md: "17px" }}
                   fontSize="14.53px"
                   fontWeight="400"
-                  color="white"
+                  color="black"
                 >
                   {el.name}
                 </Text>
@@ -101,7 +109,7 @@ export default function OrderListAlbums({
                   pl={{ base: "0", md: "17px" }}
                   fontSize="10px"
                   fontWeight="400"
-                  color="white"
+                  color="black"
                 >
                   Альбом: {name}
                 </Text>
@@ -113,7 +121,7 @@ export default function OrderListAlbums({
               alignItems="center"
               w={{ base: "50%", lg: "32%" }}
             >
-              <Text fontSize="12px" textAlign="end" color="white">
+              <Text fontSize="12px" textAlign="end" color="black">
                 {el.price}c
               </Text>
             </Box>

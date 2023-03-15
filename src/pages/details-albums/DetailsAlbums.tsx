@@ -19,8 +19,6 @@ export default function DetailsAlbums() {
     localStorage.setItem("id-album", JSON.stringify(id));
   }, []);
 
-  console.log(albums);
-
   return (
     <section>
       <Container maxW="1220px" pt="140px">

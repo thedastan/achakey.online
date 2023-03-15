@@ -10,7 +10,7 @@ export enum ActionTypes {
 
 //Types
 export interface ITrack {
-  id?: string;
+  id?: number | null;
   name?: string;
   image?: string;
   artist?: string;
@@ -64,7 +64,7 @@ interface FetchTrackErrorAction {
 
 //Types
 export interface IMyTrack {
-  id?: string;
+  id?: number | null;
   name?: string;
   image?: string;
   artist?: string;
@@ -77,7 +77,7 @@ export interface IMyTrack {
 }
 
 export interface IMyAlbums {
-  id?: string;
+  id?: number | null | any;
   name: string;
   total_price: string;
   image: string;

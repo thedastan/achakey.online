@@ -17,7 +17,7 @@ const initialState: BasketState = {
   order: {
     user: "",
     created_at: "",
-    id: "",
+    id: null,
     order_item: [],
     status: "",
     total_price: "",

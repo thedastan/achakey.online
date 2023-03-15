@@ -55,29 +55,30 @@ export default function MusicForList({
       ],
     };
 
-    basket.forEach((obj1: IBasketTypes) => {
-      if (
-        obj1.cart_item.every((el) => {
-          return cart.cart_item.some((item) => item.music !== el.music?.id);
-        })
-      ) {
-        postBasketItem(cart);
-        alert("Success");
-      } else {
-        alert("NO");
-      }
-    });
+    const userFiter = basket.filter((el) => el.user === getUserId());
+    const filterBasket = userFiter[0]?.cart_item;
+    const includesTracks = filterBasket.filter(
+      (el) => el.music?.id === cart?.cart_item[0].music
+    );
+
+    if (includesTracks[0]?.music?.id === cart?.cart_item[0]?.music) {
+      alert("No");
+    } else {
+      alert("Success");
+      postBasketItem(cart);
+      fetchBasket();
+    }
     fetchBasket();
   };
 
   function filterTraks() {
-    basket.forEach((obj1) => {
-      if (obj1.cart_item.find((el) => el.music?.id === music?.id)) {
-        setTitle("в корзине");
-      } else {
-        setTitle("+ в корзину");
-      }
-    });
+    // basket.forEach((obj1) =>
+    //   obj1.cart_item.find((el) =>
+    //     el.music?.id === music?.id
+    //       ? setTitle("в корзине")
+    //       : setTitle("+ в корзину")
+    //   )
+    // );
   }
 
   useEffect(() => {

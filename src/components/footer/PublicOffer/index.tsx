@@ -10,6 +10,7 @@ const PublicOffer = () => {
         xl: "xl",
         "2xl": "2xl",
     });
+    
     return (
         <Box maxW="80%" mx="auto" >
             <Text

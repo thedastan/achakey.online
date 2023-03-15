@@ -14,7 +14,6 @@ export default function AllPlaylist() {
     fetchTracks();
   }, []);
 
-  console.log(tracks);
   return (
     <section style={{ minHeight: "70vh" }}>
       <AudioPlayer listTruck={tracks} />

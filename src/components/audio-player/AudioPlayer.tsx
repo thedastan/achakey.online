@@ -26,6 +26,7 @@ import "./style.scss";
 import "../ui/style.scss";
 import { getIdAlums, getUserId } from "../helper";
 import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
+import { fetchBasket } from "../../pages/basket/action-creators/action";
 interface IlistMedia {
   listTruck?: ITrack[] | any;
 }
@@ -48,14 +49,27 @@ interface ICart {
   cart_item: ICartArray[];
 }
 
+interface IOrderArray {
+  cart: string;
+  music?: number | null;
+  album?: number | null | any;
+}
+
+interface IOrder {
+  total_price: string | number;
+  user: string;
+  order_item: IOrderArray[];
+}
+
 export default function AudioPlayer({ listTruck }: IlistMedia) {
   const dispatch = useAppDispatch();
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
+  const { basket } = useAppSelector((state) => state.reducerBasket);
 
   const [openPopup, setOpenPopup] = useState(false);
   const { event } = useAppSelector((state) => state.eventReducer);
-  const { currentIndex: indexCurrent } = useAppSelector(
-    (state) => state.currentIndexReducer
+  const indexCurrent = useAppSelector(
+    (state) => state.currentIndexReducer.currentIndex
   );
 
   const { pause, active, duration, currentTime } = useAppSelector(
@@ -153,19 +167,61 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
       ],
     };
 
-    postBasketItem(cart);
+    const userFiter = basket.filter((el) => el.user === getUserId());
+    const filterBasket = userFiter[0]?.cart_item;
+    const includesTracks = filterBasket.filter(
+      (el) => el.album?.id === cart?.cart_item[0].album
+    );
+
+    if (includesTracks[0]?.album?.id !== cart?.cart_item[0]?.album) {
+      alert("Success");
+      postBasketItem(cart);
+      fetchBasket();
+    } else {
+      alert("No");
+      fetchBasket();
+    }
+    fetchBasket();
   }
 
-  console.log(active?.price);
+  function postOrderAlbum() {
+    const order: IOrder = {
+      user: getUserId(),
+      total_price: Number(active?.price),
+      order_item: [
+        {
+          music: null,
+          cart: getUserId(),
+          album: albums?.id,
+        },
+      ],
+    };
+
+    const userFiter = basket.filter((el) => el.user === getUserId());
+    const filterBasket = userFiter[0]?.cart_item;
+    const includesTracks = filterBasket.filter(
+      (el) => el.album?.id === order?.order_item[0].album
+    );
+
+    if (includesTracks[0]?.album?.id !== order?.order_item[0]?.album) {
+      alert("Success");
+      // postBasketItem(cart);
+      fetchBasket();
+    } else {
+      alert("No");
+      fetchBasket();
+    }
+    fetchBasket();
+  }
 
   useEffect(() => {
     //@ts-ignore
     dispatch(fetchAlbumsDetails(getIdAlums()));
   }, []);
 
-  if (!active) {
-    return null;
-  }
+  useEffect(() => {
+    fetchBasket();
+  }, [basket]);
 
   return (
     <section
@@ -187,7 +243,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           mx={{ base: "auto", md: "0" }}
           mb={{ base: "19px", md: "0" }}
         >
-          <Image src={active.image} />
+          <Image src={active?.image} />
         </Box>
         <Box
           w={{ base: "100%", md: "90%" }}
@@ -200,7 +256,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
             color="white"
             display={{ base: "none", md: "block" }}
           >
-            {active.name}
+            {active?.name}
           </Text>
           <Box
             display="flex"

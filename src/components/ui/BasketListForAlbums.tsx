@@ -1,14 +1,12 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import SvgCross from "../../assets/svg/SvgCross";
-import SvgPlay from "../../assets/svg/SvgPlay";
+
 import { useAppSelector } from "../../hooks/Index";
 import { useActionOrder } from "../../hooks/useActions";
+import SvgCross from "../../assets/svg/SvgCross";
 import { IMusicForBasket, IPlayList } from "../../pages/basket/types";
-import { ITrack } from "../../redux/types";
-import { getUserId } from "../helper";
-import { OrderPopup } from "../order/OrderPopup";
 import { OrderPost } from "../order/types/order";
+import { getUserId } from "../helper";
 
 interface IBasketAlbums {
   image?: string;
@@ -18,6 +16,7 @@ interface IBasketAlbums {
   deleted: (value: string) => void;
   id: string;
   albums: IPlayList | undefined;
+  setOpenPopup: (value: boolean) => void;
 }
 
 export default function BasketListAlbums({
@@ -28,9 +27,9 @@ export default function BasketListAlbums({
   albums,
   deleted,
   id,
+  setOpenPopup,
 }: IBasketAlbums) {
   const { fetchOrderPost, fetchOrder } = useActionOrder();
-  const [openPopup, setOpenPopup] = useState(false);
   const Order = useAppSelector((state) => state.reducerOrder.order);
 
   const postOrder = async (cart: any) => {
@@ -47,29 +46,24 @@ export default function BasketListAlbums({
       ],
     };
 
-    {
-      Order.forEach((el) => {
-        if (
-          el?.order_item?.every((i) =>
-            order.order_item.some((e) => e.album === i?.album?.id)
-          )
-        ) {
-          // alert("No");
-        } else {
-          // fetchOrderPost(order);
-          // alert("Success");
-        }
-      });
-    }
+    const userFiter = Order.filter((el) => el.user === getUserId());
 
-    console.log(
-      Order.forEach((el) => {
-        el?.order_item?.every((i) =>
-          order.order_item.some((e) => e.album === i?.album?.id)
-        );
-      }),
-      "ORDER"
+    const filterUser = userFiter.map(
+      //@ts-ignore
+      (el) =>
+        el?.order_item?.filter((i) => i.album?.id === order.order_item[0].album)
     );
+
+    const newData = filterUser.flat();
+    const arrayOfObjects = newData.map((item) => ({ ...item }));
+
+    if (arrayOfObjects[0]?.album?.id === order.order_item[0].album) {
+      alert("No");
+    } else {
+      alert("Success");
+      fetchOrderPost(order);
+      fetchOrder();
+    }
 
     setOpenPopup(true);
     fetchOrder();
@@ -188,10 +182,6 @@ export default function BasketListAlbums({
           </Box>
         ))}
       </Box>
-      <OrderPopup
-        className={openPopup ? "transform" : ""}
-        setOpenPopup={setOpenPopup}
-      />
     </Box>
   );
 }

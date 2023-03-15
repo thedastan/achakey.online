@@ -7,7 +7,7 @@ import { useActionOrder } from "../../hooks/useActions";
 import { ITrack } from "../../redux/types";
 import { getUserId } from "../helper";
 import { OrderPopup } from "../order/OrderPopup";
-import { OrderPost, OrderType } from "../order/types/order";
+import { OrderPost } from "../order/types/order";
 import "./style.scss";
 
 interface IBasketProps {
@@ -17,6 +17,7 @@ interface IBasketProps {
   deleted: (value: string) => void;
   id?: string;
   music: ITrack | undefined;
+  setOpenPopup: (value: boolean) => void;
 }
 
 export default function BasketListProduct({
@@ -26,10 +27,10 @@ export default function BasketListProduct({
   deleted,
   id,
   music,
+  setOpenPopup,
 }: IBasketProps) {
   const { fetchOrderPost, fetchOrder } = useActionOrder();
   const Order = useAppSelector((state) => state.reducerOrder.order);
-  const [openPopup, setOpenPopup] = useState(false);
 
   const postOrder = async (cart?: ITrack) => {
     const order: OrderPost = {
@@ -45,34 +46,32 @@ export default function BasketListProduct({
       ],
     };
 
-    Order.forEach((obj1: OrderType) => {
-      if (obj1.order_item?.length) {
-        if (
-          obj1.order_item?.every((el) => {
-            return order.order_item.find(
-              (item) => item.music !== el?.music?.id
-            );
-          })
-        ) {
-          alert("Success");
-          fetchOrderPost(order);
-        } else {
-          alert("NO");
-        }
-      } else {
-        fetchOrderPost(order);
-        setOpenPopup(true);
-      }
-    });
-    // fetchOrderPost(order);
-    setOpenPopup(true);
+    const userFiter = Order.filter((el) => el.user === getUserId());
+
+    const filterUser = userFiter.map(
+      //@ts-ignore
+      (el) =>
+        el?.order_item?.filter((i) => i.music?.id === order.order_item[0].music)
+    );
+
+    const newData = filterUser.flat();
+    const arrayOfObjects = newData.map((item) => ({ ...item }));
+
+    if (arrayOfObjects[0]?.music?.id === order?.order_item[0]?.music) {
+      alert("No");
+    } else {
+      alert("Success");
+      fetchOrderPost(order);
+      fetchOrder();
+    }
+
     fetchOrder();
-    console.log(order);
+    setOpenPopup(true);
   };
 
   useEffect(() => {
     fetchOrder();
-  }, []);
+  }, [Order]);
 
   return (
     <Box
@@ -84,6 +83,7 @@ export default function BasketListProduct({
       pl={{ base: "8px", md: "25px" }}
       pr={{ base: "10px", md: "29px" }}
       zIndex="1"
+      position="relative"
     >
       <Box
         display="flex"
@@ -136,10 +136,6 @@ export default function BasketListProduct({
           </Box>
         </Box>
       </Box>
-      <OrderPopup
-        className={openPopup ? "transform" : ""}
-        setOpenPopup={setOpenPopup}
-      />
     </Box>
   );
 }
