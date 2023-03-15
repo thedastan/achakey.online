@@ -92,7 +92,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                     <Image
                                         src={el.image}
                                         objectFit='cover'
-                                        width={["90vw", "60vw", "50vw", "50vw", "50vw"]}
+                                        width={["88vw", "60vw", "50vw", "50vw", "50vw"]}
                                         height={["35vh", "35vh", "40vh", "100vh", "100vh"]}
                                         borderRadius={{
                                             base: "20px",
@@ -101,8 +101,9 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                             lg: "0",
                                             xl: "0",
                                         }}
-                                        m={["40px", "15px", "20px", "0", "0"]}
-                                        mt={["90px","80px","80px","0","0"]}
+                                        m={["10px", "15px", "20px", "0", "0"]}
+                                        mt={["80px","80px","80px","0","0"]}
+                                        ml={["30px","0","0",'0',"0"]}
                                         alt="img"
                                     />
                                 </Box>
