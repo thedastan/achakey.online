@@ -51,7 +51,14 @@ export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
       alignItems="center"
     >
       <Box w="100%">
-        <Box bg="#E0E0E0" mx="auto" rounded="20px" maxW="688px">
+        <Box
+          bg="#E0E0E0"
+          mx="auto"
+          rounded="20px"
+          maxW="688px"
+          h="65vh"
+          overflowY="auto"
+        >
           <Container maxW="688px" pb="34px">
             <Box w="11px" ml="auto" py="24px" onClick={handleClickClose}>
               <SvgCross />
