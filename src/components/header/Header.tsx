@@ -15,6 +15,7 @@ import ModalUserAuth from "../form/modal/ModalUser";
 import "./style.scss";
 import {SvgAvatar} from "../../assets/svg/SvgAvatar";
 import {getAccessToken} from "../helper";
+import {useEffect, useState} from "react";
 
 export default function Header() {
     const dispatch = useAppDispatch();
@@ -41,17 +42,20 @@ export default function Header() {
         "2xl": "2xl",
     });
     return (
-        <Box pos="absolute" top="0" left="0" right="0" py="30px" bg="transparent">
+        <Box pos="absolute" bg={breakpoints === "base" && "sm" ? "black" : "transparent"} zIndex="10" top="0"
+             left="0" right="0" py={breakpoints === "base" && "sm" ? "10px" : "30px"}>
             <ModalUserAuth isOpen={isOpen} onClose={onClose}/>
             <Container
                 maxW="1440px"
                 pos="relative"
-                display={breakpoints === "base" && "sm" && "md"  ? "block" : "flex" }
+                display={breakpoints === "base" && "sm" && "md" ? "block" : "flex"}
                 justifyContent="end"
                 alignItems="center"
             >
                 {!getAccessToken() ? (
-                    <Box display="flex" zIndex="11"  justifyContent={breakpoints === "base" && "sm" ? "space-between" : "end" && breakpoints === "md" ? "end" : "end"} alignItems="center" >
+                    <Box display="flex" zIndex="11"
+                         justifyContent={breakpoints === "base" && "sm" ? "space-between" : "end" && breakpoints === "md" ? "end" : "end"}
+                         alignItems="center">
                         <Box zIndex="11">
                             <Link to={"/"}>
                                 <Image src={LogoAchakey} alt="Logo"/>
@@ -72,7 +76,9 @@ export default function Header() {
                         </Button>
                     </Box>
                 ) : (
-                    <Box display="flex"   justifyContent={breakpoints === "base" && "sm" ? "space-between" : "end" && breakpoints === "md" ? "end" : "end"} alignItems="center">
+                    <Box display="flex"
+                         justifyContent={breakpoints === "base" && "sm" ? "space-between" : "end" && breakpoints === "md" ? "end" : "end"}
+                         alignItems="center">
                         <Box mx="10px" zIndex="21">
                             <Link to={"/"}>
                                 <Image src={LogoAchakey} alt="Logo"/>
