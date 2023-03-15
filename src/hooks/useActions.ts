@@ -11,6 +11,7 @@ import actionForgotPassword from "../components/form/forgotPassword/action";
 import actionBasket from "../pages/basket/action-creators/index";
 import actionUser from "../components/user/action-creators/index";
 import actionOrder from "../components/order/action-creators/index";
+import actionResetPassword from "../components/form/resetPassword/action/index";
 import { useAppDispatch } from "./Index";
 
 export const useAction = () => {
@@ -61,4 +62,9 @@ export const useActionForgot = () => {
 export const useActionOrder = () => {
   const dispatch = useAppDispatch();
   return bindActionCreators(actionOrder, dispatch);
+};
+
+export const useActionResetPassword = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(actionResetPassword, dispatch);
 };

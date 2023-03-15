@@ -1,6 +1,6 @@
 export const getAccessToken = () => {
-  // return JSON.parse(localStorage.getItem("accessToken") as string);
-  return false
+  return JSON.parse(localStorage.getItem("accessToken") as string);
+  // return false
 };
 
 export const getUserId = () => {

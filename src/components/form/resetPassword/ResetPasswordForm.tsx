@@ -10,10 +10,40 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { useAppSelector } from "../../../hooks/Index";
+import { useActionResetPassword } from "../../../hooks/useActions";
 
 const ResetPasswordForm = () => {
+  const url: string = window.location.href;
+  const token: string = url.slice(url.length - 33, url.length);
+
   const [passEye, setPassEye] = useState<boolean>(false);
   const [secondPassEye, setSecondPassEye] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
+  const [passwordTwo, setPasswordTwo] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [errorTwo, setErrorTwo] = useState<string>("");
+
+  const { loading } = useAppSelector((state) => state.resetPasswordReducer);
+  const { fetchResetPassword } = useActionResetPassword();
+
+  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setError("");
+    if (value.length >= 6) setPassword(value);
+    else {
+      setError("Введите не менее 6 символов");
+    }
+  };
+
+  const handleChangePasswordTwo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setErrorTwo("");
+    if (value === password) setPasswordTwo(value);
+    else {
+      setErrorTwo("Пароли не совпадают");
+    }
+  };
 
   const handleClick = () => {
     setPassEye(!passEye);
@@ -23,10 +53,11 @@ const ResetPasswordForm = () => {
     setSecondPassEye(!secondPassEye);
   };
 
-  const token = "1234fyfytf54er5tfty";
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("reset");
+    if (password.length && passwordTwo.length) {
+      fetchResetPassword({ password, token });
+    }
   };
   return (
     <Box h="100vh" w="100%" display="flex" alignItems="center">
@@ -52,6 +83,7 @@ const ResetPasswordForm = () => {
                     id="password"
                     type={passEye ? "text" : "password"}
                     placeholder="Новый пароль*"
+                    onChange={handleChangePassword}
                     sx={{
                       "&::placeholder": {
                         color: "#AAAAAA",
@@ -84,6 +116,9 @@ const ResetPasswordForm = () => {
                     </Box>
                   </InputRightElement>
                 </InputGroup>
+                <Text fontSize="12px" color="red">
+                  {error}
+                </Text>
               </Box>
               <Box mb="15px">
                 <InputGroup>
@@ -92,6 +127,7 @@ const ResetPasswordForm = () => {
                     id="password_confirm"
                     type={secondPassEye ? "text" : "password"}
                     placeholder="Подтвердите пароль*"
+                    onChange={handleChangePasswordTwo}
                     sx={{
                       "&::placeholder": {
                         color: "#AAAAAA",
@@ -124,8 +160,12 @@ const ResetPasswordForm = () => {
                     </Box>
                   </InputRightElement>
                 </InputGroup>
+                <Text fontSize="12px" color="red">
+                  {errorTwo}
+                </Text>
               </Box>
               <Button
+                isLoading={loading}
                 type="submit"
                 colorScheme="blue.600"
                 mt={{ base: "10px", sm: "15px" }}
