@@ -52,8 +52,8 @@ const Authoration: FC = () => {
   };
 
   useEffect(() => {
-    if (authUser.id) {
-      navigate("/basket");
+    if (authUser.access) {
+      navigate("/");
     }
   }, [authUser, navigate]);
 
@@ -63,7 +63,7 @@ const Authoration: FC = () => {
         <FormControl>
           <Box mb="10px">
             <Input
-              {...register("email", {
+              {...register("username", {
                 required: "введите почту или номер",
               })}
               id="emailOrNumber"
@@ -90,7 +90,7 @@ const Authoration: FC = () => {
               fontSize="12px"
               ml={{ base: "5px", sm: "14px" }}
             >
-              {errors.email && errors.email?.message}
+              {errors.username && errors.username?.message}
             </Text>
           </Box>
           <Box mb="10px">
