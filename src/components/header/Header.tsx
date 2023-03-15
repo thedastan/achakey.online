@@ -51,8 +51,8 @@ export default function Header() {
         "2xl": "2xl",
     });
     return (
-        <Box pos="absolute" bg={breakpoints === "base" && "sm" ? "black" : "transparent"} zIndex="10" top="0"
-             left="0" right="0" py={breakpoints === "base" && "sm" ? "10px" : "30px"}>
+        <Box pos="absolute"  bg={breakpoints === "base" && "sm" ? "black" : "transparent"} zIndex="1" top="0"
+             left="0" right="0" py={breakpoints === "base" && "sm" ? "10px" : "10px"}>
             <ModalUserAuth isOpen={isOpen} onClose={onClose}/>
             <Container
                 maxW="1440px"
