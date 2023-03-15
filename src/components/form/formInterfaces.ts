@@ -8,8 +8,9 @@ export interface IInputRegister {
 }
 
 export interface IInputAuth {
-  id: string;
-  email: string;
+  id?: string;
+  access?: string
+  username: string;
   password: string;
 }
 

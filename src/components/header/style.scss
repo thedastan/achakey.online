@@ -1,0 +1,7 @@
+.avatar__login {
+  &:hover {
+    .avatar__login__menu {
+      display: block;
+    }
+  }
+}

@@ -18,10 +18,8 @@ export const fetchRegister = (user: IInputRegister) => {
       });
       toast.success("Вы успешно зарегистрировались!");
     } catch (e: any) {
-      if (e.response.data?.email[0] === "user with this email already exists") {
-        toast.error(
-          "Пользователь с таким адресом электронной почты уже существует"
-        );
+      if (e.response.data?.email[0]) {
+        toast.error(e.response.data?.email[0]);
       } else {
         toast.error(e.message);
       }
