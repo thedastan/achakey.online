@@ -110,7 +110,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                 <Container
                                     maxW={["75vw", "70vw", "45vw", "38vw", "34vw"]}
                                     pr={["0", "0", "0", "0", "60px"]}
-                                    ml={["15%","20%","28%","7%","10%"]}
+                                    ml={["8%","16%","22%","7%","10%"]}
                                 >
                                     <Text
                                         as="h1"
@@ -168,7 +168,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                                             bg="none"
                                                             fontFamily="sans"
                                                             fontSize="14px"
-                                                            px={["3vw", "3vw", "5vw", "4vw", "3vw"]}
+                                                            width={["125px","160px","160px","180px","210px"]}
                                                             py="9px"
                                                             border="1px"
                                                             borderColor="white"
@@ -189,7 +189,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                                             bg="none"
                                                             fontFamily="sans"
                                                             fontSize="14px"
-                                                            px={["3vw", "3vw", "5vw", "4vw", "3vw"]}
+                                                            width={["125px","160px","160px","180px","210px"]}
                                                             py="9px"
                                                             border="1px"
                                                             borderColor="white"
@@ -211,7 +211,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                                         bg="none"
                                                         fontFamily="sans"
                                                         fontSize="14px"
-                                                        px={["3vw", "3vw", "5vw", "4vw", "3vw"]}
+                                                        width={["125px","160px","160px","180px","210px"]}
                                                         py="9px"
                                                         borderColor="white"
                                                         borderRadius="md"
