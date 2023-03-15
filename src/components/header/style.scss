@@ -2,3 +2,14 @@
   backdrop-filter: blur(3px);
   z-index: 1;
 }
+
+.avatar__login {
+  &:hover {
+    .avatar__login__menu {
+      display: block;
+      &:hover {
+        display: block;
+      }
+    }
+  }
+}
