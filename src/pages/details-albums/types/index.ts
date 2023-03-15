@@ -9,7 +9,7 @@ interface ITrack {
   audio?: string;
   created_at?: string;
   updated_at?: string;
-  id?: string;
+  id?: number | null;
   name?: string;
   image?: string;
   artist?: string;
@@ -23,7 +23,7 @@ interface ITrack {
 }
 
 export interface IAlbumDetail {
-  id?: string;
+  id?: number;
   name: string;
   total_price: string;
   image: string;

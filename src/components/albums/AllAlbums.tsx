@@ -13,8 +13,6 @@ export default function AllAlbums() {
     fetchTracks();
   }, []);
 
-  console.log();
-
   return (
     <section style={{ minHeight: "70vh" }}>
       <Box>

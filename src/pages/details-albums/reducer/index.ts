@@ -6,7 +6,7 @@ const initialState: AlbumDetailsState = {
     music: [],
     name: "",
     total_price: "",
-    id: "",
+    id: 0,
   },
   error: "",
 };

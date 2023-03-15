@@ -11,7 +11,7 @@ export interface OrderState {
 }
 
 export interface OrderType {
-  id?: number | string;
+  id?: number | null;
   user: string;
   total_price?: string;
   status?: string;
@@ -23,8 +23,8 @@ export interface OrderType {
 export interface OrderItem {
   id?: string | number;
   order: string;
-  music: ITrack;
-  album: IAlbums;
+  music?: ITrack;
+  album?: IAlbums;
 }
 
 export interface OrderPost {

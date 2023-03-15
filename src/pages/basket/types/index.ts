@@ -10,12 +10,12 @@ export enum BasketTypes {
 interface IOrderItem {
   cart: number | null;
   id: number | null;
-  music?: IMusicForBasket;
+  music?: IMusicForBasket | undefined;
   album?: IPlayList;
 }
 
 export interface IMusicForBasket {
-  id?: string;
+  id?: number | null;
   name?: string;
   image?: string;
   artist?: string;
