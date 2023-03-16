@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { FiEyeOff, FiEye } from "react-icons/fi";
 import { useAppSelector } from "../../../hooks/Index";
 import { useActionResetPassword } from "../../../hooks/useActions";
 
@@ -104,7 +104,7 @@ const ResetPasswordForm = () => {
                   />
                   <InputRightElement width="3rem" h="100%">
                     <Box
-                      color="#2A3654"
+                      color="#000000"
                       h="100%"
                       display="flex"
                       alignItems="center"
@@ -112,7 +112,7 @@ const ResetPasswordForm = () => {
                       fontSize={{ base: "20px", sm: "25px" }}
                       onClick={handleClick}
                     >
-                      {passEye ? <BsEyeSlashFill /> : <BsEyeFill />}
+                      {passEye ? <FiEyeOff /> : <FiEye />}
                     </Box>
                   </InputRightElement>
                 </InputGroup>
@@ -148,7 +148,7 @@ const ResetPasswordForm = () => {
                   />
                   <InputRightElement width="3rem" h="100%">
                     <Box
-                      color="#2A3654"
+                      color="#000000"
                       h="100%"
                       display="flex"
                       alignItems="center"
@@ -156,7 +156,7 @@ const ResetPasswordForm = () => {
                       fontSize={{ base: "20px", sm: "25px" }}
                       onClick={handleSecondClick}
                     >
-                      {secondPassEye ? <BsEyeSlashFill /> : <BsEyeFill />}
+                      {secondPassEye ? <FiEyeOff /> : <FiEye />}
                     </Box>
                   </InputRightElement>
                 </InputGroup>

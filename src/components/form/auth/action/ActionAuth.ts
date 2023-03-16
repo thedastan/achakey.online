@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { Dispatch } from "redux";
 import { PUBLIC_API } from "../../../../api/Index";
 import { IForms, IFormsTypes, IInputAuth } from "../../formInterfaces";
@@ -18,10 +19,9 @@ export const fetchAuthLogin = (user: IInputAuth) => {
       localStorage.setItem("accessToken", JSON.stringify(res.data.access));
       localStorage.setItem("refreshToken", JSON.stringify(res.data.refresh));
       localStorage.setItem("user-id", `"${res.data.id}"`);
-      console.log(res.data);
-      alert("Добро пожаловать!");
+      toast.success("Добро пожаловать");
     } catch (e: any) {
-      alert(JSON.stringify(e.response.data, null, 2));
+      toast.error("Не правильный логин или пароль!");
       dispatch({
         type: IFormsTypes.ERROR_USER,
         payload: e.message,

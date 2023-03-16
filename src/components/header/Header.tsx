@@ -8,6 +8,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
 import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
 import { useModalforms } from "../../hooks/useActions";
@@ -22,6 +23,12 @@ export default function Header() {
   const navigate = useNavigate();
   const { loginModal } = useModalforms();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [drop, setDrop] = useState<boolean>(false)
+
+  const openCloseDrop = () => {
+    setDrop(!drop)
+  }
 
   const { searchChange } = useAppSelector((state) => state.searchChangeReducer);
   const { tracks } = useAppSelector((state) => state.musicReducer);
@@ -120,17 +127,18 @@ export default function Header() {
               rounded="50%"
               position="relative"
               cursor="pointer"
+              onClick={ openCloseDrop }
               className="avatar__login"
             >
-              <SvgAvatar />
+              <SvgAvatar fill={ drop ? "white" : "rgba(255, 255, 255, 0.4)" } />
               <Box
                 position="absolute"
-                display="none"
+                display={ drop ? "block" : "none" }
                 bg="transparent"
                 top="0"
                 right="0"
                 mr="30px"
-                className="avatar__login__menu"
+                // className="avatar__login__menu"
               >
                 <Box display="flex" flexDir="column" alignItems="flex-end">
                   <Box

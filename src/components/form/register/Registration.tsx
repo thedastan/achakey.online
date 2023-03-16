@@ -11,7 +11,7 @@ import {
 import React, { FC, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
-import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { FiEyeOff, FiEye } from "react-icons/fi";
 import { ToastContainer } from "react-toastify";
 import { useGoogleLogin } from "@react-oauth/google";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,7 +25,7 @@ const Registration: FC = () => {
   const [passEye, setPassEye] = useState<boolean>(false);
   const [secondPassEye, setSecondPassEye] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [phone, setPhoneNumber] = useState<string>("");
   const [password, setPassword1] = useState<string>("");
   const [password_confirm, setPassword2] = useState<string>("");
 
@@ -52,7 +52,7 @@ const Registration: FC = () => {
   );
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse: { access_token: string; }) => {
+    onSuccess: (tokenResponse: { access_token: string }) => {
       if (tokenResponse.access_token) {
         console.log(tokenResponse);
         fetchRegisterGoogle(tokenResponse.access_token);
@@ -111,8 +111,8 @@ const Registration: FC = () => {
     if (password === password_confirm) {
       if (email.length > 0) {
         fetchRegister({ email, password, password_confirm });
-      } else if (phoneNumber.length > 0) {
-        fetchRegister({ phoneNumber, password, password_confirm });
+      } else if (phone.length > 0) {
+        fetchRegister({ phone, password, password_confirm });
       } else {
         setErrorEmailPhone("Введите почту или номер");
       }
@@ -245,7 +245,7 @@ const Registration: FC = () => {
                 />
                 <InputRightElement width="3rem" h="100%">
                   <Box
-                    color="#2A3654"
+                    color="#000000"
                     h="100%"
                     display="flex"
                     alignItems="center"
@@ -253,7 +253,7 @@ const Registration: FC = () => {
                     fontSize={{ base: "20px", sm: "25px" }}
                     onClick={handleClick}
                   >
-                    {passEye ? <BsEyeSlashFill /> : <BsEyeFill />}
+                    {passEye ? <FiEyeOff /> : <FiEye />}
                   </Box>
                 </InputRightElement>
               </InputGroup>
@@ -293,7 +293,7 @@ const Registration: FC = () => {
                 />
                 <InputRightElement width="3rem" h="100%">
                   <Box
-                    color="#2A3654"
+                    color="#000000"
                     h="100%"
                     display="flex"
                     alignItems="center"
@@ -301,7 +301,7 @@ const Registration: FC = () => {
                     fontSize={{ base: "20px", sm: "25px" }}
                     onClick={handleSecondClick}
                   >
-                    {secondPassEye ? <BsEyeSlashFill /> : <BsEyeFill />}
+                    {secondPassEye ? <FiEyeOff /> : <FiEye />}
                   </Box>
                 </InputRightElement>
               </InputGroup>

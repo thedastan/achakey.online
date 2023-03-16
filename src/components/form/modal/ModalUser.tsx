@@ -33,7 +33,7 @@ const ModalUserAuth: FC<IModal> = ({ isOpen, onClose }) => {
           !!register ? (
             <Registration />
           ) : !!login ? (
-            <Authoration />
+            <Authoration onClose={onClose} />
           ) : (
             !!forgotPas && <ForgotPassword />
           )
