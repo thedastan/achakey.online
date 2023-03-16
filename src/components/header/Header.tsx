@@ -102,13 +102,7 @@ export default function Header() {
         ) : (
           <Box
             display="flex"
-            justifyContent={
-              breakpoints === "base" && "sm"
-                ? "space-between"
-                : "end" && breakpoints === "md"
-                ? "end"
-                : "end"
-            }
+            justifyContent="end"
             alignItems="center"
           >
             {!getAccessToken() && (

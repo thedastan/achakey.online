@@ -101,7 +101,6 @@
     .music-container {
         display: flex;
     }
-
     .music-text-two {
         display: none;
     }
@@ -116,8 +115,8 @@
     .music--button {
         width: 110px;
     }
-    .music--cont--text {
-        margin-top: -10%;
+    .music-cont-text {
+        margin-top: 5%;
     }
 }
 
