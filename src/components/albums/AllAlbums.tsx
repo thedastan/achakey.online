@@ -17,40 +17,39 @@ export default function AllAlbums() {
     <section style={{ minHeight: "70vh" }}>
       <Box>
         <Box
-          maxW="1164px"
-          rounded="30px"
-          bg="rgba(255, 255, 255, 0.08)"
-          minH="241px"
-          mb="45px"
-        ></Box>
-        <Box
           display="flex"
           flexWrap="wrap"
           justifyContent={{ base: "center", sm: "start" }}
+          gap="43px"
         >
           {albums.map((el, index) => (
             <Box
               key={index}
-              maxW="259px"
+              w={{ base: "100%", sm: "259px" }}
               mr={albums.length - 1 === index ? "0" : { base: "0", md: "43px" }}
               mx={{ base: "10px", md: "0" }}
               objectFit="cover"
-              h="auto"
+              h={{ base: "auto", sm: "217px" }}
               mb="45px"
               pos="relative"
             >
-              <Image src={el?.image} h="200px" w="100%" rounded="14px" />
-              <Box
-                position="absolute"
-                bg="linear-gradient(180deg, rgba(0, 0, 0, 0) -1.97%, #000000 92.45%)"
-                zIndex="3"
-                bottom="0"
-                left="0"
-                right="0"
-                roundedBottom="14px"
-                h="93px"
-              >
-                <NavLink to={`details/${el.id}`}>
+              <NavLink to={`details/${el.id}`}>
+                <Image
+                  h={{ base: "auto", sm: "217px" }}
+                  src={el?.image}
+                  w="100%"
+                  rounded="14px"
+                />
+                <Box
+                  position="absolute"
+                  bg="linear-gradient(180deg, rgba(0, 0, 0, 0) -1.97%, #000000 92.45%)"
+                  zIndex="3"
+                  bottom="0"
+                  left="0"
+                  right="0"
+                  roundedBottom="14px"
+                  h="93px"
+                >
                   <Text
                     textColor="white"
                     fontWeight="500"
@@ -63,8 +62,8 @@ export default function AllAlbums() {
                   <Text pl="24px" color="white" opacity="0.5">
                     {`${el.music.length}`} треков
                   </Text>
-                </NavLink>
-              </Box>
+                </Box>
+              </NavLink>
             </Box>
           ))}
         </Box>

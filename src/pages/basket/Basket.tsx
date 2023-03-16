@@ -7,13 +7,14 @@ import API from "../../api/Index";
 import { useAppSelector } from "../../hooks/Index";
 import { useActionBasket } from "../../hooks/useActions";
 import { OrderPopup } from "../../components/order/OrderPopup";
+import { getUserId } from "../../components/helper";
 
 export default function Basket() {
   const [openPopup, setOpenPopup] = useState(false);
   const { fetchBasket } = useActionBasket();
   const { basket } = useAppSelector((state) => state.reducerBasket);
 
-  const lengthBasket = basket.map((el) => el.cart_item.length);
+  const lengthBasket = basket.filter((el) => el.user === getUserId());
 
   const deletedBasket = async (id: string) => {
     try {
@@ -33,11 +34,13 @@ export default function Basket() {
     fetchBasket();
   }, []);
 
+  console.log(lengthBasket);
+
   return (
     <section>
       <Box w="100%" minH="90vh" pb="50px" pt="140px">
         <Container maxW="1220px" position="relative">
-          {!lengthBasket[0] && (
+          {!lengthBasket[0]?.cart_item?.length && (
             <Text
               textAlign="center"
               color="white"
@@ -73,7 +76,7 @@ export default function Basket() {
               </div>
             ))}
 
-            {lengthBasket[0] && (
+            {lengthBasket[0]?.cart_item?.length && (
               <Box
                 display="flex"
                 justifyContent="space-between"

@@ -13,11 +13,9 @@ let audio: any;
 
 export default function AudioPlayerExcerpt() {
   const { change } = useAppSelector((state) => state.reducerChange);
-  const { volume, active, pause, currentTime, duration } = useAppSelector(
+  const { volume, active, pause } = useAppSelector(
     (state) => state.excerptPlayerReducer
   );
-
-  const pausePlay = useAppSelector((state) => state.playReducer.pause);
 
   const { excerptCurrentTimeAction, excerptDurationAction, excerptPlayAction } =
     useExcerpAction();

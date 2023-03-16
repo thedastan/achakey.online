@@ -10,12 +10,13 @@ const initialState: ExcerptPlayerState = {
   duration: 0,
   pause: true,
   volume: 50,
+  forAlbum: false,
 };
 
 export const excerptPlayerReducer = (
   state = initialState,
   action: ExcerptActionPlayer
-) => {
+): ExcerptPlayerState => {
   switch (action.type) {
     case ExcerptPlayerTypes.EXCERPT_PAUSE:
       return { ...state, pause: true };
@@ -31,6 +32,9 @@ export const excerptPlayerReducer = (
 
     case ExcerptPlayerTypes.EXCERPT_SET_VOLUME:
       return { ...state, volume: action.payload };
+
+    case ExcerptPlayerTypes.EXCERPT_FOR_ALBUM:
+      return { ...state, forAlbum: action.payload };
 
     case ExcerptPlayerTypes.EXCERPT_SET_ACTIVE:
       return {
