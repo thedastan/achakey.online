@@ -5,6 +5,7 @@ import MenuBar from "../ui/MenuBar";
 
 import {searchResult} from "../header/action-creators/Action";
 import {useAppDispatch} from "../../hooks/Index";
+import {Box} from "@chakra-ui/react";
 
 interface IMain {
     children: JSX.Element;
@@ -27,7 +28,7 @@ export default function PageRouting({children}: IMain) {
                 </main>
             </MenuBar>
             {window.location.pathname === "/all-playlist" && <Footer/>}
-            {/*{window.location.pathname === "/" && <Footer/>}*/}
+            {window.location.pathname === "/" && <Box display={{base:"block",lg:"none"}}><Footer/></Box>}
             {window.location.pathname === "/excerpts" && <Footer/>}
             {window.location.pathname === "/my-playlist" && <Footer/>}
             {window.location.pathname === "/basket" && <Footer/>}
