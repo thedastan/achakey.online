@@ -62,6 +62,7 @@ export default function Footer() {
               src={LogoAchakey}
               maxW="121px"
               h="36px"
+              mx="10px"
               display={{ base: "none", md: "block" }}
             />
           </Link>
