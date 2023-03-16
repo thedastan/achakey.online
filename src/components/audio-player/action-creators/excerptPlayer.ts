@@ -12,6 +12,12 @@ export const excerptPauseAction = (): ExcerptActionPlayer => {
   return { type: ExcerptPlayerTypes.EXCERPT_PAUSE };
 };
 
+export const excerptForAlbumAction = (
+  payload: boolean
+): ExcerptActionPlayer => {
+  return { type: ExcerptPlayerTypes.EXCERPT_FOR_ALBUM, payload };
+};
+
 export const excerptCurrentTimeAction = (
   payload: number
 ): ExcerptActionPlayer => {

@@ -21,21 +21,16 @@ import SvgNext from "../../assets/svg/SvgNext";
 import SvgPause from "../../assets/svg/SvgPause";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import SvgPrev from "../../assets/svg/SvgPrev";
+import defaultImage from "../../assets/img/defaultImage.png";
 
-import "./style.scss";
-import "../ui/style.scss";
 import { getIdAlums, getUserId } from "../helper";
 import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
 import { fetchBasket } from "../../pages/basket/action-creators/action";
+import "./style.scss";
+import "../ui/style.scss";
+
 interface IlistMedia {
   listTruck?: ITrack[] | any;
-}
-
-interface ITrackChange {
-  onClick?: any;
-  name?: string;
-  music?: ITrack;
-  tracks?: boolean;
 }
 
 interface ICartArray {
@@ -72,7 +67,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     (state) => state.currentIndexReducer.currentIndex
   );
 
-  const { pause, active, duration, currentTime } = useAppSelector(
+  const { pause, active, duration, currentTime, forAlbum } = useAppSelector(
     (state) => state.excerptPlayerReducer
   );
 
@@ -87,12 +82,14 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   } = useExcerpAction();
 
   const play = () => {
-    if (pause) {
-      excerptPlayAction();
-      pauseTrack();
-    } else {
-      excerptPauseAction();
-      pauseTrack();
+    if (forAlbum) {
+      if (pause) {
+        excerptPlayAction();
+        pauseTrack();
+      } else {
+        excerptPauseAction();
+        pauseTrack();
+      }
     }
   };
 
@@ -185,6 +182,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   }
 
   function postOrderAlbum() {
+    setOpenPopup(true);
     const order: IOrder = {
       user: getUserId(),
       total_price: Number(active?.price),
@@ -223,6 +221,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     fetchBasket();
   }, [basket]);
 
+  console.log(forAlbum);
+
   return (
     <section
       style={{
@@ -237,27 +237,40 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
         alignItems="end"
       >
         <Box
+          mb="20px"
+          fontSize="32px"
+          color="white"
+          display={{ base: "block", md: "none" }}
+          fontWeight="900"
+          mx="auto"
+        >
+          {albums.name}
+          <Text>{`[Album]`}</Text>
+        </Box>
+        <Box
           maxW="176px"
           h="225px"
           mr={{ base: "0", md: "23px" }}
           mx={{ base: "auto", md: "0" }}
           mb={{ base: "19px", md: "0" }}
         >
-          <Image src={active?.image} />
+          <Image src={albums?.image ? albums.image : defaultImage} />
         </Box>
         <Box
           w={{ base: "100%", md: "90%" }}
           flexDir={{ base: "column", md: "row" }}
           pl="10px"
         >
-          <Text
+          <Box
             mb="32px"
             fontSize="38.57px"
             color="white"
             display={{ base: "none", md: "block" }}
+            fontWeight="900"
           >
-            {active?.name}
-          </Text>
+            {albums.name}
+            <Text>{`[Album]`}</Text>
+          </Box>
           <Box
             display="flex"
             flexDir={{ base: "column", md: "row" }}
@@ -268,7 +281,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               <Button
                 bg="transparent"
                 colorScheme="none"
-                onClick={OnClickPrev}
+                onClick={() => (forAlbum ? OnClickPrev : console.log("Prev"))}
                 p="0"
               >
                 <SvgPrev />
@@ -280,12 +293,16 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 p="0"
                 mx="2px"
               >
-                {pause ? <SvgPlay fill="white" /> : <SvgPause fill="white" />}
+                {forAlbum && pause ? (
+                  <SvgPlay fill="white" />
+                ) : (
+                  <SvgPause fill="white" />
+                )}
               </Button>
               <Button
                 bg="transparent"
                 colorScheme="none"
-                onClick={OnClickNext}
+                onClick={() => (forAlbum ? OnClickNext() : console.log("Next"))}
                 p="0"
               >
                 <SvgNext />
@@ -296,8 +313,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               <input
                 type="range"
                 min={0}
-                max={duration}
-                value={currentTime}
+                max={forAlbum ? duration : 0}
+                value={forAlbum ? currentTime : 0}
                 onChange={changeCurrentTime}
                 className="time"
               />
@@ -307,7 +324,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 fontSize={{ base: "12px", md: "16px" }}
                 textColor="white"
               >
-                {startTimer()}
+                {forAlbum ? startTimer() : 0}
               </Text>
             </Box>
           </Box>
@@ -318,7 +335,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           >
             <Box display="flex" flexDir={{ base: "column", sm: "row" }}>
               <Button
-                onClick={() => setOpenPopup(true)}
+                onClick={postOrderAlbum}
                 rounded="50px"
                 w={{ base: "55vw", sm: "39vw", md: "17vw" }}
                 py="9px"

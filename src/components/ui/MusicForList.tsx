@@ -1,14 +1,18 @@
 import { Box, Button, Text, Image } from "@chakra-ui/react";
+
 import SvgPlay from "../../assets/svg/SvgPlay";
 import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
 import { SvgPlayerGifDefault } from "../../assets/svg/SvgPlayerGifDefault";
 import { useAppSelector } from "../../hooks/Index";
 import trackImage from "../../assets/img/Ellipse.png";
 import { ITrack } from "../../redux/types";
-import { useActionBasket, useActionUser } from "../../hooks/useActions";
+import {
+  useAction,
+  useActionBasket,
+  useExcerpAction,
+} from "../../hooks/useActions";
 import { useEffect, useState } from "react";
-import { getUserId } from "../helper";
-import { IBasketTypes } from "../../pages/basket/types";
+import { getIdAlums, getUserId } from "../helper";
 
 interface ITrackChange {
   onClick?: any;
@@ -35,12 +39,27 @@ export default function MusicForList({
   tracks,
 }: ITrackChange) {
   const [title, setTitle] = useState("+ в корзину");
-  const { active, pause } = useAppSelector(
+  const { basket } = useAppSelector((state) => state.reducerBasket);
+  const { postBasketItem, fetchBasket } = useActionBasket();
+
+  const { pause, active } = useAppSelector(
     (state) => state.excerptPlayerReducer
   );
-  const { basket } = useAppSelector((state) => state.reducerBasket);
 
-  const { postBasketItem, fetchBasket } = useActionBasket();
+  const { pauseTrack } = useAction();
+
+  const { excerptPauseAction, excerptPlayAction } = useExcerpAction();
+
+  const play = (music: any) => {
+    if (pause) {
+      excerptPlayAction();
+      pauseTrack();
+    } else {
+      excerptPauseAction();
+      onClick(music);
+      pauseTrack();
+    }
+  };
 
   const PostBasketItem = async (element: any) => {
     const cart: ICart = {
@@ -71,23 +90,9 @@ export default function MusicForList({
     fetchBasket();
   };
 
-  function filterTraks() {
-    // basket.forEach((obj1) =>
-    //   obj1.cart_item.find((el) =>
-    //     el.music?.id === music?.id
-    //       ? setTitle("в корзине")
-    //       : setTitle("+ в корзину")
-    //   )
-    // );
-  }
-
   useEffect(() => {
     fetchBasket();
   }, []);
-
-  useEffect(() => {
-    filterTraks();
-  }, [music, title, basket]);
 
   return (
     <Box
@@ -103,7 +108,9 @@ export default function MusicForList({
         display="flex"
         alignItems="center"
         w="25vw"
-        onClick={() => onClick(music)}
+        onClick={() => {
+          play(music);
+        }}
       >
         {tracks && <Image src={trackImage} w="47px" mr="29px" />}
         {active?.music_short === music?.music_short ? (
@@ -138,24 +145,28 @@ export default function MusicForList({
       <Text color="white" ml="50px">
         {music?.price}
       </Text>
-      <Button
-        onClick={() => PostBasketItem(music)}
-        border="1px"
-        borderColor={
-          active?.music_short === music?.music_short ? "blue" : "white"
-        }
-        rounded="38px"
-        fontSize="9px"
-        h="23px"
-        w="84px"
-        textColor={
-          active?.music_short === music?.music_short ? "blue" : "white"
-        }
-        background="transparent"
-        colorScheme="none"
-      >
-        {title}
-      </Button>
+      {window.location.pathname !== "/excerpts/details/" + getIdAlums() ? (
+        <Button
+          onClick={() => PostBasketItem(music)}
+          border="1px"
+          borderColor={
+            active?.music_short === music?.music_short ? "blue" : "white"
+          }
+          rounded="38px"
+          fontSize="9px"
+          h="23px"
+          w="84px"
+          textColor={
+            active?.music_short === music?.music_short ? "blue" : "white"
+          }
+          background="transparent"
+          colorScheme="none"
+        >
+          {title}
+        </Button>
+      ) : (
+        ""
+      )}
     </Box>
   );
 }

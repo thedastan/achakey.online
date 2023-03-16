@@ -7,6 +7,7 @@ import {
 } from "../playlist/reducer/action-creator";
 import { ITrack } from "../../redux/types";
 import MusicForList from "../ui/MusicForList";
+import { getIdAlums } from "../helper";
 
 interface ITrackList {
   tracks: ITrack[];
@@ -14,7 +15,8 @@ interface ITrackList {
 }
 
 export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
-  const { excerptActiveAction } = useExcerpAction();
+  const { excerptActiveAction, excerptForAlbumAction } = useExcerpAction();
+
   const { pauseTrack } = useAction();
   const dispatch = useAppDispatch();
 
@@ -23,6 +25,11 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
     eventChange(true);
     dispatch(currentIndexAction(index));
     pauseTrack();
+    {
+      window.location.pathname === "/excerpts/details/" + getIdAlums()
+        ? excerptForAlbumAction(true)
+        : excerptForAlbumAction(false);
+    }
   };
 
   return (

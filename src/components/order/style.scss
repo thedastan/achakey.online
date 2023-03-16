@@ -10,3 +10,21 @@
     margin: 0 auto;
   }
 }
+
+.accordion {
+  &__icon {
+    transition: 0.3s ease-in-out;
+  }
+  &.active &__icon {
+    transform: rotate(180deg);
+  }
+
+  &__content {
+    overflow: hidden;
+    transition: max-height 1s ease-in-out;
+    max-height: 0;
+  }
+  &.active &__content {
+    max-height: 20em;
+  }
+}

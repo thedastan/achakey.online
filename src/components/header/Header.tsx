@@ -13,10 +13,9 @@ import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
 import { useModalforms } from "../../hooks/useActions";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import ModalUserAuth from "../form/modal/ModalUser";
-import "./style.scss";
 import { SvgAvatar } from "../../assets/svg/SvgAvatar";
 import { getAccessToken } from "../helper";
-import { useEffect, useState } from "react";
+import "./style.scss";
 
 export default function Header() {
   const dispatch = useAppDispatch();
@@ -112,11 +111,13 @@ export default function Header() {
             }
             alignItems="center"
           >
-            <Box mx="10px" zIndex="21">
-              <Link to={"/"}>
-                <Image src={LogoAchakey} alt="Logo" />
-              </Link>
-            </Box>
+            {!getAccessToken() && (
+              <Box mx="10px" zIndex="21">
+                <Link to={"/"}>
+                  <Image src={LogoAchakey} alt="Logo" />
+                </Link>
+              </Box>
+            )}
 
             <Box
               zIndex="21"

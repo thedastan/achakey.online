@@ -3,11 +3,10 @@ import { useState } from "react";
 
 import { useAppSelector } from "../../hooks/Index";
 import { useActionOrder } from "../../hooks/useActions";
-import SvgCross from "../../assets/svg/SvgCross";
 import { IMusicForBasket, IPlayList } from "../../pages/basket/types";
 import { OrderPost } from "../order/types/order";
 import { getUserId } from "../helper";
-
+import SvgArrowTop from "../../assets/svg/SvgArrowTop";
 interface IBasketAlbums {
   image?: string;
   name?: string;
@@ -25,12 +24,11 @@ export default function BasketListAlbums({
   price,
   music,
   albums,
-  deleted,
-  id,
   setOpenPopup,
 }: IBasketAlbums) {
   const { fetchOrderPost, fetchOrder } = useActionOrder();
   const Order = useAppSelector((state) => state.reducerOrder.order);
+  const [active, setActive] = useState<boolean>(false);
 
   const postOrder = async (cart: any) => {
     const order: OrderPost = {
@@ -80,107 +78,138 @@ export default function BasketListAlbums({
       pr={{ base: "10px", md: "29px" }}
     >
       <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
         py="19px"
+        pb="45px"
+        className={`accordion ${active && "active"}`}
+        w="100%"
+        textColor="white"
+        position="relative"
       >
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Image
-            src={image}
-            maxW="47px"
-            rounded="50%"
-            mr={{ base: "10px", md: "26px" }}
-          />
-          <Text
-            pl={{ base: "0", md: "17px" }}
-            fontSize="20px"
-            fontWeight="400"
-            color="white"
-          >
-            Альбом: {name}
-          </Text>
-        </Box>
         <Box
+          onClick={() => setActive(!active)}
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          w={{ base: "50%", lg: "32%" }}
+          borderBottom="0.5px solid rgba(255, 255, 255, 0.5)"
+          pb="19px"
         >
-          <Text fontSize="12px" color="white">
-            {price}c
-          </Text>
-          <Button
-            onClick={() => postOrder(albums)}
-            ml={{ base: "2%", md: "18%" }}
-            border="1px"
-            borderColor="white"
-            rounded="38px"
-            fontSize="9px"
-            h="23px"
-            w="84px"
-            background="transparent"
-            colorScheme="none"
-            zIndex="0"
-          >
-            Оплатить
-          </Button>
-          <Box cursor="pointer" onClick={() => deleted(`${id}`)}>
-            <SvgCross />
-          </Box>
-        </Box>
-      </Box>
-      <Box>
-        {music?.map((el: any, index: any) => (
           <Box
-            key={index}
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            py="19px"
           >
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+            <Image
+              src={image}
+              maxW="47px"
+              rounded="50%"
+              mr={{ base: "10px", md: "26px" }}
+            />
+            <Text
+              pl={{ base: "0", md: "17px" }}
+              fontSize="20px"
+              fontWeight="400"
+              color="white"
             >
-              <Image
-                src={el.image}
-                maxW="47px"
-                rounded="50%"
-                mr={{ base: "10px", md: "26px" }}
-              />
-              <Box>
-                <Text
-                  pl={{ base: "0", md: "17px" }}
-                  fontSize="14.53px"
-                  fontWeight="400"
-                  color="white"
+              Альбом: <span style={{ fontWeight: "600" }}>{name}</span>
+            </Text>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Text pr="69px" fontWeight="600" fontSize="20px">
+              {price} сом
+            </Text>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                postOrder(albums);
+              }}
+              border="1px"
+              borderColor="white"
+              rounded="38px"
+              fontSize="9px"
+              h="23px"
+              w="84px"
+              textColor="white"
+              background="transparent"
+              colorScheme="none"
+            >
+              Оплатить
+            </Button>
+          </Box>
+        </Box>
+        <Box>
+          <Box className="accordion__content">
+            {music?.map((el: any, index: any) => (
+              <Box
+                key={index}
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                py="19px"
+                borderBottom="0.5px solid rgba(255, 255, 255, 0.5)"
+              >
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
                 >
-                  {el.name}
-                </Text>
-                <Text
-                  pl={{ base: "0", md: "17px" }}
-                  fontSize="10px"
-                  fontWeight="400"
-                  color="white"
+                  <Image
+                    src={el.image}
+                    maxW="47px"
+                    rounded="50%"
+                    mr={{ base: "10px", md: "26px" }}
+                  />
+                  <Box>
+                    <Text
+                      pl={{ base: "0", md: "17px" }}
+                      fontSize="14.53px"
+                      fontWeight="400"
+                      color="white"
+                    >
+                      {el.name}
+                    </Text>
+                    <Text
+                      pl={{ base: "0", md: "17px" }}
+                      fontSize="10px"
+                      fontWeight="400"
+                      color="white"
+                    >
+                      Альбом: {name}
+                    </Text>
+                  </Box>
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
                 >
-                  Альбом: {name}
-                </Text>
+                  <Text fontSize="12px" textAlign="end" color="white">
+                    {el.price}c
+                  </Text>
+                </Box>
               </Box>
-            </Box>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              w={{ base: "50%", lg: "32%" }}
-            >
-              <Text fontSize="12px" color="white">
-                {el.price}c
-              </Text>
+            ))}
+          </Box>
+        </Box>
+        <Box
+          position="absolute"
+          w="100%"
+          ml="auto"
+          display="flex"
+          justifyContent="center"
+          onClick={() => setActive(!active)}
+          pt="10px"
+        >
+          <Box display="flex" alignItems="center" mx="auto">
+            <Text>{music?.length} треков</Text>
+            <Box className="accordion__icon" ml="17px">
+              <SvgArrowTop stroke="white" />
             </Box>
           </Box>
-        ))}
+        </Box>
       </Box>
     </Box>
   );

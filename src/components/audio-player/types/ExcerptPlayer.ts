@@ -1,13 +1,5 @@
 import { ITrack } from "../../../redux/types";
 
-export interface ExcerptPlayerState {
-  active: null | ITrack;
-  volume: number;
-  duration: number;
-  currentTime: number;
-  pause: boolean;
-}
-
 export enum ExcerptPlayerTypes {
   EXCERPT_PLAY = "EXCERPT_PLAY",
   EXCERPT_PAUSE = "EXCERPT_PAUSE",
@@ -15,6 +7,21 @@ export enum ExcerptPlayerTypes {
   EXCERPT_SET_DURATION = "EXCERPT_SET_DURATION",
   EXCERPT_SET_CURRENT_TIME = "EXCERPT_SET_CURRENT_TIME",
   EXCERPT_SET_VOLUME = "EXCERPT_SET_VOLUME",
+  EXCERPT_FOR_ALBUM = "EXCERPT_FOR_ALBUM",
+}
+
+export interface ExcerptPlayerState {
+  active: null | ITrack;
+  volume: number;
+  duration: number;
+  currentTime: number;
+  pause: boolean;
+  forAlbum: boolean;
+}
+
+export interface ExcerptPlayerActive {
+  active: null | ITrack;
+  album: null | boolean;
 }
 
 interface ExcerptPlayAction {
@@ -45,10 +52,16 @@ interface ExcerptActiveAction {
   payload: ITrack;
 }
 
+interface ExcerptForAlbumAction {
+  type: ExcerptPlayerTypes.EXCERPT_FOR_ALBUM;
+  payload: boolean;
+}
+
 export type ExcerptActionPlayer =
   | ExcerptActiveAction
   | ExcerptCurrentTimeAction
   | ExcerptDurationAction
   | ExcerptPauseAction
   | ExcerptPlayAction
-  | ExcerptVolumeAction;
+  | ExcerptVolumeAction
+  | ExcerptForAlbumAction;
