@@ -39,7 +39,6 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
       display="flex"
       flexDir="column"
       justifyContent="start"
-      // pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}
       overflowY="scroll"
       className="scroll"
     >
