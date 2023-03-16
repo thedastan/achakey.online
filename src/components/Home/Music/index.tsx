@@ -86,9 +86,9 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                 flexDir={{base: "column", md: "column", lg: "row", xl: "row"}}
                                 ml={breakpoints === "base" ? "0" : "0"}
                             >
-                                <Box display={{base: "flex", sm: ""}} zIndex="-1">
+                                <Box  zIndex="-1">
                                     <Box    width={{base:"80vw", sm:"72vw", md:"53vw", lg:"50vw", xl:"50vw", "2xl":"50vw"}}
-                                            height={{base: "50vh", sm: "50vh", md: "50vh", lg: "100vh", xl: "100vh", "2xl":"100vh"}}
+                                            height={{base: "35vh", sm: "40vh", md: "40vh", lg: "100vh", xl: "100vh", "2xl":"100vh"}}
                                             className="music-container" zIndex="-1">
                                         <Image
                                             src={el.image}
@@ -120,6 +120,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                             mt={{base:"80px",sm:"80px",md:"80px",lg:"0",xl:"0","2xl":"0"}}
                                             ml={{base:"0", sm:"30px", md:"0", lg:"0", xl:'0', "2xl":"0"}}
                                             alt="img"
+                                            className="music--image"
                                         />
                                         <Text
                                             as="h1"
@@ -138,7 +139,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                     maxW={["75vw", "70vw", "45vw", "38vw", "34vw"]}
                                     pr={["0", "0", "0", "0", "60px"]}
                                     ml={["6%","16%","22%","7%","10%"]}
-                                    className="music--cont--text"
+                                    className="music-cont-text"
                                 >
                                     <Text
                                         as="h1"
@@ -210,6 +211,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                                         borderColor: "#49DEFF",
                                                         background: "none",
                                                     }}
+                                                    className="music--button"
                                                     onClick={openModal}
                                                 >
                                                     В корзину
@@ -231,6 +233,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                                             borderColor: "#49DEFF",
                                                             background: "none",
                                                         }}
+                                                        className="music--button"
                                                     >
                                                         В корзину
                                                     </Button>
@@ -248,6 +251,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                                     borderRadius="md"
                                                     color="white"
                                                     mx="20px"
+                                                    className="music--button"
                                                     _hover={{
                                                         color: "#49DEFF",
                                                         borderColor: "#49DEFF",
@@ -262,12 +266,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                 </Container>
                             </Box>
                             {index === playlistData.length - 1 ? (
-                                <Box className="music-footer" mt={["25px", "28px", "28px", "-89px", "-89px"]}>
-                                    <Footer/>
-                                </Box>
-                            ) : (
-                                ""
-                            )}
+                                <Box className="music-footer" mt={["25px", "28px", "28px", "-89px", "-89px"]}><Footer/></Box>) : ("")}
                         </SwiperSlide>
                     </Box>
                 ))}
