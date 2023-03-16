@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { FiEyeOff, FiEye } from "react-icons/fi";
 import {
   Box,
   Button,
@@ -12,20 +12,23 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import { useModalforms } from "../../../hooks/useActions";
 import { usePostAuth } from "./../../../hooks/useActions";
 import { useAppSelector } from "../../../hooks/Index";
 import { IInputAuth } from "../formInterfaces";
 
-const Authoration: FC = () => {
+type IModalInterface = {
+  onClose: () => void;
+};
+
+const Authoration: FC<IModalInterface> = ({ onClose }) => {
   const navigate = useNavigate();
   const [passEye, setPassEye] = useState(false);
 
   const { fetchAuthLogin } = usePostAuth();
-  const { loading, error, authUser } = useAppSelector(
-    (state) => state.reducerAuth
-  );
+  const { loading, authUser } = useAppSelector((state) => state.reducerAuth);
 
   const { registerModal, forgotPassModal } = useModalforms();
 
@@ -52,13 +55,15 @@ const Authoration: FC = () => {
   };
 
   useEffect(() => {
-    if (authUser.access) {
+    if (authUser.access || authUser.id) {
       navigate("/");
+      onClose();
     }
-  }, [authUser, navigate]);
+  }, [authUser, navigate, onClose]);
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>
+      <ToastContainer />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl>
           <Box mb="10px">
@@ -118,7 +123,7 @@ const Authoration: FC = () => {
               />
               <InputRightElement width="3rem" h="100%">
                 <Box
-                  color="#2A3654"
+                  color="#000000"
                   h="100%"
                   display="flex"
                   alignItems="center"
@@ -126,7 +131,7 @@ const Authoration: FC = () => {
                   fontSize={{ base: "20px", sm: "25px" }}
                   onClick={handleClick}
                 >
-                  {passEye ? <BsEyeSlashFill /> : <BsEyeFill />}
+                  {passEye ? <FiEyeOff /> : <FiEye />}
                 </Box>
               </InputRightElement>
             </InputGroup>
