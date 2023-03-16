@@ -34,7 +34,9 @@ export default function Basket() {
     fetchBasket();
   }, []);
 
-  console.log(lengthBasket);
+  const filterUser = basket.filter((el) => el.user === getUserId());
+
+  console.log(basket);
 
   return (
     <section>
@@ -51,7 +53,7 @@ export default function Basket() {
             </Text>
           )}
           <Box pl={{ base: "0", md: "5%", xl: "0" }}>
-            {basket?.map((item, index) => (
+            {filterUser?.map((item, index) => (
               <div key={index}>
                 {
                   <Box>
@@ -67,6 +69,30 @@ export default function Basket() {
                             image={el.album?.image}
                             name={el.album?.name}
                             price={el.album?.total_price}
+                          />
+                        )}
+                      </Box>
+                    ))}
+                  </Box>
+                }
+              </div>
+            ))}
+
+            {filterUser?.map((item, index) => (
+              <div key={index}>
+                {
+                  <Box>
+                    {item.cart_item.map((el, idx) => (
+                      <Box key={idx}>
+                        {el.music !== null && (
+                          <BasketListProduct
+                            setOpenPopup={setOpenPopup}
+                            id={String(el.id)}
+                            deleted={deletedBasket}
+                            music={el.music}
+                            image={el.music?.image}
+                            name={String(el.music?.name)}
+                            price={Number(el.music?.price)}
                           />
                         )}
                       </Box>

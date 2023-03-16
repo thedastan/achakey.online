@@ -24,8 +24,8 @@ import { playlistData } from "./playListData";
 import { Link } from "react-router-dom";
 import ModalUserAuth from "../../form/modal/ModalUser";
 import Footer from "../../footer/Footer";
-import "./style.css";
 import { getAccessToken } from "../../helper";
+import "./style.css";
 
 interface MusicProps {
   musicPlay: boolean;
@@ -42,7 +42,6 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
     "2xl": "2xl",
   });
   const { tracks } = useAppSelector((state) => state.musicReducer);
-  console.log(tracks);
 
   useEffect(() => {
     fetchTracks();
@@ -78,7 +77,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
         className="mySwiper"
       >
         {playlistData.map((el: any, index) => (
-          <Box>
+          <Box key={index}>
             <SwiperSlide>
               <Box
                 display="flex"

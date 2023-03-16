@@ -61,10 +61,10 @@ export default function MusicForList({
     }
   };
 
-  const PostBasketItem = async (element: any) => {
+  const PostBasketItem = async (element: ITrack | undefined) => {
     const cart: ICart = {
       user: getUserId(),
-      total_price: element.price,
+      total_price: Number(element?.price),
       cart_item: [
         {
           music: element?.id,
@@ -76,11 +76,16 @@ export default function MusicForList({
 
     const userFiter = basket.filter((el) => el.user === getUserId());
     const filterBasket = userFiter[0]?.cart_item;
-    const includesTracks = filterBasket.filter(
+    const includesTracks = filterBasket?.filter(
       (el) => el.music?.id === cart?.cart_item[0].music
     );
 
-    if (includesTracks[0]?.music?.id === cart?.cart_item[0]?.music) {
+    console.log(includesTracks === undefined);
+
+    if (
+      includesTracks !== undefined &&
+      includesTracks[0]?.music?.id === cart?.cart_item[0]?.music
+    ) {
       alert("No");
     } else {
       alert("Success");
@@ -112,7 +117,13 @@ export default function MusicForList({
           play(music);
         }}
       >
-        {tracks && <Image src={trackImage} w="47px" mr="29px" />}
+        <Image
+          src={music?.image}
+          rounded="50%"
+          w="47px"
+          mr="29px"
+          display={{ base: "none", md: "block" }}
+        />
         {active?.music_short === music?.music_short ? (
           <Box display="inline-block" w="32px" h="32px" pt="2px">
             {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}

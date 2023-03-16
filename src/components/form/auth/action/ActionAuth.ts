@@ -18,6 +18,7 @@ export const fetchAuthLogin = (user: IInputAuth) => {
       localStorage.setItem("accessToken", JSON.stringify(res.data.access));
       localStorage.setItem("refreshToken", JSON.stringify(res.data.refresh));
       localStorage.setItem("user-id", `"${res.data.id}"`);
+      console.log(res.data);
       alert("Добро пожаловать!");
     } catch (e: any) {
       alert(JSON.stringify(e.response.data, null, 2));
