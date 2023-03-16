@@ -23,7 +23,7 @@ import {playlistData} from "./playListData";
 import {Link} from "react-router-dom";
 import ModalUserAuth from "../../form/modal/ModalUser";
 import Footer from "../../footer/Footer";
-import "./style.css"
+import "./musicStyle.css"
 import {getAccessToken} from "../../helper";
 
 interface MusicProps {
@@ -79,45 +79,55 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                 className="mySwiper"
             >
                 {playlistData.map((el: any, index) => (
-                    <Box>
                         <SwiperSlide>
                             <Box
                                 display="flex"
                                 justifyContent={"space-between"}
                                 alignItems="center"
                                 flexDir={{base: "column", md: "column", lg: "row", xl: "row"}}
-                                ml={breakpoints === "base" ? "-20px" : "0"}
+                                ml={breakpoints === "base" ? "0px" : "0"}
                             >
-                                <Box zIndex="-1">
+                                <Box
+                                    width={{base:"80vw", sm:"72vw", md:"53vw", lg:"50vw", xl:"50vw", "2xl":"50vw"}}
+                                     height={{base: "50vh", sm: "50vh", md: "50vh", lg: "100vh", xl: "100vh", "2xl":"100vh"}}
+                                     className="music-container" zIndex="-1">
                                     <Image
                                         src={el.image}
                                         objectFit='cover'
-                                        width={["88vw", "60vw", "50vw", "50vw", "50vw"]}
-                                        height={["35vh", "35vh", "40vh", "100vh", "100vh"]}
-                                        borderRadius={{
-                                            base: "20px",
-                                            sm: "20px",
-                                            md: "20px",
-                                            lg: "0",
-                                            xl: "0",
-                                        }}
+                                        className="music--image"
+                                        width={{base:"", sm:"60vw", md:"60vw", lg:"50vw", xl:"50vw", "2xl":"50vw"}}
+                                        height={{base:"", sm: "35vh", md: "35vh", lg: "100vh", xl: "100vh", "2xl":"100vh"}}
+                                        borderRadius={{base: "20px", sm: "20px", md: "20px", lg: "0", xl: "0",}}
                                         m={["10px", "15px", "20px", "0", "0"]}
-                                        mt={["80px","80px","80px","0","0"]}
-                                        ml={["30px","0","0",'0',"0"]}
+                                        mt={{base:"80px",sm:"80px",md:"80px",lg:"0",xl:"0","2xl":"0"}}
+                                        ml={{base:"0", sm:"30px", md:"0", lg:"0", xl:'0', "2xl":"0"}}
                                         alt="img"
                                     />
+                                    <Text
+                                        as="h1"
+                                        fontFamily="sans"
+                                        className="music--text"
+                                        fontSize={{base:"17px", sm:"22px", md:"32px", lg:"32px", xl:"35px", "2xl":"38px"}}
+                                        fontWeight="900"
+                                        pt={{base:"",sm:"0",md:"0"}}
+                                        color="white"
+                                    >
+                                        {el.name}
+                                    </Text>
                                 </Box>
                                 <Container
                                     maxW={["75vw", "70vw", "45vw", "38vw", "34vw"]}
                                     pr={["0", "0", "0", "0", "60px"]}
-                                    ml={["8%","16%","22%","7%","10%"]}
+                                    ml={["6%","16%","22%","7%","10%"]}
+                                    className="music--cont--text"
                                 >
                                     <Text
                                         as="h1"
                                         fontFamily="sans"
-                                        fontSize={["25px", "32px", "32px", "35px", "38px"]}
+                                        fontSize={{base:"25px", sm:"32px", md:"32px", lg:"32px", xl:"35px", "2xl":"38px"}}
                                         fontWeight="900"
                                         color="white"
+                                        className="music-text-two"
                                     >
                                         {el.name}
                                     </Text>
@@ -127,7 +137,6 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                         </Box>
                                         <Box display="flex" alignItems="center">
                                             <Input
-                                                className="input-music"
                                                 min={0}
                                                 max={el.music_short_len}
                                                 type="range"
@@ -162,18 +171,19 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                         justifyContent="space-between"
                                         alignItems="center"
                                     >
-                                            <Stack direction="row" spacing={4} align="center">
+                                            <Stack direction="row" spacing={2} align="center">
                                                 {!getAccessToken() ? (
                                                         <Button
                                                             bg="none"
                                                             fontFamily="sans"
                                                             fontSize="14px"
-                                                            width={["125px","160px","160px","180px","210px"]}
+                                                            width={{base:"", sm: "140px", md: "160px", lg: "160px", xl: "180px", "2xl": "210px"}}
                                                             py="9px"
                                                             border="1px"
                                                             borderColor="white"
                                                             borderRadius="md"
                                                             color="white"
+                                                            className="music--button"
                                                             _hover={{
                                                                 color: "#49DEFF",
                                                                 borderColor: "#49DEFF",
@@ -189,12 +199,13 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                                             bg="none"
                                                             fontFamily="sans"
                                                             fontSize="14px"
-                                                            width={["125px","160px","160px","180px","210px"]}
+                                                            width={{base:"", sm: "140px", md: "160px", lg: "160px", xl: "180px", "2xl": "210px"}}
                                                             py="9px"
                                                             border="1px"
                                                             borderColor="white"
                                                             borderRadius="md"
                                                             color="white"
+                                                            className="music--button"
                                                             _hover={{
                                                                 color: "#49DEFF",
                                                                 borderColor: "#49DEFF",
@@ -211,11 +222,12 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                                         bg="none"
                                                         fontFamily="sans"
                                                         fontSize="14px"
-                                                        width={["125px","160px","160px","180px","210px"]}
+                                                        width={{base:"", sm: "140px", md: "160px", lg: "160px", xl: "180px", "2xl": "210px"}}
                                                         py="9px"
                                                         borderColor="white"
                                                         borderRadius="md"
                                                         color="white"
+                                                        className="music--button"
                                                         mx="20px"
                                                         _hover={{
                                                             color: "#49DEFF",
@@ -230,9 +242,8 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                     </Box>
                                 </Container>
                             </Box>
-                            {index === playlistData.length - 1 ? <Box mt={["25px","28px","28px","-89px","-89px"]}><Footer/></Box> : ""}
+                            {index === playlistData.length - 1 ? <Box className="music-footer" mt={["25px","28px","28px","-89px","-89px"]}><Footer/></Box> : ""}
                         </SwiperSlide>
-                    </Box>
                 ))}
             </Swiper>
         </Box>
