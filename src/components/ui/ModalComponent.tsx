@@ -30,11 +30,12 @@ const ModalComponent: FC<IPorps> = ({
       >
         <ModalOverlay />
         <ModalContent
-          bg="rgba(252,252,253,0.7)"
+          bg="rgba(252,252,253,0.83)"
           maxW={["90%", "80%", "560px"]}
           px={{ base: "0", md: "50px" }}
           py="10px"
           borderRadius="21px"
+          backdropFilter="blur(14.5px)"
         >
           <ModalHeader
             textAlign="center"

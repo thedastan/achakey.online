@@ -2,7 +2,7 @@ export interface IInputRegister {
   name?: string;
   surname?: string;
   email?: string;
-  phoneNumber?: string;
+  phone?: string;
   password: string;
   password_confirm: string;
 }
