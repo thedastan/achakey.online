@@ -266,7 +266,7 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
                                 </Container>
                             </Box>
                             {index === playlistData.length - 1 ? (
-                                <Box className="music-footer" mt={["25px", "28px", "28px", "-89px", "-89px"]}><Footer/></Box>) : ("")}
+                                <Box display={{base:"none",sm:"none",md:"none",lg:"block"}} mt="-89px"><Footer/></Box>) : ("")}
                         </SwiperSlide>
                     </Box>
                 ))}
