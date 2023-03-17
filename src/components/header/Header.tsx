@@ -63,13 +63,13 @@ export default function Header() {
     });
     return (
         <Box
-            pos="absolute"
+            pos="fixed"
             bg={breakpoints === "base" && "sm" ? "black" : "transparent"}
             zIndex="1"
             top="0"
             left="0"
             right="0"
-            py={breakpoints === "base" && "sm" ? "10px" : "10px"}
+            p={breakpoints === "base" && "sm" ? "20px" : "20px"}
         >
             <ModalUserAuth isOpen={isOpen} onClose={onClose}/>
             <Container
@@ -89,8 +89,8 @@ export default function Header() {
                         alignItems="center"
                     >
                         <Box zIndex="11">
-                            <Link to={"/"} onClick={handleRefresh}>
-                                <Image src={LogoAchakey} alt="Logo"/>
+                            <Link to={"/"} >
+                                <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo"/>
                             </Link>
                         </Box>
                         <Button
@@ -114,8 +114,8 @@ export default function Header() {
                     >
                         {isHomePage ? (
                             <Box mx="10px" zIndex="21">
-                                <Link to={"/"} onClick={handleRefresh}>
-                                    <Image src={LogoAchakey} alt="Logo"/>
+                                <Link to={"/"} >
+                                    <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo"/>
                                 </Link>
                             </Box>
                         ): null}
