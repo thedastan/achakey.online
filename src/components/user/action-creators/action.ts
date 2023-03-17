@@ -21,7 +21,6 @@ export const fetchUserDetails = (id: string) => {
   return async (dispatch: Dispatch<ActionUser>) => {
     try {
       const response = await API.get(`account/users/${id}`);
-
       dispatch({
         type: UserTypes.USER_DETAILS,
         payload: response.data,

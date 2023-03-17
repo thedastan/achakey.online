@@ -8,10 +8,10 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import {Link, NavLink, useNavigate,useLocation} from "react-router-dom";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
-import {useModalforms} from "../../hooks/useActions";
+import {useActionUser, useModalforms} from "../../hooks/useActions";
 import {useAppDispatch, useAppSelector} from "../../hooks/Index";
 import ModalUserAuth from "../form/modal/ModalUser";
 import {SvgAvatar} from "../../assets/svg/SvgAvatar";
@@ -25,6 +25,10 @@ export default function Header() {
     const navigate = useNavigate();
     const {loginModal} = useModalforms();
     const {isOpen, onOpen, onClose} = useDisclosure();
+
+    const {fetchUserDetails} = useActionUser();
+
+    const { userDetails } = useAppSelector(state => state.reducerUser)
 
   const [drop, setDrop] = useState<boolean>(false)
 
@@ -42,6 +46,7 @@ export default function Header() {
     const logoutAccount = () => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        localStorage.removeItem('user-id')
         navigate("/");
         window.location.reload();
     };
@@ -61,6 +66,13 @@ export default function Header() {
         xl: "xl",
         "2xl": "2xl",
     });
+
+    const userId = JSON.parse(localStorage.getItem('user-id') as string)
+
+    useEffect(()=>{
+        fetchUserDetails(userId)
+    }, [userId])
+
     return (
         <Box
             pos="fixed"
@@ -127,6 +139,7 @@ export default function Header() {
                             position="relative"
                             cursor="pointer"
                             className="avatar__login"
+                            onClick={ openCloseDrop }
                         >
                             <SvgAvatar fill={ drop ? "white" : "rgba(255, 255, 255, 0.4)" } />
                             <Box
@@ -166,10 +179,10 @@ export default function Header() {
                                             borderColor="rgba(210,210,210,0.62)"
                                         >
                                             <Text textAlign="center" fontSize="14px">
-                                                Malika
+                                                {/* Malika */}
                                             </Text>
                                             <Text color="#6B6B6B" my="5px">
-                                                tashievamalikaa@gmail.com
+                                                { userDetails?.email }
                                             </Text>
                                         </Box>
                                         <Box
