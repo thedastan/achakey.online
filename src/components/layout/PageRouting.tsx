@@ -1,19 +1,20 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import MenuBar from "../ui/MenuBar";
 
-import {searchResult} from "../header/action-creators/Action";
-import {useAppDispatch} from "../../hooks/Index";
-import {Box} from "@chakra-ui/react";
+import { searchResult } from "../header/action-creators/Action";
+import { useAppDispatch } from "../../hooks/Index";
+import { useState } from "react";
+import { Box } from "@chakra-ui/react";
 
 interface IMain {
-    children: JSX.Element;
+  children: JSX.Element;
 }
 
-export default function PageRouting({children}: IMain) {
-    const dispatch = useAppDispatch();
-    const navigation = useNavigate();
+export default function PageRouting({ children }: IMain) {
+  const dispatch = useAppDispatch();
+  const navigation = useNavigate();
 
     return (
         <>

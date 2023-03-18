@@ -18,7 +18,7 @@ export const fetchOrder = () => {
   };
 };
 
-export const fetchOrderItem = (id: string) => {
+export const fetchOrderItem = (id: number) => {
   return async (dispatch: Dispatch<ActionTypes>) => {
     try {
       const response = await API.get(`order/${id}`);
@@ -46,4 +46,8 @@ export const fetchOrderPost = (order: OrderPost) => {
       console.log(e);
     }
   };
+};
+
+export const fetchOrderId = (payload: number): ActionTypes => {
+  return { type: OrderTypes.ORDER_POST_ID, payload };
 };

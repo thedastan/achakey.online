@@ -1,24 +1,26 @@
-import { Box, Button, Text, Image } from "@chakra-ui/react";
+import { Box, Button, Text, Image, useDisclosure } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 import SvgPlay from "../../assets/svg/SvgPlay";
 import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
 import { SvgPlayerGifDefault } from "../../assets/svg/SvgPlayerGifDefault";
 import { useAppSelector } from "../../hooks/Index";
-import trackImage from "../../assets/img/Ellipse.png";
 import { ITrack } from "../../redux/types";
 import {
   useAction,
   useActionBasket,
   useExcerpAction,
 } from "../../hooks/useActions";
-import { useEffect, useState } from "react";
-import { getIdAlums, getUserId } from "../helper";
+import { getAccessToken, getIdAlums, getUserId } from "../helper";
+import { loginModal } from "../form/modal/action/ModalAction";
+import { IBasketTypes } from "../../pages/basket/types";
 
 interface ITrackChange {
   onClick?: any;
   name?: string;
   music?: ITrack;
-  tracks?: boolean;
+  trackBoolean?: boolean;
+  title: string;
 }
 
 interface ICartArray {
@@ -36,11 +38,16 @@ export default function MusicForList({
   onClick,
   name,
   music,
-  tracks,
+  trackBoolean,
+  title,
 }: ITrackChange) {
-  const [title, setTitle] = useState("+ в корзину");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [buttonTitle, setButtonTitle] = useState<string>("+ в корзину");
+
   const { basket } = useAppSelector((state) => state.reducerBasket);
+  const { tracks } = useAppSelector((state) => state.musicReducer);
   const { postBasketItem, fetchBasket } = useActionBasket();
+  const userFilter = basket.filter((el) => el.user === getUserId());
 
   const { pause, active } = useAppSelector(
     (state) => state.excerptPlayerReducer
@@ -80,8 +87,6 @@ export default function MusicForList({
       (el) => el.music?.id === cart?.cart_item[0].music
     );
 
-    console.log(includesTracks === undefined);
-
     if (
       includesTracks !== undefined &&
       includesTracks[0]?.music?.id === cart?.cart_item[0]?.music
@@ -92,12 +97,24 @@ export default function MusicForList({
       postBasketItem(cart);
       fetchBasket();
     }
+
     fetchBasket();
+
+    const hasTrackInBasket = tracks.some((track) => {
+      return userFilter[0]?.cart_item.some((el) => el.music?.id === track.id);
+    });
+
+    if (hasTrackInBasket) {
+      setButtonTitle("в корзине");
+    } else {
+      setButtonTitle("+ в корзину");
+    }
   };
 
-  useEffect(() => {
-    fetchBasket();
-  }, []);
+  const openModal = () => {
+    onOpen();
+    loginModal();
+  };
 
   return (
     <Box
@@ -156,9 +173,11 @@ export default function MusicForList({
       <Text color="white" ml="50px">
         {music?.price}
       </Text>
-      {window.location.pathname !== "/excerpts/details/" + getIdAlums() ? (
+      {window.location.pathname !== "/excerpts/details/" + getIdAlums() && (
         <Button
-          onClick={() => PostBasketItem(music)}
+          onClick={() =>
+            getAccessToken() ? PostBasketItem(music) : openModal()
+          }
           border="1px"
           borderColor={
             active?.music_short === music?.music_short ? "blue" : "white"
@@ -173,10 +192,8 @@ export default function MusicForList({
           background="transparent"
           colorScheme="none"
         >
-          {title}
+          {buttonTitle}
         </Button>
-      ) : (
-        ""
       )}
     </Box>
   );

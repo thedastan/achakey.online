@@ -1,13 +1,18 @@
 import { Box, Text } from "@chakra-ui/react";
-import { useAppDispatch } from "../../hooks/Index";
-import { useAction, useExcerpAction } from "../../hooks/useActions";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import {
+  useAction,
+  useActionBasket,
+  useExcerpAction,
+} from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
 } from "../playlist/reducer/action-creator";
 import { ITrack } from "../../redux/types";
 import MusicForList from "../ui/MusicForList";
-import { getIdAlums } from "../helper";
+import { getIdAlums, getUserId } from "../helper";
+import { useEffect, useState } from "react";
 
 interface ITrackList {
   tracks: ITrack[];
@@ -15,7 +20,10 @@ interface ITrackList {
 }
 
 export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
+  const [buttonTitle, setButtonTitle] = useState<string>("+ в корзину");
   const { excerptActiveAction, excerptForAlbumAction } = useExcerpAction();
+  const { basket } = useAppSelector((state) => state.reducerBasket);
+  const { fetchBasket } = useActionBasket();
 
   const { pauseTrack } = useAction();
   const dispatch = useAppDispatch();
@@ -31,6 +39,26 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
         : excerptForAlbumAction(false);
     }
   };
+
+  function titleBasket() {
+    const userFilter = basket.filter((el) => el.user === getUserId());
+
+    userFilter[0]?.cart_item.filter((el) =>
+      tracks.filter((i) =>
+        i.id === el.music?.id
+          ? setButtonTitle("в корзине")
+          : setButtonTitle("+ в корзину")
+      )
+    );
+  }
+
+  useEffect(() => {
+    titleBasket();
+  }, []);
+
+  useEffect(() => {
+    fetchBasket();
+  }, []);
 
   return (
     <Box
@@ -66,6 +94,7 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
         <Box>
           {tracks.map((el, index) => (
             <MusicForList
+              title={buttonTitle}
               name={el?.name}
               key={index}
               music={el}

@@ -4,10 +4,13 @@ export enum OrderTypes {
   ORDER = "ORDER",
   ORDER_DETAILS = "ORDER_DETAILS",
   ORDER_POST = "ORDER_POST",
+  ORDER_POST_ID = "ORDER_POST_ID",
 }
 
 export interface OrderState {
   order: OrderType[];
+  orderDetails: OrderType | null;
+  orderId: number | null;
 }
 
 export interface OrderType {
@@ -15,7 +18,7 @@ export interface OrderType {
   user: string;
   total_price?: string;
   status?: string;
-  order_item?: OrderItem[];
+  order_item: OrderItem[] | undefined;
   created_at?: string;
   updated_at?: string;
 }
@@ -40,18 +43,6 @@ interface OrderItemPost {
   music?: number | string | null;
 }
 
-interface OrderMusicTypes {
-  name: string;
-  artist?: string;
-  price: string | number;
-}
-
-interface OrderAlbumTypes {
-  name: string;
-  music: OrderMusicTypes[];
-  total_price: string;
-}
-
 interface ActionOrder {
   type: OrderTypes.ORDER;
   payload: OrderType[];
@@ -59,7 +50,7 @@ interface ActionOrder {
 
 interface ActionOrderDetails {
   type: OrderTypes.ORDER_DETAILS;
-  payload: OrderItem;
+  payload: OrderType;
 }
 
 interface ActionPostOrder {
@@ -67,4 +58,13 @@ interface ActionPostOrder {
   payload: OrderPost;
 }
 
-export type ActionTypes = ActionOrder | ActionOrderDetails | ActionPostOrder;
+interface ActionPostOrderId {
+  type: OrderTypes.ORDER_POST_ID;
+  payload: number;
+}
+
+export type ActionTypes =
+  | ActionOrder
+  | ActionOrderDetails
+  | ActionPostOrder
+  | ActionPostOrderId;
