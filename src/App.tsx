@@ -28,7 +28,7 @@ function App() {
         <Route path="/excerpts/details/:id" element={<DetailsAlbums />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/public-offer" element={<PublicOffer />} />
-        <Route path="/account/resetPassword" element={<ResetPassword />} />
+        <Route path="/account/resetPassword" element={<ResetPasswordEmailPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPhonePage />} />
         <Route path="/accountManagement" element={<AccountManagamentPage />} />
         <Route path="*" element={<NotFound />} />
