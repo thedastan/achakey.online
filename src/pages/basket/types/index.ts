@@ -26,13 +26,16 @@ export interface IMusicForBasket {
   created_at?: string;
   updated_at?: string;
 }
+
 export interface IPlayList {
   id: number | null;
   image: string;
   music: IMusicForBasket[];
   total_price: string;
   name: string;
+  user: string;
 }
+
 export interface BasketState {
   error: string;
   basket: IBasketTypes[];
@@ -41,31 +44,12 @@ export interface BasketState {
 }
 
 export interface IBasketTypes {
+  order_item: any;
   id?: string | number;
   user: string;
   total_price?: string;
   cart_item: IOrderItem[];
   created_at?: string;
-}
-
-interface IMusicForPost {
-  name: string;
-  artist?: string;
-  price?: string;
-}
-
-interface IPlayListForList {
-  playlist: {
-    name: string;
-    music: [
-      {
-        name: string;
-        artist: string;
-        price: string;
-      }
-    ];
-    total_price: string;
-  };
 }
 
 interface ICart_item {
@@ -78,8 +62,6 @@ export interface IOrderItemForPost {
   total_price: string | number;
   user: string;
   cart_item: ICart_item[];
-  // music?: IMusicForPost;
-  // playlist?: IPlayListForList;
 }
 
 interface ActionsIBasket {

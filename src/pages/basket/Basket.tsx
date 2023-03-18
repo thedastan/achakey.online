@@ -8,17 +8,21 @@ import { useAppSelector } from "../../hooks/Index";
 import { useActionBasket } from "../../hooks/useActions";
 import { OrderPopup } from "../../components/order/OrderPopup";
 import { getUserId } from "../../components/helper";
+import { OrderDetails } from "../../components/order/OrderDetails";
 
 export default function Basket() {
   const [openPopup, setOpenPopup] = useState(false);
+  const [openPopupId, setOpenPopupId] = useState(false);
+
   const { fetchBasket } = useActionBasket();
   const { basket } = useAppSelector((state) => state.reducerBasket);
 
   const lengthBasket = basket.filter((el) => el.user === getUserId());
+  const filterUser = basket.filter((el) => el.user === getUserId());
 
   const deletedBasket = async (id: string) => {
     try {
-      const responce = await API.delete(`account/cart/${id}`);
+      const responce = await API.put(`account/cart/1`);
       fetchBasket();
       return alert(`RESPOMCE ${responce}`);
     } catch (e) {
@@ -34,10 +38,6 @@ export default function Basket() {
     fetchBasket();
   }, []);
 
-  const filterUser = basket.filter((el) => el.user === getUserId());
-
-  console.log(basket);
-
   return (
     <section>
       <Box w="100%" minH="90vh" pb="50px" pt="140px">
@@ -47,7 +47,7 @@ export default function Basket() {
               textAlign="center"
               color="white"
               fontSize="48px"
-              pt={{ base: "40%", lg: "20%", xl: "0" }}
+              pt={{ base: "40%", sm: "20%", xl: "0" }}
             >
               Пусто...
             </Text>
@@ -61,7 +61,7 @@ export default function Basket() {
                       <Box key={idx}>
                         {el.album !== null && (
                           <BasketListAlbums
-                            setOpenPopup={setOpenPopup}
+                            setOpenPopup={setOpenPopupId}
                             albums={el?.album}
                             id={String(el.id)}
                             deleted={deletedBasket}
@@ -86,7 +86,7 @@ export default function Basket() {
                       <Box key={idx}>
                         {el.music !== null && (
                           <BasketListProduct
-                            setOpenPopup={setOpenPopup}
+                            setOpenPopup={setOpenPopupId}
                             id={String(el.id)}
                             deleted={deletedBasket}
                             music={el.music}
@@ -113,6 +113,7 @@ export default function Basket() {
               >
                 <Text color="white">Итого: {total} c</Text>
                 <Button
+                  onClick={() => setOpenPopup(true)}
                   bg="#007AFF"
                   colorScheme="#007AFF"
                   rounded="10px"
@@ -130,6 +131,10 @@ export default function Basket() {
           <OrderPopup
             className={openPopup ? "transform" : ""}
             setOpenPopup={setOpenPopup}
+          />
+          <OrderDetails
+            className={openPopupId ? "active" : ""}
+            setOpenPopup={setOpenPopupId}
           />
         </Container>
       </Box>
