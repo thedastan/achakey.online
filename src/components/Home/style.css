@@ -19,7 +19,7 @@
     transform-origin: center left;
     transition: color 0.3s ease;
     position: relative;
-    z-index: 4;
+    z-index: 0;
     outline: none;
 }
 

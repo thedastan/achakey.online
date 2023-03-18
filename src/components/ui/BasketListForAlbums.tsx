@@ -7,6 +7,7 @@ import { IMusicForBasket, IPlayList } from "../../pages/basket/types";
 import { OrderPost } from "../order/types/order";
 import { getUserId } from "../helper";
 import SvgArrowTop from "../../assets/svg/SvgArrowTop";
+import SvgCross from "../../assets/svg/SvgCross";
 interface IBasketAlbums {
   image?: string;
   name?: string;
@@ -25,8 +26,11 @@ export default function BasketListAlbums({
   music,
   albums,
   setOpenPopup,
+  deleted,
+  id,
 }: IBasketAlbums) {
-  const { fetchOrderPost, fetchOrder } = useActionOrder();
+  const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
+    useActionOrder();
   const Order = useAppSelector((state) => state.reducerOrder.order);
   const [active, setActive] = useState<boolean>(false);
 
@@ -62,6 +66,22 @@ export default function BasketListAlbums({
       fetchOrderPost(order);
       fetchOrder();
     }
+
+    userFiter?.filter((el) =>
+      el?.order_item?.filter((i) =>
+        i.album?.id === order.order_item[0].album
+          ? fetchOrderItem(Number(el?.id))
+          : console.log("NoNo")
+      )
+    );
+
+    userFiter?.filter((el) =>
+      el?.order_item?.filter((i) =>
+        i.album?.id === order.order_item[0].album
+          ? fetchOrderId(Number(el?.id))
+          : console.log("id")
+      )
+    );
 
     setOpenPopup(true);
     fetchOrder();
@@ -138,6 +158,9 @@ export default function BasketListAlbums({
             >
               Оплатить
             </Button>
+            <Box cursor="pointer" onClick={() => deleted(`${id}`)}>
+              <SvgCross />
+            </Box>
           </Box>
         </Box>
         <Box>

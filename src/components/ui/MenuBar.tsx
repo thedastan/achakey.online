@@ -1,5 +1,5 @@
-import { Box, useDisclosure } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { Box, Button, useDisclosure } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SvgAllTracks from "../../assets/svg/SvgAllTracks";
 import SvgBasket from "../../assets/svg/SvgBasket";

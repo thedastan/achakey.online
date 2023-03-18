@@ -55,7 +55,8 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
 
     return (
         <Box
-            maxW="1536px"
+            maxW="3072px"
+            width="100%"
             className="music"
             mx={"auto"}
             style={{display: musicPlay ? "block" : "none", background: "#1D1D20"}}

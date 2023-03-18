@@ -10,6 +10,7 @@ import {
 import {
   useAction,
   useActionBasket,
+  useActionOrder,
   useExcerpAction,
 } from "../../hooks/useActions";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
@@ -28,6 +29,8 @@ import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
 import { fetchBasket } from "../../pages/basket/action-creators/action";
 import "./style.scss";
 import "../ui/style.scss";
+import { OrderDetails } from "../order/OrderDetails";
+import { OrderPost } from "../order/types/order";
 
 interface IlistMedia {
   listTruck?: ITrack[] | any;
@@ -42,18 +45,6 @@ interface ICart {
   total_price: string | number;
   user: string;
   cart_item: ICartArray[];
-}
-
-interface IOrderArray {
-  cart: string;
-  music?: number | null;
-  album?: number | null | any;
-}
-
-interface IOrder {
-  total_price: string | number;
-  user: string;
-  order_item: IOrderArray[];
 }
 
 export default function AudioPlayer({ listTruck }: IlistMedia) {
@@ -73,6 +64,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
   const { pauseTrack } = useAction();
   const { postBasketItem } = useActionBasket();
+  const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
+    useActionOrder();
 
   const {
     excerptActiveAction,
@@ -183,13 +176,13 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
   function postOrderAlbum() {
     setOpenPopup(true);
-    const order: IOrder = {
+    const order: OrderPost = {
       user: getUserId(),
-      total_price: Number(active?.price),
+      total_price: String(active?.price),
       order_item: [
         {
           music: null,
-          cart: getUserId(),
+          order: getUserId(),
           album: albums?.id,
         },
       ],
@@ -203,12 +196,30 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
     if (includesTracks[0]?.album?.id !== order?.order_item[0]?.album) {
       alert("Success");
-      // postBasketItem(cart);
+      fetchOrderPost(order);
       fetchBasket();
     } else {
       alert("No");
       fetchBasket();
     }
+
+    userFiter.filter((el) =>
+      el.order_item.filter((i: any) =>
+        i.album?.id === order.order_item[0].album
+          ? fetchOrderItem(Number(el?.id))
+          : console.log("NoNo")
+      )
+    );
+
+    userFiter?.filter((el) =>
+      el?.order_item?.filter((i: any) =>
+        i.album?.id === order.order_item[0].album
+          ? fetchOrderId(Number(el?.id))
+          : console.log("id")
+      )
+    );
+
+    setOpenPopup(true);
     fetchBasket();
   }
 
@@ -220,8 +231,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   useEffect(() => {
     fetchBasket();
   }, [basket]);
-
-  console.log(forAlbum);
 
   return (
     <section
@@ -364,9 +373,9 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           </Box>
         </Box>
         <Box mx="auto" maxW="700px">
-          <OrderPopup
+          <OrderDetails
             setOpenPopup={setOpenPopup}
-            className={openPopup ? "transform" : ""}
+            className={openPopup ? "active" : ""}
           />
         </Box>
       </Box>

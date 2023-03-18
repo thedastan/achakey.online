@@ -29,7 +29,8 @@ export default function BasketListProduct({
   music,
   setOpenPopup,
 }: IBasketProps) {
-  const { fetchOrderPost, fetchOrder } = useActionOrder();
+  const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
+    useActionOrder();
   const Order = useAppSelector((state) => state.reducerOrder.order);
 
   const postOrder = async (cart?: ITrack) => {
@@ -46,7 +47,7 @@ export default function BasketListProduct({
       ],
     };
 
-    const userFiter = Order.filter((el) => el.user === getUserId());
+    const userFiter = Order?.filter((el) => el.user === getUserId());
 
     const filterUser = userFiter.map(
       //@ts-ignore
@@ -64,6 +65,29 @@ export default function BasketListProduct({
       fetchOrderPost(order);
       fetchOrder();
     }
+
+    if (arrayOfObjects[0]?.music?.id === order?.order_item[0]?.music) {
+      console.log(arrayOfObjects);
+      fetchOrderId(Number(arrayOfObjects[0]?.id));
+      fetchOrderItem(Number(arrayOfObjects[0]?.id));
+      console.log(arrayOfObjects[0]?.id);
+    }
+
+    userFiter?.filter((el) =>
+      el?.order_item?.filter((i) =>
+        i.music?.id === order.order_item[0].music
+          ? fetchOrderItem(Number(el?.id))
+          : console.log("NoNo")
+      )
+    );
+
+    userFiter?.filter((el) =>
+      el?.order_item?.filter((i) =>
+        i.music?.id === order.order_item[0].music
+          ? fetchOrderId(Number(el?.id))
+          : console.log("id")
+      )
+    );
 
     fetchOrder();
     setOpenPopup(true);

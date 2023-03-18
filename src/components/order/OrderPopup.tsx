@@ -60,7 +60,7 @@ export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
 
             <Box h="65vh" overflowY="auto">
               <Box mx="29px" mb="30px">
-                {order.map((item, index) => (
+                {order?.map((item, index) => (
                   <Box key={index}>
                     {item.order_item?.map((el, index) => (
                       <div key={index}>

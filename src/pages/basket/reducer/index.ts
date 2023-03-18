@@ -12,6 +12,7 @@ const initialState: BasketState = {
       music: [],
       name: "",
       total_price: "",
+      user: "",
     },
   },
   order: {
