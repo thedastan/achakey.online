@@ -85,3 +85,49 @@
     }
 }
 
+/*mt={["25px","28px","28px","-89px","-89px"]}*/
+
+.music--text {
+    display: none;
+}
+.music--button {
+    width: 125px;
+}
+.music--image {
+    width: 100vw;
+    height: 28vh;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    .music-cont-text {
+        margin-top: -8%;
+    }
+}
+@media (max-width: 320px) {
+    .music-container {
+        display: flex;
+    }
+    .music-text-two {
+        display: none;
+    }
+    .music--text {
+        display: block;
+        padding-top: 80px;
+    }
+    .music--image {
+        width: 50vw;
+        height: 23vh;
+    }
+    .music--button {
+        width: 110px;
+    }
+    .music-cont-text {
+        margin-top: 5%;
+    }
+}
+
+/*@media (max-width: 768px) and (max-width: 834px) and (max-height: 1280px) {*/
+/*    .music-footer {*/
+/*        margin-top: 19%;*/
+/*    }*/
+/*}*/

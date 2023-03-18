@@ -18,3 +18,8 @@
     }
 }
 
+@media (max-width: 1279px) and (min-width: 1110px) {
+    .disk {
+        left: 44%;
+    }
+}
