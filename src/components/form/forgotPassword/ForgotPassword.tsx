@@ -1,12 +1,16 @@
-import { Box, Button, FormControl, Input, Link, Text } from "@chakra-ui/react";
+import { Box, FormControl } from "@chakra-ui/react";
 import React, { FC, useState, ChangeEvent, FormEvent } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAppSelector } from "../../../hooks/Index";
 
+import { useAppSelector } from "../../../hooks/Index";
 import { useActionForgot, useModalforms } from "../../../hooks/useActions";
 import { isEmail, isPhone } from "../../helpers/helperFunction";
 import { IForgotPassword } from "../formInterfaces";
+import BtnForm from "../../ui/BtnForm";
+import Inputs from "../../ui/Inputs";
+import TextError from "../../ui/TextError";
+import TextFormEnd from "../../ui/TextFormEnd";
 
 const ForgotPassword: FC = () => {
   const [errors, setError] = useState<string>("");
@@ -15,7 +19,7 @@ const ForgotPassword: FC = () => {
     phone: "",
   });
 
-  const { loading, error, forgotPassword } = useAppSelector(
+  const { loading, forgotPassword } = useAppSelector(
     (state) => state.forgotPasswordReducer
   );
 
@@ -38,9 +42,14 @@ const ForgotPassword: FC = () => {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (emailPhone.email?.length || emailPhone.phone?.length) {
+    if (emailPhone.email?.length) {
       setError("");
-      fetchForgotPassword(emailPhone);
+      const email = emailPhone.email;
+      fetchForgotPassword({ email });
+    } else if (emailPhone.phone?.length) {
+      setError("");
+      const phone = emailPhone.phone;
+      fetchForgotPassword({ phone });
     } else {
       setError("Введите почту или номер телефона");
     }
@@ -56,68 +65,30 @@ const ForgotPassword: FC = () => {
       <form onSubmit={onSubmit}>
         <FormControl>
           <Box mb="10px">
-            <Input
-              type="text"
-              onChange={handleChange}
-              sx={{
-                "&::placeholder": {
-                  color: "#AAAAAA",
-                  fontSize: "14px",
-                  fontWeight: "medium",
-                },
-              }}
+            <Inputs
+              id="emailOrPhone"
               placeholder="Почта или номер телефона*"
-              border="1px"
-              borderColor="#AAAAAA"
-              focusBorderColor="#174079"
-              bg="#ffffff"
-              borderRadius={{ base: "10px", sm: "15px" }}
-              fontSize="14px"
-              py={{ base: "10px", sm: "25px" }}
-              color="#174079"
+              type="text"
+              required={true}
+              borderColor={errors.length ? "#FF0000" : "#AAAAAA"}
+              focusBorderColor={errors.length ? "#FF0000" : "#174079"}
+              onChangeInput={handleChange}
             />
-            <Text
-              color="red"
-              fontSize="12px"
-              fontFamily="500"
-              ml={{ base: "5px", sm: "14px" }}
-            >
-              {errors}
-            </Text>
+            <TextError text={errors} />
           </Box>
-          <Button
+          <BtnForm
+            btnText="Сбросить пароль"
             isLoading={loading}
-            mt={{ base: "10px", sm: "15px" }}
-            type="submit"
             bg="#2A3654"
             color="white"
-            fontWeight="600"
-            fontFamily="revert"
-            w="100%"
-            py="25px"
-            colorScheme="blue"
-            fontSize={{ base: "14px", sm: "18px" }}
-            borderRadius="14px"
-          >
-            Сбросить пароль
-          </Button>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            flexDirection={{ base: "column", sm: "row" }}
-            my="10px"
-            fontFamily="sans"
-            fontWeight="400"
-            fontSize="14px"
-          >
-            <Text color="#353535" pr="5px">
-              Нет аккаунта?
-            </Text>
-            <Link color="rgba(59,113,254,1)" onClick={openRegister}>
-              Зарегистрироватсься?
-            </Link>
-          </Box>
+            width="100%"
+            colorSceme="blue"
+          />
+          <TextFormEnd
+            questionText="Нет аккаунта?"
+            textWord="Зарегистрироватсься?"
+            onClickLink={openRegister}
+          />
         </FormControl>
       </form>
     </Box>

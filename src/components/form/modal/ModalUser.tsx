@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { useAppSelector } from "../../../hooks/Index";
 import ModalComponent from "../../ui/ModalComponent";
 import Authoration from "../auth/Authoration";
+import EnterSecurityCode from "../enterSequirity/EnterSecurityCode";
 import ForgotPassword from "../forgotPassword/ForgotPassword";
 import Registration from "../register/Registration";
 
@@ -12,7 +13,7 @@ type IModal = {
 };
 
 const ModalUserAuth: FC<IModal> = ({ isOpen, onClose }) => {
-  const { register, login, forgotPas } = useAppSelector(
+  const { register, login, forgotPas, exterSequirity } = useAppSelector(
     (state) => state.reducerModalForm
   );
   return (
@@ -27,6 +28,8 @@ const ModalUserAuth: FC<IModal> = ({ isOpen, onClose }) => {
             ? "Авторизация"
             : forgotPas
             ? "Забыли пароль"
+            : exterSequirity
+            ? "Введите код безопасности"
             : ""
         }
         children={
@@ -34,8 +37,12 @@ const ModalUserAuth: FC<IModal> = ({ isOpen, onClose }) => {
             <Registration />
           ) : !!login ? (
             <Authoration onClose={onClose} />
+          ) : !!forgotPas ? (
+            <ForgotPassword />
+          ) : !!exterSequirity ? (
+            <EnterSecurityCode />
           ) : (
-            !!forgotPas && <ForgotPassword />
+            ""
           )
         }
       />

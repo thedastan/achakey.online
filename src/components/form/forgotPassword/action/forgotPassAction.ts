@@ -10,7 +10,7 @@ export const fetchForgotPassword = (emailPhone: IForgotPassword) => {
       dispatch({
         type: IFormsTypes.FORGOT_LOADING,
       });
-      const res = await PUBLIC_API.post("password_reset/", {
+      const res = await PUBLIC_API.post("reset_password/", {
         ...emailPhone,
       });
       dispatch({

@@ -1,25 +1,24 @@
 import {
   Box,
-  Button,
   FormControl,
-  Input,
   InputGroup,
   InputRightElement,
-  Link,
-  Text,
 } from "@chakra-ui/react";
 import React, { FC, useState } from "react";
-import { FcGoogle } from "react-icons/fc";
-import { BsApple } from "react-icons/bs";
-import { FiEyeOff, FiEye } from "react-icons/fi";
 import { ToastContainer } from "react-toastify";
-import { useGoogleLogin } from "@react-oauth/google";
 import "react-toastify/dist/ReactToastify.css";
 
 //local
 import { useModalforms, usePostRegistr } from "../../../hooks/useActions";
 import { useAppSelector } from "../../../hooks/Index";
 import { isEmail, isPhone } from "../../helpers/helperFunction";
+import Inputs from "../../ui/Inputs";
+import BtnForm from "../../ui/BtnForm";
+import EyeInput from "../../ui/EyeInput";
+import TextError from "../../ui/TextError";
+import TextFormEnd from "../../ui/TextFormEnd";
+import WordIndex from "../../ui/WordIndex";
+import BtnGoogle from "./BtnGoogle";
 
 const Registration: FC = () => {
   const [passEye, setPassEye] = useState<boolean>(false);
@@ -28,37 +27,20 @@ const Registration: FC = () => {
   const [phone, setPhoneNumber] = useState<string>("");
   const [password, setPassword1] = useState<string>("");
   const [password_confirm, setPassword2] = useState<string>("");
-
   const [errorEmailPhone, setErrorEmailPhone] = useState<string>("");
   const [errorPas, setErrorPas] = useState<string>("");
   const [errorPasConfirm, setErrorPasConfirm] = useState<string>("");
 
-  const enterMethod = [
-    {
-      icon: <FcGoogle />,
-      text: "Google",
-    },
-    {
-      icon: <BsApple />,
-      text: "Apple",
-    },
-  ];
+  const { fetchRegister } = usePostRegistr();
+  const { loginModal, enterSequirityCode } = useModalforms();
 
-  const { fetchRegister, fetchRegisterGoogle } = usePostRegistr();
-  const { loginModal } = useModalforms();
-
-  const { loading, registerUser, error } = useAppSelector(
+  const { loading, phoneNumber } = useAppSelector(
     (state) => state.registerReducer
   );
 
-  const login = useGoogleLogin({
-    onSuccess: (tokenResponse: { access_token: string }) => {
-      if (tokenResponse.access_token) {
-        console.log(tokenResponse);
-        fetchRegisterGoogle(tokenResponse.access_token);
-      }
-    },
-  });
+  if (isPhone(phoneNumber)) {
+    enterSequirityCode();
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let emailOrPhone = e.target.value;
@@ -79,7 +61,7 @@ const Registration: FC = () => {
     const value = e.target.value;
     setErrorPas("");
     if (value.length < 6) {
-      setErrorPas("Не менее 6 символов");
+      setErrorPas("Введите не менее 6 символов");
     } else {
       setErrorPas("");
       setPassword1(value);
@@ -109,9 +91,9 @@ const Registration: FC = () => {
     setErrorPasConfirm("");
     setErrorEmailPhone("");
     if (password === password_confirm) {
-      if (email.length > 0) {
+      if (email.length > 5) {
         fetchRegister({ email, password, password_confirm });
-      } else if (phone.length > 0) {
+      } else if (phone.length > 5) {
         fetchRegister({ phone, password, password_confirm });
       } else {
         setErrorEmailPhone("Введите почту или номер");
@@ -130,223 +112,72 @@ const Registration: FC = () => {
       <ToastContainer />
       <form onSubmit={handleSubmit}>
         <FormControl>
-          <Text
-            textAlign="center"
-            color="#353535"
-            fontFamily="sans"
-            fontWeight="400"
-            fontSize="14px"
-          >
-            войдите через
-          </Text>
-          <Box
-            fontFamily="sans"
-            fontSize="16px"
-            fontWeight="700"
-            display="flex"
-            flexDirection={{ base: "column", sm: "row" }}
-            justifyContent="space-between"
-          >
-            {enterMethod.map((el, idx) => (
-              <Box
-                key={idx}
-                bg={idx === 0 ? "#ffffff" : "#141416"}
-                w={{ base: "100%", sm: "45%" }}
-                borderRadius="12px"
-                color={idx === 0 ? "#2A3654" : "#FCFCFD"}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                my="0.3rem"
-                textAlign="center"
-                fontFamily="sans"
-                py="0.6rem"
-                px="2.2rem"
-                cursor="pointer"
-                onClick={() => {
-                  if (idx === 0) {
-                    login();
-                  }
-                }}
-              >
-                {el.icon}
-                <Text ml="5px">{el.text}</Text>
-              </Box>
-            ))}
+          <WordIndex text="войдите через" size="16px" />
+          <Box pt="10px" pb="20px">
+            <BtnGoogle />
           </Box>
-          <Text
-            textAlign="center"
-            color="#353535"
-            fontFamily="sans"
-            fontWeight="400"
-            fontSize="14px"
-          >
-            или создать аккаунт
-          </Text>
-          <Box mt="10px">
-            <Box mb="10px">
-              <Input
-                required
-                onChange={handleChange}
-                id="email"
-                type="text"
-                placeholder="Почта или номер*"
-                sx={{
-                  "&::placeholder": {
-                    color: "#AAAAAA",
-                    fontSize: "14px",
-                    fontWeight: "medium",
-                  },
-                }}
-                border="1px"
-                borderColor="#AAAAAA"
-                focusBorderColor="#174079"
-                bg="#ffffff"
-                borderRadius={{ base: "10px", sm: "15px" }}
-                fontSize="14px"
-                fontWeight="medium"
-                fontFamily="revert"
-                py={{ base: "10px", sm: "25px" }}
-                color="#174079"
+          <WordIndex text="или создать аккаунт" size="12px" />
+          <Box my="10px">
+            <Inputs
+              id="emailOrPhone"
+              type="text"
+              required={true}
+              placeholder="Почта или номер*"
+              borderColor={errorEmailPhone.length ? "#FF0000" : "#AAAAAA"}
+              focusBorderColor={errorEmailPhone.length ? "#FF0000" : "#174079"}
+              onChangeInput={handleChange}
+            />
+            <TextError text={errorEmailPhone} />
+          </Box>
+          <Box mb="10px">
+            <InputGroup>
+              <Inputs
+                id="password"
+                type={passEye ? "text" : "password"}
+                required={true}
+                placeholder="Пароль*"
+                borderColor={errorPas.length ? "#FF0000" : "#AAAAAA"}
+                focusBorderColor={errorPas.length ? "#FF0000" : "#174079"}
+                onChangeInput={passwordChange1}
               />
-              <Text
-                color="red"
-                fontSize="12px"
-                ml={{ base: "5px", sm: "14px" }}
-              >
-                {errorEmailPhone}
-              </Text>
-            </Box>
-            <Box mb="10px">
-              <InputGroup>
-                <Input
-                  required
-                  onChange={passwordChange1}
-                  id="password"
-                  type={passEye ? "text" : "password"}
-                  placeholder="Пароль*"
-                  sx={{
-                    "&::placeholder": {
-                      color: "#AAAAAA",
-                      fontSize: "14px",
-                      fontWeight: "medium",
-                    },
-                  }}
-                  border="1px"
-                  borderColor="#AAAAAA"
-                  focusBorderColor="#174079"
-                  bg="#ffffff"
-                  borderRadius={{ base: "10px", sm: "15px" }}
-                  fontSize="14px"
-                  fontWeight="medium"
-                  fontFamily="revert"
-                  py={{ base: "10px", sm: "25px" }}
-                  color="#174079"
-                />
-                <InputRightElement width="3rem" h="100%">
-                  <Box
-                    color="#000000"
-                    h="100%"
-                    display="flex"
-                    alignItems="center"
-                    cursor="pointer"
-                    fontSize={{ base: "20px", sm: "25px" }}
-                    onClick={handleClick}
-                  >
-                    {passEye ? <FiEyeOff /> : <FiEye />}
-                  </Box>
-                </InputRightElement>
-              </InputGroup>
-              <Text
-                color="red"
-                fontSize="12px"
-                ml={{ base: "5px", sm: "14px" }}
-              >
-                {errorPas}
-              </Text>
-            </Box>
-            <Box mb="10px">
-              <InputGroup>
-                <Input
-                  required
-                  onChange={passwordChange2}
-                  id="password_confirm"
-                  type={secondPassEye ? "text" : "password"}
-                  placeholder="Подтвердите пароль*"
-                  sx={{
-                    "&::placeholder": {
-                      color: "#AAAAAA",
-                      fontSize: "14px",
-                      fontWeight: "medium",
-                    },
-                  }}
-                  border="1px"
-                  borderColor="#AAAAAA"
-                  focusBorderColor="#174079"
-                  bg="#ffffff"
-                  borderRadius={{ base: "10px", sm: "15px" }}
-                  fontSize="14px"
-                  fontWeight="medium"
-                  fontFamily="revert"
-                  py={{ base: "10px", sm: "25px" }}
-                  color="#174079"
-                />
-                <InputRightElement width="3rem" h="100%">
-                  <Box
-                    color="#000000"
-                    h="100%"
-                    display="flex"
-                    alignItems="center"
-                    cursor="pointer"
-                    fontSize={{ base: "20px", sm: "25px" }}
-                    onClick={handleSecondClick}
-                  >
-                    {secondPassEye ? <FiEyeOff /> : <FiEye />}
-                  </Box>
-                </InputRightElement>
-              </InputGroup>
-              <Text
-                color="red"
-                fontSize="12px"
-                ml={{ base: "5px", sm: "14px" }}
-              >
-                {errorPasConfirm}
-              </Text>
-            </Box>
+              <InputRightElement width="3rem" h="100%">
+                <EyeInput eye={passEye} onClickEye={handleClick} />
+              </InputRightElement>
+            </InputGroup>
+            <TextError text={errorPas} />
           </Box>
-          <Button
+          <Box mb="10px">
+            <InputGroup>
+              <Inputs
+                id="password_confirm"
+                type={secondPassEye ? "text" : "password"}
+                required={true}
+                placeholder="Подтвердите пароль*"
+                borderColor={errorPasConfirm.length ? "#FF0000" : "#AAAAAA"}
+                focusBorderColor={
+                  errorPasConfirm.length ? "#FF0000" : "#174079"
+                }
+                onChangeInput={passwordChange2}
+              />
+              <InputRightElement width="3rem" h="100%">
+                <EyeInput eye={secondPassEye} onClickEye={handleSecondClick} />
+              </InputRightElement>
+            </InputGroup>
+            <TextError text={errorPasConfirm} />
+          </Box>
+          <BtnForm
             isLoading={loading}
-            mt={{ base: "10px", sm: "15px" }}
-            type="submit"
+            btnText="Зарегистрироваться"
             bg="#2A3654"
             color="white"
-            fontWeight="600"
-            fontFamily="revert"
-            w="100%"
-            py="25px"
-            colorScheme="blue"
-            fontSize={{ base: "14px", sm: "18px" }}
-            borderRadius="14px"
-          >
-            Зарегистрироваться
-          </Button>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            flexDirection={{ base: "column", sm: "row" }}
-            my="10px"
-            fontFamily="sans"
-            fontWeight="400"
-            fontSize="14px"
-          >
-            <Text color="#353535" pr="5px">
-              У вас уже есть аккаунт?
-            </Text>
-            <Link color="rgba(59,113,254,1)" onClick={openLogin}>
-              Авторизоваться
-            </Link>
-          </Box>
+            colorSceme="blue"
+            width="100%"
+          />
+          <TextFormEnd
+            questionText="У вас уже есть аккаунт?"
+            textWord="Авторизоваться"
+            onClickLink={openLogin}
+          />
         </FormControl>
       </form>
     </Box>
