@@ -30,7 +30,7 @@ const ModalComponent: FC<IPorps> = ({
       >
         <ModalOverlay />
         <ModalContent
-          bg="rgba(252,252,253,0.83)"
+          bg="rgba(252,252,253,0.7)"
           maxW={["90%", "80%", "560px"]}
           px={{ base: "0", md: "50px" }}
           py="10px"

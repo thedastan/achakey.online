@@ -2,7 +2,7 @@ import React from "react";
 
 import ResetPasswordForm from "../../components/form/resetPassword/ResetPasswordForm";
 
-const ResetPassword = () => {
+const ResetPasswordEmailPage = () => {
   return (
     <>
       <ResetPasswordForm />
@@ -10,4 +10,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ResetPasswordEmailPage;

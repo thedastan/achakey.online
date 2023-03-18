@@ -8,7 +8,6 @@ const initialState: IStateModalForm = {
   register: false,
   login: false,
   forgotPas: false,
-  loginForgot: false,
   exterSequirity: false,
 };
 
@@ -40,8 +39,16 @@ export const reducerModalForm = (state = initialState, action: IModalsForm) => {
         register: false,
         login: false,
         forgotPas: action.payload,
-        loginForgot: false,
         exterSequirity: false,
+      };
+    }
+    case IModalActionTypes.ENTER_SEQUIRITY_MODAL: {
+      return {
+        ...state,
+        register: false,
+        login: false,
+        forgotPas: false,
+        exterSequirity: action.payload,
       };
     }
     default:

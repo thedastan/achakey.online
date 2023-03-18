@@ -11,7 +11,8 @@ import {
   Basket,
   Home,
   MyPlaylist,
-  ResetPassword,
+  ResetPasswordEmailPage,
+  ResetPasswordPhonePage,
 } from "./pages/Index";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/public-offer" element={<PublicOffer />} />
         <Route path="/account/resetPassword" element={<ResetPassword />} />
+        <Route path="/resetPassword" element={<ResetPasswordPhonePage />} />
         <Route path="/accountManagement" element={<AccountManagamentPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

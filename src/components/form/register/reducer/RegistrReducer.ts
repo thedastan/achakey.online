@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   error: "",
   registerUser: {},
+  phoneNumber: "",
 } as IStateRegister;
 
 export const registerReducer = (state = initialState, action: IForms) => {
@@ -18,8 +19,19 @@ export const registerReducer = (state = initialState, action: IForms) => {
         loading: false,
       };
     }
+    case IFormsTypes.PHONE_NUMBER_REGISTER: {
+      return {
+        ...state,
+        phoneNumber: action.payload,
+      };
+    }
     case IFormsTypes.ERROR_USER: {
-      return { ...state, error: action.payload, loading: false };
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+        phoneNumber: "",
+      };
     }
     default:
       return state;

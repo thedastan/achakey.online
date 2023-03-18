@@ -2,7 +2,6 @@ export interface IStateModalForm {
   register: boolean;
   login: boolean;
   forgotPas: boolean;
-  loginForgot: boolean;
   exterSequirity: boolean;
 }
 
@@ -24,11 +23,6 @@ interface IModalLogin {
   payload: boolean;
 }
 
-interface IModalForgotLogin {
-  type: IModalActionTypes.LOGIN_FORGOT_MODAL;
-  payload: boolean;
-}
-
 interface IModalForgotPassword {
   type: IModalActionTypes.FORGOT_PASS_MODAL;
   payload: boolean;
@@ -42,6 +36,5 @@ interface IModalEnterSequirity {
 export type IModalsForm =
   | IModalRegister
   | IModalLogin
-  | IModalForgotLogin
   | IModalForgotPassword
   | IModalEnterSequirity;

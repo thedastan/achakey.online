@@ -39,3 +39,16 @@ export const forgotPassModal = () => {
     }
   };
 };
+
+export const enterSequirityCode = () => {
+  return async (dispatch: Dispatch<IModalsForm>) => {
+    try {
+      dispatch({
+        type: IModalActionTypes.ENTER_SEQUIRITY_MODAL,
+        payload: true,
+      });
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+};

@@ -9,9 +9,14 @@ export interface IInputRegister {
 
 export interface IInputAuth {
   id?: string;
-  access?: string
+  access?: string;
   username: string;
   password: string;
+}
+
+export interface IInputEnterSequirityCode {
+  phone: string;
+  code: number;
 }
 
 export interface IForgotPassword {
@@ -30,15 +35,11 @@ export interface IInputResetPassword {
   password: string;
 }
 
-export interface IValidateRegister {
-  errorEmail: string;
-  errorPhone: string;
-}
 export interface IStateRegister {
   loading: boolean;
   error: any | string;
   registerUser: IInputRegister;
-  validateRegister: IValidateRegister;
+  phoneNumber: string;
 }
 
 export interface IStateResetPassword {
@@ -59,6 +60,12 @@ export interface IStateForgotPassword {
   forgotPassword: IForgotPassword;
 }
 
+export interface IStateEnterSequirityCode {
+  loading: boolean;
+  error: string | any;
+  sequirityCode: IInputEnterSequirityCode;
+}
+
 export enum IFormsTypes {
   REGISTER_USER = "REGISTER_USER",
   RESET_LOADING = "RESET_LOADING",
@@ -70,6 +77,9 @@ export enum IFormsTypes {
   VALIDATE_REGISTER = "VALIDATE_REGISTER",
   FORGOT_PASSWORD = "FORGOT_PASSWORD",
   FORGOT_LOADING = "FORGOT_LOADING",
+  PHONE_NUMBER_REGISTER = "PHONE_NUMBER_REGISTER",
+  ENTER_SEQUIRITY_CODE = "ENTER_SEQUIRITY_CODE",
+  LOADING_SEQUIRITY_CODE = "LOADING_SEQUIRITY_CODE",
 }
 
 interface ILoadingUser {
@@ -87,11 +97,6 @@ interface ILoadingReset {
 interface IResetPassword {
   type: IFormsTypes.RESET_PASSWORD;
   payload: any;
-}
-
-interface IErrorValidationRegister {
-  type: IFormsTypes.VALIDATE_REGISTER;
-  payload: IValidateRegister;
 }
 
 interface IErrorUser {
@@ -118,14 +123,30 @@ interface IForgotPasswordSUccess {
   payload: IForgotPassword;
 }
 
+interface IPhoneNumberRegister {
+  type: IFormsTypes.PHONE_NUMBER_REGISTER;
+  payload: string;
+}
+
+interface IEnterSequirity {
+  type: IFormsTypes.ENTER_SEQUIRITY_CODE;
+  payload: any;
+}
+
+interface IEnterSequirityLoading {
+  type: IFormsTypes.LOADING_SEQUIRITY_CODE;
+}
+
 export type IForms =
   | IRegister
   | ILogin
   | ILoadingUser
   | IErrorUser
   | ILoadingRegister
-  | IErrorValidationRegister
   | IForgotPasswordLoading
   | IForgotPasswordSUccess
   | ILoadingReset
-  | IResetPassword;
+  | IResetPassword
+  | IPhoneNumberRegister
+  | IEnterSequirity
+  | IEnterSequirityLoading;

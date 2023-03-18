@@ -8,6 +8,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { theme } from "./components/layout/Index";
 import PageRouting from "./components/layout/PageRouting";
 import { setUpStore } from "./redux/Store";
+import { ID_CLIENT } from "./components/helpers/idClientGoogle";
 import App from "./App";
 import "./index.css";
 
@@ -15,12 +16,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const idClient =
-  "426144994353-f3kdvs86sshvbd56ql707tk815ld51ce.apps.googleusercontent.com";
-
 root.render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId={idClient}>
+    <GoogleOAuthProvider clientId={ID_CLIENT}>
       <BrowserRouter>
         <ChakraProvider theme={theme}>
           <Provider store={setUpStore()}>

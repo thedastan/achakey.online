@@ -21,7 +21,8 @@ import { reducerDetailsAlbums } from "../pages/details-albums/reducer/index";
 import { reducerUser } from "../components/user/reducer/index";
 import { forgotPasswordReducer } from "../components/form/forgotPassword/reducer/forgotPasswordReducer";
 import { reducerOrder } from "../components/order/reducer/index";
-import { resetPasswordReducer } from '../components/form/resetPassword/reducer/reducerResetPassword';
+import { resetPasswordReducer } from "../components/form/resetPassword/reducer/reducerResetPassword";
+import { reducerEnterSequirity } from "../components/form/enterSequirity/reducer/EnterSequirityReducer";
 
 const rootReducer = combineReducers({
   playReducer,
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
   forgotPasswordReducer,
   reducerOrder,
   resetPasswordReducer,
+  reducerEnterSequirity,
 });
 
 export const setUpStore = () => {
