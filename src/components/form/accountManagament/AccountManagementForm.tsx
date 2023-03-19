@@ -5,80 +5,79 @@ import {
   FormControl,
   FormLabel,
   Input,
-  InputGroup,
-  InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import React, { useEffect } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+import { useAppSelector } from "../../../hooks/Index";
+import { useActionUser } from "../../../hooks/useActions";
+import LoadBlock from "../../ui/LoadBlock";
+import { UserDetails } from "../../user/types";
+import BtnForm from "../../ui/BtnForm";
 
 const AccountManagementForm = () => {
-  const [passEye, setPassEye] = useState<boolean>(false);
+  const { userDetails, loading } = useAppSelector((state) => state.reducerUser);
 
-  const handleClick = () => {
-    setPassEye(!passEye);
+  const { fetchUserDetails, fetchChangeUserFields } = useActionUser();
+
+  const userId = JSON.parse(localStorage.getItem("user-id") as string);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserDetails>();
+
+  console.log(loading);
+
+  const onSubmit: SubmitHandler<UserDetails> = (data) => {
+    fetchChangeUserFields(data);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("submit");
-  };
+  useEffect(() => {
+    fetchUserDetails(userId);
+  }, []);
 
   return (
     <Box h="100vh" w="100%" display="flex" alignItems="center">
       <Container maxW="1220px">
-        <Box w={["100%", "90%", "460px"]} mx="auto">
-          <Text
-            textAlign="center"
-            color="white"
-            fontSize="4xl"
-            fontFamily="sans"
-            fontWeight="medium"
-            mb="10px"
-          >
-            Аккаунт
-          </Text>
-          <form onSubmit={handleSubmit}>
-            <FormControl>
-              <Box mb="15px">
-                <FormLabel
-                  color="#C9C9C9"
-                  fontSize="12px"
-                  fontFamily="revert"
-                  fontWeight="500"
-                  htmlFor="emailPhone"
-                >
-                  Изменить почту
-                </FormLabel>
-                <Input
-                  id="emailPhone"
-                  required
-                  placeholder="Введите почту"
-                  sx={{
-                    "&::placeholder": {
-                      color: "#AAAAAA",
-                      fontSize: "14px",
-                      fontWeight: "medium",
-                    },
-                  }}
-                  border="1px"
-                  borderColor="#AAAAAA"
-                  focusBorderColor="#174079"
-                  bg="#ffffff"
-                  borderRadius={{ base: "10px", sm: "15px" }}
-                  fontSize="14px"
-                  fontWeight="medium"
-                  fontFamily="revert"
-                  py={{ base: "10px", sm: "25px" }}
-                  color="#174079"
+        {!loading && userDetails.id ? (
+          <Box w={["100%", "90%", "460px"]} mx="auto">
+            <Text
+              textAlign="center"
+              color="white"
+              fontSize="4xl"
+              fontFamily="sans"
+              fontWeight="medium"
+              mb="10px"
+            >
+              Аккаунт
+            </Text>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <FormControl>
+                <input
+                  defaultValue={userDetails.id}
+                  type="hidden"
+                  {...register("id")}
                 />
-              </Box>
-              <Box mb="15px">
-                <InputGroup>
+                <Box mb="15px">
+                  <FormLabel
+                    color="#C9C9C9"
+                    fontSize="12px"
+                    fontFamily="revert"
+                    fontWeight="500"
+                    htmlFor="emailPhone"
+                  >
+                    Изменить почту
+                  </FormLabel>
                   <Input
-                    id="password"
-                    type={passEye ? "text" : "password"}
-                    placeholder="Потвердить пароль"
+                    id="emailPhone"
+                    placeholder="Введите почту"
+                    defaultValue={userDetails.email}
+                    {...register("email", {
+                      required: !!userDetails.email ? true : false,
+                    })}
                     sx={{
                       "&::placeholder": {
                         color: "#AAAAAA",
@@ -97,103 +96,88 @@ const AccountManagementForm = () => {
                     py={{ base: "10px", sm: "25px" }}
                     color="#174079"
                   />
-                  <InputRightElement width="3rem" h="100%">
-                    <Box
-                      color="#2A3654"
-                      h="100%"
-                      display="flex"
-                      alignItems="center"
-                      cursor="pointer"
-                      fontSize={{ base: "20px", sm: "25px" }}
-                      onClick={handleClick}
-                    >
-                      {passEye ? <BsEyeSlashFill /> : <BsEyeFill />}
-                    </Box>
-                  </InputRightElement>
-                </InputGroup>
-              </Box>
-              <Box my="15px">
-                <FormLabel
-                  color="#C9C9C9"
-                  fontSize="12px"
-                  fontFamily="revert"
-                  fontWeight="500"
-                  htmlFor="phoneNumber"
-                >
-                  Добавить номер
-                </FormLabel>
-                <Input
-                  id="phoneNumber"
-                  placeholder="Номер"
-                  sx={{
-                    "&::placeholder": {
-                      color: "#AAAAAA",
-                      fontSize: "14px",
-                      fontWeight: "medium",
-                    },
-                  }}
-                  border="1px"
-                  borderColor="#AAAAAA"
-                  focusBorderColor="#174079"
-                  bg="#ffffff"
-                  borderRadius={{ base: "10px", sm: "15px" }}
-                  fontSize="14px"
-                  fontWeight="medium"
-                  fontFamily="revert"
-                  py={{ base: "10px", sm: "25px" }}
-                  color="#174079"
+                </Box>
+                <Box my="15px">
+                  <FormLabel
+                    color="#C9C9C9"
+                    fontSize="12px"
+                    fontFamily="revert"
+                    fontWeight="500"
+                    htmlFor="phoneNumber"
+                  >
+                    Добавить номер
+                  </FormLabel>
+                  <Input
+                    id="phoneNumber"
+                    placeholder="Номер"
+                    defaultValue={userDetails.phone}
+                    {...register("phone", {
+                      required: !!userDetails.phone ? true : false,
+                    })}
+                    sx={{
+                      "&::placeholder": {
+                        color: "#AAAAAA",
+                        fontSize: "14px",
+                        fontWeight: "medium",
+                      },
+                    }}
+                    border="1px"
+                    borderColor="#AAAAAA"
+                    focusBorderColor="#174079"
+                    bg="#ffffff"
+                    borderRadius={{ base: "10px", sm: "15px" }}
+                    fontSize="14px"
+                    fontWeight="medium"
+                    fontFamily="revert"
+                    py={{ base: "10px", sm: "25px" }}
+                    color="#174079"
+                  />
+                </Box>
+                <Box mb="15px">
+                  <FormLabel
+                    color="#C9C9C9"
+                    fontSize="12px"
+                    fontFamily="revert"
+                    fontWeight="500"
+                    htmlFor="name"
+                  >
+                    Добавить имя
+                  </FormLabel>
+                  <Input
+                    id="name"
+                    placeholder="Имя"
+                    sx={{
+                      "&::placeholder": {
+                        color: "#AAAAAA",
+                        fontSize: "14px",
+                        fontWeight: "medium",
+                      },
+                    }}
+                    border="1px"
+                    borderColor="#AAAAAA"
+                    focusBorderColor="#174079"
+                    bg="#ffffff"
+                    borderRadius={{ base: "10px", sm: "15px" }}
+                    fontSize="14px"
+                    fontWeight="medium"
+                    fontFamily="revert"
+                    py={{ base: "10px", sm: "25px" }}
+                    color="#174079"
+                  />
+                </Box>
+                <BtnForm
+                  btnText="Сохранить"
+                  bg="#007AFF"
+                  color="white"
+                  width="100%"
+                  colorSceme="blue.600"
                 />
-              </Box>
-              <Box mb="15px">
-                <FormLabel
-                  color="#C9C9C9"
-                  fontSize="12px"
-                  fontFamily="revert"
-                  fontWeight="500"
-                  htmlFor="name"
-                >
-                  Добавить имя
-                </FormLabel>
-                <Input
-                  id="name"
-                  placeholder="Имя"
-                  sx={{
-                    "&::placeholder": {
-                      color: "#AAAAAA",
-                      fontSize: "14px",
-                      fontWeight: "medium",
-                    },
-                  }}
-                  border="1px"
-                  borderColor="#AAAAAA"
-                  focusBorderColor="#174079"
-                  bg="#ffffff"
-                  borderRadius={{ base: "10px", sm: "15px" }}
-                  fontSize="14px"
-                  fontWeight="medium"
-                  fontFamily="revert"
-                  py={{ base: "10px", sm: "25px" }}
-                  color="#174079"
-                />
-              </Box>
-              <Button
-                type="submit"
-                colorScheme="blue.600"
-                mt={{ base: "10px", sm: "15px" }}
-                borderRadius={{ base: "10px", sm: "15px" }}
-                fontSize={{ base: "14px", sm: "18px" }}
-                fontWeight="medium"
-                fontFamily="revert"
-                w="100%"
-                bg="#007AFF"
-                color="white"
-                py="25px"
-              >
-                Сохранить
-              </Button>
-            </FormControl>
-          </form>
-        </Box>
+              </FormControl>
+            </form>
+          </Box>
+        ) : (
+          <LoadBlock />
+        )}
       </Container>
     </Box>
   );
