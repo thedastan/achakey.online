@@ -28,8 +28,6 @@ export const fetchUserDetails = (id: string) => {
         type: UserTypes.USER_DETAILS,
         payload: response.data,
       });
-    } catch (e) {
-      console.error(e);
     } catch (e: any) {
       dispatch({
         type: UserTypes.ERROR_USER,
