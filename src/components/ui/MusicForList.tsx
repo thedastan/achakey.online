@@ -10,10 +10,13 @@ import {
   useAction,
   useActionBasket,
   useExcerpAction,
+  useModalforms,
 } from "../../hooks/useActions";
 import { getAccessToken, getIdAlums, getUserId } from "../helper";
-import { loginModal } from "../form/modal/action/ModalAction";
+// import { loginModal } from "../form/modal/action/ModalAction";
 import { IBasketTypes } from "../../pages/basket/types";
+import Authoration from "../form/auth/Authoration";
+import ModalUserAuth from "../form/modal/ModalUser";
 
 interface ITrackChange {
   onClick?: any;
@@ -42,7 +45,7 @@ export default function MusicForList({
   title,
 }: ITrackChange) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [buttonTitle, setButtonTitle] = useState<string>("+ в корзину");
+  const { loginModal } = useModalforms();
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const { tracks } = useAppSelector((state) => state.musicReducer);
@@ -99,22 +102,16 @@ export default function MusicForList({
     }
 
     fetchBasket();
-
-    const hasTrackInBasket = tracks.some((track) => {
-      return userFilter[0]?.cart_item.some((el) => el.music?.id === track.id);
-    });
-
-    if (hasTrackInBasket) {
-      setButtonTitle("в корзине");
-    } else {
-      setButtonTitle("+ в корзину");
-    }
   };
 
   const openModal = () => {
     onOpen();
     loginModal();
   };
+
+  const cart_item = userFilter[0]?.cart_item;
+
+  const findMusic = cart_item?.some((el) => el.music?.id === music?.id);
 
   return (
     <Box
@@ -126,6 +123,7 @@ export default function MusicForList({
       alignContent="center"
       background="transparent"
     >
+      <ModalUserAuth isOpen={isOpen} onClose={onClose} />
       <Box
         display="flex"
         alignItems="center"
@@ -192,7 +190,7 @@ export default function MusicForList({
           background="transparent"
           colorScheme="none"
         >
-          {buttonTitle}
+          {findMusic ? "в корзине" : "+ в корзину"}
         </Button>
       )}
     </Box>

@@ -38,7 +38,7 @@ export const OrderDetails = ({ className, setOpenPopup }: IOrderPopup) => {
 
   useEffect(() => {
     fetchOrderItem(Number(orderId));
-  }, [orderDetails]);
+  }, []);
 
   return (
     <Box
@@ -65,50 +65,52 @@ export const OrderDetails = ({ className, setOpenPopup }: IOrderPopup) => {
                 <Box>
                   {orderDetails?.order_item?.map((el: any, index: any) => (
                     <div key={index}>
-                      <Box
-                        bg="white"
-                        rounded="10px"
-                        my="5px"
-                        py="12px"
-                        px="25px"
-                      >
+                      {el.music !== null && (
                         <Box
-                          display="flex"
-                          justifyContent="space-between"
-                          alignItems="center"
+                          bg="white"
+                          rounded="10px"
+                          my="5px"
+                          py="12px"
+                          px="25px"
                         >
                           <Box
                             display="flex"
                             justifyContent="space-between"
                             alignItems="center"
-                            w={{ base: "155px", sm: "170px" }}
                           >
-                            <Image
-                              src={el?.music?.image}
-                              w="35px"
-                              rounded="50%"
-                            />
-                            <Text fontSize="12px" fontWeight="400">
-                              {el?.music?.name}
+                            <Box
+                              display="flex"
+                              justifyContent="space-between"
+                              alignItems="center"
+                              w={{ base: "155px", sm: "170px" }}
+                            >
+                              <Image
+                                src={el?.music?.image}
+                                w="35px"
+                                rounded="50%"
+                              />
+                              <Text fontSize="12px" fontWeight="400">
+                                {el?.music?.name}
+                              </Text>
+                            </Box>
+                            <Text fontWeight="400" fontSize="12px">
+                              {el?.music?.price}c
                             </Text>
+                            <Button
+                              onClick={() => deletedorder(`${el?.id}`)}
+                              bg="transparent"
+                              colorScheme="none"
+                              px="0"
+                              py="0"
+                              color="#C10404"
+                              fontSize="12px"
+                              fontWeight="400"
+                            >
+                              Удалить
+                            </Button>
                           </Box>
-                          <Text fontWeight="400" fontSize="12px">
-                            {el?.music?.price}c
-                          </Text>
-                          <Button
-                            onClick={() => deletedorder(`${el?.id}`)}
-                            bg="transparent"
-                            colorScheme="none"
-                            px="0"
-                            py="0"
-                            color="#C10404"
-                            fontSize="12px"
-                            fontWeight="400"
-                          >
-                            Удалить
-                          </Button>
                         </Box>
-                      </Box>
+                      )}
                     </div>
                   ))}
                   {orderDetails?.order_item?.map((el, index) => (

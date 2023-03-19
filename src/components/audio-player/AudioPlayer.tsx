@@ -16,7 +16,6 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { ITrack } from "../../redux/types";
 import { changeAction } from "../../global-audio-player-excerpt/action";
-import { OrderPopup } from "../order/OrderPopup";
 
 import SvgNext from "../../assets/svg/SvgNext";
 import SvgPause from "../../assets/svg/SvgPause";
@@ -27,10 +26,10 @@ import defaultImage from "../../assets/img/defaultImage.png";
 import { getIdAlums, getUserId } from "../helper";
 import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
 import { fetchBasket } from "../../pages/basket/action-creators/action";
-import "./style.scss";
-import "../ui/style.scss";
 import { OrderDetails } from "../order/OrderDetails";
 import { OrderPost } from "../order/types/order";
+import "./style.scss";
+import "../ui/style.scss";
 
 interface IlistMedia {
   listTruck?: ITrack[] | any;
@@ -51,7 +50,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   const dispatch = useAppDispatch();
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
   const { basket } = useAppSelector((state) => state.reducerBasket);
-
+  const Order = useAppSelector((state) => state.reducerOrder.order);
+  // const filterUser = basket.filter((el) => el.user === albums);
   const [openPopup, setOpenPopup] = useState(false);
   const { event } = useAppSelector((state) => state.eventReducer);
   const indexCurrent = useAppSelector(
@@ -158,6 +158,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     };
 
     const userFiter = basket.filter((el) => el.user === getUserId());
+
     const filterBasket = userFiter[0]?.cart_item;
     const includesTracks = filterBasket.filter(
       (el) => el.album?.id === cart?.cart_item[0].album
@@ -178,33 +179,38 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     setOpenPopup(true);
     const order: OrderPost = {
       user: getUserId(),
-      total_price: String(active?.price),
+      total_price: null,
+      status: null,
       order_item: [
         {
-          music: null,
           order: getUserId(),
+          music: null,
           album: albums?.id,
         },
       ],
     };
 
-    const userFiter = basket.filter((el) => el.user === getUserId());
-    const filterBasket = userFiter[0]?.cart_item;
-    const includesTracks = filterBasket.filter(
-      (el) => el.album?.id === order?.order_item[0].album
+    const userFiter = Order.filter((el) => el.user === getUserId());
+
+    const filterUser = userFiter.map(
+      //@ts-ignore
+      (el) =>
+        el?.order_item?.filter((i) => i.album?.id === order.order_item[0].album)
     );
 
-    if (includesTracks[0]?.album?.id !== order?.order_item[0]?.album) {
+    const newData = filterUser.flat();
+    const arrayOfObjects = newData.map((item) => ({ ...item }));
+
+    if (arrayOfObjects[0]?.album?.id === order.order_item[0].album) {
+      alert("No");
+    } else {
       alert("Success");
       fetchOrderPost(order);
-      fetchBasket();
-    } else {
-      alert("No");
-      fetchBasket();
+      fetchOrder();
     }
 
-    userFiter.filter((el) =>
-      el.order_item.filter((i: any) =>
+    userFiter?.filter((el) =>
+      el?.order_item?.filter((i) =>
         i.album?.id === order.order_item[0].album
           ? fetchOrderItem(Number(el?.id))
           : console.log("NoNo")
@@ -212,7 +218,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     );
 
     userFiter?.filter((el) =>
-      el?.order_item?.filter((i: any) =>
+      el?.order_item?.filter((i) =>
         i.album?.id === order.order_item[0].album
           ? fetchOrderId(Number(el?.id))
           : console.log("id")
@@ -220,8 +226,12 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     );
 
     setOpenPopup(true);
-    fetchBasket();
+    fetchOrder();
   }
+
+  const findAlbum = basket[0]?.cart_item.some(
+    (el) => el.album?.id === albums.id
+  );
 
   useEffect(() => {
     //@ts-ignore
@@ -230,7 +240,10 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
   useEffect(() => {
     fetchBasket();
-  }, [basket]);
+  }, []);
+
+  console.log(albums, "a");
+  console.log(basket, "b");
 
   return (
     <section
@@ -367,7 +380,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 borderColor="blueDark"
                 color="blueDark"
               >
-                В корзину
+                {findAlbum ? "В корзине" : "В корзину"}
               </Button>
             </Box>
           </Box>

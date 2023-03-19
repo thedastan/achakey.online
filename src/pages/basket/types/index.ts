@@ -44,7 +44,6 @@ export interface BasketState {
 }
 
 export interface IBasketTypes {
-  order_item: any;
   id?: string | number;
   user: string;
   total_price?: string;

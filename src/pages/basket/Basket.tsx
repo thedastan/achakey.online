@@ -13,6 +13,7 @@ import { OrderDetails } from "../../components/order/OrderDetails";
 export default function Basket() {
   const [openPopup, setOpenPopup] = useState(false);
   const [openPopupId, setOpenPopupId] = useState(false);
+  const [total, setTotal] = useState(0);
 
   const { fetchBasket } = useActionBasket();
   const { basket } = useAppSelector((state) => state.reducerBasket);
@@ -22,7 +23,7 @@ export default function Basket() {
 
   const deletedBasket = async (id: string) => {
     try {
-      const responce = await API.put(`account/cart/1`);
+      const responce = await API.put(`account/cart/4`);
       fetchBasket();
       return alert(`RESPOMCE ${responce}`);
     } catch (e) {
@@ -32,10 +33,34 @@ export default function Basket() {
     fetchBasket();
   };
 
-  const total = 50;
-
   useEffect(() => {
     fetchBasket();
+  }, []);
+
+  useEffect(() => {
+    let result = 0;
+    let totalAlbum = 0;
+
+    const numberArray = filterUser.map((el) =>
+      el.cart_item?.map((i) => i.music?.price)
+    );
+
+    const numberArrayAlbum = filterUser.map((el) =>
+      el.cart_item?.map((i) => i.album?.total_price)
+    );
+
+    const newAlbumDate = numberArrayAlbum.flat();
+
+    const newDate = numberArray.flat();
+
+    for (const keys of newDate) {
+      result += Number(keys);
+    }
+
+    for (const keys of newAlbumDate) {
+      totalAlbum += typeof keys === "undefined" || "object" ? 0 : Number(keys);
+    }
+    setTotal(totalAlbum + result);
   }, []);
 
   return (
