@@ -196,7 +196,9 @@ export default function Header() {
                                                 </NavLink>
                                             </Text>
                                             <Text p="5px" my="6px">
-                                                Изменить пароль
+                                                <NavLink to="/changePassword">
+                                                    Изменить пароль
+                                                </NavLink> 
                                             </Text>
                                         </Box>
                                         <Box p="8px">

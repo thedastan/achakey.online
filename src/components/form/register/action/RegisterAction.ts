@@ -27,15 +27,16 @@ export const fetchRegister = (user: IInputRegister) => {
         toast.success("Вам на почту отправлено ссылка для подверждения");
       }
     } catch (e: any) {
-      if (e.response.data?.email[0]) {
-        toast.error(e.response.data?.email[0]);
-      } else {
-        toast.error(e.message);
-      }
       dispatch({
         type: IFormsTypes.ERROR_USER,
         payload: e.message,
       });
+      if (e.response.data?.phone[0] || e.response.data?.email[0]) {
+        toast.error(e.response.data?.phone[0]);
+        toast.error(e.response.data?.email[0]);
+      } else {
+        toast.error(e.message);
+      }
     }
   };
 };
