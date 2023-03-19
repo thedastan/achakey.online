@@ -51,7 +51,7 @@ export const fetchMyTracks = () => {
 export const fetchMyAlbums = () => {
   return async (dispatch: Dispatch<TypeAction>) => {
     try {
-      const response = await API.get(`my_playlist_music/`);
+      const response = await API.get(`my_playlist_album/`);
       dispatch({
         type: ActionTypes.FETCH_MY_ALBUMS,
         payload: response.data,

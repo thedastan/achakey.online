@@ -40,22 +40,6 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
     }
   };
 
-  function titleBasket() {
-    const userFilter = basket.filter((el) => el.user === getUserId());
-
-    userFilter[0]?.cart_item.filter((el) =>
-      tracks.filter((i) =>
-        i.id === el.music?.id
-          ? setButtonTitle("в корзине")
-          : setButtonTitle("+ в корзину")
-      )
-    );
-  }
-
-  useEffect(() => {
-    titleBasket();
-  }, []);
-
   useEffect(() => {
     fetchBasket();
   }, []);

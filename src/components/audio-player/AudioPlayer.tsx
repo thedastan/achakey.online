@@ -51,7 +51,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const Order = useAppSelector((state) => state.reducerOrder.order);
-  // const filterUser = basket.filter((el) => el.user === albums);
   const [openPopup, setOpenPopup] = useState(false);
   const { event } = useAppSelector((state) => state.eventReducer);
   const indexCurrent = useAppSelector(
@@ -241,9 +240,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   useEffect(() => {
     fetchBasket();
   }, []);
-
-  console.log(albums, "a");
-  console.log(basket, "b");
 
   return (
     <section

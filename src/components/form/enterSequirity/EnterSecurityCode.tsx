@@ -14,14 +14,16 @@ import { useActionEnterSequirity } from "../../../hooks/useActions";
 const EnterSecurityCode: FC = () => {
   const [time, setTime] = useState("00:01:00");
   const [phone, setPhoneNumber] = useState<string>("");
-  const [code, setCode] = useState<number>(0);
+  const [code, setCode] = useState<any>("");
   const intervalRef = useRef<any>(null);
+
+  console.log(code);
 
   const { fetchSequirityCode } = useActionEnterSequirity();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    console.log(value);
+    setCode(code.split("").push(value));
   };
 
   useEffect(() => {

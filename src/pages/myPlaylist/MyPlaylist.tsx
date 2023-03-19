@@ -1,9 +1,8 @@
-import {Box, Button, Container, Image, Stack, Text} from "@chakra-ui/react";
-import {useEffect, useState} from "react";
-import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
+import { Box, Button, Container, Image, Stack, Text } from "@chakra-ui/react";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { tabBooleanAction } from "./action-creators/action";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import SvgMyPlaylistEmpty from "../../assets/svg/SvgMyPlaylistEmpty";
 import MyAlbum from "../../components/MyAlbum/MyAlbum";
 import MyTracks from "../../components/my-tracks/Mytracks";
@@ -15,13 +14,10 @@ enum AlbumOrTracks {
 
 export default function MyPlaylist() {
   const dispatch = useAppDispatch();
-  const { basket } = useAppSelector((state) => state.reducerBasket);
+  const { myTracks } = useAppSelector((state) => state.musicReducer);
   const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
   const isAlbum = isActive === AlbumOrTracks.ALBUM;
   const isTracks = isActive === AlbumOrTracks.TRACKS;
-
-  const arrayLength =  basket.map((el ) =>  el.cart_item.length )
-
 
   return (
     <section>
@@ -54,42 +50,47 @@ export default function MyPlaylist() {
               Моя альбом
             </Text>
           </Box>
-          {!arrayLength[0] && (
-              <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  flexDirection="column"
-                  color="white"
-                  mt={["-8rem","-13rem","-16rem","-10rem","60px"]}
+          {!myTracks.length && (
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              flexDirection="column"
+              color="white"
+            >
+              <Text
+                fontFamily="sans"
+                fontWeight="400"
+                fontStyle="normal"
+                fontSize="16px"
+                color="white"
               >
-                <Text
-                    fontFamily="sans"
-                    fontWeight="400"
-                    fontStyle="normal"
-                    fontSize="16px"
-                    color="white"
-                    pt={{base: "40%", lg: "20%", xl: "0"}}>
-                  В вашем кабинете пока нет альбомов
-                </Text>
-                <Box my="10"><SvgMyPlaylistEmpty/></Box>
-                <Stack direction='row' spacing={4} align='center'>
-                  <Link to="/excerpts">
-                    <Button width="267px" height="45px" colorScheme='blue' bg="#007AFF" variant='solid'>
-                      Перейти к покупке
-                    </Button>
-                  </Link>
-                </Stack>
+                В вашем кабинете пока нет альбомов
+              </Text>
+              <Box my="10">
+                <SvgMyPlaylistEmpty />
               </Box>
+              <Stack direction="row" spacing={4} align="center">
+                <Link to="/excerpts">
+                  <Button
+                    width="267px"
+                    height="45px"
+                    colorScheme="blue"
+                    bg="#007AFF"
+                    variant="solid"
+                  >
+                    Перейти к покупке
+                  </Button>
+                </Link>
+              </Stack>
+            </Box>
           )}
-          {/*<Box display="flex">*/}
-          {/*   <Box*/}
-          {/*        // w={{ base: "90vw", lg: "630px" }} h="auto"*/}
-             {/*>*/}
-             {/*    {isTracks ? <MyTracks /> : <MyAlbum />}*/}
-             {/*</Box>*/}
-             {/*   </Box>*/}
-              </Box>
+          <Box display="flex">
+            <Box w="90vw" h="auto">
+              {isTracks ? <MyTracks /> : <MyAlbum />}
+            </Box>
+          </Box>
+        </Box>
       </Container>
     </section>
   );

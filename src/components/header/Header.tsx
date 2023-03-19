@@ -73,7 +73,7 @@ export default function Header() {
 
     useEffect(()=>{
         fetchUserDetails(userId)
-    }, [userId, fetchUserDetails])
+    }, [])
 
 
     return (

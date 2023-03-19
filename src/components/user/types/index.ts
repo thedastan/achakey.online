@@ -1,6 +1,8 @@
 export const enum UserTypes {
   USER = "USER",
   USER_DETAILS = "USER_DETAILS",
+  LOADING_USER = "LOADING_USER",
+  ERROR_USER = "ERROR_USER",
 }
 
 export interface UserDetails {
@@ -10,8 +12,10 @@ export interface UserDetails {
 }
 
 export interface UserState {
+  loading: boolean;
   user: UserDetails[];
   userDetails: UserDetails;
+  error: any | string;
 }
 
 interface ActionUsers {
@@ -23,5 +27,17 @@ interface ActionUserDetails {
   type: UserTypes.USER_DETAILS;
   payload: UserDetails;
 }
+interface ActionUserLoading {
+  type: UserTypes.LOADING_USER;
+}
 
-export type ActionUser = ActionUsers | ActionUserDetails;
+interface ActionErrorUser {
+  type: UserTypes.ERROR_USER;
+  payload: any | string;
+}
+
+export type ActionUser =
+  | ActionUsers
+  | ActionUserDetails
+  | ActionUserLoading
+  | ActionErrorUser;
