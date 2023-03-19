@@ -13,8 +13,8 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import {Link, useNavigate, useLocation} from "react-router-dom";
-import { useEffect } from 'react';
-import { searchResult } from "./action-creators/Action";
+import {useEffect} from 'react';
+import {searchResult} from "./action-creators/Action";
 import Popup from "../ui/Popup";
 import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
 import {useActionUser, useModalforms} from "../../hooks/useActions";
@@ -36,10 +36,10 @@ export default function Header() {
 
     const {fetchUserDetails} = useActionUser();
 
-    const { userDetails } = useAppSelector(state => state.reducerUser)
+    const {userDetails} = useAppSelector(state => state.reducerUser)
 
-  const { searchChange } = useAppSelector((state) => state.searchChangeReducer);
-  const { tracks } = useAppSelector((state) => state.musicReducer);
+    const {searchChange} = useAppSelector((state) => state.searchChangeReducer);
+    const {tracks} = useAppSelector((state) => state.musicReducer);
 
     const searchResultArray = tracks.filter((el) =>
         el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
@@ -71,7 +71,7 @@ export default function Header() {
 
     const userId = JSON.parse(localStorage.getItem('user-id') as string)
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchUserDetails(userId)
     }, [])
 
@@ -94,47 +94,48 @@ export default function Header() {
                 justifyContent="end"
                 alignItems="center"
             >
-                        {!isHomePage ? (
-                            <InputGroup width={{sm:"100%",md:"70%",lg:"100%"}} left={{ sm:"0px",md:"50px",lg:"0px"}} display={{base:"none",sm:"block"}}  maxW="574px" mx="auto">
-                                <InputLeftElement  pointerEvents="none"  children={<Box color="gray.300"><SvgSearch /></Box>} />
-                                <Input
-                                    focusBorderColor='white'
-                                    type="text"
-                                    rounded="50px"
-                                    placeholder="Поиск треков..."
-                                    color="#000000"
-                                    onChange={(e)=> dispatch(searchResult(e.target.value))}
-                                    _hover={{
-                                        bg: "white"
-                                    }}
-                                />
-                                {searchChange && (
-                                    <Popup top={"50px"}>
-                                        <Box>
-                                            {searchResultArray.length ? (
-                                                searchResultArray.map((el, index) => (
-                                                    <Text
-                                                        key={index}
-                                                        py="10px"
-                                                        pl="20px"
-                                                        borderBottom={
-                                                            searchResultArray.length - 1 === index ? "0" : "1px"
-                                                        }
-                                                        borderColor="white"
-                                                    >
-                                                        {el.name}
-                                                    </Text>
-                                                ))
-                                            ) : (
-                                                <Text textAlign="center" py="50px" pl="20px">
-                                                    oops no music...
-                                                </Text>
-                                            )}
-                                        </Box>
-                                    </Popup>
-                                )}
-                            </InputGroup>
-                        ): null}
+                {!isHomePage ? (
+                    <InputGroup width={{sm: "100%", md: "70%", lg: "100%"}} left={{sm: "0px", md: "50px", lg: "0px"}}
+                                display={{base: "none", sm: "block"}} maxW="574px" mx="auto">
+                        <InputLeftElement pointerEvents="none" children={<Box color="gray.300"><SvgSearch/></Box>}/>
+                        <Input
+                            focusBorderColor='white'
+                            type="text"
+                            rounded="50px"
+                            placeholder="Поиск треков..."
+                            color="#000000"
+                            onChange={(e) => dispatch(searchResult(e.target.value))}
+                            _hover={{
+                                bg: "white"
+                            }}
+                        />
+                        {searchChange && (
+                            <Popup top={"50px"}>
+                                <Box>
+                                    {searchResultArray.length ? (
+                                        searchResultArray.map((el, index) => (
+                                            <Text
+                                                key={index}
+                                                py="10px"
+                                                pl="20px"
+                                                borderBottom={
+                                                    searchResultArray.length - 1 === index ? "0" : "1px"
+                                                }
+                                                borderColor="white"
+                                            >
+                                                {el.name}
+                                            </Text>
+                                        ))
+                                    ) : (
+                                        <Text textAlign="center" py="50px" pl="20px">
+                                            oops no music...
+                                        </Text>
+                                    )}
+                                </Box>
+                            </Popup>
+                        )}
+                    </InputGroup>
+                ) : null}
 
                 {!getAccessToken() ? (
                     <Box
@@ -146,7 +147,7 @@ export default function Header() {
                         alignItems="center"
                     >
                         <Box zIndex="11">
-                            <Link to={"/"} >
+                            <Link to={"/"}>
                                 <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo"/>
                             </Link>
                         </Box>
@@ -170,15 +171,16 @@ export default function Header() {
                         alignItems="center"
                     >
                         {!isHomePage ? (
-                            <InputGroup display={{base:"block",sm:"none"}}  maxW="574px" mx="auto">
-                                <InputLeftElement  pointerEvents="none"  children={<Box color="gray.300"><SvgSearch /></Box>} />
+                            <InputGroup display={{base: "block", sm: "none"}} maxW="574px" mx="auto">
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<Box color="gray.300"><SvgSearch/></Box>}/>
                                 <Input
                                     focusBorderColor='white'
                                     type="text"
                                     rounded="50px"
                                     placeholder="Поиск треков..."
                                     color="#000000"
-                                    onChange={(e)=> dispatch(searchResult(e.target.value))}
+                                    onChange={(e) => dispatch(searchResult(e.target.value))}
                                     _hover={{
                                         bg: "white"
                                     }}
@@ -209,52 +211,63 @@ export default function Header() {
                                     </Popup>
                                 )}
                             </InputGroup>
-                        ): null}
+                        ) : null}
                         {isHomePage ? (
                             <Box mx="10px" zIndex="21">
-                                <Link to={"/"} >
+                                <Link to={"/"}>
                                     <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo"/>
                                 </Link>
                             </Box>
-                        ): null}
+                        ) : null}
                         <Box position="relative">
                             <Menu>
-                                {({ isOpen }) => (
-                                <>
-                                <MenuButton isActive={isOpen} as={Button} bg="transparent" colorScheme="transparent">
-                                    <SvgAvatar fill={ isOpen ? "white" : "rgba(255, 255, 255, 0.4)" } />
-                                </MenuButton>
-                                <MenuList position="absolute" top="-55px" right="-10px" zIndex="22" bg="transparent" border="0" fontFamily="sans" fontSize="12px">
-                                    <MenuItem bg="transparent" display="flex" justifyContent="flex-end" pr="0" fontWeight="500">
-                                        <Text
-                                            bg="#646464"
-                                            color="white"
-                                            borderRadius="4px"
-                                            py="8px"
-                                            px="25px"
-                                        >
-                                            Аккаунт
-                                        </Text>
-                                    </MenuItem>
-                                    <MenuItem fontWeight="500" pb="10px" pt="15px" borderBottom="1px" borderTopRadius="5px" borderColor="rgba(210,210,210,0.62)" _hover={{background: "white"}}>
-                                        <Text color="#6B6B6B" my="5px">
-                                            { !!userDetails?.email ? userDetails.email : "" }
-                                        </Text>
-                                        <Text color="#6B6B6B" my="5px">
-                                            { !!userDetails?.phone ? userDetails.phone : "" }
-                                        </Text>
-                                    </MenuItem>
-                                    <MenuItem color="#000000" py="10px" fontWeight="500" onClick={()=>{navigate('/accountManagement')}}>
-                                        Управление аккаунтом
-                                    </MenuItem>
-                                    <MenuItem color="#000000" py="10px" fontWeight="500" onClick={()=>{navigate('/changePassword')}}>
-                                        Изменить пароль
-                                    </MenuItem>
-                                    <MenuItem color="#000000" pt="10px" pb="15px" borderTop="1px" fontWeight="500" borderBottomRadius="5px" borderColor="rgba(210,210,210,0.62)" onClick={logoutAccount}>
-                                        Выйти
-                                    </MenuItem>
-                                </MenuList>
-                                </>
+                                {({isOpen}) => (
+                                    <>
+                                        <MenuButton isActive={isOpen} as={Button} bg="transparent"
+                                                    colorScheme="transparent">
+                                            <SvgAvatar fill={isOpen ? "white" : "rgba(255, 255, 255, 0.4)"}/>
+                                        </MenuButton>
+                                        <MenuList position="absolute" top="-55px" right="-10px" zIndex="22"
+                                                  bg="transparent" border="0" fontFamily="sans" fontSize="12px">
+                                            <MenuItem bg="transparent" display="flex" justifyContent="flex-end" pr="0"
+                                                      fontWeight="500">
+                                                <Text
+                                                    bg="#646464"
+                                                    color="white"
+                                                    borderRadius="4px"
+                                                    py="8px"
+                                                    px="25px"
+                                                >
+                                                    Аккаунт
+                                                </Text>
+                                            </MenuItem>
+                                            <MenuItem fontWeight="500" pb="10px" pt="15px" borderBottom="1px"
+                                                      borderTopRadius="5px" borderColor="rgba(210,210,210,0.62)"
+                                                      _hover={{background: "white"}}>
+                                                <Text color="#6B6B6B" my="5px">
+                                                    {!!userDetails?.email ? userDetails.email : ""}
+                                                </Text>
+                                                <Text color="#6B6B6B" my="5px">
+                                                    {!!userDetails?.phone ? userDetails.phone : ""}
+                                                </Text>
+                                            </MenuItem>
+                                            <MenuItem color="#000000" py="10px" fontWeight="500" onClick={() => {
+                                                navigate('/accountManagement')
+                                            }}>
+                                                Управление аккаунтом
+                                            </MenuItem>
+                                            <MenuItem color="#000000" py="10px" fontWeight="500" onClick={() => {
+                                                navigate('/changePassword')
+                                            }}>
+                                                Изменить пароль
+                                            </MenuItem>
+                                            <MenuItem color="#000000" pt="10px" pb="15px" borderTop="1px"
+                                                      fontWeight="500" borderBottomRadius="5px"
+                                                      borderColor="rgba(210,210,210,0.62)" onClick={logoutAccount}>
+                                                Выйти
+                                            </MenuItem>
+                                        </MenuList>
+                                    </>
                                 )}
                             </Menu>
                         </Box>
