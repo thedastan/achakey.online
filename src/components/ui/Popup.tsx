@@ -12,13 +12,13 @@ export default function Popup({ children, top }: IPopup) {
       top={top}
       left="0"
       right="0"
-      maxW="540px"
+      maxW="580px"
       mx="auto"
-      roundedBottom="5px"
+      roundedBottom="6px"
       px={{ base: "20px", sm: "10px", md: "0" }}
       zIndex="2"
     >
-      <Box bg="white" roundedBottom="5px">
+      <Box bg="white" rounded="6px">
         {children}
       </Box>
     </Box>
