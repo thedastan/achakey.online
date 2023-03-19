@@ -17,6 +17,7 @@ import { indexForAlbums } from "./action-creators";
 
 export default function MyAlbum() {
   const [indexTab, setIndexTab] = useState<number>(0);
+  const [album, setAlbum] = useState<ITrack[] | null>();
   const { activeTrack } = useAction();
   const { fetchMyAlbums } = useTracksAction();
   const dispatch = useAppDispatch();
@@ -64,11 +65,19 @@ export default function MyAlbum() {
     fetchMyAlbums();
   }, []);
 
+  useEffect(() => {
+    if (myAlbums) {
+      setAlbum(myAlbums[indexTab]?.music || null);
+    }
+  }, [myAlbums, indexTab]);
+
+  console.log(myAlbums);
+
   return (
     <Box minH="90vh">
       <Box mb="47px" w="100%">
         <Slider {...settings}>
-          {myAlbums.map((el, index) => (
+          {myAlbums?.map((el, index) => (
             <Box key={index} onClick={() => onChangeIndex(index)}>
               <Image
                 src={el.image}
@@ -82,7 +91,7 @@ export default function MyAlbum() {
         </Slider>
       </Box>
       <Box>
-        {myAlbums[indexTab]?.music.map((item, index) => (
+        {/* {myAlbums[indexTab]?.map((item, index) => (
           <ListForAlbumOrTracks
             music={item}
             key={index}
@@ -90,7 +99,7 @@ export default function MyAlbum() {
             name={item.name}
             onClick={() => OnChange(item, index)}
           />
-        ))}
+        ))} */}
       </Box>
     </Box>
   );

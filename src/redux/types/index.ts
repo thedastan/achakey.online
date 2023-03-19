@@ -20,6 +20,7 @@ export interface ITrack {
   music_short?: string;
   created_at?: string;
   updated_at?: string;
+  text?: string;
 }
 
 export interface IAlbums {
@@ -74,6 +75,7 @@ export interface IMyTrack {
   music?: string;
   created_at?: string;
   updated_at?: string;
+  text?: string;
 }
 
 export interface IMyAlbums {
