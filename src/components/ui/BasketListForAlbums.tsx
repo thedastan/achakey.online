@@ -137,6 +137,7 @@ export default function BasketListAlbums({
             display="flex"
             justifyContent="space-between"
             alignItems="center"
+            w={{ base: "50%", lg: "32%" }}
           >
             <Text pr="69px" fontWeight="600" fontSize="20px">
               {price} сом
@@ -146,6 +147,7 @@ export default function BasketListAlbums({
                 e.stopPropagation();
                 postOrder(albums);
               }}
+              mr={{ base: "2%", md: "18%" }}
               border="1px"
               borderColor="white"
               rounded="38px"
@@ -158,7 +160,13 @@ export default function BasketListAlbums({
             >
               Оплатить
             </Button>
-            <Box cursor="pointer" onClick={() => deleted(`${id}`)}>
+            <Box
+              cursor="pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                deleted(`${id}`);
+              }}
+            >
               <SvgCross />
             </Box>
           </Box>

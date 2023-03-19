@@ -1,4 +1,4 @@
-import { IMyTrack } from "../../../redux/types";
+import { IAlbums, IMyTrack } from "../../../redux/types";
 
 export interface PlayerState {
   active: IMyTrack | null;
@@ -25,7 +25,7 @@ interface PauseAction {
 }
 interface SetActiveAction {
   type: PlayerActionTypes.SET_ACTIVE;
-  payload: any;
+  payload: IMyTrack;
 }
 interface SetDurationAction {
   type: PlayerActionTypes.SET_DURATION;

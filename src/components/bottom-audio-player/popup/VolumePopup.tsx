@@ -28,7 +28,7 @@ export default function VolumePopup({
 
   const setAudio = () => {
     if (active) {
-      audio.src = active.audio;
+      audio.src = active.music;
       audio.volume = volume / 100;
     }
   };

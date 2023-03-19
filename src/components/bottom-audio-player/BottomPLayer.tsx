@@ -23,16 +23,16 @@ import {
   useExcerpAction,
   useTracksAction,
 } from "../../hooks/useActions";
-import "./style.css";
 import {
   changeTimeAction,
   changeVolumeAction,
   loopAction,
 } from "../../global-audio-player/action-creators";
+import "./style.css";
 
 export default function BottomPlayer() {
   const { tabBoolean } = useAppSelector((state) => state.reducerTabBoolean);
-  const { albums: objAlbum, tracks: listTruck } = useAppSelector(
+  const { myAlbums: objAlbum, myTracks: listTruck } = useAppSelector(
     (state) => state.musicReducer
   );
   const albumIndex = useAppSelector(
@@ -343,12 +343,6 @@ export default function BottomPlayer() {
               ml="5px"
               colorScheme="none"
             >
-              {/* {!loop ? (
-                <SvgLoop fill={allLoop ? "#0EEB24" : "white"} />
-              ) : (
-                <SvgActiveLoop />
-              )} */}
-
               {allLoop ? (
                 <SvgLoop fill={allLoop && "#0EEB24"} />
               ) : loop ? (

@@ -5,7 +5,6 @@ import AudioPlayer from "../../components/audio-player/AudioPlayer";
 import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
 import ExcerptTrackList from "../../components/excerptTrackList/ExcerptTrackList";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
-import { useTracksAction } from "../../hooks/useActions";
 import { fetchAlbumsDetails } from "./action-creators";
 
 export default function DetailsAlbums() {
