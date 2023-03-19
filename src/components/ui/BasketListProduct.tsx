@@ -95,7 +95,7 @@ export default function BasketListProduct({
 
   useEffect(() => {
     fetchOrder();
-  }, [Order]);
+  }, []);
 
   return (
     <Box
