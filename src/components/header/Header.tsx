@@ -3,11 +3,15 @@ import {
     Button,
     Container,
     Image,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
     Text,
     useBreakpointValue,
     useDisclosure,
 } from "@chakra-ui/react";
-import {Link, NavLink, useNavigate,useLocation} from "react-router-dom";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import { useEffect, useState } from 'react';
 
 import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
@@ -21,7 +25,6 @@ import "./style.scss";
 export default function Header() {
     const location = useLocation();
     const isHomePage = location.pathname === "/";
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {loginModal} = useModalforms();
     const {isOpen, onOpen, onClose} = useDisclosure();
@@ -29,12 +32,6 @@ export default function Header() {
     const {fetchUserDetails} = useActionUser();
 
     const { userDetails } = useAppSelector(state => state.reducerUser)
-
-  const [drop, setDrop] = useState<boolean>(false)
-
-  const openCloseDrop = () => {
-    setDrop(!drop)
-  }
 
   const { searchChange } = useAppSelector((state) => state.searchChangeReducer);
   const { tracks } = useAppSelector((state) => state.musicReducer);
@@ -71,7 +68,7 @@ export default function Header() {
 
     useEffect(()=>{
         fetchUserDetails(userId)
-    }, [userId])
+    }, [userId, fetchUserDetails])
 
     return (
         <Box
@@ -131,84 +128,46 @@ export default function Header() {
                                 </Link>
                             </Box>
                         ): null}
-                        <Box
-                            zIndex="21"
-                            w="30px"
-                            h="30px"
-                            rounded="50%"
-                            position="relative"
-                            cursor="pointer"
-                            className="avatar__login"
-                            onClick={ openCloseDrop }
-                        >
-                            <SvgAvatar fill={ drop ? "white" : "rgba(255, 255, 255, 0.4)" } />
-                            <Box
-                                position="absolute"
-                                display={ drop ? "block" : "none" }
-                                bg="transparent"
-                                top="0"
-                                right="0"
-                                mr="30px"
-                                //className="avatar__login__menu"
-                            >
-                                <Box display="flex" flexDir="column" alignItems="flex-end">
-                                    <Box
-                                        bg="#646464"
-                                        color="white"
-                                        borderRadius="4px"
-                                        py="8px"
-                                        px="25px"
-                                        fontFamily="sans"
-                                        fontSize="12px"
-                                    >
-                                        Аккаунт
-                                    </Box>
-                                    <Box
-                                        bg="white"
-                                        mt="10px"
-                                        fontFamily="sans"
-                                        py="5px"
-                                        borderRadius="5px"
-                                        fontWeight="500"
-                                        color="#000000"
-                                        fontSize="12px"
-                                    >
-                                        <Box
-                                            borderBottom="1px"
-                                            p="10px"
-                                            borderColor="rgba(210,210,210,0.62)"
+                        <Box position="relative">
+                            <Menu>
+                                {({ isOpen }) => (
+                                <>
+                                <MenuButton isActive={isOpen} as={Button} bg="transparent" colorScheme="transparent">
+                                    <SvgAvatar fill={ isOpen ? "white" : "rgba(255, 255, 255, 0.4)" } />
+                                </MenuButton>
+                                <MenuList position="absolute" top="-55px" right="-10px" zIndex="22" bg="transparent" border="0" fontFamily="sans" fontSize="12px">
+                                    <MenuItem bg="transparent" display="flex" justifyContent="flex-end" pr="0" fontWeight="500">
+                                        <Text
+                                            bg="#646464"
+                                            color="white"
+                                            borderRadius="4px"
+                                            py="8px"
+                                            px="25px"
                                         >
-                                            <Text textAlign="center" fontSize="14px">
-                                                {/* Malika */}
-                                            </Text>
-                                            <Text color="#6B6B6B" my="5px">
-                                                { userDetails?.email }
-                                            </Text>
-                                        </Box>
-                                        <Box
-                                            borderBottom="1px"
-                                            px="10px"
-                                            borderColor="rgba(210,210,210,0.62)"
-                                        >
-                                            <Text p="5px" my="6px">
-                                                <NavLink to="/accountManagement">
-                                                    Управление аккаунтом
-                                                </NavLink>
-                                            </Text>
-                                            <Text p="5px" my="6px">
-                                                <NavLink to="/changePassword">
-                                                    Изменить пароль
-                                                </NavLink> 
-                                            </Text>
-                                        </Box>
-                                        <Box p="8px">
-                                            <Text p="5px" onClick={logoutAccount}>
-                                                Выйти
-                                            </Text>
-                                        </Box>
-                                    </Box>
-                                </Box>
-                            </Box>
+                                            Аккаунт
+                                        </Text>
+                                    </MenuItem>
+                                    <MenuItem fontWeight="500" pb="10px" pt="15px" borderBottom="1px" borderTopRadius="5px" borderColor="rgba(210,210,210,0.62)" _hover={{background: "white"}}>
+                                        <Text color="#6B6B6B" my="5px">
+                                            { !!userDetails?.email ? userDetails.email : "" }
+                                        </Text>
+                                        <Text color="#6B6B6B" my="5px">
+                                            { !!userDetails?.phone ? userDetails.phone : "" }
+                                        </Text>
+                                    </MenuItem>
+                                    <MenuItem color="#000000" py="10px" fontWeight="500" onClick={()=>{navigate('/accountManagement')}}>
+                                        Управление аккаунтом
+                                    </MenuItem>
+                                    <MenuItem color="#000000" py="10px" fontWeight="500" onClick={()=>{navigate('/changePassword')}}>
+                                        Изменить пароль
+                                    </MenuItem>
+                                    <MenuItem color="#000000" pt="10px" pb="15px" borderTop="1px" fontWeight="500" borderBottomRadius="5px" borderColor="rgba(210,210,210,0.62)" onClick={logoutAccount}>
+                                        Выйти
+                                    </MenuItem>
+                                </MenuList>
+                                </>
+                                )}
+                            </Menu>
                         </Box>
                     </Box>
                 )}

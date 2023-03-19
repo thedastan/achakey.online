@@ -38,7 +38,7 @@ const ForgotPassword: FC = () => {
   };
 
   const { registerModal } = useModalforms();
-  const { fetchForgotPassword } = useActionForgot();
+  const { fetchForgotPassword, fetchForgotPasswordPhone } = useActionForgot();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,7 +49,7 @@ const ForgotPassword: FC = () => {
     } else if (emailPhone.phone?.length) {
       setError("");
       const phone = emailPhone.phone;
-      fetchForgotPassword({ phone });
+      fetchForgotPasswordPhone({ phone });
     } else {
       setError("Введите почту или номер телефона");
     }
