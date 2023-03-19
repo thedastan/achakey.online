@@ -11,7 +11,7 @@ const initialState: SearchState = {
 export const searchChangeReducer = (
   state = initialState,
   action: SearchAction
-) => {
+):SearchState => {
   switch (action.type) {
     case SearchTypes.SERACH_CHANGE:
       return { ...state, searchChange: action.payload };

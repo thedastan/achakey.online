@@ -12,7 +12,7 @@ export const fetchUser = () => {
         payload: response.data,
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 };
@@ -26,7 +26,7 @@ export const fetchUserDetails = (id: string) => {
         payload: response.data,
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 };

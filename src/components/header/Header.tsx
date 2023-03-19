@@ -2,18 +2,20 @@ import {
     Box,
     Button,
     Container,
-    Image,
+    Image, InputGroup, InputLeftElement,
     Menu,
     MenuButton,
     MenuItem,
     MenuList,
     Text,
+    Input,
     useBreakpointValue,
     useDisclosure,
 } from "@chakra-ui/react";
 import {Link, useNavigate, useLocation} from "react-router-dom";
-import { useEffect, useState } from 'react';
-
+import { useEffect } from 'react';
+import { searchResult } from "./action-creators/Action";
+import Popup from "../ui/Popup";
 import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
 import {useActionUser, useModalforms} from "../../hooks/useActions";
 import {useAppDispatch, useAppSelector} from "../../hooks/Index";
@@ -21,8 +23,11 @@ import ModalUserAuth from "../form/modal/ModalUser";
 import {SvgAvatar} from "../../assets/svg/SvgAvatar";
 import {getAccessToken} from "../helper";
 import "./style.scss";
+import SvgSearch from "../../assets/svg/SvgSearch";
 
 export default function Header() {
+    const dispatch = useAppDispatch();
+
     const location = useLocation();
     const isHomePage = location.pathname === "/";
     const navigate = useNavigate();
@@ -70,6 +75,7 @@ export default function Header() {
         fetchUserDetails(userId)
     }, [userId, fetchUserDetails])
 
+
     return (
         <Box
             pos="fixed"
@@ -88,6 +94,48 @@ export default function Header() {
                 justifyContent="end"
                 alignItems="center"
             >
+                        {!isHomePage ? (
+                            <InputGroup width={{sm:"100%",md:"70%",lg:"100%"}} left={{ sm:"0px",md:"50px",lg:"0px"}} display={{base:"none",sm:"block"}}  maxW="574px" mx="auto">
+                                <InputLeftElement  pointerEvents="none"  children={<Box color="gray.300"><SvgSearch /></Box>} />
+                                <Input
+                                    focusBorderColor='white'
+                                    type="text"
+                                    rounded="50px"
+                                    placeholder="Поиск треков..."
+                                    color="#000000"
+                                    onChange={(e)=> dispatch(searchResult(e.target.value))}
+                                    _hover={{
+                                        bg: "white"
+                                    }}
+                                />
+                                {searchChange && (
+                                    <Popup top={"50px"}>
+                                        <Box>
+                                            {searchResultArray.length ? (
+                                                searchResultArray.map((el, index) => (
+                                                    <Text
+                                                        key={index}
+                                                        py="10px"
+                                                        pl="20px"
+                                                        borderBottom={
+                                                            searchResultArray.length - 1 === index ? "0" : "1px"
+                                                        }
+                                                        borderColor="white"
+                                                    >
+                                                        {el.name}
+                                                    </Text>
+                                                ))
+                                            ) : (
+                                                <Text textAlign="center" py="50px" pl="20px">
+                                                    oops no music...
+                                                </Text>
+                                            )}
+                                        </Box>
+                                    </Popup>
+                                )}
+                            </InputGroup>
+                        ): null}
+
                 {!getAccessToken() ? (
                     <Box
                         display="flex"
@@ -121,6 +169,47 @@ export default function Header() {
                         justifyContent={breakpoints === "base" && "sm" ? isHomePage ? "space-between" : "end" : "end" && breakpoints === "md" ? "end" : "end"}
                         alignItems="center"
                     >
+                        {!isHomePage ? (
+                            <InputGroup display={{base:"block",sm:"none"}}  maxW="574px" mx="auto">
+                                <InputLeftElement  pointerEvents="none"  children={<Box color="gray.300"><SvgSearch /></Box>} />
+                                <Input
+                                    focusBorderColor='white'
+                                    type="text"
+                                    rounded="50px"
+                                    placeholder="Поиск треков..."
+                                    color="#000000"
+                                    onChange={(e)=> dispatch(searchResult(e.target.value))}
+                                    _hover={{
+                                        bg: "white"
+                                    }}
+                                />
+                                {searchChange && (
+                                    <Popup top={"50px"}>
+                                        <Box>
+                                            {searchResultArray.length ? (
+                                                searchResultArray.map((el, index) => (
+                                                    <Text
+                                                        key={index}
+                                                        py="10px"
+                                                        pl="20px"
+                                                        borderBottom={
+                                                            searchResultArray.length - 1 === index ? "0" : "1px"
+                                                        }
+                                                        borderColor="white"
+                                                    >
+                                                        {el.name}
+                                                    </Text>
+                                                ))
+                                            ) : (
+                                                <Text textAlign="center" py="50px" pl="20px">
+                                                    oops no music...
+                                                </Text>
+                                            )}
+                                        </Box>
+                                    </Popup>
+                                )}
+                            </InputGroup>
+                        ): null}
                         {isHomePage ? (
                             <Box mx="10px" zIndex="21">
                                 <Link to={"/"} >
