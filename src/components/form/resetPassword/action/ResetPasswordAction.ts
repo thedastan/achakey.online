@@ -8,7 +8,7 @@ export const fetchResetPassword = (reset: IInputResetPassword) => {
       dispatch({
         type: IFormsTypes.RESET_LOADING,
       });
-      const res = await PUBLIC_API.post("password_reset/confirm/", {
+      const res = await PUBLIC_API.post("reset_password/confirm/", {
         ...reset,
       });
       dispatch({
@@ -20,7 +20,7 @@ export const fetchResetPassword = (reset: IInputResetPassword) => {
         type: IFormsTypes.ERROR_USER,
         payload: e.message,
       });
-      alert(e.message)
+      alert(e.message);
     }
   };
 };

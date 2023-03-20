@@ -1,8 +1,12 @@
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Image, Text } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import Slider from "react-slick";
 
-import { useAction, useTracksAction } from "../../hooks/useActions";
+import {
+  useAction,
+  useExcerpAction,
+  useTracksAction,
+} from "../../hooks/useActions";
 import {
   currentIndexAction,
   eventChange,
@@ -14,19 +18,24 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import { ITrack } from "../../redux/types";
 import { indexForAlbums } from "./action-creators";
+import PopupForLyrics from "../ui/popupForLyrics";
 
 export default function MyAlbum() {
+  const [openPopup, setOpenPopup] = useState(false);
   const [indexTab, setIndexTab] = useState<number>(0);
-  const [album, setAlbum] = useState<ITrack[] | null>();
   const { activeTrack } = useAction();
   const { fetchMyAlbums } = useTracksAction();
   const dispatch = useAppDispatch();
   const { myAlbums } = useAppSelector((state) => state.musicReducer);
+  const { active } = useAppSelector((state) => state.playReducer);
+
+  const { excerptPauseAction } = useExcerpAction();
 
   const OnChange = (data: ITrack, index: number) => {
     activeTrack(data);
     eventChange(true);
     dispatch(currentIndexAction(index));
+    excerptPauseAction();
   };
 
   const onChangeIndex = (index: number) => {
@@ -65,17 +74,9 @@ export default function MyAlbum() {
     fetchMyAlbums();
   }, []);
 
-  useEffect(() => {
-    if (myAlbums) {
-      setAlbum(myAlbums[indexTab]?.music || null);
-    }
-  }, [myAlbums, indexTab]);
-
-  console.log(myAlbums);
-
   return (
     <Box minH="90vh">
-      <Box mb="47px" w="100%">
+      <Box mb="47px" w={{ base: "100%", md: "90%" }}>
         <Slider {...settings}>
           {myAlbums?.map((el, index) => (
             <Box key={index} onClick={() => onChangeIndex(index)}>
@@ -90,8 +91,8 @@ export default function MyAlbum() {
           ))}
         </Slider>
       </Box>
-      <Box>
-        {/* {myAlbums[indexTab]?.map((item, index) => (
+      <Box w="100%">
+        {myAlbums[indexTab]?.music?.map((item, index) => (
           <ListForAlbumOrTracks
             music={item}
             key={index}
@@ -99,8 +100,37 @@ export default function MyAlbum() {
             name={item.name}
             onClick={() => OnChange(item, index)}
           />
-        ))} */}
+        ))}
       </Box>
+      {active && (
+        <Box
+          textColor="white"
+          maxW="350px"
+          px="35px"
+          py="35px"
+          rounded="30px"
+          bg="rgba(255, 255, 255, 0.08)"
+          ml="20px"
+          display={{ base: "none", lg: "block" }}
+        >
+          <Box pb="18px">
+            <Image maxW="279px" rounded="22px" src={active?.image} />
+          </Box>
+          <Text fontSize="14px" lineHeight="19.88px">
+            <p>
+              {active.text?.split("\r\n").map((line, index) => (
+                <p key={index}>{line}</p>
+              ))}
+            </p>
+          </Text>
+        </Box>
+      )}
+      <PopupForLyrics
+        className={openPopup ? "transform" : ""}
+        image={active?.image}
+        setOpenPopup={setOpenPopup}
+        text={active?.text}
+      />
     </Box>
   );
 }

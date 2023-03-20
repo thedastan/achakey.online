@@ -31,6 +31,8 @@ export default function ListForAlbumOrTracks({
     return minutes + ":" + seconds;
   }
 
+  console.log(active);
+
   return (
     <Box
       py="22px"
