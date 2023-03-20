@@ -17,7 +17,7 @@ import TextError from "../../ui/TextError";
 
 const ResetPasswordForm = () => {
   const url: string = window.location.href;
-  const token: string = url.slice(url.length - 33, url.length);
+  const token: string = "f61ea0c6fa2461ddc31d0a1c54f1ba2c9dff977fb72";
 
   const [passEye, setPassEye] = useState<boolean>(false);
   const [secondPassEye, setSecondPassEye] = useState<boolean>(false);
