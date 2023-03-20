@@ -46,7 +46,7 @@ export default function Basket() {
     );
 
     const numberArrayAlbum = filterUser.map((el) =>
-      el.cart_item?.map((i) => i.album?.total_price)
+      el.cart_item?.map((i) => i.album?.music?.map((j) => j.price))
     );
 
     const newAlbumDate = numberArrayAlbum.flat();
@@ -54,14 +54,14 @@ export default function Basket() {
     const newDate = numberArray.flat();
 
     for (const keys of newDate) {
-      result += Number(keys);
+      result += typeof keys === "undefined" ? 0 : Number(keys);
     }
 
     for (const keys of newAlbumDate) {
-      totalAlbum += typeof keys === "undefined" || "object" ? 0 : Number(keys);
+      totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
     }
     setTotal(totalAlbum + result);
-  }, []);
+  }, [basket]);
 
   return (
     <section>
