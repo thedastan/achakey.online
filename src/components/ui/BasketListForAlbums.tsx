@@ -1,5 +1,5 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useAppSelector } from "../../hooks/Index";
 import { useActionOrder } from "../../hooks/useActions";
@@ -12,7 +12,7 @@ interface IBasketAlbums {
   image?: string;
   name?: string;
   price?: string;
-  music?: IMusicForBasket[];
+  music?: IMusicForBasket[] | undefined;
   deleted: (value: string) => void;
   id: string;
   albums: IPlayList | undefined;
@@ -33,6 +33,7 @@ export default function BasketListAlbums({
     useActionOrder();
   const Order = useAppSelector((state) => state.reducerOrder.order);
   const [active, setActive] = useState<boolean>(false);
+  const [total, setTotal] = useState(0);
 
   const postOrder = async (cart: any) => {
     const order: OrderPost = {
@@ -87,6 +88,18 @@ export default function BasketListAlbums({
     fetchOrder();
   };
 
+  useEffect(() => {
+    let result = 0;
+
+    const numberArray: any[] | undefined = music?.map((el) => el?.price);
+
+    for (const keys of numberArray!) {
+      result += typeof keys === "undefined" ? 0 : Number(keys);
+    }
+
+    setTotal(result);
+  }, [music]);
+
   return (
     <Box
       className="basket"
@@ -140,7 +153,7 @@ export default function BasketListAlbums({
             w={{ base: "50%", lg: "32%" }}
           >
             <Text pr="69px" fontWeight="600" fontSize="20px">
-              {price} сом
+              {total} сом
             </Text>
             <Button
               onClick={(e) => {
@@ -218,7 +231,7 @@ export default function BasketListAlbums({
                   alignItems="center"
                 >
                   <Text fontSize="12px" textAlign="end" color="white">
-                    {el.price}c
+                    {Math.floor(el.price)}c
                   </Text>
                 </Box>
               </Box>

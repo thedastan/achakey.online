@@ -48,7 +48,6 @@ export default function MusicForList({
   const { loginModal } = useModalforms();
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
-  const { tracks } = useAppSelector((state) => state.musicReducer);
   const { postBasketItem, fetchBasket } = useActionBasket();
   const userFilter = basket.filter((el) => el.user === getUserId());
 

@@ -138,7 +138,7 @@ export default function BasketListProduct({
           w={{ base: "50%", lg: "32%" }}
         >
           <Text fontSize="12px" color="white">
-            {price}c
+            {Math.floor(price)}c
           </Text>
           <Button
             onClick={() => postOrder(music)}

@@ -1,5 +1,5 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SvgArrowTop from "../../assets/svg/SvgArrowTop";
 
 import { IMusicForBasket, IPlayList } from "../../pages/basket/types";
@@ -25,7 +25,19 @@ export default function OrderListAlbums({
   id,
 }: IBasketAlbums) {
   const [active, setActive] = useState<boolean>(false);
+  const [total, setTotal] = useState(0);
 
+  useEffect(() => {
+    let result = 0;
+
+    const numberArray: any[] | undefined = music?.map((el) => el?.price);
+
+    for (const keys of numberArray!) {
+      result += typeof keys === "undefined" ? 0 : Number(keys);
+    }
+
+    setTotal(result);
+  }, [music]);
   return (
     <Box
       bg="white"
@@ -71,7 +83,7 @@ export default function OrderListAlbums({
             </Text>
           </Box>
           <Box display="flex" alignItems="center">
-            <Text mr="48px">{albums?.total_price} сом</Text>
+            <Text mr="48px">{total} сом</Text>
             <Button
               bg="transparent"
               colorScheme="none"
@@ -132,7 +144,7 @@ export default function OrderListAlbums({
                   alignItems="center"
                 >
                   <Text fontSize="12px" textAlign="end" color="black">
-                    {el.price}c
+                    {Math.floor(el.price)}c
                   </Text>
                 </Box>
               </Box>

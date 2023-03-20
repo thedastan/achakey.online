@@ -1,10 +1,11 @@
 import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import API from "../../api/Index";
 import SvgBlackCross from "../../assets/svg/SvgBlackCross";
 import { useAppSelector } from "../../hooks/Index";
 import { useActionOrder } from "../../hooks/useActions";
+import { getUserId } from "../helper";
 import OrderListAlbums from "./orderListForAlbum";
 import "./style.scss";
 
@@ -15,7 +16,9 @@ interface IOrderPopup {
 
 export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
   const { fetchOrder } = useActionOrder();
+  const [total, setTotal] = useState(0);
   const { order } = useAppSelector((state) => state.reducerOrder);
+  const filterUser = order.filter((el) => el.user === getUserId());
 
   function handleClickClose() {
     setOpenPopup(false);
@@ -35,6 +38,32 @@ export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
 
   useEffect(() => {
     fetchOrder();
+  }, []);
+
+  useEffect(() => {
+    let result = 0;
+    let totalAlbum = 0;
+
+    const numberArray = filterUser.map((el) =>
+      el.order_item?.map((i) => i.music?.price)
+    );
+
+    const numberArrayAlbum = filterUser.map((el) =>
+      el.order_item?.map((i) => i.album?.music?.map((j) => j.price))
+    );
+
+    const newAlbumDate = numberArrayAlbum.flat();
+
+    const newDate = numberArray.flat();
+
+    for (const keys of newDate) {
+      result += typeof keys === "undefined" ? 0 : Number(keys);
+    }
+
+    for (const keys of newAlbumDate) {
+      totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
+    }
+    setTotal(totalAlbum + result);
   }, []);
 
   return (
@@ -141,7 +170,7 @@ export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
 
             <Box display="flex" justifyContent="space-between" mx="29px">
               <Text fontSize="16px" fontWeight="500" color="#242424">
-                Итого: 540 сом
+                Итого: {total} сом
               </Text>
               <Button
                 position="static"

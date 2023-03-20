@@ -1,5 +1,5 @@
 import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import API from "../../api/Index";
 import SvgBlackCross from "../../assets/svg/SvgBlackCross";
@@ -16,6 +16,7 @@ interface IOrderPopup {
 
 export const OrderDetails = ({ className, setOpenPopup }: IOrderPopup) => {
   const { fetchOrder } = useActionOrder();
+  const [total, setTotal] = useState(0);
   const { orderDetails, orderId } = useAppSelector(
     (state) => state.reducerOrder
   );
@@ -39,6 +40,37 @@ export const OrderDetails = ({ className, setOpenPopup }: IOrderPopup) => {
   useEffect(() => {
     fetchOrderItem(Number(orderId));
   }, []);
+
+  useEffect(() => {
+    let result = 0;
+    let totalAlbum = 0;
+
+    const numberArray: any[] | undefined = orderDetails?.order_item?.map(
+      (el) => el.music?.price
+    );
+
+    const numberArrayAlbum = orderDetails?.order_item?.map((el) =>
+      el.album?.music?.map((j) => j.price)
+    );
+
+    const newAlbumDate: (string | undefined)[] | undefined =
+      numberArrayAlbum?.flat();
+
+    const newDate: (string | undefined)[] | undefined = [numberArray]?.flat();
+
+    for (const keys of newDate) {
+      result += typeof keys === "undefined" ? 0 : Number(keys);
+    }
+
+    const _total = newAlbumDate;
+
+    for (const keys of [_total]) {
+      totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
+    }
+
+    setTotal(Number(totalAlbum + result));
+    console.log(totalAlbum, "ty");
+  }, [orderDetails]);
 
   return (
     <Box
@@ -133,7 +165,7 @@ export const OrderDetails = ({ className, setOpenPopup }: IOrderPopup) => {
 
             <Box display="flex" justifyContent="space-between" mx="29px">
               <Text fontSize="16px" fontWeight="500" color="#242424">
-                Итого: 540 сом
+                Итого: {total} сом
               </Text>
               <Button
                 position="static"
