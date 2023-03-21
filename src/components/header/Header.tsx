@@ -2,7 +2,9 @@ import {
     Box,
     Button,
     Container,
-    Image, InputGroup, InputLeftElement,
+    Image,
+    InputGroup,
+    InputLeftElement,
     Menu,
     MenuButton,
     MenuItem,
@@ -51,7 +53,7 @@ export default function Header() {
         localStorage.removeItem('user-id')
         navigate("/");
         window.location.reload();
-    };
+    }
 
     const openModal = () => {
         onOpen();
@@ -75,16 +77,18 @@ export default function Header() {
         fetchUserDetails(userId)
     }, [])
 
-
     return (
         <Box
-            pos="fixed"
-            bg={breakpoints === "base" && "sm" ? "black" : "transparent"}
-            zIndex="1"
+            pos={isHomePage ? "fixed" :"absolute"}
+            bg={breakpoints === "base" && "sm" ? isHomePage ? "black" : "none" : "none"}
+            zIndex="21"
+            width={{base:"100%",sm:"100%",md:"90%"}}
             top="0"
-            left="0"
+            left={{base:"0px",sm:"0px",md:"100px"}}
             right="0"
-            p={breakpoints === "base" && "sm" ? "20px" : "20px"}
+            p={breakpoints === "base" && "sm"  ? "20px" : "40px" && "md" ? "40px" :"40px"}
+            px={{base: "0px", sm: "45px", md: "45px"}}
+            pt={{sm:"40px",md:"40px"}}
         >
             <ModalUserAuth isOpen={isOpen} onClose={onClose}/>
             <Container

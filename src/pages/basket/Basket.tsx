@@ -1,4 +1,4 @@
-import { Box, Button, Container, Text } from "@chakra-ui/react";
+import {Box, Button, Container, Stack, Text} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import BasketListAlbums from "../../components/ui/BasketListForAlbums";
@@ -9,6 +9,8 @@ import { useActionBasket } from "../../hooks/useActions";
 import { OrderPopup } from "../../components/order/OrderPopup";
 import { getUserId } from "../../components/helper";
 import { OrderDetails } from "../../components/order/OrderDetails";
+import SvgBasketEmpty from "../../assets/svg/SvgBasketEmpty";
+import {Link} from "react-router-dom";
 
 export default function Basket() {
   const [openPopup, setOpenPopup] = useState(false);
@@ -68,14 +70,32 @@ export default function Basket() {
       <Box w="100%" minH="90vh" pb="50px" pt="140px">
         <Container maxW="1220px" position="relative">
           {!lengthBasket[0]?.cart_item?.length && (
-            <Text
-              textAlign="center"
-              color="white"
-              fontSize="48px"
-              pt={{ base: "40%", sm: "20%", xl: "0" }}
-            >
-              Пусто...
-            </Text>
+              <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  flexDirection="column"
+                  mt={["-5rem","-13rem","-13rem","-10rem","50px"]}
+                  color="white"
+              >
+                <Text
+                    fontFamily="sans"
+                    fontWeight="400"
+                    fontStyle="normal"
+                    fontSize="16px"
+                    color="white"
+                    pt={{base: "40%", lg: "20%", xl: "0"}}>
+                  В вашей корзине пока нет музыки
+                </Text>
+                <Box my="10"><SvgBasketEmpty/></Box>
+                <Stack direction='row' spacing={4} align='center'>
+                  <Link to="/excerpts">
+                    <Button width="267px" height="45px" colorScheme='blue' bg="#007AFF" variant='solid'>
+                      Перейти к покупке
+                    </Button>
+                  </Link>
+                </Stack>
+              </Box>
           )}
           <Box pl={{ base: "0", md: "5%", xl: "0" }}>
             {filterUser?.map((item, index) => (
