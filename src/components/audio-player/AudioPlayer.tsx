@@ -17,10 +17,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { ITrack } from "../../redux/types";
 import { changeAction } from "../../global-audio-player-excerpt/action";
 
-import SvgNext from "../../assets/svg/SvgNext";
-import SvgPause from "../../assets/svg/SvgPause";
 import SvgPlay from "../../assets/svg/SvgPlay";
-import SvgPrev from "../../assets/svg/SvgPrev";
 import defaultImage from "../../assets/img/defaultImage.png";
 
 import { getIdAlums, getUserId } from "../helper";
@@ -28,6 +25,9 @@ import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
 import { fetchBasket } from "../../pages/basket/action-creators/action";
 import { OrderDetails } from "../order/OrderDetails";
 import { OrderPost } from "../order/types/order";
+import SvgForAlbumPause from "../../assets/svg/SvgForAlbumPause";
+import SvgForAlbumNext from "../../assets/svg/SvgForAlbumNext";
+import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
 import "./style.scss";
 import "../ui/style.scss";
 
@@ -49,6 +49,8 @@ interface ICart {
 export default function AudioPlayer({ listTruck }: IlistMedia) {
   const dispatch = useAppDispatch();
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
+  const { myAlbums } = useAppSelector((state) => state.musicReducer);
+
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const Order = useAppSelector((state) => state.reducerOrder.order);
   const [openPopup, setOpenPopup] = useState(false);
@@ -232,6 +234,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     (el) => el.album?.id === albums.id
   );
 
+  const findMyAlum = myAlbums.some((el) => el);
+
   useEffect(() => {
     //@ts-ignore
     dispatch(fetchAlbumsDetails(getIdAlums()));
@@ -240,6 +244,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   useEffect(() => {
     fetchBasket();
   }, []);
+
+  console.log(myAlbums);
 
   return (
     <section
@@ -302,7 +308,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 onClick={() => (forAlbum ? OnClickPrev : console.log("Prev"))}
                 p="0"
               >
-                <SvgPrev />
+                <SvgForAlbumPrev />
               </Button>
               <Button
                 bg="transparent"
@@ -314,7 +320,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 {forAlbum && pause ? (
                   <SvgPlay fill="white" />
                 ) : (
-                  <SvgPause fill="white" />
+                  <SvgForAlbumPause fill="white" />
                 )}
               </Button>
               <Button
@@ -323,7 +329,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 onClick={() => (forAlbum ? OnClickNext() : console.log("Next"))}
                 p="0"
               >
-                <SvgNext />
+                <SvgForAlbumNext />
               </Button>
             </Box>
 

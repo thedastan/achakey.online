@@ -11,19 +11,20 @@ import {
   useActionBasket,
   useExcerpAction,
   useModalforms,
+  useTracksAction,
 } from "../../hooks/useActions";
 import { getAccessToken, getIdAlums, getUserId } from "../helper";
 // import { loginModal } from "../form/modal/action/ModalAction";
 import { IBasketTypes } from "../../pages/basket/types";
 import Authoration from "../form/auth/Authoration";
 import ModalUserAuth from "../form/modal/ModalUser";
+import SvgCheckMark from "../../assets/svg/SvgCheckMark";
 
 interface ITrackChange {
   onClick?: any;
   name?: string;
   music?: ITrack;
   trackBoolean?: boolean;
-  title: string;
 }
 
 interface ICartArray {
@@ -42,12 +43,13 @@ export default function MusicForList({
   name,
   music,
   trackBoolean,
-  title,
 }: ITrackChange) {
+  const { fetchMyTracks } = useTracksAction();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { loginModal } = useModalforms();
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
+  const { myTracks } = useAppSelector((state) => state.musicReducer);
   const { postBasketItem, fetchBasket } = useActionBasket();
   const userFilter = basket.filter((el) => el.user === getUserId());
 
@@ -108,9 +110,24 @@ export default function MusicForList({
     loginModal();
   };
 
+  function currentTimerAudio() {
+    let minutes: any = Math.floor(Number(music?.music_short_len) / 60);
+    let seconds: any = Number(music?.music_short_len) % 60;
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    return minutes + ":" + seconds;
+  }
+
   const cart_item = userFilter[0]?.cart_item;
 
   const findMusic = cart_item?.some((el) => el.music?.id === music?.id);
+  const findMyMusic = myTracks.some((el) => el.id === music?.id);
+
+  useEffect(() => {
+    fetchMyTracks();
+  }, []);
 
   return (
     <Box
@@ -135,6 +152,7 @@ export default function MusicForList({
           src={music?.image}
           rounded="50%"
           w="47px"
+          h="47px"
           mr="29px"
           display={{ base: "none", md: "block" }}
         />
@@ -164,13 +182,29 @@ export default function MusicForList({
           {name}
         </Text>
       </Box>
-      <Text color="white" display={{ base: "none", md: "block" }}>
-        {music?.music_short_len}
-      </Text>
-      <Text color="white" ml="50px">
+      <Box
+        display={{ base: "none", md: "flex" }}
+        alignItems="center"
+        ml={{ base: "0", sm: "22px" }}
+      >
+        <Text
+          display="flex"
+          alignItems="center"
+          color={active?.music_short === music?.music_short ? "blue" : "white"}
+        >
+          {currentTimerAudio()}
+        </Text>
+      </Box>
+
+      <Text
+        color={active?.music_short === music?.music_short ? "blue" : "white"}
+        ml={{ base: "5px", md: "50px" }}
+        display="flex"
+        alignItems={"center"}
+      >
         {music?.price}
       </Text>
-      {window.location.pathname !== "/excerpts/details/" + getIdAlums() && (
+      <Box display="flex" alignItems="center">
         <Button
           onClick={() =>
             getAccessToken() ? PostBasketItem(music) : openModal()
@@ -183,15 +217,24 @@ export default function MusicForList({
           fontSize="9px"
           h="23px"
           w="84px"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
           textColor={
             active?.music_short === music?.music_short ? "blue" : "white"
           }
           background="transparent"
           colorScheme="none"
+          color={findMyMusic ? "#49DEFF" : "white"}
         >
-          {findMusic ? "в корзине" : "+ в корзину"}
+          {findMyMusic ? `куплен` : findMusic ? "в корзине" : "+ в корзину"}
+          {findMyMusic && (
+            <Box mt="-3px">
+              <SvgCheckMark />
+            </Box>
+          )}
         </Button>
-      )}
+      </Box>
     </Box>
   );
 }

@@ -98,8 +98,11 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
     if (!pause) {
       excerptPauseAction();
       pauseTrack();
-      if (!active) {
-        onChangeForMusic(music, index);
+      if (active?.id !== music?.music?.id || !active) {
+        onChangeForMusic(music?.music, index);
+      } else {
+        excerptPauseAction();
+        pauseTrack();
       }
     } else {
       excerptPlayAction();
@@ -174,11 +177,13 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
     loginModal();
   };
 
+  const filterAlbum = albums.filter((el) => el.music.length);
+
   tracks.map((el) => dataMainPage.push(...dataMainPage, { music: el }));
-  albums.map((el) =>
+  filterAlbum?.map((el) =>
     dataMainPage.push({
       id: Math.floor(Math.random() * 100),
-      music: el.music[0] ? el.music[0] : null,
+      music: el.music[0],
     })
   );
 
@@ -495,7 +500,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
                     </Box>
                   </Container>
                 </Box>
-                {index === tracks.length - 1 ? (
+                {index === dataMainPage.length - 1 ? (
                   <Box
                     display={{
                       base: "none",
