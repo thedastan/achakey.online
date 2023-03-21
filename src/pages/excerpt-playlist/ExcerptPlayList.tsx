@@ -50,7 +50,6 @@ export default function ExcerptPlayList() {
             </Box>
           </Box>
         </Box>
-        <BottomPlayer />
       </Container>
     </section>
   );

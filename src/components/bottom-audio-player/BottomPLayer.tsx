@@ -290,6 +290,7 @@ export default function BottomPlayer() {
       rounded="0px"
       className="blur"
       p="0"
+      zIndex="3"
     >
       <Box display="flex" alignItems="center">
         <input
@@ -308,8 +309,8 @@ export default function BottomPlayer() {
           h="74px"
           display={{ base: "none", md: "block" }}
         />
-        <Box display="flex" alignItems="center">
-          <Box mr="31px">
+        <Box ml="55px" display="flex" alignItems="center">
+          <Box>
             <Button
               bg="transparent"
               colorScheme="none"
@@ -335,6 +336,25 @@ export default function BottomPlayer() {
             >
               <SvgNext />
             </Button>
+          </Box>
+        </Box>
+
+        <Box
+          mr="31px"
+          display="flex"
+          flexDir={{ base: "row-reverse", md: "column" }}
+          alignItems="center"
+        >
+          <Text
+            ml="auto"
+            textAlign="end"
+            textColor="white"
+            pb="5px"
+            fontSize="12px"
+          >
+            {startTimer()} / {currentTimerAudio()}
+          </Text>
+          <Box display="flex" alignItems="center">
             <Button
               onClick={loopActive}
               bg="transparent"
@@ -353,19 +373,6 @@ export default function BottomPlayer() {
                 <SvgLoop fill={"white"} />
               )}
             </Button>
-          </Box>
-        </Box>
-
-        <Box
-          mr="31px"
-          display="flex"
-          flexDir={{ base: "row-reverse", md: "column" }}
-          alignItems="center"
-        >
-          <Text textAlign="end" textColor="white" pb="5px" fontSize="12px">
-            {startTimer()} / {currentTimerAudio()}
-          </Text>
-          <Box display="flex" alignItems="center">
             <Box
               mr="9px"
               display={{ base: "none", md: "flex" }}
