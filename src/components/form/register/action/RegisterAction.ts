@@ -26,7 +26,6 @@ export const fetchRegister = (user: IInputRegister) => {
         type: IFormsTypes.REGISTER_USER,
         payload: res.data,
       });
-      
     } catch (e: any) {
       dispatch({
         type: IFormsTypes.ERROR_USER,

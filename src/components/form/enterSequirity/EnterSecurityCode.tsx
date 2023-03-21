@@ -14,16 +14,28 @@ import { useActionEnterSequirity } from "../../../hooks/useActions";
 const EnterSecurityCode: FC = () => {
   const [time, setTime] = useState("00:01:00");
   const [phone, setPhoneNumber] = useState<string>("");
-  const [code, setCode] = useState<any>("");
   const intervalRef = useRef<any>(null);
 
-  console.log(code);
+  const [code, setCode] = useState<any>("");
+  const [canMoveNext, setCanMoveNext] = useState(true);
+  const regex = new RegExp("^(?:([0-9]))*$");
 
   const { fetchSequirityCode } = useActionEnterSequirity();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setCode(code.split("").push(value));
+  if (code.length === 4) {
+    fetchSequirityCode({ code, phone });
+    setTimeout(() => {
+      setCode("");
+    }, 500);
+  }
+
+  const handleChange = (e: any) => {
+    if (!regex.test(e)) {
+      setCanMoveNext(false);
+      return;
+    }
+    setCanMoveNext(true);
+    setCode(e);
   };
 
   useEffect(() => {
@@ -67,28 +79,17 @@ const EnterSecurityCode: FC = () => {
         Мы отправили ваш код на номер {phone}
       </Text>
       <HStack display="flex" mt="10px" justifyContent="center">
-        <PinInput size={{ base: "md", sm: "lg" }}>
-          <PinInputField
-            bg="white"
-            py={{ base: "20px", sm: "25px" }}
-            onChange={handleChange}
-          />
-
-          <PinInputField
-            bg="white"
-            py={{ base: "20px", sm: "25px" }}
-            onChange={handleChange}
-          />
-          <PinInputField
-            bg="white"
-            py={{ base: "20px", sm: "25px" }}
-            onChange={handleChange}
-          />
-          <PinInputField
-            bg="white"
-            py={{ base: "20px", sm: "25px" }}
-            onChange={handleChange}
-          />
+        <PinInput
+          size={{ base: "md", sm: "lg" }}
+          type="number"
+          manageFocus={canMoveNext}
+          value={code}
+          onChange={handleChange}
+        >
+          <PinInputField bg="white" py={{ base: "20px", sm: "25px" }} />
+          <PinInputField bg="white" py={{ base: "20px", sm: "25px" }} />
+          <PinInputField bg="white" py={{ base: "20px", sm: "25px" }} />
+          <PinInputField bg="white" py={{ base: "20px", sm: "25px" }} />
         </PinInput>
       </HStack>
       <Box display="flex" justifyContent="center" mt="10px">
