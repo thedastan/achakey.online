@@ -1,4 +1,5 @@
-  import { Box, Text, Image, Button } from "@chakra-ui/react";
+import { Box, Text, Image, Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export default function NotFound() {
   return (
@@ -33,17 +34,19 @@ export default function NotFound() {
           mb="59px"
         >{`Страница не найдена :(`}</Text>
 
-        <Button
-          bg="blueDark"
-          w="260px"
-          h="45px"
-          mx="auto"
-          rounded="10px"
-          color="white"
-          fontSize="18px"
-        >
-          Перейти к трекам
-        </Button>
+        <Link to="/excerpts">
+          <Button
+            bg="blueDark"
+            w="260px"
+            h="45px"
+            mx="auto"
+            rounded="10px"
+            color="white"
+            fontSize="18px"
+          >
+            Перейти к трекам
+          </Button>
+        </Link>
         <Box maxW="700px" mx="auto" px="10px">
           <Image src={require("../../assets/img/darkAchakey.png")} />
         </Box>
