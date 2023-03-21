@@ -86,7 +86,7 @@ export default function MyPlaylist() {
             </Box>
           )}
           <Box display="flex">
-            <Box w="90vw" h="auto">
+            <Box w="100%" h="auto">
               {isTracks ? <MyTracks /> : <MyAlbum />}
             </Box>
           </Box>

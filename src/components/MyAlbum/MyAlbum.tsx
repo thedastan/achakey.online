@@ -31,11 +31,16 @@ export default function MyAlbum() {
 
   const { excerptPauseAction } = useExcerpAction();
 
+  const album = myAlbums[indexTab]?.music.some((el) => el.id === active?.id);
+
   const OnChange = (data: ITrack, index: number) => {
-    activeTrack(data);
-    eventChange(true);
-    dispatch(currentIndexAction(index));
+    if (data.id !== active?.id) {
+      activeTrack(data);
+      eventChange(true);
+      dispatch(currentIndexAction(index));
+    }
     excerptPauseAction();
+    setOpenPopup(true);
   };
 
   const onChangeIndex = (index: number) => {
@@ -77,60 +82,79 @@ export default function MyAlbum() {
   return (
     <Box minH="90vh">
       <Box mb="47px" w={{ base: "100%", md: "90%" }}>
-        <Slider {...settings}>
-          {myAlbums?.map((el, index) => (
-            <Box key={index} onClick={() => onChangeIndex(index)}>
-              <Image
-                src={el.image}
-                maxW={{ base: "109px", md: "160px", lg: "210px" }}
-                h={{ base: "91px", md: "130px", lg: "170px" }}
-                rounded="12px"
-                objectFit="cover"
-              />
-            </Box>
-          ))}
-        </Slider>
-      </Box>
-      <Box w="100%">
-        {myAlbums[indexTab]?.music?.map((item, index) => (
-          <ListForAlbumOrTracks
-            music={item}
-            key={index}
-            index={index + 1}
-            name={item.name}
-            onClick={() => OnChange(item, index)}
-          />
-        ))}
-      </Box>
-      {active && (
-        <Box
-          textColor="white"
-          maxW="350px"
-          px="35px"
-          py="35px"
-          rounded="30px"
-          bg="rgba(255, 255, 255, 0.08)"
-          ml="20px"
-          display={{ base: "none", lg: "block" }}
-        >
-          <Box pb="18px">
-            <Image maxW="279px" rounded="22px" src={active?.image} />
+        {myAlbums.length > 4 && (
+          <Slider {...settings}>
+            {myAlbums?.map((el, index) => (
+              <Box key={index} onClick={() => onChangeIndex(index)}>
+                <Image
+                  src={el.image}
+                  w={{ base: "109px", md: "160px", lg: "210px" }}
+                  h={{ base: "91px", md: "130px", lg: "170px" }}
+                  rounded="12px"
+                  objectFit="cover"
+                />
+              </Box>
+            ))}
+          </Slider>
+        )}
+        {myAlbums.length < 4 && (
+          <Box display="flex">
+            {myAlbums?.map((el, index) => (
+              <Box key={index} onClick={() => onChangeIndex(index)} mr="40px">
+                <Image
+                  src={el.image}
+                  w={{ base: "109px", md: "160px", lg: "210px" }}
+                  h={{ base: "91px", md: "130px", lg: "170px" }}
+                  rounded="12px"
+                  objectFit="cover"
+                />
+              </Box>
+            ))}
           </Box>
-          <Text fontSize="14px" lineHeight="19.88px">
-            <p>
-              {active.text?.split("\r\n").map((line, index) => (
-                <p key={index}>{line}</p>
-              ))}
-            </p>
-          </Text>
+        )}
+      </Box>
+      <Box display="flex" justifyContent="space-between" w="100%">
+        <Box w={album ? { base: "100%", lg: "70%" } : "100%"}>
+          {myAlbums[indexTab]?.music?.map((item, index) => (
+            <ListForAlbumOrTracks
+              music={item}
+              key={index}
+              index={index + 1}
+              name={item.name}
+              onClick={() => OnChange(item, index)}
+            />
+          ))}
         </Box>
-      )}
-      <PopupForLyrics
-        className={openPopup ? "transform" : ""}
-        image={active?.image}
-        setOpenPopup={setOpenPopup}
-        text={active?.text}
-      />
+        {album && (
+          <Box
+            textColor="white"
+            maxW="350px"
+            px="35px"
+            py="35px"
+            rounded="30px"
+            bg="rgba(255, 255, 255, 0.08)"
+            ml="20px"
+            display={{ base: "none", lg: "block" }}
+          >
+            <Box pb="18px">
+              <Image maxW="279px" rounded="22px" src={active?.image} />
+            </Box>
+            <Text fontSize="14px" lineHeight="19.88px">
+              <p>
+                {active?.text?.split("\r\n").map((line, index) => (
+                  <p key={index}>{line}</p>
+                ))}
+              </p>
+            </Text>
+          </Box>
+        )}
+        <PopupForLyrics
+          className={openPopup ? "transform" : ""}
+          image={active?.image}
+          setOpenPopup={setOpenPopup}
+          text={active?.text}
+        />
+      </Box>
     </Box>
   );
 }

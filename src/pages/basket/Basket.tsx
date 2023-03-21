@@ -23,7 +23,7 @@ export default function Basket() {
 
   const deletedBasket = async (id: string) => {
     try {
-      const responce = await API.put(`account/cart/4`);
+      const responce = await API.delete(`account/cart/${id}`);
       fetchBasket();
       return alert(`RESPOMCE ${responce}`);
     } catch (e) {

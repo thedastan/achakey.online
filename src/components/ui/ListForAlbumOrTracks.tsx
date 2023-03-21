@@ -5,6 +5,7 @@ import { SvgPlayerGifDefault } from "../../assets/svg/SvgPlayerGifDefault";
 import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import { IMyTrack } from "../../redux/types";
+import defaultImage from "../../assets/img/defaultImage.png";
 
 interface ITrackList {
   onClick?: any;
@@ -31,8 +32,6 @@ export default function ListForAlbumOrTracks({
     return minutes + ":" + seconds;
   }
 
-  console.log(active);
-
   return (
     <Box
       py="22px"
@@ -49,8 +48,9 @@ export default function ListForAlbumOrTracks({
           0{index}
         </Text>
         <Image
-          src={music?.image}
-          maxW="42px"
+          src={music?.image ? music.image : defaultImage}
+          w="42px"
+          h="42px"
           mr={{ base: "9px", md: "23px" }}
           rounded="4px"
           objectFit="cover"
