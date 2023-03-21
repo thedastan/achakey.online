@@ -135,7 +135,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
                   {el.item}
                 </span>
               </Link>
-              {basket[0].cart_item.length && index === 2 && (
+              {basket[0]?.cart_item.length && index === 2 && (
                 <Box
                   fontSize="12px"
                   position="absolute"

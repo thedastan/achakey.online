@@ -41,8 +41,8 @@ const Home = () => {
                         fontStyle="normal"
                         color="#FFFFFF"
                         fontSize={{base: "lg", sm: "xl", md: "2xl"}}
-                        my={{base: "30px", sm: "40px", md: "40px"}}
-                        px="20px"
+                        my={{base: "40px", sm: "50px", md: "50px"}}
+                        px="25px"
                         borderLeft="3px solid #49DEFF"
                         style={{
                             transform: musicPlay ? " translateY(-1400%)" : "translateY(65%)",
@@ -62,7 +62,8 @@ const Home = () => {
                             variant="outline"
                             color="white"
                             fontSize="15px"
-                            py="25px"
+                            mt="25px"
+                            height="42px"
                             px={breakpoints === "base" && "sm" ? "33px" : "63px"}
                             onClick={() => setMusicPlay(true)}
                             style={{
