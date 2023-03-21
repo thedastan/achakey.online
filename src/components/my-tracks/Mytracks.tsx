@@ -23,10 +23,14 @@ export default function MyTracks() {
   const { excerptPauseAction } = useExcerpAction();
   const { myTracks } = useAppSelector((state) => state.musicReducer);
   const { active } = useAppSelector((state) => state.playReducer);
+  const activeText = myTracks.some((el) => el.id === active?.id);
+
   const OnChange = (data: ITrack, index: number) => {
-    activeTrack(data);
-    eventChange(true);
-    dispatch(currentIndexAction(index));
+    if (data.id !== active?.id) {
+      activeTrack(data);
+      eventChange(true);
+      dispatch(currentIndexAction(index));
+    }
     excerptPauseAction();
     setOpenPopup(true);
   };
@@ -35,11 +39,9 @@ export default function MyTracks() {
     fetchMyTracks();
   }, []);
 
-  console.log(active);
-
   return (
     <Box minH="90vh" display="flex" justifyContent="space-between">
-      <Box w={active ? { base: "100%", lg: "70%" } : "100%"}>
+      <Box w={activeText ? { base: "100%", lg: "70%" } : "100%"}>
         {myTracks?.map((item: IMyTrack, index: Key | any) => (
           <ListForAlbumOrTracks
             music={item}
@@ -50,7 +52,7 @@ export default function MyTracks() {
           />
         ))}
       </Box>
-      {active && (
+      {activeText && (
         <Box
           textColor="white"
           maxW="350px"
@@ -66,7 +68,7 @@ export default function MyTracks() {
           </Box>
           <Text fontSize="14px" lineHeight="19.88px">
             <p>
-              {active.text?.split("\r\n").map((line, index) => (
+              {active?.text?.split("\r\n").map((line, index) => (
                 <p key={index}>{line}</p>
               ))}
             </p>
