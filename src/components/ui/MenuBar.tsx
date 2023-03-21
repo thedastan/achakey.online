@@ -18,6 +18,7 @@ interface IPropsMenuBar {
 export default function MenuBar({ children }: IPropsMenuBar) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { active } = useAppSelector((state) => state.playReducer);
+  const { basket } = useAppSelector((state) => state.reducerBasket);
   const { loginModal } = useModalforms();
 
   const openModal = () => {
@@ -120,13 +121,38 @@ export default function MenuBar({ children }: IPropsMenuBar) {
             </Box>
           ))}
           {list.slice(1, 4).map((el, index) => (
-            <Box key={index} py="17.5px" pl="30px" pr="41px" display="flex">
+            <Box
+              key={index}
+              py="17.5px"
+              pl="30px"
+              pr="41px"
+              display="flex"
+              position="relative"
+            >
               <Link to={el.link} className="hover-text">
                 {el.svg}
                 <span className="tooltip-text" id="right">
                   {el.item}
                 </span>
               </Link>
+              {basket[0].cart_item.length && index === 2 && (
+                <Box
+                  fontSize="12px"
+                  position="absolute"
+                  w="20px"
+                  h="20px"
+                  bg="red.500"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  color="white"
+                  rounded="50%"
+                  pr="2px"
+                  right={7}
+                >
+                  {basket[0]?.cart_item?.length}
+                </Box>
+              )}
             </Box>
           ))}
         </Box>

@@ -119,6 +119,7 @@ export default function BasketListProduct({
           <Image
             src={image}
             maxW="47px"
+            h="47px"
             rounded="50%"
             mr={{ base: "10px", md: "26px" }}
           />

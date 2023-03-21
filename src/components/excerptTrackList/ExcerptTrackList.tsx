@@ -1,6 +1,17 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from "@chakra-ui/react";
+import {
   useAction,
   useActionBasket,
   useExcerpAction,
@@ -20,7 +31,6 @@ interface ITrackList {
 }
 
 export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
-  const [buttonTitle, setButtonTitle] = useState<string>("+ в корзину");
   const { excerptActiveAction, excerptForAlbumAction } = useExcerpAction();
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const { fetchBasket } = useActionBasket();
@@ -78,7 +88,6 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
         <Box>
           {tracks.map((el, index) => (
             <MusicForList
-              title={buttonTitle}
               name={el?.name}
               key={index}
               music={el}
