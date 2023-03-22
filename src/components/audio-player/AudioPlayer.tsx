@@ -22,7 +22,6 @@ import defaultImage from "../../assets/img/defaultImage.png";
 
 import { getIdAlums, getUserId } from "../helper";
 import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
-import { fetchBasket } from "../../pages/basket/action-creators/action";
 import { OrderDetails } from "../order/OrderDetails";
 import { OrderPost } from "../order/types/order";
 import SvgForAlbumPause from "../../assets/svg/SvgForAlbumPause";
@@ -50,6 +49,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   const [total, setTotal] = useState(0);
   const dispatch = useAppDispatch();
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
+  const albumForTotal = useAppSelector((state) => state.musicReducer.albums);
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const Order = useAppSelector((state) => state.reducerOrder.order);
@@ -64,7 +64,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   );
 
   const { pauseTrack } = useAction();
-  const { postBasketItem } = useActionBasket();
+  const { postBasketItem, fetchBasket } = useActionBasket();
   const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
     useActionOrder();
 
@@ -244,9 +244,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   useEffect(() => {
     let totalAlbum = 0;
 
-    const numberArrayAlbum = basket.map((el) =>
-      el.cart_item?.map((i) => i.album?.music?.map((j) => j.price))
-    );
+    const numberArrayAlbum = albums.music.map((el) => el.price);
 
     const newAlbumDate = numberArrayAlbum.flat();
 
@@ -258,7 +256,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
   useEffect(() => {
     fetchBasket();
-  }, [albums]);
+  }, []);
 
   return (
     <section

@@ -82,8 +82,6 @@ export default function Header() {
     fetchUserDetails(userId);
   }, []);
 
-  console.log(arrayListForSearch, "wertuio");
-
   return (
     <Box
       pos={isHomePage ? "fixed" : "absolute"}
