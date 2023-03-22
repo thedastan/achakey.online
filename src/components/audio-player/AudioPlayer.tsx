@@ -47,9 +47,9 @@ interface ICart {
 }
 
 export default function AudioPlayer({ listTruck }: IlistMedia) {
+  const [total, setTotal] = useState(0);
   const dispatch = useAppDispatch();
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
-  const { myAlbums } = useAppSelector((state) => state.musicReducer);
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const Order = useAppSelector((state) => state.reducerOrder.order);
@@ -146,6 +146,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   }
 
   function postCartAlbum() {
+    fetchBasket();
     const cart: ICart = {
       user: getUserId(),
       total_price: Number(active?.price),
@@ -177,6 +178,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   }
 
   function postOrderAlbum() {
+    fetchOrder();
     setOpenPopup(true);
     const order: OrderPost = {
       user: getUserId(),
@@ -234,18 +236,29 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     (el) => el.album?.id === albums.id
   );
 
-  const findMyAlum = myAlbums.some((el) => el);
-
   useEffect(() => {
     //@ts-ignore
     dispatch(fetchAlbumsDetails(getIdAlums()));
   }, []);
 
   useEffect(() => {
-    fetchBasket();
-  }, []);
+    let totalAlbum = 0;
 
-  console.log(myAlbums);
+    const numberArrayAlbum = basket.map((el) =>
+      el.cart_item?.map((i) => i.album?.music?.map((j) => j.price))
+    );
+
+    const newAlbumDate = numberArrayAlbum.flat();
+
+    for (const keys of newAlbumDate) {
+      totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
+    }
+    setTotal(totalAlbum);
+  }, [basket]);
+
+  useEffect(() => {
+    fetchBasket();
+  }, [albums]);
 
   return (
     <section
@@ -301,6 +314,12 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
             mb="32px"
             alignItems="center"
           >
+            <Text color="blue" fontWeight="700">
+              <span style={{ fontSize: "20px", paddingRight: "4px" }}>
+                {total}
+              </span>
+              сом
+            </Text>
             <Box mb={{ base: "20px", md: "0" }} w="150px" display="flex">
               <Button
                 bg="transparent"
@@ -332,7 +351,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 <SvgForAlbumNext />
               </Button>
             </Box>
-
             <Box w="100%" ml="auto" display="flex" alignItems="center">
               <input
                 type="range"
@@ -377,10 +395,15 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 py="9px"
                 w={{ base: "55vw", sm: "39vw", md: "17vw" }}
                 fontSize="14px"
-                bg="transparent"
+                bg={findAlbum ? "blueDark" : "transparent"}
                 border="1px"
-                borderColor="blueDark"
-                color="blueDark"
+                borderColor={findAlbum ? "blueDark" : "white"}
+                color="white"
+                _hover={{
+                  color: findAlbum ? "white" : "blueDark",
+                  borderColor: "blueDark",
+                }}
+                colorScheme="none"
               >
                 {findAlbum ? "В корзине" : "В корзину"}
               </Button>

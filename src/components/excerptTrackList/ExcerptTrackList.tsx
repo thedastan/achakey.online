@@ -32,7 +32,6 @@ interface ITrackList {
 
 export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
   const { excerptActiveAction, excerptForAlbumAction } = useExcerpAction();
-  const { basket } = useAppSelector((state) => state.reducerBasket);
   const { fetchBasket } = useActionBasket();
 
   const { pauseTrack } = useAction();
