@@ -64,7 +64,7 @@ export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
       totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
     }
     setTotal(totalAlbum + result);
-  }, []);
+  }, [order]);
 
   return (
     <Box
@@ -88,7 +88,7 @@ export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
             </Box>
 
             <Box h="65vh" overflowY="auto">
-              <Box mx="29px" mb="30px">
+              <Box mx={{ base: "10px", md: "29px" }} mb="30px">
                 {order?.map((item, index) => (
                   <Box key={index}>
                     {item.order_item?.map((el, index) => (
@@ -108,21 +108,27 @@ export const OrderPopup = ({ className, setOpenPopup }: IOrderPopup) => {
                             >
                               <Box
                                 display="flex"
-                                justifyContent="space-between"
+                                justifyContent="start"
                                 alignItems="center"
                                 w={{ base: "155px", sm: "170px" }}
                               >
                                 <Image
                                   src={el?.music?.image}
                                   w="35px"
+                                  h="35px"
                                   rounded="50%"
+                                  mr="10px"
                                 />
-                                <Text fontSize="12px" fontWeight="400">
+                                <Text
+                                  fontSize="12px"
+                                  fontWeight="400"
+                                  textAlign="start"
+                                >
                                   {el?.music?.name}
                                 </Text>
                               </Box>
                               <Text fontWeight="400" fontSize="12px">
-                                {el?.music?.price}c
+                                {Math.floor(Number(el?.music?.price))}cом
                               </Text>
                               <Button
                                 onClick={() => deletedorder(`${item.id}`)}

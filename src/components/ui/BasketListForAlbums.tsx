@@ -119,6 +119,18 @@ export default function BasketListAlbums({
         position="relative"
       >
         <Box
+          display={{ base: "block", lg: "none" }}
+          w="15px"
+          cursor="pointer"
+          ml="auto"
+          onClick={(e) => {
+            e.stopPropagation();
+            deleted(`${id}`);
+          }}
+        >
+          <SvgCross />
+        </Box>
+        <Box
           onClick={() => setActive(!active)}
           display="flex"
           justifyContent="space-between"
@@ -151,9 +163,13 @@ export default function BasketListAlbums({
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            w={{ base: "50%", lg: "32%" }}
+            w={{ base: "40%", lg: "32%" }}
           >
-            <Text pr="69px" fontWeight="600" fontSize="20px">
+            <Text
+              fontWeight="600"
+              fontSize="20px"
+              display={{ base: "none", lg: "block" }}
+            >
               {total} сом
             </Text>
             <Button
@@ -161,7 +177,7 @@ export default function BasketListAlbums({
                 e.stopPropagation();
                 postOrder(albums);
               }}
-              mr={{ base: "2%", md: "18%" }}
+              mr="2%"
               border="1px"
               borderColor="white"
               rounded="38px"
@@ -171,10 +187,12 @@ export default function BasketListAlbums({
               textColor="white"
               background="transparent"
               colorScheme="none"
+              ml={{ base: "auto", lg: "none" }}
             >
               Оплатить
             </Button>
             <Box
+              display={{ base: "none", lg: "block" }}
               cursor="pointer"
               onClick={(e) => {
                 e.stopPropagation();
@@ -244,11 +262,18 @@ export default function BasketListAlbums({
           w="100%"
           ml="auto"
           display="flex"
-          justifyContent="center"
+          justifyContent={{ base: "space-between", lg: "center" }}
           onClick={() => setActive(!active)}
           pt="10px"
         >
-          <Box display="flex" alignItems="center" mx="auto">
+          <Text
+            fontWeight="600"
+            fontSize="20px"
+            display={{ base: "block", lg: "none" }}
+          >
+            {total} сом
+          </Text>
+          <Box display="flex" alignItems="center">
             <Text>{music?.length} треков</Text>
             <Box className="accordion__icon" ml="17px">
               <SvgArrowTop stroke="white" />

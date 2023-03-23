@@ -157,7 +157,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
           ))}
         </Box>
       </Box>
-      <Box display={{ base: "block", md: "none" }} zIndex="2">
+      <Box display={{ base: "block", md: "none" }} zIndex="6">
         <Box
           position="fixed"
           bottom={active ? "60px" : "21px"}

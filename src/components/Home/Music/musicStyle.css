@@ -3,6 +3,10 @@
     height: 4px;
 }
 
+.mySwiper {
+    margin: 0 auto;
+}
+
 .music {
     position: fixed;
     top: 0;
@@ -137,4 +141,3 @@
         margin-top: 5%;
     }
 }
-

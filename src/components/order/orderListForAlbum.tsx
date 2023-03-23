@@ -39,15 +39,7 @@ export default function OrderListAlbums({
     setTotal(result);
   }, [music]);
   return (
-    <Box
-      bg="white"
-      rounded="13px"
-      maxW="950px"
-      mx="auto"
-      mb="10px"
-      pl={{ base: "8px", md: "25px" }}
-      pr={{ base: "10px", md: "25px" }}
-    >
+    <Box bg="white" rounded="13px" maxW="950px" mx="auto" mb="10px" px="25px">
       <Box
         pt="19px"
         pb="45px"
@@ -69,13 +61,14 @@ export default function OrderListAlbums({
           >
             <Image
               src={image}
-              maxW="47px"
+              w="35px"
+              h="35px"
               rounded="50%"
               mr={{ base: "10px", md: "26px" }}
             />
             <Text
               pl={{ base: "0", md: "17px" }}
-              fontSize="20px"
+              fontSize={{ base: "12px", md: "16px", lg: "20px" }}
               fontWeight="400"
               color="black"
             >
@@ -83,7 +76,13 @@ export default function OrderListAlbums({
             </Text>
           </Box>
           <Box display="flex" alignItems="center">
-            <Text mr="48px">{total} сом</Text>
+            <Text
+              mr="48px"
+              display={{ base: "none", md: "block" }}
+              fontSize="20px"
+            >
+              {total} сом
+            </Text>
             <Button
               bg="transparent"
               colorScheme="none"
@@ -115,14 +114,15 @@ export default function OrderListAlbums({
                 >
                   <Image
                     src={el.image}
-                    maxW="47px"
+                    w="35px"
+                    h="35px"
                     rounded="50%"
                     mr={{ base: "10px", md: "26px" }}
                   />
                   <Box>
                     <Text
                       pl={{ base: "0", md: "17px" }}
-                      fontSize="14.53px"
+                      fontSize={{ base: "12px", md: "14.53px" }}
                       fontWeight="400"
                       color="black"
                     >
@@ -155,12 +155,17 @@ export default function OrderListAlbums({
             w="100%"
             ml="auto"
             display="flex"
-            justifyContent="center"
+            justifyContent={{ base: "space-between", md: "center" }}
             onClick={() => setActive(!active)}
             pt="10px"
           >
-            <Box display="flex" alignItems="center" mx="auto">
-              <Text>{music?.length} треков</Text>
+            <Text display={{ base: "block", md: "none" }} fontSize="12px">
+              {total}: сом
+            </Text>
+            <Box display="flex" alignItems="center">
+              <Text fontSize={{ base: "12px", md: "18px" }}>
+                {music?.length} треков
+              </Text>
               <Box className="accordion__icon" ml="17px">
                 <SvgArrowTop stroke="black" />
               </Box>

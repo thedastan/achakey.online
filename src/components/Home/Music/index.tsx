@@ -189,11 +189,8 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
 
   return (
     <Box
-      maxW="3072px"
-      width="100%"
       className="music"
-      bg="red"
-      mx={"auto"}
+      mx="auto"
       style={{ display: musicPlay ? "block" : "none", background: "#1D1D20" }}
       zIndex="auto"
     >
@@ -213,7 +210,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
         className="mySwiper"
       >
         {dataMainPage.map((el: any, index) => (
-          <Box key={index}>
+          <Box key={index} mx="auto">
             {el.music !== null && (
               <SwiperSlide>
                 <Box
