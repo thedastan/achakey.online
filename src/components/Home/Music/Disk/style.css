@@ -1,7 +1,7 @@
 
 .disk {
     position: fixed;
-    top: 40%;
+    top: 0;
     left: 43%;
     z-index: 100;
     animation: down 5s linear infinite;
@@ -12,7 +12,6 @@
     from {
         transform: rotate(0deg)
     }
-
     to {
         transform: rotate(360deg);
     }
@@ -21,5 +20,31 @@
 @media (max-width: 1279px) and (min-width: 1110px) {
     .disk {
         left: 44%;
+    }
+}
+
+
+
+@media (min-width: 1738px) {
+    .disk {
+        left: 44%;
+    }
+}
+
+@media (min-width: 2000px) {
+    .disk {
+        left: 45%;
+    }
+}
+
+@media (min-width: 2400px) {
+    .disk {
+        left: 46%;
+    }
+}
+
+@media  (min-width: 3003px){
+    .disk {
+        left: 47%;
     }
 }

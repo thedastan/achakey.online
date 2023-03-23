@@ -189,7 +189,6 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
 
   return (
     <Box
-      maxW="3072px"
       width="100%"
       className="music"
       bg="red"
