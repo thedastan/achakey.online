@@ -1,20 +1,29 @@
-import { IForms, IFormsTypes, IStateAuth } from "../../formInterfaces";
+import {
+  IFormAuth,
+  IFormTypesAuth,
+  IStateAuthUser,
+} from "../formAuthInterfaces";
 
 const initialState = {
   loading: false,
   error: "",
-  authUser: {},
-} as IStateAuth;
+  loginUser: {},
+} as IStateAuthUser;
 
-export const reducerAuth = (state = initialState, action: IForms) => {
+export const reducerAuth = (state = initialState, action: IFormAuth) => {
   switch (action.type) {
-    case IFormsTypes.LOADING_USER: {
+    case IFormTypesAuth.LOADING_AUTH: {
       return { ...state, loading: true };
     }
-    case IFormsTypes.LOGIN_USER: {
-      return { ...state, authUser: action.payload, loading: false };
+    case IFormTypesAuth.LOGIN_USER: {
+      return {
+        ...state,
+        loginUser: action.payload,
+        loading: false,
+        error: "",
+      };
     }
-    case IFormsTypes.ERROR_USER: {
+    case IFormTypesAuth.ERROR_AUTH: {
       return { ...state, error: action.payload, loading: false };
     }
     default:

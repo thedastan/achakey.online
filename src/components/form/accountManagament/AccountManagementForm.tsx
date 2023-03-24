@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   FormControl,
   FormLabel,
@@ -9,12 +8,16 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { useAppSelector } from "../../../hooks/Index";
 import { useActionUser } from "../../../hooks/useActions";
 import LoadBlock from "../../ui/LoadBlock";
 import { UserDetails } from "../../user/types";
 import BtnForm from "../../ui/BtnForm";
+import TextError from "../../ui/TextError";
+import { emailPattern, phonePattern } from "../../helpers/helperFunction";
 
 const AccountManagementForm = () => {
   const { userDetails, loading } = useAppSelector((state) => state.reducerUser);
@@ -29,8 +32,6 @@ const AccountManagementForm = () => {
     formState: { errors },
   } = useForm<UserDetails>();
 
-  console.log(loading);
-
   const onSubmit: SubmitHandler<UserDetails> = (data) => {
     fetchChangeUserFields(data);
   };
@@ -42,6 +43,7 @@ const AccountManagementForm = () => {
   return (
     <Box h="100vh" w="100%" display="flex" alignItems="center">
       <Container maxW="1220px">
+        <ToastContainer />
         {!loading && userDetails.id ? (
           <Box w={["100%", "90%", "460px"]} mx="auto">
             <Text
@@ -77,6 +79,7 @@ const AccountManagementForm = () => {
                     defaultValue={userDetails.email}
                     {...register("email", {
                       required: !!userDetails.email ? true : false,
+                      pattern: emailPattern,
                     })}
                     sx={{
                       "&::placeholder": {
@@ -96,6 +99,7 @@ const AccountManagementForm = () => {
                     py={{ base: "10px", sm: "25px" }}
                     color="#174079"
                   />
+                  <TextError text={errors.email ? "Введите почту" : ""} />
                 </Box>
                 <Box my="15px">
                   <FormLabel
@@ -113,6 +117,7 @@ const AccountManagementForm = () => {
                     defaultValue={userDetails.phone}
                     {...register("phone", {
                       required: !!userDetails.phone ? true : false,
+                      pattern: phonePattern,
                     })}
                     sx={{
                       "&::placeholder": {
@@ -132,6 +137,9 @@ const AccountManagementForm = () => {
                     py={{ base: "10px", sm: "25px" }}
                     color="#174079"
                   />
+                  <TextError
+                    text={errors.phone ? "Введите номер телефона" : ""}
+                  />
                 </Box>
                 <Box mb="15px">
                   <FormLabel
@@ -146,6 +154,8 @@ const AccountManagementForm = () => {
                   <Input
                     id="name"
                     placeholder="Имя"
+                    defaultValue={userDetails.username}
+                    {...register("username")}
                     sx={{
                       "&::placeholder": {
                         color: "#AAAAAA",

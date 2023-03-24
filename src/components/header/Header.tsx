@@ -80,7 +80,7 @@ export default function Header() {
 
     useEffect(() => {
         fetchUserDetails(userId);
-    }, []);
+    }, [userId]);
 
     return (
         <Box
@@ -329,7 +329,15 @@ export default function Header() {
                                                 borderTopRadius="5px"
                                                 borderColor="rgba(210,210,210,0.62)"
                                                 _hover={{background: "white"}}
+                                                display="flex"
+                                                flexDirection="column"
+                                                alignItems="flex-start"
                                             >
+                                                <Box display="flex" justifyContent="center" w="100%">
+                                                    <Text color="#000000" my="5px" fontSize="16px" fontWeight="600" textAlign="center">
+                                                        {!!userDetails?.username ? userDetails.username : ""}
+                                                    </Text>
+                                                </Box> 
                                                 <Text color="#6B6B6B" my="5px">
                                                     {!!userDetails?.email ? userDetails.email : ""}
                                                 </Text>

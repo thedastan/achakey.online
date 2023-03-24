@@ -5,9 +5,9 @@ import {
   InputGroup,
   InputRightElement,
   Link,
+  Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 
 //local
 import { useModalforms } from "../../../hooks/useActions";
@@ -19,6 +19,7 @@ import TextError from "../../ui/TextError";
 import BtnForm from "../../ui/BtnForm";
 import TextFormEnd from "../../ui/TextFormEnd";
 import Inputs from "../../ui/Inputs";
+import SvgErrorIcon from "../../../assets/svg/SvgErrorIcon";
 
 type IModalInterface = {
   onClose: () => void;
@@ -27,8 +28,10 @@ type IModalInterface = {
 const Authoration: FC<IModalInterface> = ({ onClose }) => {
   const navigate = useNavigate();
   const [passEye, setPassEye] = useState<boolean>(false);
+
   const [username, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
   const [errorUser, setErrorUser] = useState<string>("");
   const [errorPassword, setErrorPassword] = useState<string>("");
 
@@ -58,7 +61,9 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
   };
 
   const { fetchAuthLogin } = usePostAuth();
-  const { loading, authUser } = useAppSelector((state) => state.reducerAuth);
+  const { loading, loginUser, error } = useAppSelector(
+    (state) => state.reducerAuth
+  );
 
   const { registerModal, forgotPassModal } = useModalforms();
 
@@ -82,15 +87,14 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
   };
 
   useEffect(() => {
-    if (authUser.access || authUser.id) {
+    if (loginUser.access || loginUser.id) {
       navigate("/");
       onClose();
     }
-  }, [authUser, navigate, onClose]);
+  }, [loginUser, navigate, onClose]);
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>
-      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <FormControl>
           <Box mb="10px">
@@ -99,8 +103,8 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
               type="text"
               required={true}
               placeholder="Почта или номер*"
-              borderColor={errorUser.length ? "#FF0000" : "#AAAAAA"}
-              focusBorderColor={errorUser.length ? "#FF0000" : "#174079"}
+              borderColor={errorUser.length ? "redForm" : "#AAAAAA"}
+              focusBorderColor={errorUser.length ? "redForm" : "#174079"}
               onChangeInput={handleChangeEmailPhone}
             />
             <TextError text={errorUser} />
@@ -112,8 +116,8 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
                 placeholder="Пароль*"
                 type={passEye ? "text" : "password"}
                 required={true}
-                borderColor={errorPassword.length ? "#FF0000" : "#AAAAAA"}
-                focusBorderColor={errorPassword.length ? "#FF0000" : "#174079"}
+                borderColor={errorPassword.length ? "redForm" : "#AAAAAA"}
+                focusBorderColor={errorPassword.length ? "redForm" : "#174079"}
                 onChangeInput={handleChangePassword}
               />
               <InputRightElement width="3rem" h="100%">
@@ -121,6 +125,17 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
               </InputRightElement>
             </InputGroup>
             <TextError text={errorPassword} />
+          </Box>
+          <Box
+            display={error.length ? "flex" : "none"}
+            alignItems="center"
+            fontFamily="revert"
+            px="10px"
+          >
+            <SvgErrorIcon />
+            <Text fontSize="12px" fontWeight="500" color="redForm" ml="10px">
+              {error}
+            </Text>
           </Box>
           <Box
             my="10px"

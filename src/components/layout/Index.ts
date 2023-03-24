@@ -8,6 +8,7 @@ export const theme = extendTheme({
     blueDark: "#007AFF",
     white: "#fff",
     main: "#666666",
+    redForm: "#FF3B30",
   },
   fonts: {
     body: "system-ui, sans-serif",
