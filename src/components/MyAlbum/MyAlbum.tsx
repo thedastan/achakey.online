@@ -85,7 +85,11 @@ export default function MyAlbum() {
         {myAlbums.length > 4 && (
           <Slider {...settings}>
             {myAlbums?.map((el, index) => (
-              <Box key={index} onClick={() => onChangeIndex(index)}>
+              <Box
+                key={index}
+                onClick={() => onChangeIndex(index)}
+                pos="relative"
+              >
                 <Image
                   src={el.image}
                   w={{ base: "109px", md: "160px", lg: "210px" }}
@@ -93,25 +97,79 @@ export default function MyAlbum() {
                   rounded="12px"
                   objectFit="cover"
                 />
+                <Box
+                  position="absolute"
+                  bg="linear-gradient(180deg, rgba(0, 0, 0, 0) -1.97%, #000000 92.45%)"
+                  zIndex="3"
+                  bottom="0"
+                  left="0"
+                  right="0"
+                  roundedBottom="14px"
+                  h="93px"
+                >
+                  <Text
+                    textColor="white"
+                    fontWeight="500"
+                    fontSize="16px"
+                    pl="24px"
+                    pt="27px"
+                  >
+                    {el.name}
+                  </Text>
+                </Box>
               </Box>
             ))}
           </Slider>
         )}
-        {myAlbums.length < 4 && (
-          <Box display="flex">
-            {myAlbums?.map((el, index) => (
-              <Box key={index} onClick={() => onChangeIndex(index)} mr="40px">
-                <Image
-                  src={el.image}
-                  w={{ base: "109px", md: "160px", lg: "210px" }}
-                  h={{ base: "91px", md: "130px", lg: "170px" }}
-                  rounded="12px"
-                  objectFit="cover"
-                />
-              </Box>
-            ))}
-          </Box>
-        )}
+        <Box overflowX="auto">
+          {myAlbums.length < 4 && (
+            <Box display="flex">
+              {myAlbums?.map((el, index) => (
+                <Box
+                  key={index}
+                  onClick={() => onChangeIndex(index)}
+                  mr="40px"
+                  pos="relative"
+                >
+                  <Image
+                    src={el.image}
+                    w={{ base: "170px", lg: "210px" }}
+                    h={{ base: "140px", lg: "170px" }}
+                    rounded="12px"
+                    objectFit="cover"
+                  />
+                  <Box
+                    position="absolute"
+                    bg="linear-gradient(180deg, rgba(0, 0, 0, 0) -1.97%, #000000 92.45%)"
+                    zIndex="3"
+                    bottom="0"
+                    left="0"
+                    right="0"
+                    roundedBottom="14px"
+                    h="100%"
+                    display="flex"
+                    flexDir="column"
+                    justifyContent="end"
+                    _hover={{
+                      h: "93px",
+                      transition: "0.2s",
+                    }}
+                  >
+                    <Text
+                      textColor="white"
+                      fontWeight="500"
+                      fontSize="16px"
+                      pl="10px"
+                      pb="10px"
+                    >
+                      {el.name}
+                    </Text>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          )}
+        </Box>
       </Box>
       <Box display="flex" justifyContent="space-between" w="100%">
         <Box w={album ? { base: "100%", lg: "70%" } : "100%"}>

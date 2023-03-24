@@ -12,9 +12,14 @@ import "./style.scss";
 interface IOrderPopup {
   className: string;
   setOpenPopup: (value: boolean) => void;
+  openPopup: boolean;
 }
 
-export const OrderDetails = ({ className, setOpenPopup }: IOrderPopup) => {
+export const OrderDetails = ({
+  className,
+  setOpenPopup,
+  openPopup,
+}: IOrderPopup) => {
   const { fetchOrder } = useActionOrder();
   const [total, setTotal] = useState(0);
   const { orderDetails, orderId } = useAppSelector(

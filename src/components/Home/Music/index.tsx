@@ -380,7 +380,11 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
                           type="range"
                           min={0}
                           max={duration}
-                          value={currentTime}
+                          value={
+                            el?.music?.music_short === active?.music_short
+                              ? currentTime
+                              : 0
+                          }
                           onChange={changeCurrentTime}
                           className="time"
                         />
@@ -392,7 +396,9 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
                           fontSize={["10px", "12px", "14px", "14px", "14px"]}
                           color="rgba(255,255,255,0.34)"
                         >
-                          {startTimer()}
+                          {el?.music?.music_short === active?.music_short
+                            ? startTimer()
+                            : "00:00"}
                         </Text>
                       </Box>
                     </Flex>
