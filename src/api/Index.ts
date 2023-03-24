@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_ADDRESS = "http://api.achakey.online:8000/";
+export const API_ADDRESS = "https://api.achakey.online/";
 
 const API = axios.create({
   baseURL: API_ADDRESS,
