@@ -38,16 +38,9 @@ export default function OrderListAlbums({
 
     setTotal(result);
   }, [music]);
+
   return (
-    <Box
-      bg="white"
-      rounded="13px"
-      maxW="950px"
-      mx="auto"
-      mb="10px"
-      pl={{ base: "8px", md: "25px" }}
-      pr={{ base: "10px", md: "25px" }}
-    >
+    <Box bg="white" rounded="13px" maxW="950px" mx="auto" mb="10px" px="25px">
       <Box
         pt="19px"
         pb="45px"
@@ -69,7 +62,8 @@ export default function OrderListAlbums({
           >
             <Image
               src={image}
-              maxW="47px"
+              w="47px"
+              h="47px"
               rounded="50%"
               mr={{ base: "10px", md: "26px" }}
             />
@@ -115,7 +109,8 @@ export default function OrderListAlbums({
                 >
                   <Image
                     src={el.image}
-                    maxW="47px"
+                    w="35px"
+                    h="35px"
                     rounded="50%"
                     mr={{ base: "10px", md: "26px" }}
                   />
@@ -160,7 +155,9 @@ export default function OrderListAlbums({
             pt="10px"
           >
             <Box display="flex" alignItems="center" mx="auto">
-              <Text>{music?.length} треков</Text>
+              <Text>
+                {!active && music?.length} {active ? "скрыть" : "треков"}
+              </Text>
               <Box className="accordion__icon" ml="17px">
                 <SvgArrowTop stroke="black" />
               </Box>

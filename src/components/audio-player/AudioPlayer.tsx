@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Text } from "@chakra-ui/layout";
-import { Image } from "@chakra-ui/react";
+import { Image, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import {
@@ -12,6 +12,7 @@ import {
   useActionBasket,
   useActionOrder,
   useExcerpAction,
+  useModalforms,
 } from "../../hooks/useActions";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { ITrack } from "../../redux/types";
@@ -20,7 +21,7 @@ import { changeAction } from "../../global-audio-player-excerpt/action";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import defaultImage from "../../assets/img/defaultImage.png";
 
-import { getIdAlums, getUserId } from "../helper";
+import { getAccessToken, getIdAlums, getUserId } from "../helper";
 import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
 import { OrderDetails } from "../order/OrderDetails";
 import { OrderPost } from "../order/types/order";
@@ -29,6 +30,7 @@ import SvgForAlbumNext from "../../assets/svg/SvgForAlbumNext";
 import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
 import "./style.scss";
 import "../ui/style.scss";
+import ModalUserAuth from "../form/modal/ModalUser";
 
 interface IlistMedia {
   listTruck?: ITrack[] | any;
@@ -46,10 +48,12 @@ interface ICart {
 }
 
 export default function AudioPlayer({ listTruck }: IlistMedia) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { loginModal } = useModalforms();
+
   const [total, setTotal] = useState(0);
   const dispatch = useAppDispatch();
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
-  const albumForTotal = useAppSelector((state) => state.musicReducer.albums);
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const Order = useAppSelector((state) => state.reducerOrder.order);
@@ -236,6 +240,11 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     (el) => el.album?.id === albums.id
   );
 
+  const openModal = () => {
+    onOpen();
+    loginModal();
+  };
+
   useEffect(() => {
     //@ts-ignore
     dispatch(fetchAlbumsDetails(getIdAlums()));
@@ -252,7 +261,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
       totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
     }
     setTotal(totalAlbum);
-  }, [basket]);
+  }, [albums]);
 
   useEffect(() => {
     fetchBasket();
@@ -271,8 +280,9 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
         flexDir={{ base: "column", md: "row" }}
         alignItems="end"
       >
+        <ModalUserAuth isOpen={isOpen} onClose={onClose} />
         <Box
-          mb="20px"
+          mb="13px"
           fontSize="32px"
           color="white"
           display={{ base: "block", md: "none" }}
@@ -280,16 +290,22 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           mx="auto"
         >
           {albums.name}
-          <Text>{`[Album]`}</Text>
+          <Text textAlign="center">{`[Album]`}</Text>
         </Box>
         <Box
-          maxW="176px"
-          h="225px"
           mr={{ base: "0", md: "23px" }}
           mx={{ base: "auto", md: "0" }}
           mb={{ base: "19px", md: "0" }}
+          w="176px"
+          h="220px"
         >
-          <Image src={albums?.image ? albums.image : defaultImage} />
+          <Image
+            w="176px"
+            h="220px"
+            src={albums?.image ? albums.image : defaultImage}
+            objectFit="cover"
+            rounded="12px"
+          />
         </Box>
         <Box
           w={{ base: "100%", md: "90%" }}
@@ -297,8 +313,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           pl="10px"
         >
           <Box
-            mb="32px"
-            fontSize="38.57px"
+            mb="16px"
+            fontSize="36.57px"
             color="white"
             display={{ base: "none", md: "block" }}
             fontWeight="900"
@@ -309,16 +325,14 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           <Box
             display="flex"
             flexDir={{ base: "column", md: "row" }}
-            mb="32px"
+            mb="17px"
             alignItems="center"
           >
-            <Text color="blue" fontWeight="700">
-              <span style={{ fontSize: "20px", paddingRight: "4px" }}>
-                {total}
-              </span>
-              сом
-            </Text>
-            <Box mb={{ base: "20px", md: "0" }} w="150px" display="flex">
+            <Box
+              mb={{ base: "15px", md: "0" }}
+              w={{ base: "auto", md: "150px" }}
+              display="flex"
+            >
               <Button
                 bg="transparent"
                 colorScheme="none"
@@ -368,14 +382,45 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               </Text>
             </Box>
           </Box>
+          <Text
+            textAlign="end"
+            color="blue"
+            fontSize="20px"
+            fontWeight="700"
+            pb="21px"
+            display={{ base: "block", md: "none" }}
+          >
+            <span style={{ fontSize: "28px", paddingRight: "4px" }}>
+              {total}
+            </span>
+            сом
+          </Text>
           <Box
             display="flex"
             alignItems="center"
             flexDir={{ base: "column", md: "row" }}
           >
-            <Box display="flex" flexDir={{ base: "column", sm: "row" }}>
+            <Box
+              display="flex"
+              alignItems="end"
+              flexDir={{ base: "column", sm: "row" }}
+            >
+              <Text
+                display={{ base: "none", md: "block" }}
+                color="blue"
+                fontSize="20px"
+                fontWeight="700"
+                mr="10px"
+              >
+                <span style={{ fontSize: "28px", paddingRight: "4px" }}>
+                  {total}
+                </span>
+                сом
+              </Text>
               <Button
-                onClick={postOrderAlbum}
+                onClick={() =>
+                  getAccessToken() ? postOrderAlbum() : openModal()
+                }
                 rounded="50px"
                 w={{ base: "55vw", sm: "39vw", md: "17vw" }}
                 py="9px"
@@ -388,7 +433,9 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 Купить сейчас
               </Button>
               <Button
-                onClick={postCartAlbum}
+                onClick={() =>
+                  getAccessToken() ? postCartAlbum() : openModal()
+                }
                 rounded="50px"
                 py="9px"
                 w={{ base: "55vw", sm: "39vw", md: "17vw" }}
@@ -410,6 +457,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
         </Box>
         <Box mx="auto" maxW="700px">
           <OrderDetails
+            openPopup={openPopup}
             setOpenPopup={setOpenPopup}
             className={openPopup ? "active" : ""}
           />

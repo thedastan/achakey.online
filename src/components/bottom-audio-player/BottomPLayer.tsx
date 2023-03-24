@@ -302,15 +302,26 @@ export default function BottomPlayer() {
           className="input"
         />
       </Box>
-      <Box display="flex" justifyContent="space-between">
+      <Box
+        display="flex"
+        justifyContent={{ base: "none", md: "space-between" }}
+        pb={{ base: "15px", md: "0" }}
+        pt={{ base: "11px", md: "0" }}
+      >
         <Image
           src={active.image}
           maxW="74px"
           h="74px"
           display={{ base: "none", md: "block" }}
         />
-        <Box ml="55px" display="flex" alignItems="center">
-          <Box>
+        <Box mr="auto" display={{ base: "block", md: "none" }}>
+          <Text textAlign="end" textColor="white" pb="5px" fontSize="12px">
+            {startTimer()}
+          </Text>
+        </Box>
+
+        <Box display="flex" alignItems="center" mx="auto">
+          <Box ml={{ base: "0", md: "30px" }}>
             <Button
               bg="transparent"
               colorScheme="none"
@@ -340,10 +351,12 @@ export default function BottomPlayer() {
         </Box>
 
         <Box
-          mr="31px"
+          mr={{ base: "0px", md: "31px" }}
+          ml={{ base: "auto", md: "0px" }}
           display="flex"
           flexDir={{ base: "row-reverse", md: "column" }}
-          alignItems="center"
+          alignItems={{ base: "start", md: "center" }}
+          justifyContent={"start"}
         >
           <Text
             ml="auto"
@@ -352,9 +365,10 @@ export default function BottomPlayer() {
             pb="5px"
             fontSize="12px"
           >
-            {startTimer()} / {currentTimerAudio()}
+            {currentTimerAudio()}
           </Text>
-          <Box display="flex" alignItems="center">
+
+          <Box display={{ base: "none", md: "flex" }} alignItems="center">
             <Button
               onClick={loopActive}
               bg="transparent"

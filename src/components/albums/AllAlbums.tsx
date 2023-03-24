@@ -48,7 +48,14 @@ export default function AllAlbums() {
                   left="0"
                   right="0"
                   roundedBottom="14px"
-                  h="93px"
+                  display="flex"
+                  flexDir="column"
+                  justifyContent="end"
+                  h="100%"
+                  _hover={{
+                    h: "93px",
+                    transition: "0.2s",
+                  }}
                 >
                   <Text
                     textColor="white"

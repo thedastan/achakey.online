@@ -1,5 +1,4 @@
-import { Box, Button, useDisclosure } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import SvgAllTracks from "../../assets/svg/SvgAllTracks";
 import SvgBasket from "../../assets/svg/SvgBasket";
@@ -8,7 +7,7 @@ import SvgTrack from "../../assets/svg/SvgTrack";
 import { useAppSelector } from "../../hooks/Index";
 import { useModalforms } from "../../hooks/useActions";
 import ModalUserAuth from "../form/modal/ModalUser";
-import { getAccessToken } from "../helper";
+import { getIdAlums } from "../helper";
 import "./style.scss";
 
 interface IPropsMenuBar {
@@ -49,7 +48,8 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       svg: (
         <SvgAllTracks
           fill={
-            window.location.pathname === "/excerpts"
+            window.location.pathname === "/excerpts" ||
+            window.location.pathname === "/excerpts/details/" + getIdAlums()
               ? "white"
               : "rgba(255, 255, 255, 0.4)"
           }
@@ -120,7 +120,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
               </Link>
             </Box>
           ))}
-          {list.slice(1, 4).map((el, index) => (
+          {list.slice(1, 3).map((el, index) => (
             <Box
               key={index}
               py="17.5px"
@@ -155,12 +155,48 @@ export default function MenuBar({ children }: IPropsMenuBar) {
               )}
             </Box>
           ))}
+          {list.slice(3, 4).map((el, index) => (
+            <Box
+              key={index}
+              py="17.5px"
+              pl="30px"
+              pr="41px"
+              display="flex"
+              position="relative"
+              w="95px"
+            >
+              <Link to={el.link} className="hover-text">
+                {el.svg}
+                <span className="tooltip-text" id="right">
+                  {el.item}
+                </span>
+              </Link>
+              {basket[0]?.cart_item.length && index === 0 && (
+                <Box
+                  fontSize="12px"
+                  position="absolute"
+                  w="20px"
+                  h="20px"
+                  bg="red.500"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  color="white"
+                  rounded="50%"
+                  pr="2px"
+                  right={7}
+                >
+                  {basket[0]?.cart_item?.length}
+                </Box>
+              )}
+            </Box>
+          ))}
         </Box>
       </Box>
       <Box display={{ base: "block", md: "none" }} zIndex="2">
         <Box
           position="fixed"
-          bottom={active ? "60px" : "21px"}
+          bottom={active ? "76px" : "21px"}
           left="0"
           right="0"
           display="flex"
