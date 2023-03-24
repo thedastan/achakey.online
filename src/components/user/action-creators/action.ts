@@ -1,4 +1,6 @@
 import { Dispatch } from "redux";
+import { toast } from "react-toastify";
+
 import API from "../../../api/Index";
 import { ActionUser, UserDetails, UserTypes } from "../types";
 
@@ -46,7 +48,7 @@ export const fetchChangeUserFields = (user: UserDetails) => {
       const res = await API.put(`account/users/manager/${user.id}/`, {
         ...user,
       });
-      console.log(res);
+      toast.success("Данные успешно изменены");
       dispatch({
         type: UserTypes.USER_DETAILS,
         payload: res.data,
@@ -56,6 +58,9 @@ export const fetchChangeUserFields = (user: UserDetails) => {
         type: UserTypes.ERROR_USER,
         payload: e.message,
       });
+      if (e.response.data.phone[0] === "The phone number entered is not valid.")
+        return toast.error("Введенный номер телефона недействителен");
+      toast.error(e.message);
     }
   };
 };

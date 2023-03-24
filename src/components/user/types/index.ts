@@ -9,6 +9,7 @@ export interface UserDetails {
   id?: string;
   email?: string;
   phone?: string;
+  username?: string
 }
 
 export interface UserState {

@@ -7,13 +7,6 @@ export interface IInputRegister {
   password_confirm: string;
 }
 
-export interface IInputAuth {
-  id?: string;
-  access?: string;
-  username: string;
-  password: string;
-}
-
 export interface IInputEnterSequirityCode {
   phone: string;
   code: number;
@@ -35,6 +28,12 @@ export interface IInputResetPassword {
   password: string;
 }
 
+export interface IInputChangePassword {
+  old_password: string;
+  new_password: string;
+  confirm_new_password: string;
+}
+
 export interface IStateRegister {
   loading: boolean;
   error: any | string;
@@ -46,12 +45,6 @@ export interface IStateResetPassword {
   loading: boolean;
   error: any | string;
   resetPassword: IInputResetPassword;
-}
-
-export interface IStateAuth {
-  loading: boolean;
-  error: any | string;
-  authUser: IInputAuth;
 }
 
 export interface IStateForgotPassword {
@@ -66,12 +59,16 @@ export interface IStateEnterSequirityCode {
   sequirityCode: IInputEnterSequirityCode;
 }
 
+export interface IStateChangePassword {
+  loading: boolean;
+  changePass: IInputChangePassword;
+  errorChangePassword: string | any;
+}
+
 export enum IFormsTypes {
   REGISTER_USER = "REGISTER_USER",
   RESET_LOADING = "RESET_LOADING",
   RESET_PASSWORD = "RESET_PASSWORD",
-  LOGIN_USER = "LOGIN_USER",
-  LOADING_USER = "LOADING_USER",
   LOADING_REGISTER = "LOADING_REGISTER",
   ERROR_USER = "ERROR_USER",
   VALIDATE_REGISTER = "VALIDATE_REGISTER",
@@ -80,10 +77,9 @@ export enum IFormsTypes {
   PHONE_NUMBER_REGISTER = "PHONE_NUMBER_REGISTER",
   ENTER_SEQUIRITY_CODE = "ENTER_SEQUIRITY_CODE",
   LOADING_SEQUIRITY_CODE = "LOADING_SEQUIRITY_CODE",
-}
-
-interface ILoadingUser {
-  type: IFormsTypes.LOADING_USER;
+  LOADING_CHANGE_PASSWORD = "LOADING_CHANGE_PASSWORD",
+  ERROR_CHANGE_PASSWORD = "ERROR_CHANGE_PASSWORD",
+  CHANGE_PASSWORD = "CHANGE_PASSWORD",
 }
 
 interface ILoadingRegister {
@@ -109,11 +105,6 @@ interface IRegister {
   payload: IInputRegister;
 }
 
-interface ILogin {
-  type: IFormsTypes.LOGIN_USER;
-  payload: IInputAuth;
-}
-
 interface IForgotPasswordLoading {
   type: IFormsTypes.FORGOT_LOADING;
 }
@@ -137,10 +128,22 @@ interface IEnterSequirityLoading {
   type: IFormsTypes.LOADING_SEQUIRITY_CODE;
 }
 
+interface IChangePasswordLoading {
+  type: IFormsTypes.LOADING_CHANGE_PASSWORD;
+}
+
+interface IChangePasswordError {
+  type: IFormsTypes.ERROR_CHANGE_PASSWORD;
+  payload: any | string;
+}
+
+interface IChangePassword {
+  type: IFormsTypes.CHANGE_PASSWORD;
+  payload: any;
+}
+
 export type IForms =
   | IRegister
-  | ILogin
-  | ILoadingUser
   | IErrorUser
   | ILoadingRegister
   | IForgotPasswordLoading
@@ -149,4 +152,7 @@ export type IForms =
   | IResetPassword
   | IPhoneNumberRegister
   | IEnterSequirity
-  | IEnterSequirityLoading;
+  | IEnterSequirityLoading
+  | IChangePasswordLoading
+  | IChangePasswordError
+  | IChangePassword;

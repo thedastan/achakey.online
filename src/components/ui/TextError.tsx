@@ -7,7 +7,7 @@ type ITextError = {
 
 const TextError: FC<ITextError> = ({ text }) => {
   return (
-    <Text color="red" fontSize="12px" ml={{ base: "5px", sm: "14px" }}>
+    <Text color="redForm" fontSize="12px" ml={{ base: "5px", sm: "14px" }}>
       {text}
     </Text>
   );

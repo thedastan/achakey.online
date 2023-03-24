@@ -7,7 +7,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+import { useAppSelector } from "../../../hooks/Index";
+import { useActionChangePassword } from "../../../hooks/useActions";
 import BtnForm from "../../ui/BtnForm";
 import EyeInput from "../../ui/EyeInput";
 import Inputs from "../../ui/Inputs";
@@ -17,6 +21,20 @@ const ChangePasswordForm = () => {
   const [passEye, setPassEye] = useState<boolean>(false);
   const [secondPassEye, setSecondPassEye] = useState<boolean>(false);
   const [thirdPassEye, setThirdPassEye] = useState<boolean>(false);
+
+  const [old_password, setOldPassword] = useState<string>("");
+  const [new_password, setNewPassword] = useState<string>("");
+  const [confirm_new_password, setConfirmPassword] = useState<string>("");
+
+  const [error_old, setErrorOld] = useState<string>("");
+  const [error_new, setErrorNew] = useState<string>("");
+  const [error_confirm, setErrorConfirm] = useState<string>("");
+
+  const { loading, changePass, errorChangePassword } = useAppSelector(
+    (state) => state.reducerChangePassword
+  );
+
+  const { fetchChangePassword } = useActionChangePassword();
 
   const handleClick = () => {
     setPassEye(!passEye);
@@ -30,9 +48,57 @@ const ChangePasswordForm = () => {
     setThirdPassEye(!thirdPassEye);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    if (value.length) {
+      setErrorOld("");
+      setOldPassword(value);
+    } else {
+      setErrorOld("Введите текущий пароль");
+    }
+  };
+
+  const handleChangeTwo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    if (value.length) {
+      setErrorNew("");
+      if (value.length > 5) {
+        setErrorNew("");
+        setNewPassword(e.target.value);
+      } else {
+        setErrorNew("Введите неменее 6 символов");
+      }
+    } else {
+      setErrorNew("Введите новый пароль");
+    }
+  };
+
+  const handleChangeThree = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    if (value.length) {
+      setErrorConfirm("");
+      if (new_password === value) {
+        setErrorConfirm("");
+        setConfirmPassword(e.target.value);
+      } else {
+        setErrorConfirm("Пароли не совподают");
+      }
+    } else {
+      setErrorConfirm("Подтвердите пароль");
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (old_password.length && new_password === confirm_new_password) {
+      fetchChangePassword({ old_password, new_password, confirm_new_password });
+    }
+  };
+
   return (
     <Box h="100vh" w="100%" display="flex" alignItems="center">
       <Container maxW="1220px">
+        <ToastContainer />
         <Box w={["100%", "90%", "460px"]} mx="auto">
           <Text
             textAlign="center"
@@ -44,7 +110,7 @@ const ChangePasswordForm = () => {
           >
             Изменить пароль
           </Text>
-          <form>
+          <form onSubmit={handleSubmit}>
             <FormControl>
               <Box mb="15px">
                 <InputGroup>
@@ -55,15 +121,13 @@ const ChangePasswordForm = () => {
                     required={true}
                     borderColor="#AAAAAA"
                     focusBorderColor="#174079"
-                    onChangeInput={(e: any) => {
-                      console.log(e);
-                    }}
+                    onChangeInput={handleChange}
                   />
                   <InputRightElement width="3rem" h="100%">
                     <EyeInput eye={passEye} onClickEye={handleClick} />
                   </InputRightElement>
                 </InputGroup>
-                <TextError text={""} />
+                <TextError text={error_old} />
               </Box>
               <Box mb="15px">
                 <InputGroup>
@@ -74,9 +138,7 @@ const ChangePasswordForm = () => {
                     required={true}
                     borderColor="#AAAAAA"
                     focusBorderColor="#174079"
-                    onChangeInput={(e: any) => {
-                      console.log(e);
-                    }}
+                    onChangeInput={handleChangeTwo}
                   />
                   <InputRightElement width="3rem" h="100%">
                     <EyeInput
@@ -85,7 +147,7 @@ const ChangePasswordForm = () => {
                     />
                   </InputRightElement>
                 </InputGroup>
-                <TextError text={""} />
+                <TextError text={error_new} />
               </Box>
               <Box mb="15px">
                 <InputGroup>
@@ -96,9 +158,7 @@ const ChangePasswordForm = () => {
                     required={true}
                     borderColor="#AAAAAA"
                     focusBorderColor="#174079"
-                    onChangeInput={(e: any) => {
-                      console.log(e);
-                    }}
+                    onChangeInput={handleChangeThree}
                   />
                   <InputRightElement width="3rem" h="100%">
                     <EyeInput
@@ -107,11 +167,11 @@ const ChangePasswordForm = () => {
                     />
                   </InputRightElement>
                 </InputGroup>
-                <TextError text={""} />
+                <TextError text={error_confirm} />
               </Box>
               <BtnForm
                 btnText="Изменить"
-                isLoading={false}
+                isLoading={loading}
                 bg="#007AFF"
                 color="white"
                 colorSceme="blue.600"
