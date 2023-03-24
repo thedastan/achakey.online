@@ -50,10 +50,16 @@ interface ICartArray {
   music?: number | null;
   album?: number | null;
 }
+
 interface ICart {
   total_price: string | number;
   user: string;
   cart_item: ICartArray[];
+}
+
+interface IDataMainPage {
+  id?:number,
+  music?:ITrack
 }
 
 const Music: React.FC<MusicProps> = ({ musicPlay }) => {
@@ -62,7 +68,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
   const { loginModal } = useModalforms();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { pause, active, duration, currentTime, forAlbum } = useAppSelector(
+  const { pause, active, duration, currentTime } = useAppSelector(
     (state) => state.excerptPlayerReducer
   );
 
@@ -80,7 +86,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
   } = useExcerpAction();
 
   const { tracks, albums } = useAppSelector((state) => state.musicReducer);
-  const dataMainPage: any[] = [];
+  const dataMainPage: IDataMainPage[] = [];
 
   function onChangeForMusic(data: any, index: number) {
     excerptActiveAction(data);
@@ -180,6 +186,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
   const filterAlbum = albums.filter((el) => el.music.length);
 
   tracks.map((el) => dataMainPage.push(...dataMainPage, { music: el }));
+  
   filterAlbum?.map((el) =>
     dataMainPage.push({
       id: Math.floor(Math.random() * 100),
