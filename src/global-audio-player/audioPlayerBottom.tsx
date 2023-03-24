@@ -44,6 +44,8 @@ export default function AudioPlayerBottom() {
     }
   };
 
+  ((user_id) => console.log(user_id))(100) // IIF
+  
   useEffect(() => {
     if (!audio) {
       audio = new Audio();
