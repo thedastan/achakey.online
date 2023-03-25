@@ -8,3 +8,4 @@ export { default as ResetPasswordEmailPage } from "./resetPassword/ResetPassword
 export { default as ResetPasswordPhonePage } from "./resetPassword/ResetPasswordPhonePage";
 export { default as AccountManagamentPage } from "./accountManagement/AccountManagamentPage";
 export { default as ChangePasswordPage } from "./accountManagement/ChangePasswordPage";
+export { default as EmailVerifyPage } from "./emailVerify/EmailVerify";

@@ -24,6 +24,7 @@ import { reducerOrder } from "../components/order/reducer/index";
 import { resetPasswordReducer } from "../components/form/resetPassword/reducer/reducerResetPassword";
 import { reducerEnterSequirity } from "../components/form/enterSequirity/reducer/EnterSequirityReducer";
 import { reducerChangePassword } from "../components/form/changePassword/reducer/ChangePasswordReducer";
+import { emailVerifyReducer } from "../pages/emailVerify/reducer/reducerEmailVerify";
 
 const rootReducer = combineReducers({
   playReducer,
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   resetPasswordReducer,
   reducerEnterSequirity,
   reducerChangePassword,
+  emailVerifyReducer,
 });
 
 export const setUpStore = () => {

@@ -20,7 +20,6 @@ export const fetchAuthLogin = (user: IInputAuth) => {
       localStorage.setItem("refreshToken", JSON.stringify(res.data.refresh));
       localStorage.setItem("user-id", `"${res.data.id}"`);
     } catch (e: any) {
-      console.log(e.response.status);
       const status = e.response.status;
       if (status >= 400 && status <= 499) {
         dispatch({
@@ -33,6 +32,28 @@ export const fetchAuthLogin = (user: IInputAuth) => {
           payload: e.message,
         });
       }
+    }
+  };
+};
+
+export const fetchAuthGoogle = (token: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const res = await PUBLIC_API.post(`auth/register-with-google/`, {
+        token,
+      });
+      dispatch({
+        type: IFormTypesAuth.LOGIN_USER,
+        payload: res.data,
+      });
+      localStorage.setItem("accessToken", JSON.stringify(res.data.access));
+      localStorage.setItem("refreshToken", JSON.stringify(res.data.refresh));
+      localStorage.setItem("user-id", `"${res.data.id}"`);
+    } catch (e: any) {
+      dispatch({
+        type: IFormTypesAuth.ERROR_AUTH,
+        payload: e.message,
+      });
     }
   };
 };

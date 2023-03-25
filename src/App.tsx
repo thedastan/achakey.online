@@ -10,6 +10,7 @@ import {
   AccountManagamentPage,
   Basket,
   ChangePasswordPage,
+  EmailVerifyPage,
   Home,
   MyPlaylist,
   ResetPasswordEmailPage,
@@ -35,6 +36,7 @@ function App() {
           path="/reset_password/confirm"
           element={<ResetPasswordEmailPage />}
         />
+        <Route path="/login" element={<EmailVerifyPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPhonePage />} />
         <Route path="/accountManagement" element={<AccountManagamentPage />} />
         <Route path="*" element={<NotFound />} />

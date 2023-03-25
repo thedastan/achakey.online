@@ -19,7 +19,7 @@ import {useEffect} from "react";
 import {searchResult} from "./action-creators/Action";
 import Popup from "../ui/Popup";
 import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
-import {useActionUser, useModalforms} from "../../hooks/useActions";
+import {useActionEmailVerify, useActionUser, useModalforms} from "../../hooks/useActions";
 import {useAppDispatch, useAppSelector} from "../../hooks/Index";
 import ModalUserAuth from "../form/modal/ModalUser";
 import {SvgAvatar} from "../../assets/svg/SvgAvatar";
@@ -38,8 +38,13 @@ export default function Header() {
     const {isOpen, onOpen, onClose} = useDisclosure();
 
     const {fetchUserDetails} = useActionUser();
+    const { openModalEmailVerify } = useActionEmailVerify();
 
     const {userDetails} = useAppSelector((state) => state.reducerUser);
+
+    const {authModal} = useAppSelector(
+        (state) => state.emailVerifyReducer
+      );
 
     const {searchChange} = useAppSelector((state) => state.searchChangeReducer);
     const {tracks, albums} = useAppSelector((state) => state.musicReducer);
@@ -52,21 +57,32 @@ export default function Header() {
         el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
     );
 
+    const openModal = () => {
+        onOpen();
+        loginModal();
+    };
+
+    if(!!authModal) {
+        loginModal();
+    }
+
+    const handleRefresh = () => {
+        window.location.reload();
+    };
+
+    const closeModal = () => {
+        openModalEmailVerify(false)
+        onClose()
+    }
+
     const logoutAccount = () => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("user-id");
         navigate("/");
-        window.location.reload();
+        handleRefresh()
     };
 
-    const openModal = () => {
-        onOpen();
-        loginModal();
-    };
-    const handleRefresh = () => {
-        window.location.reload();
-    };
     const breakpoints = useBreakpointValue({
         base: "base",
         sm: "sm",
@@ -99,7 +115,7 @@ export default function Header() {
             px={{base: "0px", sm: "45px", md: "45px"}}
             pt={{sm: "40px", md: "40px"}}
         >
-            <ModalUserAuth isOpen={isOpen} onClose={onClose}/>
+            <ModalUserAuth isOpen={!!authModal ? authModal : isOpen} onClose={()=>{closeModal()}}/>
             <Container
                 maxW="1440px"
                 pos="relative"

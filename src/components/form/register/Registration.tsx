@@ -4,7 +4,7 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,9 +18,10 @@ import EyeInput from "../../ui/EyeInput";
 import TextError from "../../ui/TextError";
 import TextFormEnd from "../../ui/TextFormEnd";
 import WordIndex from "../../ui/WordIndex";
-import BtnGoogle from "./BtnGoogle";
+import { IModalInterface } from "../auth/formAuthInterfaces";
+import GoogleRegister from "./GoogleRegister";
 
-const Registration: FC = () => {
+const Registration: FC<IModalInterface> = ({ onClose }) => {
   const [passEye, setPassEye] = useState<boolean>(false);
   const [secondPassEye, setSecondPassEye] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
@@ -37,6 +38,8 @@ const Registration: FC = () => {
   const { loading, phoneNumber } = useAppSelector(
     (state) => state.registerReducer
   );
+
+  const { loginUser } = useAppSelector((state) => state.reducerAuth);
 
   if (isPhone(phoneNumber)) {
     enterSequirityCode();
@@ -107,6 +110,12 @@ const Registration: FC = () => {
     loginModal();
   };
 
+  useEffect(() => {
+    if (!!loginUser.access) {
+      onClose();
+    }
+  }, [loginUser]);
+
   return (
     <Box w="100%" px={{ sm: "20px" }}>
       <ToastContainer />
@@ -114,7 +123,8 @@ const Registration: FC = () => {
         <FormControl>
           <WordIndex text="войдите через" size="16px" />
           <Box pt="10px" pb="20px">
-            <BtnGoogle />
+            {/* <BtnGoogle /> */}
+            <GoogleRegister />
           </Box>
           <WordIndex text="или создать аккаунт" size="12px" />
           <Box my="10px">

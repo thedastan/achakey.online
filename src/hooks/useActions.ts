@@ -14,6 +14,7 @@ import actionOrder from "../components/order/action-creators/index";
 import actionResetPassword from "../components/form/resetPassword/action/index";
 import actionEnterSequirityCode from "../components/form/enterSequirity/action/index";
 import actionChangePassword from "../components/form/changePassword/action/index";
+import actionEmailVerify from "../pages/emailVerify/action/index";
 import { useAppDispatch } from "./Index";
 
 export const useAction = () => {
@@ -79,4 +80,9 @@ export const useActionEnterSequirity = () => {
 export const useActionChangePassword = () => {
   const dispatch = useAppDispatch();
   return bindActionCreators(actionChangePassword, dispatch);
+};
+
+export const useActionEmailVerify = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(actionEmailVerify, dispatch);
 };
