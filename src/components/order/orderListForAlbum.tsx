@@ -54,31 +54,30 @@ export default function OrderListAlbums({
           onClick={() => setActive(!active)}
           pb="19px"
           borderBottom="0.5px solid rgba(124, 124, 124, 0.5)"
+          flexDir={{ base: "column", sm: "row" }}
         >
           <Box
             display="flex"
-            justifyContent="space-between"
             alignItems="center"
+            w={{ base: "100%", sm: "80%", md: "100%" }}
           >
-            <Image
-              src={image}
-              w="47px"
-              h="47px"
-              rounded="50%"
-              mr={{ base: "10px", md: "26px" }}
-            />
-            <Text
-              pl={{ base: "0", md: "17px" }}
-              fontSize="20px"
-              fontWeight="400"
-              color="black"
-            >
+            <Image src={image} w="35px" h="35px" rounded="50%" mr="10px" />
+            <Text fontSize="18px" fontWeight="400" color="black">
               Альбом: {name}
             </Text>
           </Box>
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent={{ base: "space-between", md: "none" }}
+            w={{ base: "100%", sm: "auto" }}
+          >
             <Text mr="48px">{total} сом</Text>
             <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                deleted(`${id}`);
+              }}
               bg="transparent"
               colorScheme="none"
               px="0"

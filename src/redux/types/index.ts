@@ -6,6 +6,7 @@ export enum ActionTypes {
   FETCH_TRACKS_ERROR = "FETCH_TRACKS_ERROR",
   FETCH_MY_ALBUMS = "FETCH_MY_ALBUMS",
   FETCH_MY_TRACKS = "FETCH_MY_TRACKS",
+  FETCH_LOADER = "FETCH_LOADER",
 }
 
 //Types
@@ -38,6 +39,7 @@ export interface MusicState {
   tracks: ITrack[];
   myTracks: IMyTrack[];
   error: string;
+  loader: boolean;
 }
 
 //interface
@@ -98,10 +100,16 @@ interface FetchMyTracksAction {
   payload: ITrack[];
 }
 
+interface FetchLoader {
+  type: ActionTypes.FETCH_LOADER;
+  payload: boolean;
+}
+
 export type TypeAction =
   | FetchAlbumsAction
   | FetchAlbumsErrorAction
   | FetchTrackErrorAction
   | FetchTracksAction
   | FetchMyAlbumsAction
-  | FetchMyTracksAction;
+  | FetchMyTracksAction
+  | FetchLoader;

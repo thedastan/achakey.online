@@ -25,6 +25,7 @@ const initialState: BasketState = {
     updated_at: "",
   },
   error: "",
+  loader: false,
 };
 
 export const reducerBasket = (
@@ -40,6 +41,9 @@ export const reducerBasket = (
 
     case BasketTypes.BASKET_ERROR:
       return { ...state, error: action.payload };
+
+    case BasketTypes.BASKET_LOADER:
+      return { ...state, loader: action.payload };
 
     default:
       return state;

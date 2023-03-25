@@ -51,3 +51,14 @@ $transitionTime: "1" ".5", "2" ".7", "3" "1", "4" "1.2", "5" "1.5";
 }
 
 
+.bg-menuBar {
+  background-image: url("../../assets/img/excerptsBg.png");
+  background-size: 100% 50%;
+  background-repeat: no-repeat;
+  background-color: #1D1D20;
+}
+
+.bg-menuBar-blur {
+  backdrop-filter: blur(23.5px);
+  background: rgba(27, 27, 27, 0.6);
+}

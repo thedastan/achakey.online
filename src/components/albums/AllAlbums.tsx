@@ -66,7 +66,7 @@ export default function AllAlbums() {
                   >
                     {el.name}
                   </Text>
-                  <Text pl="24px" color="white" opacity="0.5">
+                  <Text pl="24px" color="white" opacity="0.5" pb="19px">
                     {`${el.music.length}`} треков
                   </Text>
                 </Box>

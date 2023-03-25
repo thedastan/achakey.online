@@ -16,7 +16,8 @@ export default function ExcerptPlayList() {
   const isTracks = isActive === AlbumOrTracks.TRACKS;
 
   return (
-    <section>
+    <section className="bg-menuBar">
+      <Box className="bg-menuBar-blur">
       <Container maxW="1220px" pt="140px">
         <Box pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}>
           <Box display="flex" mb="31px" zIndex="0">
@@ -51,6 +52,7 @@ export default function ExcerptPlayList() {
           </Box>
         </Box>
       </Container>
+      </Box>
     </section>
   );
 }
