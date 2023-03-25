@@ -20,10 +20,7 @@ import BtnForm from "../../ui/BtnForm";
 import TextFormEnd from "../../ui/TextFormEnd";
 import Inputs from "../../ui/Inputs";
 import SvgErrorIcon from "../../../assets/svg/SvgErrorIcon";
-
-type IModalInterface = {
-  onClose: () => void;
-};
+import { IModalInterface } from "./formAuthInterfaces";
 
 const Authoration: FC<IModalInterface> = ({ onClose }) => {
   const navigate = useNavigate();

@@ -4,6 +4,7 @@ import {
   AudioPlayerBottom,
   Basket,
   ChangePasswordPage,
+  EmailVerifyPage,
   DetailsAlbums,
   ExcerptPlayList,
   Home,
@@ -35,6 +36,7 @@ function App() {
           path="/reset_password/confirm"
           element={<ResetPasswordEmailPage />}
         />
+        <Route path="/login" element={<EmailVerifyPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPhonePage />} />
         <Route path="/accountManagement" element={<AccountManagamentPage />} />
         <Route path="*" element={<NotFound />} />

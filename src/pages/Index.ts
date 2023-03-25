@@ -8,6 +8,7 @@ export { default as ResetPasswordEmailPage } from "./resetPassword/ResetPassword
 export { default as ResetPasswordPhonePage } from "./resetPassword/ResetPasswordPhonePage";
 export { default as AccountManagamentPage } from "./accountManagement/AccountManagamentPage";
 export { default as ChangePasswordPage } from "./accountManagement/ChangePasswordPage";
+export { default as EmailVerifyPage } from "./emailVerify/EmailVerify";
 export { default as Navigation } from "../global-audio-player-excerpt/AudioPlayerExcerpt";
 export { default as AudioPlayerBottom } from "../global-audio-player/audioPlayerBottom";
 export { default as NotFound } from "../components/404/NotFound";

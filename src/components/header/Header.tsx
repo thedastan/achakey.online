@@ -19,8 +19,8 @@ import { useEffect } from "react";
 import { searchResult } from "./action-creators/Action";
 import Popup from "../ui/Popup";
 import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
-import { useActionUser, useModalforms } from "../../hooks/useActions";
-import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import {useActionEmailVerify, useActionUser, useModalforms} from "../../hooks/useActions";
+import {useAppDispatch, useAppSelector} from "../../hooks/Index";
 import ModalUserAuth from "../form/modal/ModalUser";
 import { SvgAvatar } from "../../assets/svg/SvgAvatar";
 import { getAccessToken } from "../helper";
@@ -37,12 +37,17 @@ export default function Header() {
   const { loginModal } = useModalforms();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { fetchUserDetails } = useActionUser();
+  const {fetchUserDetails} = useActionUser();
+  const { openModalEmailVerify } = useActionEmailVerify();
 
   const { userDetails } = useAppSelector((state) => state.reducerUser);
 
-  const { searchChange } = useAppSelector((state) => state.searchChangeReducer);
-  const { tracks, albums } = useAppSelector((state) => state.musicReducer);
+  const {authModal} = useAppSelector(
+      (state) => state.emailVerifyReducer
+    );
+
+  const {searchChange} = useAppSelector((state) => state.searchChangeReducer);
+  const {tracks, albums} = useAppSelector((state) => state.musicReducer);
   const arrayListForSearch: ITrack[] = [];
 
   tracks.forEach((el) => arrayListForSearch.push(el));
@@ -52,28 +57,39 @@ export default function Header() {
     el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
   );
 
-  const logoutAccount = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user-id");
-    navigate("/");
-    window.location.reload();
+  const openModal = () => {
+      onOpen();
+      loginModal();
   };
 
-  const openModal = () => {
-    onOpen();
-    loginModal();
-  };
+  if(!!authModal) {
+      loginModal();
+  }
+
   const handleRefresh = () => {
-    window.location.reload();
+      window.location.reload();
   };
+
+  const closeModal = () => {
+      openModalEmailVerify(false)
+      onClose()
+  }
+
+  const logoutAccount = () => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("user-id");
+      navigate("/");
+      handleRefresh()
+  };
+
   const breakpoints = useBreakpointValue({
-    base: "base",
-    sm: "sm",
-    md: "md",
-    lg: "lg",
-    xl: "xl",
-    "2xl": "2xl",
+      base: "base",
+      sm: "sm",
+      md: "md",
+      lg: "lg",
+      xl: "xl",
+      "2xl": "2xl",
   });
 
   const userId = JSON.parse(localStorage.getItem("user-id") as string);
@@ -183,8 +199,21 @@ export default function Header() {
                 ? "end"
                 : "end"
             }
-            alignItems="center"
-          >
+            zIndex="21"
+            top="0"
+            left="0"
+            right="0"
+            px={{base: "0px", sm: "45px", md: "45px"}}
+            pt={{sm: "40px", md: "40px"}}
+        >
+            <ModalUserAuth isOpen={!!authModal ? authModal : isOpen} onClose={()=>{closeModal()}}/>
+            <Container
+                maxW="1440px"
+                pos="relative"
+                display={breakpoints === "base" && "sm" && "md" ? "block" : "flex"}
+                justifyContent="end"
+                alignItems="center"
+            >
             <Box zIndex="11">
               <Link to={"/"}>
                 <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo" />

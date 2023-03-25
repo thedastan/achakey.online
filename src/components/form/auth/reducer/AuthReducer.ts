@@ -4,11 +4,11 @@ import {
   IStateAuthUser,
 } from "../formAuthInterfaces";
 
-const initialState = {
+const initialState: IStateAuthUser = {
   loading: false,
   error: "",
-  loginUser: {},
-} as IStateAuthUser;
+  loginUser: { id: "", access: "", username: "", password: "" },
+};
 
 export const reducerAuth = (state = initialState, action: IFormAuth) => {
   switch (action.type) {

@@ -34,7 +34,7 @@ const ModalUserAuth: FC<IModal> = ({ isOpen, onClose }) => {
         }
         children={
           !!register ? (
-            <Registration />
+            <Registration onClose={onClose} />
           ) : !!login ? (
             <Authoration onClose={onClose} />
           ) : !!forgotPas ? (

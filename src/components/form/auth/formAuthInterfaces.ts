@@ -1,3 +1,6 @@
+export type IModalInterface = {
+  onClose: () => void;
+};
 export interface IInputAuth {
   id?: string;
   access?: string;
