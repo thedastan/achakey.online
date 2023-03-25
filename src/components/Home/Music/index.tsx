@@ -164,9 +164,8 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
       includesTracks !== undefined &&
       includesTracks[0]?.music?.id === cart?.cart_item[0]?.music
     ) {
-      alert("No");
+      console.log('no')
     } else {
-      alert("Success");
       postBasketItem(cart);
       fetchBasket();
     }

@@ -34,9 +34,7 @@ export const OrderDetails = ({
     try {
       const responce = await API.delete(`order/${id}`);
       fetchOrder();
-      return alert(`RESPOMCE ${responce}`);
     } catch (e) {
-      alert("Rejected");
       fetchOrder();
     }
     fetchOrder();

@@ -1,11 +1,20 @@
-import { Box, Button, Container, Image, Stack, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Image,
+  Spinner,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { tabBooleanAction } from "./action-creators/action";
 import { Link } from "react-router-dom";
 import SvgMyPlaylistEmpty from "../../assets/svg/SvgMyPlaylistEmpty";
 import MyAlbum from "../../components/MyAlbum/MyAlbum";
 import MyTracks from "../../components/my-tracks/Mytracks";
+import { useTracksAction } from "../../hooks/useActions";
 
 enum AlbumOrTracks {
   ALBUM = "ALBUM",

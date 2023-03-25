@@ -5,6 +5,7 @@ export enum BasketTypes {
   BASKET_ITEM = "BASKET_ITEM",
   BASKET_ERROR = "BASKET_ERROR",
   BASKET_ITEM_FOR_POST = "BASKET_ITEM_FOR_POST",
+  BASKET_LOADER = "BASKET_LOADER",
 }
 
 interface IOrderItem {
@@ -38,6 +39,7 @@ export interface IPlayList {
 
 export interface BasketState {
   error: string;
+  loader: boolean;
   basket: IBasketTypes[];
   basketIte: IOrderItem;
   order: OrderType;
@@ -83,8 +85,14 @@ interface ActionsIBasketPost {
   payload: IOrderItemForPost;
 }
 
+interface ActionsIBasketLoader {
+  type: BasketTypes.BASKET_LOADER;
+  payload: boolean;
+}
+
 export type ActionBasket =
   | ActionsIBasket
   | ActionsIBasketError
   | ActionsIBasketItem
-  | ActionsIBasketPost;
+  | ActionsIBasketPost
+  | ActionsIBasketLoader;

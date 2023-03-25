@@ -59,9 +59,8 @@ export default function BasketListProduct({
     const arrayOfObjects = newData.map((item) => ({ ...item }));
 
     if (arrayOfObjects[0]?.music?.id === order?.order_item[0]?.music) {
-      alert("No");
+      console.log("no");
     } else {
-      alert("Success");
       fetchOrderPost(order);
       fetchOrder();
     }
