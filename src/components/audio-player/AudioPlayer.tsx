@@ -281,6 +281,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           mb="13px"
           fontSize="32px"
           color="white"
+          fontStyle="normal"
+          fontFamily="sans"
           display={{ base: "block", md: "none" }}
           fontWeight="900"
           mx="auto"
@@ -310,9 +312,11 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
         >
           <Box
             mb="16px"
-            fontSize="36.57px"
+            fontSize="38.57px"
             color="white"
             display={{ base: "none", md: "block" }}
+            fontFamily="sans"
+            fontStyle="normal"
             fontWeight="900"
           >
             {albums.name}

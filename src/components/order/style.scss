@@ -1,5 +1,5 @@
 .order {
-  transform: translateY(150vw);
+  transform: translateY(-150vh);
   transition: all 0.55s;
   opacity: 0;
   margin: 0 auto;
@@ -12,11 +12,10 @@
 }
 
 .details {
-  transform: translateY(150vw);
+  transform: translateY(-150vh);
   transition: all 0.55s;
   opacity: 0;
   margin: 0 auto;
-
   &.active {
     transform: translateY(0);
     opacity: 1;
