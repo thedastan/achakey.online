@@ -19,8 +19,12 @@ import { useEffect } from "react";
 import { searchResult } from "./action-creators/Action";
 import Popup from "../ui/Popup";
 import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
-import {useActionEmailVerify, useActionUser, useModalforms} from "../../hooks/useActions";
-import {useAppDispatch, useAppSelector} from "../../hooks/Index";
+import {
+  useActionEmailVerify,
+  useActionUser,
+  useModalforms,
+} from "../../hooks/useActions";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import ModalUserAuth from "../form/modal/ModalUser";
 import { SvgAvatar } from "../../assets/svg/SvgAvatar";
 import { getAccessToken } from "../helper";
@@ -37,17 +41,15 @@ export default function Header() {
   const { loginModal } = useModalforms();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const {fetchUserDetails} = useActionUser();
+  const { fetchUserDetails } = useActionUser();
   const { openModalEmailVerify } = useActionEmailVerify();
 
   const { userDetails } = useAppSelector((state) => state.reducerUser);
 
-  const {authModal} = useAppSelector(
-      (state) => state.emailVerifyReducer
-    );
+  const { authModal } = useAppSelector((state) => state.emailVerifyReducer);
 
-  const {searchChange} = useAppSelector((state) => state.searchChangeReducer);
-  const {tracks, albums} = useAppSelector((state) => state.musicReducer);
+  const { searchChange } = useAppSelector((state) => state.searchChangeReducer);
+  const { tracks, albums } = useAppSelector((state) => state.musicReducer);
   const arrayListForSearch: ITrack[] = [];
 
   tracks.forEach((el) => arrayListForSearch.push(el));
@@ -58,38 +60,38 @@ export default function Header() {
   );
 
   const openModal = () => {
-      onOpen();
-      loginModal();
+    onOpen();
+    loginModal();
   };
 
-  if(!!authModal) {
-      loginModal();
+  if (!!authModal) {
+    loginModal();
   }
 
   const handleRefresh = () => {
-      window.location.reload();
+    window.location.reload();
   };
 
   const closeModal = () => {
-      openModalEmailVerify(false)
-      onClose()
-  }
+    openModalEmailVerify(false);
+    onClose();
+  };
 
   const logoutAccount = () => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("user-id");
-      navigate("/");
-      handleRefresh()
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user-id");
+    navigate("/");
+    handleRefresh();
   };
 
   const breakpoints = useBreakpointValue({
-      base: "base",
-      sm: "sm",
-      md: "md",
-      lg: "lg",
-      xl: "xl",
-      "2xl": "2xl",
+    base: "base",
+    sm: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+    "2xl": "2xl",
   });
 
   const userId = JSON.parse(localStorage.getItem("user-id") as string);
@@ -108,16 +110,19 @@ export default function Header() {
             : "none"
           : "none"
       }
-      zIndex="11"
+      zIndex="21"
       top="0"
       left="0"
       right="0"
       px={{ base: "0px", sm: "45px", md: "45px" }}
       pt={{ sm: "40px", md: "40px" }}
-      w={{ base: "100%", md: "94%" }}
-      ml="auto"
     >
-      <ModalUserAuth isOpen={isOpen} onClose={onClose} />
+      <ModalUserAuth
+        isOpen={!!authModal ? authModal : isOpen}
+        onClose={() => {
+          closeModal();
+        }}
+      />
       <Container
         maxW="1440px"
         pos="relative"
@@ -136,13 +141,12 @@ export default function Header() {
             <InputLeftElement
               pointerEvents="none"
               children={
-                <Box color="gray.300" pl="37px">
+                <Box color="gray.300">
                   <SvgSearch />
                 </Box>
               }
             />
             <Input
-              pl="67px"
               focusBorderColor="white"
               type="text"
               rounded="50px"
@@ -151,7 +155,7 @@ export default function Header() {
               onChange={(e) => dispatch(searchResult(e.target.value))}
             />
             {searchChange && (
-              <Popup top="50px">
+              <Popup top={"50px"}>
                 <Box>
                   {searchResultArray.length ? (
                     searchResultArray.map((el, index) => (
@@ -199,21 +203,8 @@ export default function Header() {
                 ? "end"
                 : "end"
             }
-            zIndex="21"
-            top="0"
-            left="0"
-            right="0"
-            px={{base: "0px", sm: "45px", md: "45px"}}
-            pt={{sm: "40px", md: "40px"}}
-        >
-            <ModalUserAuth isOpen={!!authModal ? authModal : isOpen} onClose={()=>{closeModal()}}/>
-            <Container
-                maxW="1440px"
-                pos="relative"
-                display={breakpoints === "base" && "sm" && "md" ? "block" : "flex"}
-                justifyContent="end"
-                alignItems="center"
-            >
+            alignItems="center"
+          >
             <Box zIndex="11">
               <Link to={"/"}>
                 <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo" />
@@ -256,7 +247,7 @@ export default function Header() {
                 <InputLeftElement
                   pointerEvents="none"
                   children={
-                    <Box color="gray.300" pl="36px">
+                    <Box color="gray.300">
                       <SvgSearch />
                     </Box>
                   }
@@ -306,7 +297,7 @@ export default function Header() {
               </InputGroup>
             ) : null}
             {isHomePage ? (
-              <Box mx="10px" zIndex="11">
+              <Box mx="10px" zIndex="21">
                 <Link to={"/"}>
                   <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo" />
                 </Link>
