@@ -171,11 +171,9 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     );
 
     if (includesTracks[0]?.album?.id !== cart?.cart_item[0]?.album) {
-      alert("Success");
       postBasketItem(cart);
       fetchBasket();
     } else {
-      alert("No");
       fetchBasket();
     }
     fetchBasket();
@@ -209,9 +207,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     const arrayOfObjects = newData.map((item) => ({ ...item }));
 
     if (arrayOfObjects[0]?.album?.id === order.order_item[0].album) {
-      alert("No");
     } else {
-      alert("Success");
       fetchOrderPost(order);
       fetchOrder();
     }
@@ -270,7 +266,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   return (
     <section
       style={{
-        marginBottom: "32px",
+        marginBottom: "54px",
         background: "transparent",
         position: "relative",
       }}
@@ -310,7 +306,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
         <Box
           w={{ base: "100%", md: "90%" }}
           flexDir={{ base: "column", md: "row" }}
-          pl="10px"
+          ml="23px"
         >
           <Box
             mb="16px"
@@ -421,16 +417,18 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 onClick={() =>
                   getAccessToken() ? postOrderAlbum() : openModal()
                 }
-                rounded="50px"
+                ml={{ base: "0px", md: "43px", lg: "48px" }}
+                mr={{ base: "0", sm: "10%", md: "16px" }}
+                mb={{ base: "20px", sm: "0" }}
                 w={{ base: "55vw", sm: "39vw", md: "17vw" }}
+                rounded="50px"
                 py="9px"
                 fontSize="14px"
-                mr={{ base: "0", sm: "10%", md: "11px" }}
                 bg="blueDark"
                 textColor="white"
-                mb={{ base: "20px", sm: "0" }}
+                colorScheme="none"
               >
-                Купить сейчас
+                Купить альбом
               </Button>
               <Button
                 onClick={() =>

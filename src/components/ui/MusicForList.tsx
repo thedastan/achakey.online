@@ -93,9 +93,8 @@ export default function MusicForList({
       includesTracks !== undefined &&
       includesTracks[0]?.music?.id === cart?.cart_item[0]?.music
     ) {
-      alert("No");
+      console.log("no");
     } else {
-      alert("Success");
       postBasketItem(cart);
       fetchBasket();
     }
@@ -208,7 +207,11 @@ export default function MusicForList({
       <Box display="flex" alignItems="center">
         <Button
           onClick={() =>
-            getAccessToken() ? PostBasketItem(music) : openModal()
+            getAccessToken()
+              ? findMyMusic
+                ? console.log('Уже куплен')
+                : PostBasketItem(music)
+              : openModal()
           }
           border="1px"
           borderColor={

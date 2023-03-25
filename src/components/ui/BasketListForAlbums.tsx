@@ -61,9 +61,8 @@ export default function BasketListAlbums({
     const arrayOfObjects = newData.map((item) => ({ ...item }));
 
     if (arrayOfObjects[0]?.album?.id === order.order_item[0].album) {
-      alert("No");
+      console.log("no");
     } else {
-      alert("Success");
       fetchOrderPost(order);
       fetchOrder();
     }

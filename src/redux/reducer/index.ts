@@ -6,6 +6,7 @@ const initialState: MusicState = {
   myAlbums: [],
   myTracks: [],
   error: "",
+  loader: false,
 };
 
 export const musicReducer = (
@@ -30,6 +31,9 @@ export const musicReducer = (
 
     case ActionTypes.FETCH_MY_TRACKS:
       return { ...state, error: "", myTracks: action.payload };
+
+    case ActionTypes.FETCH_LOADER:
+      return { ...state, loader: action.payload };
 
     default:
       return state;

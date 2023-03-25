@@ -1,4 +1,4 @@
-import { Box, Button, Container, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Container, Stack, Text, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import BasketListAlbums from "../../components/ui/BasketListForAlbums";
@@ -11,6 +11,7 @@ import { getUserId } from "../../components/helper";
 import { OrderDetails } from "../../components/order/OrderDetails";
 import SvgBasketEmpty from "../../assets/svg/SvgBasketEmpty";
 import { Link } from "react-router-dom";
+// import SvgLoader from "../../assets/svg/SvgLoader";
 
 export default function Basket() {
   const [openPopup, setOpenPopup] = useState(false);
@@ -18,7 +19,7 @@ export default function Basket() {
   const [total, setTotal] = useState(0);
 
   const { fetchBasket } = useActionBasket();
-  const { basket } = useAppSelector((state) => state.reducerBasket);
+  const { basket, loader } = useAppSelector((state) => state.reducerBasket);
 
   const lengthBasket = basket.filter((el) => el.user === getUserId());
   const filterUser = basket.filter((el) => el.user === getUserId());
@@ -27,9 +28,8 @@ export default function Basket() {
     try {
       const responce = await API.delete(`account/cart/${id}`);
       fetchBasket();
-      return alert(`RESPOMCE ${responce}`);
+      return console.log(`RESPOMCE ${responce}`);
     } catch (e) {
-      alert("Rejected");
       fetchBasket();
     }
     fetchBasket();
@@ -67,132 +67,138 @@ export default function Basket() {
 
   return (
     <section>
-      <Box w="100%" minH="90vh" pb="50px" pt="140px">
-        <Container maxW="1220px" position="relative">
-          {!lengthBasket[0]?.cart_item?.length && (
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              flexDirection="column"
-              mt={["-5rem", "-13rem", "-13rem", "-10rem", "50px"]}
-              color="white"
-            >
-              <Text
-                fontFamily="sans"
-                fontWeight="400"
-                fontStyle="normal"
-                fontSize="16px"
-                color="white"
-                pt={{ base: "40%", lg: "20%", xl: "0" }}
-              >
-                В вашей корзине пока нет музыки
-              </Text>
-              <Box my="10">
-                <SvgBasketEmpty />
-              </Box>
-              <Stack direction="row" spacing={4} align="center">
-                <Link to="/excerpts">
-                  <Button
-                    width="267px"
-                    height="45px"
-                    colorScheme="blue"
-                    bg="#007AFF"
-                    variant="solid"
-                  >
-                    Перейти к покупке
-                  </Button>
-                </Link>
-              </Stack>
-            </Box>
-          )}
-          <Box pl={{ base: "0", md: "5%", xl: "0" }}>
-            {filterUser?.map((item, index) => (
-              <div key={index}>
-                {
-                  <Box>
-                    {item.cart_item.map((el, idx) => (
-                      <Box key={idx}>
-                        {el.album !== null && (
-                          <BasketListAlbums
-                            setOpenPopup={setOpenPopupId}
-                            albums={el?.album}
-                            id={String(el.id)}
-                            deleted={deletedBasket}
-                            music={el.album?.music}
-                            image={el.album?.image}
-                            name={el.album?.name}
-                            price={el.album?.total_price}
-                          />
-                        )}
-                      </Box>
-                    ))}
-                  </Box>
-                }
-              </div>
-            ))}
-
-            {filterUser?.map((item, index) => (
-              <div key={index}>
-                {
-                  <Box>
-                    {item.cart_item.map((el, idx) => (
-                      <Box key={idx}>
-                        {el.music !== null && (
-                          <BasketListProduct
-                            setOpenPopup={setOpenPopupId}
-                            id={String(el.id)}
-                            deleted={deletedBasket}
-                            music={el.music}
-                            image={el.music?.image}
-                            name={String(el.music?.name)}
-                            price={Number(el.music?.price)}
-                          />
-                        )}
-                      </Box>
-                    ))}
-                  </Box>
-                }
-              </div>
-            ))}
-
-            {lengthBasket[0]?.cart_item?.length && (
+      <Box w="100%" minH="90vh" pb="50px" pt="140px" position="relative">
+        {!loader ? (
+          <Container maxW="1220px" position="relative">
+            {!lengthBasket[0]?.cart_item?.length && (
               <Box
                 display="flex"
-                justifyContent="space-between"
+                justifyContent="center"
                 alignItems="center"
-                maxW="950px"
-                mx="auto"
-                mt="30px"
+                flexDirection="column"
+                mt={["-5rem", "-13rem", "-13rem", "-10rem", "50px"]}
+                color="white"
               >
-                <Text color="white">Итого: {total} c</Text>
-                <Button
-                  onClick={() => setOpenPopup(true)}
-                  bg="#007AFF"
-                  colorScheme="#007AFF"
-                  rounded="10px"
-                  px="53px"
-                  py="14px"
+                <Text
+                  fontFamily="sans"
+                  fontWeight="400"
+                  fontStyle="normal"
                   fontSize="16px"
-                  fontWeight="600"
-                  position="static"
+                  color="white"
+                  pt={{ base: "40%", lg: "20%", xl: "0" }}
                 >
-                  Оплатить все
-                </Button>
+                  В вашей корзине пока нет музыки
+                </Text>
+                <Box my="10">
+                  <SvgBasketEmpty />
+                </Box>
+                <Stack direction="row" spacing={4} align="center">
+                  <Link to="/excerpts">
+                    <Button
+                      width="267px"
+                      height="45px"
+                      colorScheme="blue"
+                      bg="#007AFF"
+                      variant="solid"
+                    >
+                      Перейти к покупке
+                    </Button>
+                  </Link>
+                </Stack>
               </Box>
             )}
+            <Box pl={{ base: "0", md: "5%", xl: "0" }}>
+              {filterUser?.map((item, index) => (
+                <div key={index}>
+                  {
+                    <Box>
+                      {item.cart_item.map((el, idx) => (
+                        <Box key={idx}>
+                          {el.album !== null && (
+                            <BasketListAlbums
+                              setOpenPopup={setOpenPopupId}
+                              albums={el?.album}
+                              id={String(el.id)}
+                              deleted={deletedBasket}
+                              music={el.album?.music}
+                              image={el.album?.image}
+                              name={el.album?.name}
+                              price={el.album?.total_price}
+                            />
+                          )}
+                        </Box>
+                      ))}
+                    </Box>
+                  }
+                </div>
+              ))}
+
+              {filterUser?.map((item, index) => (
+                <div key={index}>
+                  {
+                    <Box>
+                      {item.cart_item.map((el, idx) => (
+                        <Box key={idx}>
+                          {el.music !== null && (
+                            <BasketListProduct
+                              setOpenPopup={setOpenPopupId}
+                              id={String(el.id)}
+                              deleted={deletedBasket}
+                              music={el.music}
+                              image={el.music?.image}
+                              name={String(el.music?.name)}
+                              price={Number(el.music?.price)}
+                            />
+                          )}
+                        </Box>
+                      ))}
+                    </Box>
+                  }
+                </div>
+              ))}
+
+              {lengthBasket[0]?.cart_item?.length && (
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  maxW="950px"
+                  mx="auto"
+                  mt="30px"
+                >
+                  <Text color="white">Итого: {total} c</Text>
+                  <Button
+                    onClick={() => setOpenPopup(true)}
+                    bg="#007AFF"
+                    colorScheme="#007AFF"
+                    rounded="10px"
+                    px="53px"
+                    py="14px"
+                    fontSize="16px"
+                    fontWeight="600"
+                    position="static"
+                  >
+                    Оплатить все
+                  </Button>
+                </Box>
+              )}
+            </Box>
+            <OrderPopup
+              openPopup={openPopup}
+              className={openPopup ? "transform" : ""}
+              setOpenPopup={setOpenPopup}
+            />
+            <OrderDetails
+              openPopup={openPopupId}
+              className={openPopupId ? "active" : ""}
+              setOpenPopup={setOpenPopupId}
+            />
+          </Container>
+        ) : (
+          <Box display="flex" pt="20vh">
+            <Spinner size="xl" color="blue" mx="auto" />
           </Box>
-          <OrderPopup
-            openPopup={openPopup}
-            className={openPopup ? "transform" : ""}
-            setOpenPopup={setOpenPopup}
-          />
-          <OrderDetails
-            openPopup={openPopupId}
-            className={openPopupId ? "active" : ""}
-            setOpenPopup={setOpenPopupId}
-          />
-        </Container>
+        )}
       </Box>
     </section>
   );
