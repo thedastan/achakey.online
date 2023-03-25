@@ -22,14 +22,14 @@ export default function DetailsAlbums() {
     const styles = {
         backgroundImage: `url("${albums.image}")`,
         backgroundRepeat: "no-repeat",
-        backgroundSize: '100% 50%',
-        backgroundColor: '#1D1D20'
+        backgroundSize: '100% 50vh',
+        backgroundColor: '#1D1D20',
     };
     return (
         <>
-            <section style={styles}>
-                <Box style={{backdropFilter:"blur(23.5px)"}}>
-                    <Container maxW="1220px" pt="140px">
+            <section style={styles} >
+                <Box className="bg-menuBar-blur">
+                    < Container maxW="1220px" pt="140px">
                         <Box pl={{base: "0", md: "4%", lg: "2%", xl: "1%"}}>
                             <AudioPlayer listTruck={albums.music}/>
                             <ExcerptTrackList tracks={albums.music} allTracks/>

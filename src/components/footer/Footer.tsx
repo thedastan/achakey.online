@@ -31,19 +31,21 @@ export default function Footer() {
           flexDir={{ base: "column", md: "row" }}
           pt="18px"
         >
+          <Box  display={{ base: "block", md: "none" }}>
           <Link to="/">
             <Image
               src={LogoAchakey}
               maxW="121px"
               h="36px"
               mx="10px"
-              display={{ base: "block", md: "none" }}
             />
           </Link>
+          </Box>
           <Box
             display="flex"
             justifyContent="center"
             py="9px"
+            ml={{lg: "0", xl: "-80px"}}
             flexDir={{ base: "column", md: "row" }}
             textAlign="center"
             pb={{ base: "24px", md: "0" }}
@@ -81,6 +83,7 @@ export default function Footer() {
                 key={index}
                 color="#949494"
                 fontSize="10px"
+
                 pr={index === 0 ? { base: "0", md: "50px" } : "0"}
               >
                 {item.item}
