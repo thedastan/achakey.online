@@ -7,6 +7,12 @@ import { IForms, IFormsTypes, IInputRegister } from "../../formInterfaces";
 export const fetchRegister = (user: IInputRegister) => {
   return async (dispatch: Dispatch<IForms>) => {
     try {
+      dispatch({
+        type: IFormsTypes.LOADING_REGISTER,
+      });
+      await PUBLIC_API.post("account/register/", {
+        ...user,
+      });
       if (user.phone) {
         dispatch({
           type: IFormsTypes.PHONE_NUMBER_REGISTER,
@@ -14,18 +20,11 @@ export const fetchRegister = (user: IInputRegister) => {
         });
         sessionStorage.setItem("phoneNumber", user.phone);
       } else if (user.email) {
-        toast.success("Вам на почту отправлено ссылка для подверждения");
+        dispatch({
+          type: IFormsTypes.REGISTER_USER,
+          payload: user,
+        });
       }
-      dispatch({
-        type: IFormsTypes.LOADING_REGISTER,
-      });
-      const res = await PUBLIC_API.post("account/register/", {
-        ...user,
-      });
-      dispatch({
-        type: IFormsTypes.REGISTER_USER,
-        payload: res.data,
-      });
     } catch (e: any) {
       dispatch({
         type: IFormsTypes.ERROR_USER,
