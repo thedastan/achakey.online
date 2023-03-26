@@ -66,8 +66,8 @@ export default function Basket() {
   }, [basket]);
 
   return (
-    <section>
-      <Box w="100%" minH="90vh" pb="50px" pt="140px" position="relative">
+    <section className={lengthBasket[0]?.cart_item?.length ? "bg-menuBar" : ""}>
+      <Box className={lengthBasket[0]?.cart_item?.length ? "bg-menuBar-blur" : ""} w="100%" minH="90vh" pb="50px" pt="140px" position="relative">
         {!loader ? (
           <Container maxW="1220px" position="relative">
             {!lengthBasket[0]?.cart_item?.length && (
@@ -107,8 +107,6 @@ export default function Basket() {
                 </Stack>
               </Box>
             )}
-      <Box className="bg-menuBar">
-        <Box className="bg-menuBar-blur">
           <Box pl={{ base: "0", md: "5%", xl: "0" }}>
             {filterUser?.map((item, index) => (
                 <div key={index}>
@@ -168,7 +166,7 @@ export default function Basket() {
                     mx="auto"
                     mt="30px"
                 >
-                  <Text color="white">Итого: {total} c</Text>
+                  <Text color="white">Итого: {total} cом</Text>
                   <Button
                       onClick={() => setOpenPopup(true)}
                       bg="#007AFF"
@@ -195,8 +193,6 @@ export default function Basket() {
               className={openPopupId ? "active" : ""}
               setOpenPopup={setOpenPopupId}
           />
-        </Box>
-      </Box>
           </Container>
         ) : (
           <Box display="flex" pt="20vh">

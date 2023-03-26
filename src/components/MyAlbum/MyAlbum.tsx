@@ -151,8 +151,8 @@ export default function MyAlbum() {
                     flexDir="column"
                     justifyContent="end"
                     _hover={{
-                      h: "93px",
-                      transition: "0.2s",
+                      background :"linear-gradient(180deg, rgba(0, 0, 0, 0) -1.97%, #000000 100.45%)",
+                      transition: "1s",
                     }}
                   >
                     <Text

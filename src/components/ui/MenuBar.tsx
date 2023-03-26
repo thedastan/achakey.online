@@ -102,7 +102,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
         display={{ base: "none", md: "block" }}
         w={window.location.pathname === "/" ? "25%" : "96px"}
       >
-        <Box py="46px">
+        <Box py="60px">
           {list.slice(0, 1).map((el, index) => (
             <Box
               key={index}

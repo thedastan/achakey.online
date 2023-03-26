@@ -66,6 +66,7 @@ export default function MyPlaylist() {
               alignItems="center"
               flexDirection="column"
               color="white"
+              mt="100px"
             >
               <Text
                 fontFamily="sans"
