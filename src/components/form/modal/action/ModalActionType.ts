@@ -1,3 +1,8 @@
+export type IModal = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
 export interface IStateModalForm {
   register: boolean;
   login: boolean;

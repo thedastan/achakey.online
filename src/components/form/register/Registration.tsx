@@ -4,8 +4,9 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 //local
@@ -24,16 +25,19 @@ import GoogleRegister from "./GoogleRegister";
 const Registration: FC<IModalInterface> = ({ onClose }) => {
   const [passEye, setPassEye] = useState<boolean>(false);
   const [secondPassEye, setSecondPassEye] = useState<boolean>(false);
+
   const [email, setEmail] = useState<string>("");
   const [phone, setPhoneNumber] = useState<string>("");
   const [password, setPassword1] = useState<string>("");
   const [password_confirm, setPassword2] = useState<string>("");
+  
   const [errorEmailPhone, setErrorEmailPhone] = useState<string>("");
   const [errorPas, setErrorPas] = useState<string>("");
   const [errorPasConfirm, setErrorPasConfirm] = useState<string>("");
 
   const { fetchRegister } = usePostRegistr();
   const { loginModal, enterSequirityCode } = useModalforms();
+  const navigate = useNavigate();
 
   const { loading, phoneNumber } = useAppSelector(
     (state) => state.registerReducer
@@ -110,11 +114,10 @@ const Registration: FC<IModalInterface> = ({ onClose }) => {
     loginModal();
   };
 
-  useEffect(() => {
-    if (!!loginUser.access) {
-      onClose();
-    }
-  }, [loginUser]);
+  if (!!loginUser.access) {
+    onClose();
+    navigate("/");
+  }
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>
@@ -123,7 +126,6 @@ const Registration: FC<IModalInterface> = ({ onClose }) => {
         <FormControl>
           <WordIndex text="войдите через" size="16px" />
           <Box pt="10px" pb="20px">
-            {/* <BtnGoogle /> */}
             <GoogleRegister />
           </Box>
           <WordIndex text="или создать аккаунт" size="12px" />
