@@ -31,6 +31,7 @@ import { getAccessToken } from "../helper";
 import "./style.scss";
 import SvgSearch from "../../assets/svg/SvgSearch";
 import { ITrack } from "../../redux/types";
+import ModalExitAccount from "../form/modal/ModalExitAccount";
 
 export default function Header() {
   const dispatch = useAppDispatch();
@@ -77,14 +78,6 @@ export default function Header() {
     onClose();
   };
 
-  const logoutAccount = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user-id");
-    navigate("/");
-    handleRefresh();
-  };
-
   const breakpoints = useBreakpointValue({
     base: "base",
     sm: "sm",
@@ -117,12 +110,16 @@ export default function Header() {
       px={{ base: "0px", sm: "45px", md: "45px" }}
       pt={{ sm: "40px", md: "40px" }}
     >
-      <ModalUserAuth
-        isOpen={!!authModal ? authModal : isOpen}
-        onClose={() => {
-          closeModal();
-        }}
-      />
+      {getAccessToken() ? (
+        <ModalExitAccount isOpen={isOpen} onClose={onClose} />
+      ) : (
+        <ModalUserAuth
+          isOpen={!!authModal ? authModal : isOpen}
+          onClose={() => {
+            closeModal();
+          }}
+        />
+      )}
       <Container
         maxW="1440px"
         pos="relative"
@@ -404,7 +401,7 @@ export default function Header() {
                         fontWeight="500"
                         borderBottomRadius="5px"
                         borderColor="rgba(210,210,210,0.62)"
-                        onClick={logoutAccount}
+                        onClick={onOpen}
                       >
                         Выйти
                       </MenuItem>

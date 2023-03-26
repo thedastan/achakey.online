@@ -6,11 +6,7 @@ import Authoration from "../auth/Authoration";
 import EnterSecurityCode from "../enterSequirity/EnterSecurityCode";
 import ForgotPassword from "../forgotPassword/ForgotPassword";
 import Registration from "../register/Registration";
-
-type IModal = {
-  isOpen: boolean;
-  onClose: () => void;
-};
+import { IModal } from "./action/ModalActionType";
 
 const ModalUserAuth: FC<IModal> = ({ isOpen, onClose }) => {
   const { register, login, forgotPas, exterSequirity } = useAppSelector(

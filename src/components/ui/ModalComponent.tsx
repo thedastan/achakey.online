@@ -1,6 +1,7 @@
 import {
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalHeader,
   ModalOverlay,
@@ -12,6 +13,7 @@ type IPorps = {
   onClose: () => void;
   children: ReactNode;
   headerText: string;
+  exitBtn?: boolean;
 };
 
 const ModalComponent: FC<IPorps> = ({
@@ -19,6 +21,7 @@ const ModalComponent: FC<IPorps> = ({
   onClose,
   children,
   headerText,
+  exitBtn,
 }) => {
   return (
     <>
@@ -30,7 +33,7 @@ const ModalComponent: FC<IPorps> = ({
       >
         <ModalOverlay />
         <ModalContent
-          bg="rgba(252,252,253,0.7)"
+          bg={!!exitBtn ? "#ffffff" : "rgba(252,252,253,0.7)"}
           maxW={["90%", "80%", "560px"]}
           px={{ base: "0", md: "50px" }}
           py="10px"
@@ -48,6 +51,7 @@ const ModalComponent: FC<IPorps> = ({
           >
             {headerText}
           </ModalHeader>
+          {!!exitBtn && <ModalCloseButton />}
           <ModalBody>{children}</ModalBody>
         </ModalContent>
       </Modal>
