@@ -277,11 +277,7 @@ export default function Header() {
                             </Text>
                           </Link>
                         ))
-                      ) : (
-                        <Text textAlign="center" py="50px" pl="20px">
-                          oops no music...
-                        </Text>
-                      )}
+                      ) : null}
                     </Box>
                   </Popup>
                 )}
