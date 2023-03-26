@@ -1,3 +1,4 @@
+import { Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 
 import { usePostAuth } from "../../../hooks/useActions";
@@ -20,15 +21,17 @@ const GoogleRegister = () => {
     });
     //@ts-ignore
     google.accounts.id.renderButton(document.getElementById("signIdDiv"), {
-      theme: "filled",
-      size: "large",
-      with: "100%",
+      // theme: "filled",
     });
   }, []);
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-      <div id="signIdDiv">Google</div>
+      <div id="signIdDiv">
+        <Text color="#1D1D20" fontSize="16px">
+          Google аккаунт
+        </Text>
+      </div>
     </div>
   );
 };

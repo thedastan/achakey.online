@@ -110,11 +110,9 @@ const Registration: FC<IModalInterface> = ({ onClose }) => {
     loginModal();
   };
 
-  useEffect(() => {
-    if (!!loginUser.access) {
-      onClose();
-    }
-  }, [loginUser]);
+  if (!!loginUser.access) {
+    onClose();
+  }
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>
@@ -123,7 +121,6 @@ const Registration: FC<IModalInterface> = ({ onClose }) => {
         <FormControl>
           <WordIndex text="войдите через" size="16px" />
           <Box pt="10px" pb="20px">
-            {/* <BtnGoogle /> */}
             <GoogleRegister />
           </Box>
           <WordIndex text="или создать аккаунт" size="12px" />

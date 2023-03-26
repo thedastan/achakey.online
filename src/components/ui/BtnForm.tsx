@@ -6,8 +6,9 @@ type IBtnForm = {
   isLoading?: boolean;
   bg: string;
   color: string;
-  width?: string;
+  width?: string | any;
   colorSceme?: string;
+  onClickBtn?: () => void;
 };
 const BtnForm: FC<IBtnForm> = ({
   btnText,
@@ -16,6 +17,7 @@ const BtnForm: FC<IBtnForm> = ({
   color,
   width,
   colorSceme,
+  onClickBtn,
 }) => {
   return (
     <Button
@@ -31,6 +33,7 @@ const BtnForm: FC<IBtnForm> = ({
       my={{ base: "10px", sm: "15px" }}
       py={{ base: "15px", sm: "25px" }}
       borderRadius="14px"
+      onClick={onClickBtn}
     >
       {btnText}
     </Button>
