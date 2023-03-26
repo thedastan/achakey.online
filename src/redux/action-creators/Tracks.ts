@@ -22,6 +22,28 @@ export const fetchTracks = () => {
   };
 };
 
+export const fetchTrack = (id: string) => {
+  return async (dispatch: Dispatch<TypeAction>) => {
+    try {
+      dispatch({ type: ActionTypes.FETCH_LOADER, payload: true });
+
+      const response = await API.get(`music/${id}`);
+
+      dispatch({ type: ActionTypes.FETCH_LOADER, payload: false });
+      dispatch({
+        type: ActionTypes.FETCH_DETAILS_TRACK,
+        payload: response.data,
+      });
+    } catch (e) {
+      dispatch({ type: ActionTypes.FETCH_LOADER, payload: false });
+      dispatch({
+        type: ActionTypes.FETCH_TRACKS_ERROR,
+        payload: "Произошла ошибка при загрузке треков",
+      });
+    }
+  };
+};
+
 export const fetchAlbums = () => {
   return async (dispatch: Dispatch<TypeAction>) => {
     try {

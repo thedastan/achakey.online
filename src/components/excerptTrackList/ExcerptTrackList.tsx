@@ -22,8 +22,8 @@ import {
 } from "../playlist/reducer/action-creator";
 import { ITrack } from "../../redux/types";
 import MusicForList from "../ui/MusicForList";
-import { getIdAlums, getUserId } from "../helper";
-import { useEffect, useState } from "react";
+import { getIdAlums } from "../helper";
+import { useEffect } from "react";
 
 interface ITrackList {
   tracks: ITrack[];

@@ -15,6 +15,7 @@ import {
   Navigation,
   ResetPasswordEmailPage,
   ResetPasswordPhonePage,
+  SearchResult,
 } from "./pages/Index";
 import BottomPlayer from "./components/bottom-audio-player/BottomPLayer";
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/login" element={<EmailVerifyPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPhonePage />} />
         <Route path="/accountManagement" element={<AccountManagamentPage />} />
+        <Route path="/search-result/:id" element={<SearchResult />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <BottomPlayer />
