@@ -30,7 +30,22 @@ import { SvgAvatar } from "../../assets/svg/SvgAvatar";
 import { getAccessToken } from "../helper";
 import "./style.scss";
 import SvgSearch from "../../assets/svg/SvgSearch";
-import { ITrack } from "../../redux/types";
+import { IAlbums } from "../../redux/types";
+
+export interface ISearchTrack {
+  albums?: number | string;
+  id?: number | null;
+  name?: string;
+  image?: string;
+  artist?: string;
+  music_short_len?: string;
+  user?: any[];
+  price?: string;
+  music_short?: string;
+  created_at?: string;
+  updated_at?: string;
+  text?: string;
+}
 
 export default function Header() {
   const dispatch = useAppDispatch();
@@ -50,12 +65,11 @@ export default function Header() {
 
   const { searchChange } = useAppSelector((state) => state.searchChangeReducer);
   const { tracks, albums } = useAppSelector((state) => state.musicReducer);
-  const arrayListForSearch: ITrack[] = [];
+  const arrayListForSearch: ISearchTrack[] = tracks.filter((el) =>
+    el.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
+  );
 
-  tracks.forEach((el) => arrayListForSearch.push(el));
-
-  albums.forEach((el) => el.music.map((el) => arrayListForSearch.push(el)));
-  const searchResultArray = arrayListForSearch.filter((el) =>
+  const searchResultAlbum: IAlbums[] = albums.filter((el) =>
     el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
   );
 
@@ -100,6 +114,8 @@ export default function Header() {
     fetchUserDetails(userId);
   }, [userId]);
 
+  console.log(albums);
+
   return (
     <Box
       pos={isHomePage ? "fixed" : "absolute"}
@@ -130,67 +146,6 @@ export default function Header() {
         justifyContent="end"
         alignItems="center"
       >
-        {!isHomePage ? (
-          <InputGroup
-            width={{ sm: "100%", md: "70%", lg: "100%" }}
-            left={{ sm: "0px", md: "50px", lg: "0px" }}
-            display={{ base: "none", sm: "block" }}
-            maxW="574px"
-            mx="auto"
-          >
-            <InputLeftElement
-              pointerEvents="none"
-              children={
-                <Box color="gray.300">
-                  <SvgSearch />
-                </Box>
-              }
-            />
-            <Input
-              focusBorderColor="white"
-              type="text"
-              rounded="50px"
-              placeholder="Поиск треков..."
-              color="white"
-              onChange={(e) => dispatch(searchResult(e.target.value))}
-            />
-            {searchChange && (
-              <Popup top={"50px"}>
-                <Box>
-                  {searchResultArray.length ? (
-                    searchResultArray.map((el, index) => (
-                      <Text
-                        key={index}
-                        py="10px"
-                        pl="20px"
-                        cursor="pointer"
-                        borderBottom={
-                          searchResultArray.length - 1 === index ? "0" : "1px"
-                        }
-                        roundedBottom={
-                          searchResultArray.length - 1 === index ? "5px" : "0"
-                        }
-                        roundedTop={0 === index ? "5px" : "0"}
-                        borderColor="white"
-                        _hover={{
-                          bg: "blueDark",
-                          color: "white",
-                        }}
-                      >
-                        {el.name}
-                      </Text>
-                    ))
-                  ) : (
-                    <Text textAlign="center" py="50px" pl="20px">
-                      oops no music...
-                    </Text>
-                  )}
-                </Box>
-              </Popup>
-            )}
-          </InputGroup>
-        ) : null}
-
         {!getAccessToken() ? (
           <Box
             display="flex"
@@ -226,6 +181,7 @@ export default function Header() {
         ) : (
           <Box
             display="flex"
+            w={{ base: "100%", md: "94%" }}
             py={{ base: "20px", sm: "0px" }}
             justifyContent={
               breakpoints === "base" && "sm"
@@ -240,7 +196,9 @@ export default function Header() {
           >
             {!isHomePage ? (
               <InputGroup
-                display={{ base: "block", sm: "none" }}
+                width={{ sm: "100%", md: "70%", lg: "100%" }}
+                left={{ sm: "0px", md: "50px", lg: "0px" }}
+                display={{ base: "none", sm: "block" }}
                 maxW="574px"
                 mx="auto"
               >
@@ -257,34 +215,70 @@ export default function Header() {
                   type="text"
                   rounded="50px"
                   placeholder="Поиск треков..."
-                  color="#000000"
+                  color="white"
                   onChange={(e) => dispatch(searchResult(e.target.value))}
-                  _hover={{
-                    bg: "white",
-                  }}
                 />
                 {searchChange && (
                   <Popup top={"50px"}>
                     <Box>
-                      {searchResultArray.length ? (
-                        searchResultArray.map((el, index) => (
-                          <Text
-                            key={index}
-                            py="10px"
-                            pl="20px"
-                            borderBottom={
-                              searchResultArray.length - 1 === index
-                                ? "0"
-                                : "1px"
-                            }
-                            borderColor="white"
-                            _hover={{
-                              bg: "bluedark",
-                              color: "white",
-                            }}
-                          >
-                            {el.name}
-                          </Text>
+                      {arrayListForSearch.length && searchResultAlbum.length ? (
+                        arrayListForSearch.map((el, index) => (
+                          <Link to={`/search-result/${el.id}`} key={index}>
+                            <Text
+                              py="10px"
+                              pl="20px"
+                              cursor="pointer"
+                              borderBottom={
+                                arrayListForSearch.length - 1 === index
+                                  ? "0"
+                                  : "1px"
+                              }
+                              roundedBottom={
+                                arrayListForSearch.length - 1 === index
+                                  ? "5px"
+                                  : "0"
+                              }
+                              roundedTop={0 === index ? "5px" : "0"}
+                              borderColor="white"
+                              _hover={{
+                                bg: "blueDark",
+                                color: "white",
+                              }}
+                            >
+                              {el.name}
+                              {"    "}
+                              {"[Трек]"}
+                            </Text>
+                          </Link>
+                        ))
+                      ) : (
+                        <Text textAlign="center" py="50px" pl="20px">
+                          oops no music...
+                        </Text>
+                      )}
+                      {arrayListForSearch.length && searchResultAlbum.length ? (
+                        searchResultAlbum.map((el, index) => (
+                          <Link key={index} to={`/excerpts/details/${el?.id}`}>
+                            <Text
+                              key={index}
+                              py="10px"
+                              pl="20px"
+                              borderBottom={
+                                arrayListForSearch.length - 1 === index
+                                  ? "0"
+                                  : "1px"
+                              }
+                              borderColor="white"
+                              _hover={{
+                                bg: "bluedark",
+                                color: "white",
+                              }}
+                            >
+                              {el.name}
+                              {"    "}
+                              {`[Album]`}
+                            </Text>
+                          </Link>
                         ))
                       ) : (
                         <Text textAlign="center" py="50px" pl="20px">

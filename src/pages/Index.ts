@@ -16,3 +16,4 @@ export { default as DetailsAlbums } from "../pages/details-albums/DetailsAlbums"
 export { default as ExcerptPlayList } from "../pages/excerpt-playlist/ExcerptPlayList";
 export { default as PrivacyPolicy } from "../components/footer/PrivacyPolicy";
 export { default as PublicOffer } from "../components/footer/PublicOffer";
+export { default as SearchResult } from "../components/search-result/SearchResult";
