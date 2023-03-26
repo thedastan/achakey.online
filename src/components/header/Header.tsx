@@ -31,6 +31,7 @@ import { getAccessToken } from "../helper";
 import "./style.scss";
 import SvgSearch from "../../assets/svg/SvgSearch";
 import { IAlbums } from "../../redux/types";
+import ModalExitAccount from "../form/modal/ModalExitAccount";
 
 export interface ISearchTrack {
   albums?: number | string;
