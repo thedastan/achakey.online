@@ -30,11 +30,11 @@ export const fetchRegister = (user: IInputRegister) => {
         type: IFormsTypes.ERROR_USER,
         payload: e.message,
       });
-      if (e.response.data?.phone[0] || e.response.data?.email[0]) {
-        toast.error(e.response.data?.phone[0]);
-        toast.error(e.response.data?.email[0]);
-      } else {
-        toast.error(e.message);
+      if (e.response.data?.email[0]) {
+        return toast.error(e.response.data?.email[0]);
+      }
+      if (e.response.data?.phone[0]) {
+        return toast.error(e.response.data?.phone[0]);
       }
     }
   };

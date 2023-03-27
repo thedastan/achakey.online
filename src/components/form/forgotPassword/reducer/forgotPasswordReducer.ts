@@ -1,8 +1,8 @@
 import {
-  IForms,
-  IFormsTypes,
+  IForgotPasswordTypes,
+  IFormForgotPassword,
   IStateForgotPassword,
-} from "../../formInterfaces";
+} from "../interfacesForgotPassword";
 
 const initialState = {
   loading: false,
@@ -10,16 +10,24 @@ const initialState = {
   error: "",
 } as IStateForgotPassword;
 
-export const forgotPasswordReducer = (state = initialState, action: IForms) => {
+export const forgotPasswordReducer = (
+  state = initialState,
+  action: IFormForgotPassword
+) => {
   switch (action.type) {
-    case IFormsTypes.FORGOT_LOADING: {
+    case IForgotPasswordTypes.FORGOT_LOADING: {
       return { ...state, loading: true };
     }
-    case IFormsTypes.FORGOT_PASSWORD: {
-      return { ...state, forgotPassword: action.payload, loading: false };
+    case IForgotPasswordTypes.FORGOT_PASSWORD: {
+      return {
+        ...state,
+        loading: false,
+        forgotPassword: action.payload,
+        error: "",
+      };
     }
-    case IFormsTypes.ERROR_USER: {
-      return { ...state, error: action.payload, loading: false };
+    case IForgotPasswordTypes.FORGOT_ERROR: {
+      return { ...state, loading: false, error: action.payload };
     }
     default: {
       return state;

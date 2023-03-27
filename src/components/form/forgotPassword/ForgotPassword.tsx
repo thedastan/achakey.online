@@ -1,25 +1,32 @@
 import { Box, FormControl } from "@chakra-ui/react";
-import React, { FC, useState, ChangeEvent, FormEvent } from "react";
+import React, { FC, useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useAppSelector } from "../../../hooks/Index";
 import { useActionForgot, useModalforms } from "../../../hooks/useActions";
 import { isEmail, isPhone } from "../../helpers/helperFunction";
-import { IForgotPassword } from "../formInterfaces";
 import BtnForm from "../../ui/BtnForm";
 import Inputs from "../../ui/Inputs";
 import TextError from "../../ui/TextError";
 import TextFormEnd from "../../ui/TextFormEnd";
+import { IModalInterface } from "../auth/formAuthInterfaces";
+import { IForgotPassword } from "./interfacesForgotPassword";
 
-const ForgotPassword: FC = () => {
+const ForgotPassword: FC<IModalInterface> = ({ onClose }) => {
   const [errors, setError] = useState<string>("");
   const [emailPhone, setEmailPhone] = useState<IForgotPassword>({
     email: "",
     phone: "",
   });
 
-  const { loading, forgotPassword } = useAppSelector(
+  const navigate = useNavigate();
+
+  const { registerModal } = useModalforms();
+  const { fetchForgotPassword, fetchForgotPasswordPhone } = useActionForgot();
+
+  const { loading, forgotPassword, error } = useAppSelector(
     (state) => state.forgotPasswordReducer
   );
 
@@ -37,19 +44,16 @@ const ForgotPassword: FC = () => {
     }
   };
 
-  const { registerModal } = useModalforms();
-  const { fetchForgotPassword, fetchForgotPasswordPhone } = useActionForgot();
-
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (emailPhone.email?.length) {
       setError("");
       const email = emailPhone.email;
-      fetchForgotPassword({ email });
+      fetchForgotPassword(email);
     } else if (emailPhone.phone?.length) {
       setError("");
       const phone = emailPhone.phone;
-      fetchForgotPasswordPhone({ phone });
+      fetchForgotPasswordPhone(phone);
     } else {
       setError("Введите почту или номер телефона");
     }
@@ -58,6 +62,13 @@ const ForgotPassword: FC = () => {
   const openRegister = () => {
     registerModal();
   };
+
+  useEffect(() => {
+    if (!!forgotPassword?.phone) {
+      navigate("/resetPassword");
+      onClose();
+    }
+  }, [navigate, forgotPassword?.phone, onClose]);
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>

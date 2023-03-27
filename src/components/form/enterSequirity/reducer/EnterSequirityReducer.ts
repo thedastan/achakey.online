@@ -1,8 +1,8 @@
 import {
-  IForms,
-  IFormsTypes,
+  IEnterSequirityTypes,
+  ISequirityCode,
   IStateEnterSequirityCode,
-} from "../../formInterfaces";
+} from "../EnterSecuirityInterface";
 
 export const initialState = {
   sequirityCode: {},
@@ -10,16 +10,28 @@ export const initialState = {
   error: "",
 } as IStateEnterSequirityCode;
 
-export const reducerEnterSequirity = (state = initialState, action: IForms) => {
+export const reducerEnterSequirity = (
+  state = initialState,
+  action: ISequirityCode
+) => {
   switch (action.type) {
-    case IFormsTypes.LOADING_SEQUIRITY_CODE: {
+    case IEnterSequirityTypes.LOADING_SEQUIRITY_CODE: {
       return { ...state, loading: true };
     }
-    case IFormsTypes.ENTER_SEQUIRITY_CODE: {
-      return { ...state, sequirityCode: action.payload, loading: false };
+    case IEnterSequirityTypes.ENTER_SEQUIRITY_CODE: {
+      return {
+        ...state,
+        sequirityCode: action.payload,
+        loading: false,
+        error: "",
+      };
     }
-    case IFormsTypes.ERROR_USER: {
-      return { ...state, error: action.payload, loading: false };
+    case IEnterSequirityTypes.ERROR_SEQUIRITY_CODE: {
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     }
     default: {
       return state;

@@ -5,8 +5,8 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import React, { FC, useState } from "react";
-import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //local
@@ -30,7 +30,7 @@ const Registration: FC<IModalInterface> = ({ onClose }) => {
   const [phone, setPhoneNumber] = useState<string>("");
   const [password, setPassword1] = useState<string>("");
   const [password_confirm, setPassword2] = useState<string>("");
-  
+
   const [errorEmailPhone, setErrorEmailPhone] = useState<string>("");
   const [errorPas, setErrorPas] = useState<string>("");
   const [errorPasConfirm, setErrorPasConfirm] = useState<string>("");
