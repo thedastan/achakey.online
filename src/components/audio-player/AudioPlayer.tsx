@@ -31,6 +31,7 @@ import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
 import "./style.scss";
 import "../ui/style.scss";
 import ModalUserAuth from "../form/modal/ModalUser";
+import SvgPause from "../../assets/svg/SvgPause";
 
 interface IlistMedia {
   listTruck?: ITrack[] | any;
@@ -263,6 +264,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     fetchBasket();
   }, []);
 
+  console.log(pause);
+
   return (
     <section
       style={{
@@ -293,7 +296,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
         <Box
           mr={{ base: "0", md: "23px" }}
           mx={{ base: "auto", md: "0" }}
-          mb={{ base: "19px", md: "0" }}
+          mb={{ base: "23px", md: "0" }}
           w="176px"
           h="220px"
         >
@@ -329,7 +332,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
             alignItems="center"
           >
             <Box
-              mb={{ base: "15px", md: "0" }}
+              mb={{ base: "31px", md: "0" }}
               w={{ base: "auto", md: "150px" }}
               display="flex"
             >
@@ -348,10 +351,16 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 p="0"
                 mx="2px"
               >
-                {forAlbum && pause ? (
-                  <SvgPlay fill="white" />
+                {active ? (
+                  <>
+                    {forAlbum && pause ? (
+                      <SvgPlay fill="white" />
+                    ) : (
+                      <SvgForAlbumPause fill="white" />
+                    )}
+                  </>
                 ) : (
-                  <SvgForAlbumPause fill="white" />
+                  <SvgPlay fill="white" />
                 )}
               </Button>
               <Button
@@ -364,6 +373,26 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               </Button>
             </Box>
             <Box w="100%" ml="auto" display="flex" alignItems="center">
+              <Button
+                display={{ base: "block", md: "none" }}
+                bg="transparent"
+                colorScheme="none"
+                onClick={play}
+                p="0"
+                mx="2px"
+              >
+                {active ? (
+                  <>
+                    {forAlbum && pause ? (
+                      <SvgPlay fill="white" />
+                    ) : (
+                      <SvgForAlbumPause fill="white" />
+                    )}
+                  </>
+                ) : (
+                  <SvgPlay fill="white" />
+                )}
+              </Button>
               <input
                 type="range"
                 min={0}
@@ -403,7 +432,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
             <Box
               display="flex"
               alignItems="end"
-              flexDir={{ base: "column", sm: "row" }}
+              w={{ base: "100%", md: "none" }}
+              justifyContent={{ base: "space-between", md: "normal" }}
             >
               <Text
                 display={{ base: "none", md: "block" }}
@@ -422,9 +452,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                   getAccessToken() ? postOrderAlbum() : openModal()
                 }
                 ml={{ base: "0px", md: "43px", lg: "48px" }}
-                mr={{ base: "0", sm: "10%", md: "16px" }}
-                mb={{ base: "20px", sm: "0" }}
-                w={{ base: "55vw", sm: "39vw", md: "17vw" }}
+                mr={{ sm: "10%", md: "16px" }}
+                w={{ base: "40vw", sm: "39vw", md: "17vw" }}
                 rounded="50px"
                 py="9px"
                 fontSize="14px"
@@ -440,7 +469,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 }
                 rounded="50px"
                 py="9px"
-                w={{ base: "55vw", sm: "39vw", md: "17vw" }}
+                w={{ base: "40vw", sm: "39vw", md: "17vw" }}
                 fontSize="14px"
                 bg={findAlbum ? "blueDark" : "transparent"}
                 border="1px"
@@ -457,7 +486,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
             </Box>
           </Box>
         </Box>
-        <Box mx="auto"  maxW="700px" >
+        <Box mx="auto" maxW="700px">
           <OrderDetails
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}

@@ -1,9 +1,8 @@
 .home-bg {
     min-height: 100vh;
-    background: url("../../assets/img/playlist.png") center/cover  no-repeat;
+    background: url("../../assets/img/playlist.png") center/cover no-repeat;
     object-fit: cover;
 }
-
 
 .btn {
     cursor: pointer;
@@ -46,9 +45,10 @@
     width: 0;
     position: absolute;
     z-index: -1;
-    border-radius: 5px 5px 0 0 /5px 5px ;
+    border-radius: 5px 5px 0 0 /5px 5px;
     transition: 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
+
 .btn:after {
     content: "";
     background: #fff;
@@ -57,7 +57,7 @@
     width: 0;
     position: absolute;
     z-index: -1;
-    border-radius: 0 0 5px 5px  / 0 0 5px 5px ;
+    border-radius: 0 0 5px 5px / 0 0 5px 5px;
     transition: 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
 

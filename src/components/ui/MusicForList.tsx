@@ -9,6 +9,7 @@ import { ITrack } from "../../redux/types";
 import {
   useAction,
   useActionBasket,
+  useActionOrder,
   useExcerpAction,
   useModalforms,
   useTracksAction,
@@ -16,6 +17,7 @@ import {
 import { getAccessToken, getUserId } from "../helper";
 import ModalUserAuth from "../form/modal/ModalUser";
 import SvgCheckMark from "../../assets/svg/SvgCheckMark";
+import { OrderPost } from "../order/types/order";
 
 interface ITrackChange {
   onClick?: any;
@@ -49,6 +51,9 @@ export default function MusicForList({
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const { myTracks } = useAppSelector((state) => state.musicReducer);
   const { postBasketItem, fetchBasket } = useActionBasket();
+  const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
+    useActionOrder();
+  const Order = useAppSelector((state) => state.reducerOrder.order);
   const userFilter = basket.filter((el) => el.user === getUserId());
 
   const { pause, active } = useAppSelector(
@@ -101,6 +106,69 @@ export default function MusicForList({
 
     fetchBasket();
   };
+
+  const postOrder = async (cart?: ITrack) => {
+    const order: OrderPost = {
+      user: getUserId(),
+      total_price: null,
+      status: null,
+      order_item: [
+        {
+          order: getUserId(),
+          music: cart?.id,
+          album: null,
+        },
+      ],
+    };
+
+    const userFiter = Order?.filter((el) => el.user === getUserId());
+
+    const filterUser = userFiter.map(
+      //@ts-ignore
+      (el) =>
+        el?.order_item?.filter((i) => i.music?.id === order.order_item[0].music)
+    );
+
+    const newData = filterUser.flat();
+    const arrayOfObjects = newData.map((item) => ({ ...item }));
+
+    if (arrayOfObjects[0]?.music?.id === order?.order_item[0]?.music) {
+      console.log("no");
+    } else {
+      fetchOrderPost(order);
+      fetchOrder();
+    }
+
+    if (arrayOfObjects[0]?.music?.id === order?.order_item[0]?.music) {
+      console.log(arrayOfObjects);
+      fetchOrderId(Number(arrayOfObjects[0]?.id));
+      fetchOrderItem(Number(arrayOfObjects[0]?.id));
+      console.log(arrayOfObjects[0]?.id);
+    }
+
+    userFiter?.filter((el) =>
+      el?.order_item?.filter((i) =>
+        i.music?.id === order.order_item[0].music
+          ? fetchOrderItem(Number(el?.id))
+          : console.log("NoNo")
+      )
+    );
+
+    userFiter?.filter((el) =>
+      el?.order_item?.filter((i) =>
+        i.music?.id === order.order_item[0].music
+          ? fetchOrderId(Number(el?.id))
+          : console.log("id")
+      )
+    );
+
+    fetchOrder();
+  };
+
+  function dataForOrderAndBasket(element?: ITrack) {
+    PostBasketItem(element);
+    postOrder(element);
+  }
 
   const openModal = () => {
     onOpen();
@@ -209,8 +277,8 @@ export default function MusicForList({
           onClick={() =>
             getAccessToken()
               ? findMyMusic
-                ? console.log('Уже куплен')
-                : PostBasketItem(music)
+                ? console.log("Уже куплен")
+                : dataForOrderAndBasket(music)
               : openModal()
           }
           border="1px"

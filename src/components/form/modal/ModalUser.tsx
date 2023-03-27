@@ -44,7 +44,7 @@ const ModalUserAuth: FC<IModal> = ({ isOpen, onClose }) => {
           ) : !!login ? (
             <Authoration onClose={onClose} />
           ) : !!forgotPas ? (
-            <ForgotPassword />
+            <ForgotPassword onClose={onClose}/>
           ) : !!exterSequirity ? (
             <EnterSecurityCode />
           ) : (

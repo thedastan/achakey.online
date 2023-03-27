@@ -107,8 +107,6 @@ export default function Header() {
     fetchUserDetails(userId);
   }, [userId]);
 
-  console.log(albums);
-
   return (
     <Box
       pos={isHomePage ? "fixed" : "absolute"}
@@ -250,31 +248,34 @@ export default function Header() {
                           oops no music...
                         </Text>
                       )}
-                      {arrayListForSearch.length && searchResultAlbum.length ? (
-                        searchResultAlbum.map((el, index) => (
-                          <Link key={index} to={`/excerpts/details/${el?.id}`}>
-                            <Text
+                      {arrayListForSearch.length && searchResultAlbum.length
+                        ? searchResultAlbum.map((el, index) => (
+                            <Link
                               key={index}
-                              py="10px"
-                              pl="20px"
-                              borderBottom={
-                                arrayListForSearch.length - 1 === index
-                                  ? "0"
-                                  : "1px"
-                              }
-                              borderColor="white"
-                              _hover={{
-                                bg: "bluedark",
-                                color: "white",
-                              }}
+                              to={`/excerpts/details/${el?.id}`}
                             >
-                              {el.name}
-                              {"    "}
-                              {`[Album]`}
-                            </Text>
-                          </Link>
-                        ))
-                      ) : null}
+                              <Text
+                                key={index}
+                                py="10px"
+                                pl="20px"
+                                borderBottom={
+                                  arrayListForSearch.length - 1 === index
+                                    ? "0"
+                                    : "1px"
+                                }
+                                borderColor="white"
+                                _hover={{
+                                  bg: "bluedark",
+                                  color: "white",
+                                }}
+                              >
+                                {el.name}
+                                {"    "}
+                                {`[Album]`}
+                              </Text>
+                            </Link>
+                          ))
+                        : null}
                     </Box>
                   </Popup>
                 )}

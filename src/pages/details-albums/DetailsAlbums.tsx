@@ -1,11 +1,11 @@
 import {Box, Container} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AudioPlayer from "../../components/audio-player/AudioPlayer";
 import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
 import ExcerptTrackList from "../../components/excerptTrackList/ExcerptTrackList";
-import {useAppDispatch, useAppSelector} from "../../hooks/Index";
-import {fetchAlbumsDetails} from "./action-creators";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { fetchAlbumsDetails } from "./action-creators";
 import Footer from "../../components/footer/Footer";
 
 export default function DetailsAlbums() {
@@ -14,11 +14,12 @@ export default function DetailsAlbums() {
     const {albums} = useAppSelector((state) => state.reducerDetailsAlbums);
     const [openPopup, setOpenPopup] = useState(false);
 
-    useEffect(() => {
-        //@ts-ignore
-        dispatch(fetchAlbumsDetails(id));
-        localStorage.setItem("id-album", JSON.stringify(id));
-    }, []);
+
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchAlbumsDetails(id));
+    localStorage.setItem("id-album", JSON.stringify(id));
+  }, []);
 
     const styles = {
         backgroundImage: `url("${albums.image}")`,

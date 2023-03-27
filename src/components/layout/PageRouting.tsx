@@ -5,7 +5,6 @@ import MenuBar from "../ui/MenuBar";
 
 import { searchResult } from "../header/action-creators/Action";
 import { useAppDispatch } from "../../hooks/Index";
-import { useState } from "react";
 import { Box } from "@chakra-ui/react";
 
 interface IMain {
@@ -17,7 +16,7 @@ export default function PageRouting({ children }: IMain) {
   const navigation = useNavigate();
 
     return (
-        <div style={{overflow: "hidden"}}>
+        <div style={{overflow: "hidden",background: "#1D1D20"}}>
             <MenuBar>
                 <Header/>
                 <main

@@ -16,8 +16,8 @@ import Inputs from "../../ui/Inputs";
 import TextError from "../../ui/TextError";
 
 const ResetPasswordForm = () => {
-  const url: string = window.location.href;
-  const token: string = "f61ea0c6fa2461ddc31d0a1c54f1ba2c9dff977fb72";
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get("token");
 
   const [passEye, setPassEye] = useState<boolean>(false);
   const [secondPassEye, setSecondPassEye] = useState<boolean>(false);
@@ -32,18 +32,22 @@ const ResetPasswordForm = () => {
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setError("");
-    if (value.length >= 6) setPassword(value);
+    if (value.length >= 8) setPassword(value);
     else {
-      setError("Введите не менее 6 символов");
+      setError("Введите не менее 8 символов");
     }
   };
 
   const handleChangePasswordTwo = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setErrorTwo("");
-    if (value === password) setPasswordTwo(value);
-    else {
-      setErrorTwo("Пароли не совпадают");
+    if (value.length >= 8) {
+      if (value === password) setPasswordTwo(value);
+      else {
+        setErrorTwo("Пароли не совпадают");
+      }
+    } else {
+      setErrorTwo("Введите не менее 8 символов");
     }
   };
 
@@ -57,7 +61,7 @@ const ResetPasswordForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password.length >= 6 && passwordTwo.length >= 6) {
+    if (password.length >= 6 && passwordTwo.length >= 6 && !!token?.length) {
       fetchResetPassword({ password, token });
     }
   };
@@ -78,7 +82,7 @@ const ResetPasswordForm = () => {
           </Text>
           <form onSubmit={handleSubmit}>
             <FormControl>
-              <input type="hidden" defaultValue={token} />
+              {!!token?.length && <input type="hidden" defaultValue={token} />}
               <Box mb="15px">
                 <InputGroup>
                   <Inputs

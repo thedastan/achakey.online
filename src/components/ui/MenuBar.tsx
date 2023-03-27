@@ -86,7 +86,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
   ];
 
   return (
-    <Box maxW="1660px" mx="auto">
+    <Box maxW="2060px" mx="auto">
       <ModalUserAuth isOpen={isOpen} onClose={onClose} />
       <Box
         position="fixed"
@@ -230,7 +230,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
         </Box>
       </Box>
       <Box
-        w={{ base: "100%", md: "92%", xl: "95%" }}
+        w={{ base: "100%", md: "94%", xl: "95%" }}
         ml="auto"
         minH="100vh"
         bg="#1D1D20"

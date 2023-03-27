@@ -57,7 +57,7 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
     }
   };
 
-  const { fetchAuthLogin } = usePostAuth();
+  const { fetchAuthLogin, errorAuth } = usePostAuth();
   const { loading, loginUser, error } = useAppSelector(
     (state) => state.reducerAuth
   );
@@ -77,18 +77,21 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
 
   const openRegister = () => {
     registerModal();
+    errorAuth();
   };
 
   const openForgotPass = () => {
     forgotPassModal();
+    errorAuth();
   };
 
   useEffect(() => {
     if (loginUser.access || loginUser.id) {
       navigate("/");
       onClose();
+      errorAuth();
     }
-  }, [loginUser, navigate, onClose]);
+  }, [loginUser, navigate, onClose, errorAuth]);
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>
