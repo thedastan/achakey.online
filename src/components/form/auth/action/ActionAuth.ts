@@ -57,3 +57,12 @@ export const fetchAuthGoogle = (token: string) => {
     }
   };
 };
+
+export const errorAuth = () => {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: IFormTypesAuth.ERROR_AUTH,
+      payload: "",
+    });
+  };
+};

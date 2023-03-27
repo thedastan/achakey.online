@@ -7,16 +7,6 @@ export interface IInputRegister {
   password_confirm: string;
 }
 
-export interface IInputEnterSequirityCode {
-  phone: string;
-  code: number;
-}
-
-export interface IForgotPassword {
-  phone?: string;
-  email?: string;
-}
-
 export interface IAuthForgot {
   emailOrNumber: string;
   password: string;
@@ -47,18 +37,6 @@ export interface IStateResetPassword {
   resetPassword: IInputResetPassword;
 }
 
-export interface IStateForgotPassword {
-  loading: boolean;
-  error: any | string;
-  forgotPassword: IForgotPassword;
-}
-
-export interface IStateEnterSequirityCode {
-  loading: boolean;
-  error: string | any;
-  sequirityCode: IInputEnterSequirityCode;
-}
-
 export interface IStateChangePassword {
   loading: boolean;
   changePass: IInputChangePassword;
@@ -72,11 +50,7 @@ export enum IFormsTypes {
   LOADING_REGISTER = "LOADING_REGISTER",
   ERROR_USER = "ERROR_USER",
   VALIDATE_REGISTER = "VALIDATE_REGISTER",
-  FORGOT_PASSWORD = "FORGOT_PASSWORD",
-  FORGOT_LOADING = "FORGOT_LOADING",
   PHONE_NUMBER_REGISTER = "PHONE_NUMBER_REGISTER",
-  ENTER_SEQUIRITY_CODE = "ENTER_SEQUIRITY_CODE",
-  LOADING_SEQUIRITY_CODE = "LOADING_SEQUIRITY_CODE",
   LOADING_CHANGE_PASSWORD = "LOADING_CHANGE_PASSWORD",
   ERROR_CHANGE_PASSWORD = "ERROR_CHANGE_PASSWORD",
   CHANGE_PASSWORD = "CHANGE_PASSWORD",
@@ -105,27 +79,9 @@ interface IRegister {
   payload: IInputRegister;
 }
 
-interface IForgotPasswordLoading {
-  type: IFormsTypes.FORGOT_LOADING;
-}
-
-interface IForgotPasswordSUccess {
-  type: IFormsTypes.FORGOT_PASSWORD;
-  payload: IForgotPassword;
-}
-
 interface IPhoneNumberRegister {
   type: IFormsTypes.PHONE_NUMBER_REGISTER;
   payload: string;
-}
-
-interface IEnterSequirity {
-  type: IFormsTypes.ENTER_SEQUIRITY_CODE;
-  payload: any;
-}
-
-interface IEnterSequirityLoading {
-  type: IFormsTypes.LOADING_SEQUIRITY_CODE;
 }
 
 interface IChangePasswordLoading {
@@ -146,13 +102,9 @@ export type IForms =
   | IRegister
   | IErrorUser
   | ILoadingRegister
-  | IForgotPasswordLoading
-  | IForgotPasswordSUccess
   | ILoadingReset
   | IResetPassword
   | IPhoneNumberRegister
-  | IEnterSequirity
-  | IEnterSequirityLoading
   | IChangePasswordLoading
   | IChangePasswordError
   | IChangePassword;

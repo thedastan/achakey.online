@@ -107,8 +107,6 @@ export default function Header() {
     fetchUserDetails(userId);
   }, [userId]);
 
-  console.log(albums);
-
   return (
     <Box
       pos={isHomePage ? "fixed" : "absolute"}
