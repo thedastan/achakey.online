@@ -54,8 +54,16 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
       className="scroll"
     >
       <Box>
-        <Box display="flex" justifyContent="space-between">
-          <Text fontWeight="600" textColor="white" w="25vw">
+        <Box
+          display="flex"
+          justifyContent={{ base: "center", md: "space-between" }}
+        >
+          <Text
+            fontWeight="600"
+            textColor="white"
+            w={{ base: "100%", md: "25vw" }}
+            textAlign={{ base: "center", md: "start" }}
+          >
             {allTracks ? "Все треки" : "Все Альбомы"}
           </Text>
           <Text
@@ -67,10 +75,18 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
           >
             Отрывок
           </Text>
-          <Text fontWeight="600" textColor="white">
+          <Text
+            fontWeight="600"
+            textColor="white"
+            display={{ base: "none", md: "block" }}
+          >
             Цена
           </Text>
-          <Text fontWeight="600" textColor="white">
+          <Text
+            fontWeight="600"
+            textColor="white"
+            display={{ base: "none", md: "block" }}
+          >
             В корзину
           </Text>
         </Box>

@@ -32,7 +32,7 @@ export const OrderDetails = ({
 
   const deletedorder = async (id: string) => {
     try {
-      const responce = await API.delete(`order/${id}`);
+      const responce = await API.delete(`order/delete/${id}`);
       fetchOrder();
     } catch (e) {
       fetchOrder();
