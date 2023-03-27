@@ -15,29 +15,25 @@ export default function PageRouting({ children }: IMain) {
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
 
-  return (
-    <div style={{ background: "#1D1D20" }}>
-      <MenuBar>
-        <Header />
-        <main
-          onClick={() => {
-            dispatch(searchResult(""));
-          }}
-        >
-          {children}
-        </main>
-      </MenuBar>
-      {window.location.pathname === "/all-playlist" && <Footer />}
-      {window.location.pathname === "/" && (
-        <Box display={{ base: "block", lg: "none" }}>
-          <Footer />
-        </Box>
-      )}
-      {window.location.pathname === "/excerpts" && <Footer />}
-      {window.location.pathname === "/my-playlist" && <Footer />}
-      {window.location.pathname === "/basket" && <Footer />}
-      {window.location.pathname === "/privacy-policy" && <Footer />}
-      {window.location.pathname === "/public-offer" && <Footer />}
-    </div>
-  );
+    return (
+        <div style={{overflow: "hidden",background: "#1D1D20"}}>
+            <MenuBar>
+                <Header/>
+                <main
+                    onClick={() => {
+                        dispatch(searchResult(""));
+                    }}
+                >
+                    {children}
+                </main>
+            </MenuBar>
+            {window.location.pathname === "/all-playlist" && <Footer/>}
+            {window.location.pathname === "/" && <Box display={{base:"block",lg:"none"}}><Footer/></Box>}
+            {window.location.pathname === "/excerpts" && <Footer/>}
+            {window.location.pathname === "/my-playlist" && <Footer/>}
+            {window.location.pathname === "/basket" && <Footer/>}
+            {window.location.pathname === "/privacy-policy" && <Footer/>}
+            {window.location.pathname === "/public-offer" && <Footer/>}
+        </div>
+    );
 }

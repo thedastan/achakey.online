@@ -1,9 +1,8 @@
 .order {
-  transform: translateY(-150vh);
+  transform: translateY(150vh);
   transition: all 0.55s;
   opacity: 0;
   margin: 0 auto;
-
   &.transform {
     transform: translateY(0);
     opacity: 1;
@@ -11,8 +10,10 @@
   }
 }
 
+
+
 .details {
-  transform: translateY(-150vh);
+  transform: translateY(150vh);
   transition: all 0.55s;
   opacity: 0;
   margin: 0 auto;
