@@ -1,5 +1,5 @@
 import {Box, Container} from "@chakra-ui/react";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import AudioPlayer from "../../components/audio-player/AudioPlayer";
 import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
@@ -12,6 +12,7 @@ export default function DetailsAlbums() {
     const {id} = useParams();
     const dispatch = useAppDispatch();
     const {albums} = useAppSelector((state) => state.reducerDetailsAlbums);
+    const [openPopup, setOpenPopup] = useState(false);
 
     useEffect(() => {
         //@ts-ignore
@@ -25,6 +26,7 @@ export default function DetailsAlbums() {
         backgroundSize: '100% 50vh',
         backgroundColor: '#1D1D20',
     };
+
     return (
         <>
             <section style={styles} >

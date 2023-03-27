@@ -457,7 +457,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
             </Box>
           </Box>
         </Box>
-        <Box mx="auto"  maxW="700px">
+        <Box mx="auto"  maxW="700px" >
           <OrderDetails
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}

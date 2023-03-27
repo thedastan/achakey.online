@@ -182,10 +182,7 @@ export default function Header() {
             py={{ base: "20px", sm: "0px" }}
             justifyContent={
               breakpoints === "base" && "sm"
-                ? isHomePage
-                  ? "space-between"
-                  : "end"
-                : "end" && breakpoints === "md"
+                ? isHomePage ? "space-between" : "end" : "end" && breakpoints === "md"
                 ? "end"
                 : "end"
             }
@@ -195,7 +192,7 @@ export default function Header() {
               <InputGroup
                 width={{ sm: "100%", md: "70%", lg: "100%" }}
                 left={{ sm: "0px", md: "50px", lg: "0px" }}
-                display={{ base: "none", sm: "block" }}
+                display="flex"
                 maxW="574px"
                 mx="auto"
               >

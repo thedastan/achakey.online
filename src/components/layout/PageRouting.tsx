@@ -17,7 +17,7 @@ export default function PageRouting({ children }: IMain) {
   const navigation = useNavigate();
 
     return (
-        <>
+        <div style={{overflow: "hidden"}}>
             <MenuBar>
                 <Header/>
                 <main
@@ -35,6 +35,6 @@ export default function PageRouting({ children }: IMain) {
             {window.location.pathname === "/basket" && <Footer/>}
             {window.location.pathname === "/privacy-policy" && <Footer/>}
             {window.location.pathname === "/public-offer" && <Footer/>}
-        </>
+        </div>
     );
 }
