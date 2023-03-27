@@ -20,14 +20,6 @@ export const OrderDetails = ({
                                  setOpenPopup,
                                  openPopup,
                              }: IOrderPopup) => {
-    const {fetchOrder} = useActionOrder();
-    const [total, setTotal] = useState(0);
-    const {orderDetails, orderId} = useAppSelector(
-        (state) => state.reducerOrder
-  className,
-  setOpenPopup,
-  openPopup,
-}: IOrderPopup) => {
   const { fetchOrder } = useActionOrder();
   const [total, setTotal] = useState(0);
   const { orderDetails, orderId } = useAppSelector(
@@ -52,35 +44,6 @@ export const OrderDetails = ({
     fetchOrderItem(Number(orderId));
   }, []);
 
-  useEffect(() => {
-    let result = 0;
-    let totalAlbum = 0;
-
-    const numberArray: any[] | undefined = orderDetails?.order_item?.map(
-      (el) => el.music?.price
-    );
-
-    const numberArrayAlbum = orderDetails?.order_item?.map((el) =>
-      el.album?.music?.map((j) => j.price)
-    );
-
-    function handleClickClose() {
-        setOpenPopup(false);
-    }
-
-    const deletedorder = async (id: string) => {
-        try {
-            const responce = await API.delete(`order/${id}`);
-            fetchOrder();
-        } catch (e) {
-            fetchOrder();
-        }
-        fetchOrder();
-    };
-
-    useEffect(() => {
-        fetchOrderItem(Number(orderId));
-    }, []);
 
     useEffect(() => {
         let result = 0;
