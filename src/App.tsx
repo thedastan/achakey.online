@@ -21,7 +21,7 @@ import BottomPlayer from "./components/bottom-audio-player/BottomPLayer";
 
 function App() {
   return (
-    <div className="">
+    <div>
       <AudioPlayerBottom />
       <Navigation />
       <Routes>

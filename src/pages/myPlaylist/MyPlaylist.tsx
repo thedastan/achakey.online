@@ -31,8 +31,13 @@ export default function MyPlaylist() {
   return (
     <section>
       <Container maxW="1220px" pt="140px">
-        <Box pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}>
-          <Box display="flex" mb="31px" zIndex="0">
+        <Box pl={{ base: "0", md: "6%", lg: "3%", xl: "1%" }}>
+          <Box
+            display="flex"
+            justifyContent={{ base: "center", md: "start" }}
+            mb="31px"
+            zIndex="0"
+          >
             <Text
               cursor="pointer"
               fontWeight="600"
@@ -56,7 +61,7 @@ export default function MyPlaylist() {
                 dispatch(tabBooleanAction(false));
               }}
             >
-              Моя альбом
+              Альбомы
             </Text>
           </Box>
           {!myTracks.length && (
@@ -75,7 +80,7 @@ export default function MyPlaylist() {
                 fontSize="16px"
                 color="white"
               >
-                В вашем кабинете пока нет альбомов
+                В вашем кабинете пока нет {isTracks ? "музыки" : "альбомов"}
               </Text>
               <Box my="10">
                 <SvgMyPlaylistEmpty />

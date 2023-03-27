@@ -31,6 +31,7 @@ import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
 import "./style.scss";
 import "../ui/style.scss";
 import ModalUserAuth from "../form/modal/ModalUser";
+import SvgPause from "../../assets/svg/SvgPause";
 
 interface IlistMedia {
   listTruck?: ITrack[] | any;
@@ -263,6 +264,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     fetchBasket();
   }, []);
 
+  console.log(pause);
+
   return (
     <section
       style={{
@@ -293,7 +296,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
         <Box
           mr={{ base: "0", md: "23px" }}
           mx={{ base: "auto", md: "0" }}
-          mb={{ base: "19px", md: "0" }}
+          mb={{ base: "23px", md: "0" }}
           w="176px"
           h="220px"
         >
@@ -329,7 +332,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
             alignItems="center"
           >
             <Box
-              mb={{ base: "15px", md: "0" }}
+              mb={{ base: "31px", md: "0" }}
               w={{ base: "auto", md: "150px" }}
               display="flex"
             >
@@ -348,7 +351,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 p="0"
                 mx="2px"
               >
-                {forAlbum && pause ? (
+                {pause ? (
                   <SvgPlay fill="white" />
                 ) : (
                   <SvgForAlbumPause fill="white" />
@@ -364,6 +367,20 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               </Button>
             </Box>
             <Box w="100%" ml="auto" display="flex" alignItems="center">
+              <Button
+                display={{ base: "block", md: "none" }}
+                bg="transparent"
+                colorScheme="none"
+                onClick={play}
+                p="0"
+                mx="2px"
+              >
+                {forAlbum && pause ? (
+                  <SvgPlay fill="white" />
+                ) : (
+                  <SvgForAlbumPause fill="white" />
+                )}
+              </Button>
               <input
                 type="range"
                 min={0}
@@ -457,7 +474,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
             </Box>
           </Box>
         </Box>
-        <Box mx="auto"  maxW="700px">
+        <Box mx="auto" maxW="700px">
           <OrderDetails
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
