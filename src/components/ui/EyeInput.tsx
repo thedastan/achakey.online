@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React, { FC } from "react";
-import { FiEyeOff, FiEye } from "react-icons/fi";
+
+import SvgEyeInput from "../../assets/svg/SvgEye";
 
 type IEyeInput = {
   eye: boolean;
@@ -18,7 +19,7 @@ const EyeInput: FC<IEyeInput> = ({ eye, onClickEye }) => {
       fontSize={{ base: "20px", sm: "25px" }}
       onClick={onClickEye}
     >
-      {eye ? <FiEyeOff /> : <FiEye />}
+      <SvgEyeInput eye={eye} />
     </Box>
   );
 };
