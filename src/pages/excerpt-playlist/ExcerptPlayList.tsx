@@ -18,40 +18,40 @@ export default function ExcerptPlayList() {
   return (
     <section className="bg-menuBar">
       <Box className="bg-menuBar-blur">
-      <Container maxW="1220px" pt="140px">
-        <Box pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}>
-          <Box display="flex" mb="31px" zIndex="0">
-            <Text
-              cursor="pointer"
-              fontWeight="600"
-              color={isTracks ? "white" : "rgba(255, 255, 255, 0.4)"}
-              mr="69px"
-              fontSize="24px"
-              onClick={() => {
-                setActive(AlbumOrTracks.TRACKS);
-              }}
-            >
-              Все треки
-            </Text>
-            <Text
-              cursor="pointer"
-              fontWeight="600"
-              color={isAlbum ? "white" : "rgba(255, 255, 255, 0.4)"}
-              fontSize="24px"
-              onClick={() => {
-                setActive(AlbumOrTracks.ALBUM);
-              }}
-            >
-              Альбомы
-            </Text>
-          </Box>
-          <Box display="flex">
-            <Box w="100vw" h="auto">
-              {isTracks ? <AllPlaylist /> : <AllAlbums />}
+        <Container maxW="1220px" pt="140px">
+          <Box pl={{ base: "0", md: "6%", lg: "3%", xl: "1%" }}>
+            <Box display="flex" mb="31px" zIndex="0">
+              <Text
+                cursor="pointer"
+                fontWeight="600"
+                color={isTracks ? "white" : "rgba(255, 255, 255, 0.4)"}
+                mr="69px"
+                fontSize="24px"
+                onClick={() => {
+                  setActive(AlbumOrTracks.TRACKS);
+                }}
+              >
+                Все треки
+              </Text>
+              <Text
+                cursor="pointer"
+                fontWeight="600"
+                color={isAlbum ? "white" : "rgba(255, 255, 255, 0.4)"}
+                fontSize="24px"
+                onClick={() => {
+                  setActive(AlbumOrTracks.ALBUM);
+                }}
+              >
+                Альбомы
+              </Text>
+            </Box>
+            <Box display="flex">
+              <Box w="100vw" h="auto">
+                {isTracks ? <AllPlaylist /> : <AllAlbums />}
+              </Box>
             </Box>
           </Box>
-        </Box>
-      </Container>
+        </Container>
       </Box>
     </section>
   );

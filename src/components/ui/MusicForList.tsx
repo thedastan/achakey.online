@@ -209,7 +209,7 @@ export default function MusicForList({
           onClick={() =>
             getAccessToken()
               ? findMyMusic
-                ? console.log('Уже куплен')
+                ? console.log("Уже куплен")
                 : PostBasketItem(music)
               : openModal()
           }
