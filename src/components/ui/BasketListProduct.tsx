@@ -108,6 +108,20 @@ export default function BasketListProduct({
       position="relative"
     >
       <Box
+          display={{base: "flex", sm: "none"}}
+          justifyContent="end"
+          px="10px"
+          pt="15px"
+          alignItems="center"
+          cursor="pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            deleted(`${id}`);
+          }}
+      >
+        <SvgCross/>
+      </Box>
+      <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
@@ -125,6 +139,7 @@ export default function BasketListProduct({
             pl={{ base: "0", md: "17px" }}
             fontSize="14.53px"
             fontWeight="400"
+            fontFamily="Montserrat,sans-serif"
             color="white"
             noOfLines={1}
           >
@@ -137,7 +152,9 @@ export default function BasketListProduct({
           alignItems="center"
           w={{ base: "50%", lg: "32%" }}
         >
-          <Text fontSize="12px" color="white">
+          <Text fontSize="12px"
+                fontFamily="Montserrat, sans-serif"
+                color="white">
             {Math.floor(price)} cом
           </Text>
           <Button
@@ -155,7 +172,7 @@ export default function BasketListProduct({
           >
             Оплатить
           </Button>
-          <Box cursor="pointer" onClick={() => deleted(`${id}`)}>
+          <Box display={{base:"none",sm:"block"}} cursor="pointer" onClick={() => deleted(`${id}`)}>
             <SvgCross />
           </Box>
         </Box>
