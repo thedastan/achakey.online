@@ -7,14 +7,14 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { tabBooleanAction } from "./action-creators/action";
-import { Link } from "react-router-dom";
 import SvgMyPlaylistEmpty from "../../assets/svg/SvgMyPlaylistEmpty";
 import MyAlbum from "../../components/MyAlbum/MyAlbum";
 import MyTracks from "../../components/my-tracks/Mytracks";
-import { useTracksAction } from "../../hooks/useActions";
 
 enum AlbumOrTracks {
   ALBUM = "ALBUM",
@@ -100,11 +100,13 @@ export default function MyPlaylist() {
               </Stack>
             </Box>
           )}
-          <Box display="flex">
-            <Box w="100%" h="auto">
-              {isTracks ? <MyTracks /> : <MyAlbum />}
+          {myTracks.length && (
+            <Box display="flex">
+              <Box w="100%" h="auto">
+                {isTracks ? <MyTracks /> : <MyAlbum />}
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Container>
     </section>

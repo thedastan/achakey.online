@@ -63,6 +63,7 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
             textColor="white"
             w={{ base: "100%", md: "25vw" }}
             textAlign={{ base: "center", md: "start" }}
+            fontSize="14px"
           >
             {allTracks ? "Все треки" : "Все Альбомы"}
           </Text>
@@ -72,6 +73,7 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
             textAlign="end"
             pr="28px"
             display={{ base: "none", md: "block" }}
+            fontSize="14px"
           >
             Отрывок
           </Text>
@@ -79,6 +81,7 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
             fontWeight="600"
             textColor="white"
             display={{ base: "none", md: "block" }}
+            fontSize="14px"
           >
             Цена
           </Text>
@@ -86,6 +89,7 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
             fontWeight="600"
             textColor="white"
             display={{ base: "none", md: "block" }}
+            fontSize="14px"
           >
             В корзину
           </Text>

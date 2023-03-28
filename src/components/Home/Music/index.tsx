@@ -14,7 +14,6 @@ import {
   useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { BsPlayCircle } from "react-icons/bs";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -58,13 +57,15 @@ interface ICart {
 }
 
 interface IDataMainPage {
-  id?:number,
-  music?:ITrack
+  id?: number;
+  music?: ITrack;
+  album: boolean;
+  albumInfo?: string;
 }
 
 const Music: React.FC<MusicProps> = ({ musicPlay }) => {
-  const { fetchTracks } = useTracksAction();
   const dispatch = useAppDispatch();
+  const { fetchTracks } = useTracksAction();
   const { loginModal } = useModalforms();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -164,7 +165,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
       includesTracks !== undefined &&
       includesTracks[0]?.music?.id === cart?.cart_item[0]?.music
     ) {
-      console.log('no')
+      console.log("no");
     } else {
       postBasketItem(cart);
       fetchBasket();
@@ -184,12 +185,14 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
 
   const filterAlbum = albums.filter((el) => el.music.length);
 
-  tracks.map((el) => dataMainPage.push(...dataMainPage, { music: el }));
-  
+  tracks.map((el) => dataMainPage.push({ music: el, album: false }));
+
   filterAlbum?.map((el) =>
     dataMainPage.push({
       id: Math.floor(Math.random() * 100),
       music: el.music[0],
+      album: true,
+      albumInfo: el.name,
     })
   );
 
@@ -316,7 +319,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
                         pt={{ base: "", sm: "0", md: "0" }}
                         color="white"
                       >
-                        {el?.music?.name}
+                        {el?.albumInfo ? el.albumInfo : el?.music?.name}
                       </Text>
                     </Box>
                   </Box>
@@ -341,7 +344,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
                       color="white"
                       className="music-text-two"
                     >
-                      {el?.music?.name}
+                      {el?.albumInfo ? el.albumInfo : el?.music?.name}
                       {el?.id ? "  [Album]" : " [offical Audio]"}
                     </Text>
                     <Flex
