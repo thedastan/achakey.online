@@ -1,6 +1,6 @@
 import { Box, Container, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
+
 import { AllPlaylist } from "../Index";
 import AllAlbums from "../../components/albums/AllAlbums";
 
@@ -9,24 +9,34 @@ enum AlbumOrTracks {
   TRACKS = "TRACKS",
 }
 
-export default function ExcerptPlayList() {
-  const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
+interface ITab {
+  setActive: (value: any) => void;
+  isAlbum: boolean;
+  isTracks: boolean;
+}
 
-  const isAlbum = isActive === AlbumOrTracks.ALBUM;
-  const isTracks = isActive === AlbumOrTracks.TRACKS;
-
+export default function ExcerptPlayList({
+  isAlbum,
+  isTracks,
+  setActive,
+}: ITab) {
   return (
     <section className="bg-menuBar">
       <Box className="bg-menuBar-blur">
         <Container maxW="1220px" pt="140px">
           <Box pl={{ base: "0", md: "6%", lg: "3%", xl: "1%" }}>
-            <Box display="flex" mb="31px" zIndex="0">
+            <Box
+              display="flex"
+              mb="31px"
+              zIndex="0"
+              justifyContent={{ base: "center", md: "start" }}
+            >
               <Text
                 cursor="pointer"
                 fontWeight="600"
                 color={isTracks ? "white" : "rgba(255, 255, 255, 0.4)"}
-                mr="69px"
-                fontSize="24px"
+                mr={{ base: "35px", md: "50px", lg: "69px" }}
+                fontSize={{ base: "18px", md: "20px", lg: "24px" }}
                 onClick={() => {
                   setActive(AlbumOrTracks.TRACKS);
                 }}
@@ -37,7 +47,7 @@ export default function ExcerptPlayList() {
                 cursor="pointer"
                 fontWeight="600"
                 color={isAlbum ? "white" : "rgba(255, 255, 255, 0.4)"}
-                fontSize="24px"
+                fontSize={{ base: "18px", md: "20px", lg: "24px" }}
                 onClick={() => {
                   setActive(AlbumOrTracks.ALBUM);
                 }}

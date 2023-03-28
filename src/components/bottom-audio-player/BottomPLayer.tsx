@@ -283,7 +283,7 @@ export default function BottomPlayer() {
     <Box
       position="fixed"
       bottom="0"
-      left={{ base: "0", md: "100px" }}
+      left={{ base: "0", md: "96px" }}
       right="0"
       bg="rgba(11, 11, 11, 0.49)"
       mx="auto"
@@ -308,12 +308,22 @@ export default function BottomPlayer() {
         pb={{ base: "15px", md: "0" }}
         pt={{ base: "11px", md: "0" }}
       >
-        <Image
-          src={active.image}
-          maxW="74px"
-          h="74px"
-          display={{ base: "none", md: "block" }}
-        />
+        <Box display="flex" alignItems="center">
+          <Image
+            src={active.image}
+            maxW="74px"
+            h="74px"
+            display={{ base: "none", md: "block" }}
+          />
+          <Box ml="8px" display={{ base: "none", md: "block" }} w="157px">
+            <Text color="white" fontSize="14px" fontWeight="400" noOfLines={1}>
+              {active.name} {"- [offical Audio]"}
+            </Text>
+            <Text color="white" fontSize="12" fontWeight="300" noOfLines={1}>
+              {active.artist}
+            </Text>
+          </Box>
+        </Box>
         <Box mr="auto" display={{ base: "block", md: "none" }}>
           <Text textAlign="end" textColor="white" pb="5px" fontSize="12px">
             {startTimer()}
@@ -321,7 +331,7 @@ export default function BottomPlayer() {
         </Box>
 
         <Box display="flex" alignItems="center" mx="auto">
-          <Box ml={{ base: "0", md: "30px" }}>
+          <Box mr={{ base: "0", md: "30px" }}>
             <Button
               bg="transparent"
               colorScheme="none"
@@ -362,7 +372,7 @@ export default function BottomPlayer() {
             ml="auto"
             textAlign="end"
             textColor="white"
-            pb="5px"
+            pt="7px"
             fontSize="12px"
           >
             {currentTimerAudio()}

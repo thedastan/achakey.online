@@ -6,7 +6,6 @@ import { useAppSelector } from "../../hooks/Index";
 import { useActionOrder } from "../../hooks/useActions";
 import { ITrack } from "../../redux/types";
 import { getUserId } from "../helper";
-import { OrderPopup } from "../order/OrderPopup";
 import { OrderPost } from "../order/types/order";
 import "./style.scss";
 

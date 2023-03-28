@@ -75,12 +75,12 @@ export default function MyTracks() {
           </Text>
         </Box>
       )}
-      <PopupForLyrics
-        className={openPopup ? "transform" : ""}
-        image={active?.image}
-        setOpenPopup={setOpenPopup}
-        text={active?.text}
-      />
+        <PopupForLyrics
+          className={openPopup ? "transform" : ""}
+          image={active?.image}
+          setOpenPopup={setOpenPopup}
+          text={active?.text}
+        />
     </Box>
   );
 }

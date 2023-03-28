@@ -1,4 +1,5 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 import {
   currentIndexAction,
@@ -10,7 +11,6 @@ import SvgForAlbumPause from "../../assets/svg/SvgForAlbumPause";
 import SvgForAlbumNext from "../../assets/svg/SvgForAlbumNext";
 import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
 import SvgRandom from "../../assets/svg/SvgRandom";
-import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import {
   useAction,
   useExcerpAction,
@@ -21,10 +21,9 @@ import {
   changeVolumeAction,
   loopAction,
 } from "../../global-audio-player/action-creators";
-import SvgArrowTop from "../../assets/svg/SvgArrowTop";
-import { useEffect, useState } from "react";
 import SvgPlay from "../../assets/svg/SvgPlay";
 import SvgAllAlbums from "../../assets/svg/SvgAllList";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 
 interface IPopup {
   image?: string;
@@ -253,13 +252,14 @@ export default function PopupForLyrics({
           rounded="30px"
           bg="rgba(255, 255, 255, 0.08)"
         >
-          <Image
-            rounded={{ base: "22px", sm: "22px" }}
-            src={image}
-            mx="auto"
-            maxW="340px"
-            maxH="340px"
-          />
+          <Box maxW="340px" minH="340px" mx="auto" objectFit="cover">
+            <Image
+              rounded={{ base: "22px", sm: "22px" }}
+              src={image}
+              minH="340px"
+              objectFit="cover"
+            />
+          </Box>
           <Box
             display="flex"
             alignItems="center"
@@ -288,7 +288,7 @@ export default function PopupForLyrics({
                 )}
               </Button>
             </Box>
-            <Box ml={{ base: "0", md: "30px" }}>
+            <Box>
               <Button
                 bg="transparent"
                 colorScheme="none"

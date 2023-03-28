@@ -201,7 +201,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
           right="0"
           display="flex"
           justifyContent="center"
-          zIndex="2"
+          zIndex="3"
         >
           <Box
             py="15px"

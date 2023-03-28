@@ -10,23 +10,15 @@ import {
 import "swiper/css";
 import "swiper/css/pagination";
 
-import {useAppDispatch, useAppSelector} from "../../../hooks/Index";
+import { useAppSelector} from "../../../hooks/Index";
 import {
-    useAction,
-    useActionBasket,
-    useExcerpAction,
-    useModalforms,
+
     useTracksAction,
 } from "../../../hooks/useActions";
 import ModalUserAuth from "../../form/modal/ModalUser";
 import Footer from "../../footer/Footer";
-import {getIdAlums, getUserId} from "../../helper";
 import "./musicStyle.css";
-import {changeAction} from "../../../global-audio-player-excerpt/action";
-import {
-    currentIndexAction,
-    eventChange,
-} from "../../playlist/reducer/action-creator";
+
 import {ITrack} from "../../../redux/types";
 import MusicLeft from "./MusicLeft";
 import MusicRight from "./MusicRight";
@@ -150,3 +142,4 @@ const Music: React.FC<MusicProps> = ({musicPlay}) => {
 };
 
 export default Music;
+

@@ -89,6 +89,7 @@ export default function MyAlbum() {
                 key={index}
                 onClick={() => onChangeIndex(index)}
                 pos="relative"
+                cursor="pointer"
               >
                 <Image
                   src={el.image}
@@ -130,6 +131,7 @@ export default function MyAlbum() {
                   onClick={() => onChangeIndex(index)}
                   mr="40px"
                   pos="relative"
+                  cursor="pointer"
                 >
                   <Image
                     src={el.image}
@@ -140,7 +142,6 @@ export default function MyAlbum() {
                   />
                   <Box
                     position="absolute"
-                    bg="linear-gradient(180deg, rgba(0, 0, 0, 0) -1.97%, #000000 92.45%)"
                     zIndex="3"
                     bottom="0"
                     left="0"
@@ -150,13 +151,15 @@ export default function MyAlbum() {
                     display="flex"
                     flexDir="column"
                     justifyContent="end"
-                    _hover={{
-                      background :"linear-gradient(180deg, rgba(0, 0, 0, 0) -1.97%, #000000 100.45%)",
-                      transition: "1s",
-                    }}
+                    bg={
+                      indexTab === index
+                        ? "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.03%, #000000 92.45%)"
+                        : "linear-gradient(180deg, rgba(0, 0, 0, 0) -1.97%, #000000 92.45%)"
+                    }
                   >
                     <Text
-                      textColor="white"
+                      textColor="rgba(255, 255, 255, 0.89)"
+                      opacity={index === indexTab ? "1" : "0.4"}
                       fontWeight="500"
                       fontSize="16px"
                       pl="10px"
