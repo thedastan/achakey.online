@@ -19,7 +19,7 @@ export interface ITrack {
   music_short_len?: string;
   user?: any[];
   price?: string;
-  music_short?: string;
+  music_short?: string ;
   created_at?: string;
   updated_at?: string;
   text?: string;

@@ -159,7 +159,7 @@ export const OrderPopup = ({
                                                                     fontSize="14px"
                                                                     fontFamily="Montserrat,sans-serif"
                                                                 >
-                                                                    {Math.floor(Number(el?.music?.price))}cом
+                                                                    {Math.floor(Number(el?.music?.price))} cом
                                                                 </Text>
                                                                 <Button
                                                                     onClick={() => deletedorder(`${item.id}`)}
