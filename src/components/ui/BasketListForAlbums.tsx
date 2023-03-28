@@ -241,15 +241,6 @@ export default function BasketListAlbums({
                                         </Text>
                                     </Box>
                                 </Box>
-                                <Box
-                                    display="flex"
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                >
-                                    <Text fontSize="12px" textAlign="end" color="white">
-                                        {Math.floor(el.price)} cом
-                                    </Text>
-                                </Box>
                             </Box>
                         ))}
                     </Box>

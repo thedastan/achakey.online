@@ -29,6 +29,7 @@ const Home = () => {
           fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
           color="white"
           zIndex="2"
+          letterSpacing="0.01em"
           style={{
             transform: musicPlay ? " translateY(-1500%)" : "translateY(100%)",
             transition: musicPlay ? "2s" : "2s",
@@ -40,6 +41,7 @@ const Home = () => {
           fontFamily="Montserrat, sans-serif"
           fontStyle="normal"
           color="#FFFFFF"
+          letterSpacing="0.1em"
           fontSize={{ base: "lg", sm: "xl", md: "2xl" }}
           my={{ base: "40px", sm: "50px", md: "50px" }}
           px="25px"
