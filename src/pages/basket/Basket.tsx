@@ -55,11 +55,13 @@ export default function Basket() {
 
     const newDate = numberArray.flat();
 
+    const filterNewDate = newAlbumDate.filter((el) => el !== undefined);
+
     for (const keys of newDate) {
       result += typeof keys === "undefined" ? 0 : Number(keys);
     }
 
-    for (const keys of newAlbumDate) {
+    for (const keys of filterNewDate.flat()) {
       totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
     }
     setTotal(totalAlbum + result);
@@ -107,57 +109,57 @@ export default function Basket() {
                 </Stack>
               </Box>
             )}
-          <Box pl={{ base: "0", md: "5%", xl: "0" }}>
-            {filterUser?.map((item, index) => (
+            <Box pl={{ base: "0", md: "5%", xl: "0" }}>
+              {filterUser?.map((item, index) => (
                 <div key={index}>
                   {
                     <Box>
                       {item.cart_item.map((el, idx) => (
-                          <Box key={idx}>
-                            {el.album !== null && (
-                                <BasketListAlbums
-                                    setOpenPopup={setOpenPopupId}
-                                    albums={el?.album}
-                                    id={String(el.id)}
-                                    deleted={deletedBasket}
-                                    music={el.album?.music}
-                                    image={el.album?.image}
-                                    name={el.album?.name}
-                                    price={el.album?.total_price}
-                                />
-                            )}
-                          </Box>
+                        <Box key={idx}>
+                          {el.album !== null && (
+                            <BasketListAlbums
+                              setOpenPopup={setOpenPopupId}
+                              albums={el?.album}
+                              id={String(el.id)}
+                              deleted={deletedBasket}
+                              music={el.album?.music}
+                              image={el.album?.image}
+                              name={el.album?.name}
+                              price={el.album?.total_price}
+                            />
+                          )}
+                        </Box>
                       ))}
                     </Box>
                   }
                 </div>
-            ))}
+              ))}
 
-            {filterUser?.map((item, index) => (
+              {filterUser?.map((item, index) => (
                 <div key={index}>
                   {
                     <Box>
                       {item.cart_item.map((el, idx) => (
-                          <Box key={idx}>
-                            {el.music !== null && (
-                                <BasketListProduct
-                                    setOpenPopup={setOpenPopupId}
-                                    id={String(el.id)}
-                                    deleted={deletedBasket}
-                                    music={el.music}
-                                    image={el.music?.image}
-                                    name={String(el.music?.name)}
-                                    price={Number(el.music?.price)}
-                                />
-                            )}
-                          </Box>
+                        <Box key={idx}>
+                          {el.music !== null && (
+                            <BasketListProduct
+                              setOpenPopup={setOpenPopupId}
+                              id={String(el.id)}
+                              deleted={deletedBasket}
+                              music={el.music}
+                              image={el.music?.image}
+                              name={String(el.music?.name)}
+                              price={Number(el.music?.price)}
+                            />
+                          )}
+                        </Box>
                       ))}
                     </Box>
                   }
                 </div>
-            ))}
+              ))}
 
-            {lengthBasket[0]?.cart_item?.length && (
+              {lengthBasket[0]?.cart_item?.length && (
                 <Box
                     display="flex"
                     justifyContent={{base:"center",sm:"space-between"}}
@@ -169,31 +171,31 @@ export default function Basket() {
                 >
                   <Text my="10px" color="white">Итого: {total} cом</Text>
                   <Button
-                      onClick={() => setOpenPopup(true)}
-                      bg="#007AFF"
-                      colorScheme="#007AFF"
-                      rounded="10px"
-                      px="53px"
-                      py="14px"
-                      fontSize="16px"
-                      fontWeight="600"
-                      position="static"
+                    onClick={() => setOpenPopup(true)}
+                    bg="#007AFF"
+                    colorScheme="#007AFF"
+                    rounded="10px"
+                    px="53px"
+                    py="14px"
+                    fontSize="16px"
+                    fontWeight="600"
+                    position="static"
                   >
                     Оплатить все
                   </Button>
                 </Box>
-            )}
-          </Box>
-          <OrderPopup
+              )}
+            </Box>
+            <OrderPopup
               openPopup={openPopup}
               className={openPopup ? "transform" : ""}
               setOpenPopup={setOpenPopup}
-          />
-          <OrderDetails
+            />
+            <OrderDetails
               openPopup={openPopupId}
               className={openPopupId ? "active" : ""}
               setOpenPopup={setOpenPopupId}
-          />
+            />
           </Container>
         ) : (
           <Box display="flex" pt="20vh">

@@ -71,6 +71,7 @@ export default function ListForAlbumOrTracks({
           fontSize="14px"
           ml={{ base: "8px", md: "17.4px" }}
           cursor="pointer"
+          noOfLines={1}
         >
           {name}
           {" [offical Audio]"}
@@ -79,6 +80,7 @@ export default function ListForAlbumOrTracks({
       <Text
         color="white"
         textColor={active?.music === music?.music ? "blue" : "white"}
+        pt="9px"
       >
         {currentTimerAudio()}
       </Text>

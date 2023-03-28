@@ -223,7 +223,13 @@ export default function MusicForList({
         />
         {active?.music_short === music?.music_short ? (
           <Box display="inline-block" w="32px" h="32px" pt="2px">
-            {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
+            {pause ? (
+              <SvgPlayerGifDefault />
+            ) : (
+              <Box display="flex" justifyContent="center">
+                <SvgPlayerGif />
+              </Box>
+            )}
           </Box>
         ) : (
           <Box display="inline-block" w="32px">

@@ -18,8 +18,18 @@ import {
   SearchResult,
 } from "./pages/Index";
 import BottomPlayer from "./components/bottom-audio-player/BottomPLayer";
+import { useState } from "react";
+
+enum AlbumOrTracks {
+  ALBUM = "ALBUM",
+  TRACKS = "TRACKS",
+}
 
 function App() {
+  const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
+  const isAlbum = isActive === AlbumOrTracks.ALBUM;
+  const isTracks = isActive === AlbumOrTracks.TRACKS;
+
   return (
     <div>
       <AudioPlayerBottom />
@@ -27,7 +37,16 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/basket" element={<Basket />} />
-        <Route path="/excerpts" element={<ExcerptPlayList />} />
+        <Route
+          path="/excerpts"
+          element={
+            <ExcerptPlayList
+              isAlbum={isAlbum}
+              isTracks={isTracks}
+              setActive={setActive}
+            />
+          }
+        />
         <Route path="/my-playlist" element={<MyPlaylist />} />
         <Route path="/excerpts/details/:id" element={<DetailsAlbums />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
