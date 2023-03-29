@@ -6,6 +6,7 @@ import MenuBar from "../ui/MenuBar";
 import { searchResult } from "../header/action-creators/Action";
 import { useAppDispatch } from "../../hooks/Index";
 import { Box } from "@chakra-ui/react";
+import {useState} from "react";
 
 interface IMain {
   children: JSX.Element;
@@ -14,10 +15,10 @@ interface IMain {
 export default function PageRouting({ children }: IMain) {
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
-
+    const [openPopup, setOpenPopup] = useState(false);
     return (
-        <div style={{overflow: "hidden",background: "#1D1D20"}}>
-            <MenuBar>
+        <div style={{overflow: "hidden",background: "#1D1D20", zIndex:openPopup ? "0" : "" }}>
+            <MenuBar >
                 <Header/>
                 <main
                     onClick={() => {
@@ -26,7 +27,7 @@ export default function PageRouting({ children }: IMain) {
                 >
                     {children}
                 </main>
-            </MenuBar>
+            </MenuBar >
             {window.location.pathname === "/all-playlist" && <Footer/>}
             {window.location.pathname === "/" && <Box display={{base:"block",lg:"none"}}><Footer/></Box>}
             {window.location.pathname === "/excerpts" && <Footer/>}
