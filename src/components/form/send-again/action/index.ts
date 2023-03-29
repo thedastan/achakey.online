@@ -1,5 +1,5 @@
-import * as sendAgainAction from "./sendAgainAction";
+import * as SendAgainAction from "./sendAgainAction";
 
 export default {
-  ...sendAgainAction,
+  ...SendAgainAction,
 };
