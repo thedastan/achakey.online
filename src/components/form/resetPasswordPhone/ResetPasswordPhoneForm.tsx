@@ -3,7 +3,6 @@ import {
   Container,
   FormControl,
   HStack,
-  Input,
   InputGroup,
   InputRightElement,
   Link,
@@ -11,21 +10,64 @@ import {
   PinInputField,
   Text,
 } from "@chakra-ui/react";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../../hooks/Index";
 
-import { useActionResetPasswordPhone } from "../../../hooks/useActions";
+import {
+  useActionEmailVerify,
+  useActionResetPasswordPhone,
+  useActionSendAgain,
+} from "../../../hooks/useActions";
+import { getPadTime } from "../../helpers/getPadTime";
 import BtnForm from "../../ui/BtnForm";
 import EyeInput from "../../ui/EyeInput";
 import Inputs from "../../ui/Inputs";
 import TextError from "../../ui/TextError";
 
 const ResetPasswordPhoneForm = () => {
+  const [timeLeft, setTimeLeft] = useState<number>(60);
+  const [isCounting, setIsCounting] = useState<boolean>(false);
+
+  const minutes: any | number | bigint = getPadTime(Math.floor(timeLeft / 60));
+  const seconds = getPadTime(timeLeft - minutes * 60);
+
   const [passEye, setPassEye] = useState<boolean>(false);
   const [secondPassEye, setSecondPassEye] = useState<boolean>(false);
+
+  const [phone, setPhoneNumber] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [passwordTwo, setPasswordTwo] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [password_confirm, setPasswordTwo] = useState<string>("");
+
+  const [errorOne, setError] = useState<string>("");
   const [errorTwo, setErrorTwo] = useState<string>("");
+
+  const [code, setCode] = useState<any>("");
+  const [canMoveNext, setCanMoveNext] = useState(true);
+  const regex = new RegExp("^(?:([0-9]))*$");
+
+  const { openModalEmailVerify } = useActionEmailVerify();
+  const { sendAgainPhone } = useActionSendAgain();
+
+  const navigate = useNavigate();
+
+  const { loading, resetPassPhone, error } = useAppSelector(
+    (state) => state.reducerResetPasswordPhone
+  );
+
+  if (!!resetPassPhone?.phone) {
+    navigate("/");
+    openModalEmailVerify(true);
+  }
+
+  const handleChange = (e: any) => {
+    if (!regex.test(e)) {
+      setCanMoveNext(false);
+      return;
+    }
+    setCanMoveNext(true);
+    setCode(e);
+  };
 
   const { fetchResetPasswordPhone } = useActionResetPasswordPhone();
 
@@ -57,37 +99,31 @@ const ResetPasswordPhoneForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password.length >= 6 && passwordTwo.length >= 6) {
-      console.log("reset password");
+    if (password.length >= 6 && password_confirm.length >= 6) {
+      if (password === password_confirm) {
+        fetchResetPasswordPhone({ phone, code, password, password_confirm });
+      }
     }
   };
 
-  const [time, setTime] = useState("00:01:00");
-  const intervalRef = useRef<any>(null);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft((timeLeft: number) => (timeLeft >= 1 ? timeLeft - 1 : 0));
+    }, 1000);
+    if (timeLeft === 0) setIsCounting(true);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [timeLeft]);
 
   useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      const [hours, minutes, seconds] = time.split(":").map(parseFloat);
-      const totalSeconds = hours * 60 * 60 + minutes * 60 + seconds;
-      if (totalSeconds <= 0) {
-        clearInterval(intervalRef.current);
-        return;
-      }
-      const newSeconds = totalSeconds - 1;
-      const newHours = Math.floor(newSeconds / 3600);
-      const newMinutes = Math.floor((newSeconds - newHours * 3600) / 60);
-      const newTime = `${newHours.toString().padStart(2, "0")}:${newMinutes
-        .toString()
-        .padStart(2, "0")}:${(newSeconds - newHours * 3600 - newMinutes * 60)
-        .toString()
-        .padStart(2, "0")}`;
-      setTime(newTime);
-    }, 1000);
-
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  }, [time]);
+    let number = sessionStorage.getItem("phoneNumber") || "";
+    if (number.length) {
+      setPhoneNumber(number);
+    } else {
+      console.log("mikjolklok");
+    }
+  }, []);
 
   return (
     <Box h="100vh" w="100%" display="flex" alignItems="center">
@@ -111,44 +147,31 @@ const ResetPasswordPhoneForm = () => {
               fontWeight="400"
               fontSize="14px"
             >
-              Мы отправили ваш код на номер +996500032640
+              Мы отправили ваш код на номер {phone}
             </Text>
             <HStack display="flex" mt="10px" justifyContent="center">
-              <PinInput size={{ base: "md", sm: "lg" }}>
+              <PinInput
+                size={{ base: "md", sm: "lg" }}
+                type="number"
+                manageFocus={canMoveNext}
+                value={code}
+                onChange={handleChange}
+              >
                 <PinInputField bg="white" py={{ base: "20px", sm: "25px" }} />
                 <PinInputField bg="white" py={{ base: "20px", sm: "25px" }} />
                 <PinInputField bg="white" py={{ base: "20px", sm: "25px" }} />
                 <PinInputField bg="white" py={{ base: "20px", sm: "25px" }} />
               </PinInput>
             </HStack>
-            <Box display="flex" justifyContent="center" mt="10px">
-              <Input
-                w="100px"
-                type="time"
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                border="none"
-                boxShadow="none"
-                color="#777E90"
-                focusBorderColor="none"
-                _focus={{
-                  boxShadow: "none",
-                }}
-                sx={{
-                  border: "none",
-                  outline: "none",
-                  "::-webkit-calendar-picker-indicator": {
-                    display: "none",
-                  },
-                  "::-webkit-inner-spin-button": {
-                    display: "none",
-                  },
-                  "::-webkit-clear-button": {
-                    display: "none",
-                  },
-                }}
-              />
-            </Box>
+            <Text
+              textAlign="center"
+              my="10px"
+              color="#777E90"
+              fontSize="16px"
+              fontFamily="sans"
+            >
+              {minutes}:{seconds}
+            </Text>
             <Box
               display="flex"
               justifyContent="center"
@@ -158,7 +181,15 @@ const ResetPasswordPhoneForm = () => {
               fontWeight="400"
               fontSize="14px"
             >
-              <Link color="#4285F4">Отправить еще раз</Link>
+              <Link
+                color="#4285F4"
+                display={!!isCounting ? "block" : "none"}
+                onClick={() => {
+                  sendAgainPhone(phone);
+                }}
+              >
+                Отправить еще раз
+              </Link>
             </Box>
           </Box>
           <form onSubmit={handleSubmit}>
@@ -178,7 +209,7 @@ const ResetPasswordPhoneForm = () => {
                     <EyeInput eye={passEye} onClickEye={handleClick} />
                   </InputRightElement>
                 </InputGroup>
-                <TextError text={error} />
+                <TextError text={errorOne} />
               </Box>
               <Box mb="15px">
                 <InputGroup>
@@ -202,7 +233,7 @@ const ResetPasswordPhoneForm = () => {
               </Box>
               <BtnForm
                 btnText="Изменить"
-                isLoading={false}
+                isLoading={loading}
                 bg="#007AFF"
                 color="white"
                 colorSceme="blue.600"
