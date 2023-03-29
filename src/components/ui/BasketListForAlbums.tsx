@@ -119,9 +119,10 @@ export default function BasketListAlbums({
         position="relative"
       >
         <Box
-          display={{ base: "flex", md: "none" }}
+          display={{ base: "flex", sm: "none" }}
           justifyContent="end"
           px="10px"
+          mb="9px"
           alignItems="center"
           cursor="pointer"
           onClick={(e) => {
@@ -136,24 +137,17 @@ export default function BasketListAlbums({
           display="flex"
           justifyContent="space-between"
           alignItems="center"
+          borderBottom="0.5px solid rgba(255, 255, 255, 0.5)"
           pb="19px"
-          position="relative"
         >
           <Box
-            bottom="0px"
-            position="absolute"
-            w="100%"
-            h="2px"
-            borderBottom="0.5px solid rgba(255, 255, 255, 0.5)"
-          ></Box>
-          <Box
             display="flex"
-            justifyContent="space-between"
             alignItems="center"
+            w={{ base: "70%", md: "50%" }}
           >
             <Image
               src={image}
-              maxW="47px"
+              w="47px"
               h="47px"
               rounded="50%"
               mr={{ base: "10px", md: "26px" }}
@@ -164,6 +158,7 @@ export default function BasketListAlbums({
               fontWeight="400"
               color="white"
               noOfLines={1}
+              maxW="300px"
             >
               Альбом: <span style={{ fontWeight: "600" }}>{name}</span>
             </Text>
@@ -171,15 +166,17 @@ export default function BasketListAlbums({
 
           <Box
             display="flex"
-            justifyContent={{ base: "end", md: "space-between" }}
+            justifyContent="end"
             alignItems="center"
-            w={{ base: "auto", md: "50%", lg: "32%" }}
+            w={{ base: "50%", lg: "32%" }}
           >
             <Text
-              display={{ base: "none", md: "block" }}
-              pr="69px"
+              display={{ base: "none", sm: "block" }}
               fontWeight="600"
               fontSize="20px"
+              mr="auto"
+              w="100px"
+              textAlign="start"
             >
               {total} сом
             </Text>
@@ -202,7 +199,7 @@ export default function BasketListAlbums({
               Оплатить
             </Button>
             <Box
-              display={{ base: "none", md: "block" }}
+              display={{ base: "none", sm: "block" }}
               cursor="pointer"
               onClick={(e) => {
                 e.stopPropagation();
@@ -231,8 +228,8 @@ export default function BasketListAlbums({
                 >
                   <Image
                     src={el.image}
-                    w="47px"
-                    h="47px"
+                    w={{ base: "34px", md: "47px" }}
+                    h={{ base: "34px", md: "47px" }}
                     rounded="50%"
                     mr={{ base: "10px", md: "26px" }}
                   />
@@ -255,15 +252,6 @@ export default function BasketListAlbums({
                     </Text>
                   </Box>
                 </Box>
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Text fontSize="12px" textAlign="end" color="white">
-                    {Math.floor(el.price)} cом
-                  </Text>
-                </Box>
               </Box>
             ))}
           </Box>
@@ -274,20 +262,24 @@ export default function BasketListAlbums({
           ml="auto"
           display="flex"
           justifyContent={{ base: "space-between", md: "center" }}
+          alignItems="center"
           onClick={() => setActive(!active)}
           pt="10px"
         >
           <Text
-            display={{ base: "block", md: "none" }}
+            display={{ base: "block", sm: "none" }}
             fontWeight="600"
             fontSize="20px"
-            cursor="pointer"
           >
             {total} сом
           </Text>
-          <Box display="flex" alignItems="center" w="100px">
+          <Box
+            display="flex"
+            alignItems="center"
+            mx={{ base: "0px", md: "auto" }}
+          >
             <Text cursor="pointer">{music?.length} треков</Text>
-            <Box className="accordion__icon" ml="17px">
+            <Box className="accordion__icon" ml="17px" cursor="pointer">
               <SvgArrowTop stroke="white" />
             </Box>
           </Box>

@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Center,
-  Container,
-  Divider,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import API from "../../api/Index";
@@ -73,7 +65,7 @@ export const OrderPopup = ({
       result += typeof keys === "undefined" ? 0 : Number(keys);
     }
 
-    for (const keys of newAlbumDate) {
+    for (const keys of newAlbumDate.flat()) {
       totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
     }
     setTotal(totalAlbum + result);
@@ -116,7 +108,13 @@ export const OrderPopup = ({
                 borderRadius="11px"
                 bg="rgba(146, 146, 146, 1);"
               />
-              <Box w="11px" ml="auto" py="24px" onClick={handleClickClose}>
+              <Box
+                w="11px"
+                ml="auto"
+                cursor="pointer"
+                py="24px"
+                onClick={handleClickClose}
+              >
                 <SvgBlackCross />
               </Box>
             </Box>
@@ -175,7 +173,7 @@ export const OrderPopup = ({
                                   fontSize="14px"
                                   fontFamily="Montserrat,sans-serif"
                                 >
-                                  {Math.floor(Number(el?.music?.price))}cом
+                                  {Math.floor(Number(el?.music?.price))} cом
                                 </Text>
                                 <Button
                                   onClick={() => deletedorder(`${item.id}`)}

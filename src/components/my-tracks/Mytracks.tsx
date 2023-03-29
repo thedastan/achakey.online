@@ -62,9 +62,16 @@ export default function MyTracks() {
           bg="rgba(255, 255, 255, 0.08)"
           ml="20px"
           display={{ base: "none", lg: "block" }}
+          mb="18px"
         >
           <Box pb="18px">
-            <Image maxW="279px" rounded="22px" src={active?.image} />
+            <Image
+              maxW="279px"
+              minH="279px"
+              rounded="22px"
+              objectFit="cover"
+              src={active?.image}
+            />
           </Box>
           <Text fontSize="14px" lineHeight="19.88px">
             <p>
@@ -75,12 +82,12 @@ export default function MyTracks() {
           </Text>
         </Box>
       )}
-        <PopupForLyrics
-          className={openPopup ? "transform" : ""}
-          image={active?.image}
-          setOpenPopup={setOpenPopup}
-          text={active?.text}
-        />
+      <PopupForLyrics
+        className={openPopup ? "transform" : ""}
+        image={active?.image}
+        setOpenPopup={setOpenPopup}
+        text={active?.text}
+      />
     </Box>
   );
 }

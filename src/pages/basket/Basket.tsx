@@ -1,5 +1,6 @@
 import { Box, Button, Container, Stack, Text, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import BasketListAlbums from "../../components/ui/BasketListForAlbums";
 import BasketListProduct from "../../components/ui/BasketListProduct";
@@ -10,8 +11,6 @@ import { OrderPopup } from "../../components/order/OrderPopup";
 import { getUserId } from "../../components/helper";
 import { OrderDetails } from "../../components/order/OrderDetails";
 import SvgBasketEmpty from "../../assets/svg/SvgBasketEmpty";
-import { Link } from "react-router-dom";
-// import SvgLoader from "../../assets/svg/SvgLoader";
 
 export default function Basket() {
   const [openPopup, setOpenPopup] = useState(false);

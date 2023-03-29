@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import SvgArrowTop from "../../assets/svg/SvgArrowTop";
 
 import { IMusicForBasket, IPlayList } from "../../pages/basket/types";
+import defaultImage from "../../assets/img/defaultImage.png";
 // import "./style.scss";
 
 interface IBasketAlbums {
@@ -61,7 +62,13 @@ export default function OrderListAlbums({
             alignItems="center"
             w={{ base: "100%", sm: "80%", md: "100%" }}
           >
-            <Image src={image} w="35px" h="35px" rounded="50%" mr="10px" />
+            <Image
+              src={image ? image : defaultImage}
+              w="35px"
+              h="35px"
+              rounded="50%"
+              mr="10px"
+            />
             <Text fontSize="18px" fontWeight="400" color="black">
               Альбом: {name}
             </Text>
@@ -107,7 +114,7 @@ export default function OrderListAlbums({
                   alignItems="center"
                 >
                   <Image
-                    src={el.image}
+                    src={el.image ? el.image : defaultImage}
                     w="35px"
                     h="35px"
                     rounded="50%"
@@ -132,7 +139,7 @@ export default function OrderListAlbums({
                     </Text>
                   </Box>
                 </Box>
-                <Box
+                {/* <Box
                   display="flex"
                   justifyContent="space-between"
                   alignItems="center"
@@ -140,7 +147,7 @@ export default function OrderListAlbums({
                   <Text fontSize="12px" textAlign="end" color="black">
                     {Math.floor(el.price)}c
                   </Text>
-                </Box>
+                </Box> */}
               </Box>
             ))}
           </Box>

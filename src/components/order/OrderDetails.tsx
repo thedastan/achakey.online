@@ -20,7 +20,7 @@ export const OrderDetails = ({
   setOpenPopup,
   openPopup,
 }: IOrderPopup) => {
-  const { fetchOrder } = useActionOrder();
+ const { fetchOrder } = useActionOrder();
   const [total, setTotal] = useState(0);
   const { orderDetails, orderId } = useAppSelector(
     (state) => state.reducerOrder
@@ -33,8 +33,11 @@ export const OrderDetails = ({
   const deletedorder = async (id: string) => {
     try {
       const responce = await API.delete(`order/delete/${id}`);
+
+      setOpenPopup(false);
       fetchOrder();
     } catch (e) {
+
       fetchOrder();
     }
     fetchOrder();
@@ -67,12 +70,11 @@ export const OrderDetails = ({
 
     const _total = newAlbumDate;
 
-    for (const keys of [_total]) {
+    for (const keys of [_total].flat()) {
       totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
     }
 
     setTotal(Number(totalAlbum + result));
-    console.log(totalAlbum, "ty");
   }, [orderDetails]);
 
   return (
@@ -106,7 +108,13 @@ export const OrderDetails = ({
                 borderRadius="11px"
                 bg="rgba(146, 146, 146, 1);"
               />
-              <Box w="11px" ml="auto" py="24px" onClick={handleClickClose}>
+              <Box
+                w="11px"
+                ml="auto"
+                py="24px"
+                cursor="pointer"
+                onClick={handleClickClose}
+              >
                 <SvgBlackCross />
               </Box>
             </Box>
@@ -137,6 +145,7 @@ export const OrderDetails = ({
                               <Image
                                 src={el?.music?.image}
                                 w="35px"
+                                h="35px"
                                 rounded="50%"
                                 mx="5px"
                               />
@@ -154,7 +163,7 @@ export const OrderDetails = ({
                               fontSize="12px"
                               fontFamily="Montserrat,sans-serif"
                             >
-                              {el?.music?.price} cом
+                              {Math.floor(el?.music?.price)} cом
                             </Text>
                             <Button
                               onClick={() => deletedorder(`${el?.id}`)}
