@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
 
+import { useActionResetPasswordPhone } from "../../../hooks/useActions";
 import BtnForm from "../../ui/BtnForm";
 import EyeInput from "../../ui/EyeInput";
 import Inputs from "../../ui/Inputs";
@@ -25,6 +26,8 @@ const ResetPasswordPhoneForm = () => {
   const [passwordTwo, setPasswordTwo] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [errorTwo, setErrorTwo] = useState<string>("");
+
+  const { fetchResetPasswordPhone } = useActionResetPasswordPhone();
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
