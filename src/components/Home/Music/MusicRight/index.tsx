@@ -52,11 +52,12 @@ interface IDataMainPage {
     music?: ITrack;
 }
 
-const MusicRight = ({el, nameAlbum, index}: IMusicRight) => {
-    const {fetchTracks} = useTracksAction();
-    const dispatch = useAppDispatch();
-    const {loginModal} = useModalforms();
-    const {onOpen} = useDisclosure();
+
+const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
+  const { fetchTracks } = useTracksAction();
+  const dispatch = useAppDispatch();
+  const { loginModal } = useModalforms();
+  const { onOpen } = useDisclosure();
 
     const {pause, active, duration, currentTime} = useAppSelector(
         (state) => state.excerptPlayerReducer
@@ -182,16 +183,155 @@ const MusicRight = ({el, nameAlbum, index}: IMusicRight) => {
             music: el.music[0],
         })
     )
-    return (
-        <>
-            <Container
-                maxW={["75vw", "70vw", "45vw", "38vw", "34vw"]}
-                pr={["0", "0", "0", "0", "60px"]}
-                ml={["6%", "16%", "22%", "7%", "10%"]}
-                className="music-cont-text"
+
+
+  const userFilter = basket.filter((el) => el.user === getUserId());
+
+  const findBasketMusic = userFilter[0]?.cart_item.some((item) =>
+    !el.id ? item.music?.id === el?.music?.id : item.album?.id === el?.id
+  );
+
+  return (
+    <>
+      <Container
+        maxW={["75vw", "70vw", "45vw", "38vw", "34vw"]}
+        pr={["0", "0", "0", "0", "60px"]}
+        ml={["6%", "16%", "22%", "7%", "10%"]}
+        className="music-cont-text"
+      >
+        <Text
+          as="h1"
+          fontFamily="sans"
+          fontSize={{
+            base: "25px",
+            sm: "32px",
+            md: "32px",
+            lg: "32px",
+            xl: "35px",
+            "2xl": "38px",
+          }}
+          fontWeight="900"
+          color="white"
+          className="music-text-two"
+        >
+          {nameAlbum ? nameAlbum : el?.music?.name}
+          {el?.id ? "  [Album]" : " [offical Audio]"}
+        </Text>
+        <Flex
+          alignItems="center"
+          my={breakpoints === "base" && "sm" && "md" ? "5" : "7"}
+        >
+          <Box fontSize="40px" mr="10px" onClick={() => play(el, index)}>
+            {active?.music_short === el?.music?.music_short ? (
+              <Box display="inline-block" w="32px" h="32px" pt="2px">
+                {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
+              </Box>
+            ) : (
+              <Box display="inline-block" w="32px">
+                <SvgPlay
+                  fill={
+                    active?.music_short === el?.music?.music_short
+                      ? "#49DEFF"
+                      : "#FFFFFF"
+                  }
+                />
+              </Box>
+            )}
+          </Box>
+          <Box display="flex" alignItems="center" w="100%">
+            <input
+              type="range"
+              min={0}
+              max={duration}
+              value={
+                el?.music?.music_short === active?.music_short ? currentTime : 0
+              }
+              onChange={changeCurrentTime}
+              className="time"
+            />
+            <Text
+              as="span"
+              ml="11px"
+              fontFamily="sans"
+              fontWeight="semibold"
+              fontSize={["10px", "12px", "14px", "14px", "14px"]}
+              color="rgba(255,255,255,0.34)"
             >
-                <Text
-                    as="h1"
+              {el?.music?.music_short === active?.music_short
+                ? startTimer()
+                : "00:00"}
+            </Text>
+          </Box>
+        </Flex>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Stack direction="row" spacing={4} align="center">
+            {!getAccessToken() ? (
+              <Button
+                bg="none"
+                fontFamily="sans"
+                fontSize="14px"
+                width={{
+                  base: "",
+                  sm: "140px",
+                  md: "160px",
+                  lg: "160px",
+                  xl: "180px",
+                  "2xl": "210px",
+                }}
+                height="35px"
+                border="1px"
+                borderColor="white"
+                borderRadius="5px"
+                color="white"
+                _hover={{
+                  color: "#49DEFF",
+                  borderColor: "#49DEFF",
+                  background: "none",
+                }}
+                className="music--button"
+                onClick={() =>
+                  !findBasketMusic && getAccessToken()
+                    ? PostBasketItem(el.music)
+                    : openModal()
+                }
+              >
+                {findBasketMusic ? "В корзине" : "В корзину"}
+              </Button>
+            ) : (
+              <Button
+                onClick={() =>
+                  !findBasketMusic && getAccessToken()
+                    ? PostBasketItem(el.music)
+                    : openModal()
+                }
+                bg="none"
+                fontFamily="sans"
+                fontSize="14px"
+                width={{
+                  base: "",
+                  sm: "140px",
+                  md: "160px",
+                  lg: "160px",
+                  xl: "180px",
+                  "2xl": "210px",
+                }}
+                height="35px"
+                border="1px"
+                borderColor="white"
+                borderRadius="5px"
+                color="white"
+                _hover={{
+                  color: "#49DEFF",
+                  borderColor: "#49DEFF",
+                  background: "none",
+                }}
+                className="music--button"
+              >
+                {findBasketMusic ? "В корзине" : "В корзину"}
+                {!el?.music?.album ? (
+                  <Box
+                    px="5px"
+                    color="#49DEFF"
                     fontFamily="sans"
                     fontSize={{
                         base: "25px",

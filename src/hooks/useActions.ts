@@ -16,6 +16,7 @@ import actionEnterSequirityCode from "../components/form/enterSequirity/action/i
 import actionChangePassword from "../components/form/changePassword/action/index";
 import actionEmailVerify from "../pages/emailVerify/action/index";
 import actionResetPasswordPhone from "../components/form/resetPasswordPhone/action/index";
+import actionSendAgain from "../components/form/send-again/action/index";
 import { useAppDispatch } from "./Index";
 
 export const useAction = () => {
@@ -91,4 +92,9 @@ export const useActionEmailVerify = () => {
 export const useActionResetPasswordPhone = () => {
   const dispath = useAppDispatch();
   return bindActionCreators(actionResetPasswordPhone, dispath);
+};
+
+export const useActionSendAgain = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(actionSendAgain, dispatch);
 };

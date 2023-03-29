@@ -64,8 +64,13 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
             w={{ base: "100%", md: "25vw" }}
             textAlign={{ base: "center", md: "start" }}
             fontSize={{ base: "20px", md: "14px" }}
+            display={
+              window.location.pathname === "/excerpts/details/" + getIdAlums()
+                ? "block"
+                : { base: "none", md: "block" }
+            }
           >
-            {allTracks ? "Все треки" : "Все Альбомы"}
+            {!allTracks ? "Все треки" : "Все Альбомы"}
           </Text>
           <Text
             fontWeight="600"

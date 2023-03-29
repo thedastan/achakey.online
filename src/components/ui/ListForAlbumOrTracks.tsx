@@ -57,7 +57,9 @@ export default function ListForAlbumOrTracks({
         />
         {active?.music === music?.music ? (
           <Box display="inline-block" w="32px" h="32px" pt="2px">
-            {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
+            <Box display="flex" justifyContent="center">
+              {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
+            </Box>
           </Box>
         ) : (
           <Box display="inline-block" w="32px">

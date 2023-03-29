@@ -1,5 +1,5 @@
 import { Box, FormControl } from "@chakra-ui/react";
-import React, { FC, useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { FC, useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -63,12 +63,10 @@ const ForgotPassword: FC<IModalInterface> = ({ onClose }) => {
     registerModal();
   };
 
-  useEffect(() => {
-    if (!!forgotPassword?.phone) {
-      navigate("/resetPassword");
-      onClose();
-    }
-  }, [navigate, forgotPassword?.phone, onClose]);
+  if (!!forgotPassword?.phone) {
+    navigate("/resetPassword");
+    onClose();
+  }
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>

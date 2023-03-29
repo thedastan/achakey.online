@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Image, Text} from "@chakra-ui/react";
 
 interface IMusicLeft {
-    name: string;
+    name?: string;
     image?: any;
 }
 

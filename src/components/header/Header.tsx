@@ -304,31 +304,14 @@ export default function Header() {
                     </MenuButton>
                     <MenuList
                       position="absolute"
-                      top="-55px"
-                      right="-10px"
+                      top="-20px"
+                      right="-20px"
                       zIndex="22"
                       bg="transparent"
                       border="0"
                       fontFamily="sans"
                       fontSize="12px"
                     >
-                      <MenuItem
-                        bg="transparent"
-                        display="flex"
-                        justifyContent="flex-end"
-                        pr="0"
-                        fontWeight="500"
-                      >
-                        <Text
-                          bg="#646464"
-                          color="white"
-                          borderRadius="4px"
-                          py="8px"
-                          px="25px"
-                        >
-                          Аккаунт
-                        </Text>
-                      </MenuItem>
                       <MenuItem
                         fontWeight="500"
                         pb="10px"
@@ -341,7 +324,7 @@ export default function Header() {
                         flexDirection="column"
                         alignItems="flex-start"
                       >
-                        <Box display="flex" justifyContent="center" w="100%">
+                        <Box display="flex" justifyContent="center" w="100%" px="20px">
                           <Text
                             color="#000000"
                             my="5px"
@@ -354,15 +337,16 @@ export default function Header() {
                               : ""}
                           </Text>
                         </Box>
-                        <Text color="#6B6B6B" my="5px">
+                        <Text color="#6B6B6B" my="5px" mx="10px">
                           {!!userDetails?.email ? userDetails.email : ""}
                         </Text>
-                        <Text color="#6B6B6B" my="5px">
+                        <Text color="#6B6B6B" my="5px" mx="10px">
                           {!!userDetails?.phone ? userDetails.phone : ""}
                         </Text>
                       </MenuItem>
                       <MenuItem
                         color="#000000"
+                        pl="20px"
                         py="10px"
                         fontWeight="500"
                         onClick={() => {
@@ -373,6 +357,7 @@ export default function Header() {
                       </MenuItem>
                       <MenuItem
                         color="#000000"
+                        pl="20px"
                         py="10px"
                         fontWeight="500"
                         onClick={() => {
@@ -385,6 +370,7 @@ export default function Header() {
                         color="#000000"
                         pt="10px"
                         pb="15px"
+                        pl="20px"
                         borderTop="1px"
                         fontWeight="500"
                         borderBottomRadius="5px"

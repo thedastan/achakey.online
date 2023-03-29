@@ -12,6 +12,7 @@ import { useAppSelector } from "../../../hooks/Index";
 
 import {
   useActionEnterSequirity,
+  useActionSendAgain,
   useModalforms,
 } from "../../../hooks/useActions";
 import { getPadTime } from "../../helpers/getPadTime";
@@ -31,6 +32,7 @@ const EnterSecurityCode: FC = () => {
   const regex = new RegExp("^(?:([0-9]))*$");
 
   const { fetchSequirityCode } = useActionEnterSequirity();
+  const { sendAgainPhone } = useActionSendAgain();
   const { loginModal } = useModalforms();
 
   const { loading, error, sequirityCode } = useAppSelector(
@@ -123,7 +125,12 @@ const EnterSecurityCode: FC = () => {
         fontWeight="400"
         fontSize="14px"
       >
-        <Link color={isCounting ? "#4285F4" : "blue.500"}>
+        <Link
+          color={isCounting ? "#4285F4" : "blue.500"}
+          onClick={() => {
+            isCounting && sendAgainPhone(phone);
+          }}
+        >
           Отправить еще раз
         </Link>
       </Box>

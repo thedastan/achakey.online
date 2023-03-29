@@ -1,5 +1,5 @@
 import { Box, Button, Text, Image, useDisclosure } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import SvgPlay from "../../assets/svg/SvgPlay";
 import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
@@ -46,6 +46,7 @@ export default function MusicForList({
 }: ITrackChange) {
   const { fetchMyTracks } = useTracksAction();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [controlPause, setControlPause] = useState(false);
   const { loginModal } = useModalforms();
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
@@ -221,18 +222,35 @@ export default function MusicForList({
           mr="29px"
           display={{ base: "none", md: "block" }}
         />
+        {active?.music_short !== music?.music_short && (
+          <Image
+            src={music?.image}
+            rounded="50%"
+            w="36px"
+            h="36px"
+            mr="0px"
+            display={{ base: "block", md: "none" }}
+          />
+        )}
         {active?.music_short === music?.music_short ? (
-          <Box display="inline-block" w="32px" h="32px" pt="2px">
-            {pause ? (
-              <SvgPlayerGifDefault />
-            ) : (
-              <Box display="flex" justifyContent="center">
-                <SvgPlayerGif />
-              </Box>
-            )}
+          <Box
+            display="inline-block"
+            w={{ base: "36px", md: "32px" }}
+            h={{ base: "36px", md: "32px" }}
+            pt="2px"
+          >
+            <Box display="flex" justifyContent="center">
+              {pause ? (
+                <SvgPlayerGifDefault />
+              ) : (
+                <Box display="flex" justifyContent="center">
+                  <SvgPlayerGif />
+                </Box>
+              )}
+            </Box>
           </Box>
         ) : (
-          <Box display="inline-block" w="32px">
+          <Box display={{ base: "none", md: "block" }} w="32px">
             <SvgPlay
               fill={
                 active?.music_short === music?.music_short
