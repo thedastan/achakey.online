@@ -168,7 +168,7 @@ export default function BasketListAlbums({
             display="flex"
             justifyContent="end"
             alignItems="center"
-            w={{ base: "50%", lg: "32%" }}
+            w={{ base: "50%",sm:"70%",md:"50%", lg: "32%" }}
           >
             <Text
               display={{ base: "none", sm: "block" }}
@@ -185,7 +185,7 @@ export default function BasketListAlbums({
                 e.stopPropagation();
                 postOrder(albums);
               }}
-              mr={{ base: "2%", md: "18%" }}
+              mr={{ base: "2%",sm:"30%", md: "21%",lg:"18%" }}
               border="1px"
               borderColor="white"
               rounded="38px"
@@ -261,7 +261,7 @@ export default function BasketListAlbums({
           w="100%"
           ml="auto"
           display="flex"
-          justifyContent={{ base: "space-between", md: "center" }}
+          justifyContent={{ base: "space-between", sm: "center" }}
           alignItems="center"
           onClick={() => setActive(!active)}
           pt="10px"
