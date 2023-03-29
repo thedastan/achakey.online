@@ -196,9 +196,15 @@ export default function MyAlbum() {
             bg="rgba(255, 255, 255, 0.08)"
             ml="20px"
             display={{ base: "none", lg: "block" }}
+            mb="18px"
           >
             <Box pb="18px">
-              <Image maxW="279px" rounded="22px" src={active?.image} />
+              <Image
+                maxW="279px"
+                minH="279px"
+                rounded="22px"
+                src={active?.image}
+              />
             </Box>
             <Text fontSize="14px" lineHeight="19.88px">
               <p>

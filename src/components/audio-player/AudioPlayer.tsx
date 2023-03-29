@@ -301,8 +301,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           h="220px"
         >
           <Image
-            w="176px"
-            h="220px"
+            w={{ base: "198px", md: "176px" }}
+            h={{ base: "198px", md: "220px" }}
             src={albums?.image ? albums.image : defaultImage}
             objectFit="cover"
             rounded="12px"

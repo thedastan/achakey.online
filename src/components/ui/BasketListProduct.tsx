@@ -108,18 +108,18 @@ export default function BasketListProduct({
       position="relative"
     >
       <Box
-          display={{base: "flex", sm: "none"}}
-          justifyContent="end"
-          px="10px"
-          pt="15px"
-          alignItems="center"
-          cursor="pointer"
-          onClick={(e) => {
-            e.stopPropagation();
-            deleted(`${id}`);
-          }}
+        display={{ base: "flex", sm: "none" }}
+        justifyContent="end"
+        px="10px"
+        pt="15px"
+        alignItems="center"
+        cursor="pointer"
+        onClick={(e) => {
+          e.stopPropagation();
+          deleted(`${id}`);
+        }}
       >
-        <SvgCross/>
+        <SvgCross />
       </Box>
       <Box
         display="flex"
@@ -130,8 +130,8 @@ export default function BasketListProduct({
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Image
             src={image}
-            maxW="47px"
-            h="47px"
+            w={{ base: "34px", md: "47px" }}
+            h={{ base: "34px", md: "47px" }}
             rounded="50%"
             mr={{ base: "10px", md: "26px" }}
           />
@@ -152,9 +152,11 @@ export default function BasketListProduct({
           alignItems="center"
           w={{ base: "50%", lg: "32%" }}
         >
-          <Text fontSize="12px"
-                fontFamily="Montserrat, sans-serif"
-                color="white">
+          <Text
+            fontSize="12px"
+            fontFamily="Montserrat, sans-serif"
+            color="white"
+          >
             {Math.floor(price)} cом
           </Text>
           <Button
@@ -172,7 +174,11 @@ export default function BasketListProduct({
           >
             Оплатить
           </Button>
-          <Box display={{base:"none",sm:"block"}} cursor="pointer" onClick={() => deleted(`${id}`)}>
+          <Box
+            display={{ base: "none", sm: "block" }}
+            cursor="pointer"
+            onClick={() => deleted(`${id}`)}
+          >
             <SvgCross />
           </Box>
         </Box>

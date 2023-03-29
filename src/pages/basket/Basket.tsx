@@ -1,5 +1,6 @@
 import { Box, Button, Container, Stack, Text, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import BasketListAlbums from "../../components/ui/BasketListForAlbums";
 import BasketListProduct from "../../components/ui/BasketListProduct";
@@ -10,8 +11,6 @@ import { OrderPopup } from "../../components/order/OrderPopup";
 import { getUserId } from "../../components/helper";
 import { OrderDetails } from "../../components/order/OrderDetails";
 import SvgBasketEmpty from "../../assets/svg/SvgBasketEmpty";
-import { Link } from "react-router-dom";
-// import SvgLoader from "../../assets/svg/SvgLoader";
 
 export default function Basket() {
   const [openPopup, setOpenPopup] = useState(false);
@@ -68,8 +67,15 @@ export default function Basket() {
   }, [basket]);
 
   return (
-    <section  className={lengthBasket[0]?.cart_item?.length ? "bg-menuBar" : ""} >
-      <Box className={lengthBasket[0]?.cart_item?.length ? "bg-menuBar-blur" : ""} w="100%" minH="100vh" pb="50px" pt="140px" position="relative">
+    <section className={lengthBasket[0]?.cart_item?.length ? "bg-menuBar" : ""}>
+      <Box
+        className={lengthBasket[0]?.cart_item?.length ? "bg-menuBar-blur" : ""}
+        w="100%"
+        minH="90vh"
+        pb="50px"
+        pt="140px"
+        position="relative"
+      >
         {!loader ? (
           <Container maxW="1220px" position="relative">
             {!lengthBasket[0]?.cart_item?.length && (
@@ -161,15 +167,16 @@ export default function Basket() {
 
               {lengthBasket[0]?.cart_item?.length && (
                 <Box
-                    display="flex"
-                    justifyContent={{base:"center",sm:"space-between"}}
-                    alignItems="center"
-                    maxW="950px"
-                    mx="auto"
-                    mt="30px"
-                    flexDir={{base:"column",sm:"row"}}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  maxW="950px"
+                  mx="auto"
+                  mt="30px"
                 >
-                  <Text my="10px" color="white">Итого: {total} cом</Text>
+                  <Text my="10px" color="white">
+                    Итого: {total} cом
+                  </Text>
                   <Button
                     onClick={() => setOpenPopup(true)}
                     bg="#007AFF"
