@@ -97,12 +97,6 @@ export default function PopupForLyrics({
     }
   };
 
-  const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(changeVolumeAction(Number(e.target.value)));
-
-    setVolume(Number(e.target.value));
-  };
-
   const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(changeTimeAction(Number(e.target.value)));
 
@@ -252,11 +246,12 @@ export default function PopupForLyrics({
           rounded="30px"
           bg="rgba(255, 255, 255, 0.08)"
         >
-          <Box maxW="340px" minH="340px" mx="auto" objectFit="cover">
+          <Box w="279px" h="279px" mx="auto" objectFit="cover">
             <Image
               rounded={{ base: "22px", sm: "22px" }}
               src={image}
-              minH="340px"
+              h="100%"
+              w="100%"
               objectFit="cover"
             />
           </Box>

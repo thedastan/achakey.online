@@ -52,7 +52,7 @@ interface IDataMainPage {
   music?: ITrack;
 }
 
-const MusicRight = ({ el, nameAlbum , index }: IMusicRight) => {
+const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
   const { fetchTracks } = useTracksAction();
   const dispatch = useAppDispatch();
   const { loginModal } = useModalforms();
@@ -74,9 +74,6 @@ const MusicRight = ({ el, nameAlbum , index }: IMusicRight) => {
     excerptPlayAction,
     excerptCurrentTimeAction,
   } = useExcerpAction();
-
-  const { tracks, albums } = useAppSelector((state) => state.musicReducer);
-  const dataMainPage: IDataMainPage[] = [];
 
   function onChangeForMusic(data: any, index: number) {
     excerptActiveAction(data);
@@ -172,16 +169,16 @@ const MusicRight = ({ el, nameAlbum , index }: IMusicRight) => {
     loginModal();
   };
 
-  const filterAlbum = albums.filter((el) => el.music.length);
+  useEffect(() => {
+    fetchBasket();
+  }, []);
 
-  tracks.map((el) => dataMainPage.push(...dataMainPage, { music: el }));
+  const userFilter = basket.filter((el) => el.user === getUserId());
 
-  filterAlbum?.map((el) =>
-    dataMainPage.push({
-      id: Math.floor(Math.random() * 100),
-      music: el.music[0],
-    })
+  const findBasketMusic = userFilter[0]?.cart_item.some((item) =>
+    !el.id ? item.music?.id === el?.music?.id : item.album?.id === el?.id
   );
+
   return (
     <>
       <Container
@@ -281,15 +278,19 @@ const MusicRight = ({ el, nameAlbum , index }: IMusicRight) => {
                 }}
                 className="music--button"
                 onClick={() =>
-                  getAccessToken() ? PostBasketItem(el.music) : openModal()
+                  !findBasketMusic && getAccessToken()
+                    ? PostBasketItem(el.music)
+                    : openModal()
                 }
               >
-                В корзину
+                {findBasketMusic ? "В корзине" : "В корзину"}
               </Button>
             ) : (
               <Button
                 onClick={() =>
-                  getAccessToken() ? PostBasketItem(el.music) : openModal()
+                  !findBasketMusic && getAccessToken()
+                    ? PostBasketItem(el.music)
+                    : openModal()
                 }
                 bg="none"
                 fontFamily="sans"
@@ -314,7 +315,7 @@ const MusicRight = ({ el, nameAlbum , index }: IMusicRight) => {
                 }}
                 className="music--button"
               >
-                В корзину{" "}
+                {findBasketMusic ? "В корзине" : "В корзину"}
                 {!el?.music?.album ? (
                   <Box
                     px="5px"

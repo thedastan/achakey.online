@@ -67,7 +67,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
 
   filterAlbum?.map((el) =>
     dataMainPage.push({
-      id: Math.floor(Math.random() * 100),
+      id: Number(el.id),
       music: el.music[0],
       album: true,
       albumInfo: el.name,
@@ -98,7 +98,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
         modules={[Pagination, FreeMode, Scrollbar, Mousewheel]}
         className="mySwiper"
       >
-        {dataMainPage.map((el: any, index) => (
+        {dataMainPage.map((el: IDataMainPage, index) => (
           <Box key={index}>
             {el.music !== null && (
               <SwiperSlide>
