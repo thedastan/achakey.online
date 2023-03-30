@@ -16,7 +16,7 @@ export default function PageRouting({ children }: IMain) {
   const navigation = useNavigate();
 
     return (
-        <div style={{overflow: "hidden",background: "#1D1D20"}}>
+        <div  style={{overflow: "hidden",background: "#1D1D20"}}>
             <MenuBar>
                 <Header/>
                 <main

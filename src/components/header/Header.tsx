@@ -145,7 +145,7 @@ export default function Header() {
           <Box
             display="flex"
             py={{ base: "20px", sm: "0px" }}
-            zIndex="11"
+            zIndex="4"
             justifyContent={
               breakpoints === "base" && "sm"
                 ? "space-between"
@@ -155,7 +155,7 @@ export default function Header() {
             }
             alignItems="center"
           >
-            <Box zIndex="11">
+            <Box zIndex="4">
               <Link to={"/"}>
                 <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo" />
               </Link>
@@ -167,7 +167,7 @@ export default function Header() {
               fontFamily="Roboto"
               fontWeight="600"
               fontSize="16px"
-              zIndex="11"
+              zIndex="4"
               onClick={openModal}
             >
               Войти
@@ -193,6 +193,7 @@ export default function Header() {
                 display="flex"
                 maxW="574px"
                 mx="auto"
+                zIndex="4"
               >
                 <InputLeftElement
                   pointerEvents="none"
@@ -282,7 +283,7 @@ export default function Header() {
               </InputGroup>
             ) : null}
             {isHomePage ? (
-              <Box mx="10px" zIndex="21">
+              <Box mx="10px" zIndex="4">
                 <Link to={"/"}>
                   <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo" />
                 </Link>
@@ -306,7 +307,7 @@ export default function Header() {
                       position="absolute"
                       top="-20px"
                       right="-20px"
-                      zIndex="22"
+                      zIndex="4"
                       bg="transparent"
                       border="0"
                       fontFamily="sans"

@@ -45,6 +45,7 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
 
   return (
     <Box
+      h="645px"
       mx="auto"
       display="flex"
       flexDir="column"

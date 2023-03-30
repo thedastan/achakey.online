@@ -139,15 +139,6 @@ export default function OrderListAlbums({
                     </Text>
                   </Box>
                 </Box>
-                {/* <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Text fontSize="12px" textAlign="end" color="black">
-                    {Math.floor(el.price)}c
-                  </Text>
-                </Box> */}
               </Box>
             ))}
           </Box>

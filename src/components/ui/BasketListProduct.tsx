@@ -104,7 +104,7 @@ export default function BasketListProduct({
       mb="10px"
       pl={{ base: "8px", md: "25px" }}
       pr={{ base: "10px", md: "29px" }}
-      zIndex="1"
+      zIndex="0"
       position="relative"
     >
       <Box
