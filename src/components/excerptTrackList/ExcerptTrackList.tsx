@@ -50,8 +50,7 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
       display="flex"
       flexDir="column"
       justifyContent="start"
-      overflowY="scroll"
-      className="scroll"
+      // className="scroll"
     >
       <Box>
         <Box
@@ -70,7 +69,7 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
                 : { base: "none", md: "block" }
             }
           >
-            {!allTracks ? "Все треки" : "Все Альбомы"}
+            {allTracks ? "Все треки" : "Трек альбомы"}
           </Text>
           <Text
             fontWeight="600"

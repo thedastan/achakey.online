@@ -266,159 +266,169 @@ export default function AudioPlayer({listTruck}: IlistMedia) {
         fetchBasket();
     }, []);
 
-    console.log(pause);
-
-    return (
-        <section
-            style={{
-                marginBottom: "54px",
-                background: "transparent",
-                position: "relative",
-            }}
+  return (
+    <section
+      style={{
+        marginBottom: "54px",
+        background: "transparent",
+        position: "relative",
+      }}
+    >
+      <Box
+        display="flex"
+        flexDir={{ base: "column", md: "row" }}
+        alignItems="end"
+      >
+        <ModalUserAuth isOpen={isOpen} onClose={onClose} />
+        <Box
+          mb="13px"
+          fontSize="32px"
+          color="white"
+          fontStyle="normal"
+          fontFamily="sans"
+          display={{ base: "block", md: "none" }}
+          fontWeight="900"
+          mx="auto"
         >
+          {albums.name}
+          <Text textAlign="center">{`[Album]`}</Text>
+        </Box>
+        <Box
+          mr={{ base: "0", md: "23px" }}
+          mx={{ base: "auto", md: "0" }}
+          mb={{ base: "23px", md: "0" }}
+          w="176px"
+          h="220px"
+        >
+          <Image
+            w={{ base: "198px", md: "176px" }}
+            h={{ base: "198px", md: "220px" }}
+            src={albums?.image ? albums.image : defaultImage}
+            objectFit="cover"
+            rounded="12px"
+          />
+        </Box>
+        <Box
+          w={{ base: "100%", md: "90%" }}
+          flexDir={{ base: "column", md: "row" }}
+          ml="23px"
+        >
+          <Box
+            mb="16px"
+            fontSize="38.57px"
+            color="white"
+            display={{ base: "none", md: "block" }}
+            fontFamily="sans"
+            fontStyle="normal"
+            fontWeight="900"
+          >
+            {albums.name}
+            <Text>{`[Album]`}</Text>
+          </Box>
+          <Box
+            display="flex"
+            flexDir={{ base: "column", md: "row" }}
+            mb="17px"
+            alignItems="center"
+          >
             <Box
-                display="flex"
-                flexDir={{base: "column", md: "row"}}
-                alignItems="end"
+              mb={{ base: "31px", md: "0" }}
+              w={{ base: "auto", md: "150px" }}
+              display="flex"
             >
-                <ModalUserAuth isOpen={isOpen} onClose={onClose}/>
-                <Box
-                    mb="13px"
-                    fontSize="32px"
-                    color="white"
-                    fontStyle="normal"
-                    fontFamily="sans"
-                    display={{base: "block", md: "none"}}
-                    fontWeight="900"
-                    mx="auto"
-                >
-                    {albums.name}
-                    <Text textAlign="center">{`[Album]`}</Text>
-                </Box>
-                <Box
-                    mr={{base: "0", md: "23px"}}
-                    mx={{base: "auto", md: "0"}}
-                    mb={{base: "23px", md: "0"}}
-                    w="176px"
-                    h="220px"
-                >
-                    <Image
-                        w={{base: "198px", md: "176px"}}
-                        h={{base: "198px", md: "220px"}}
-                        src={albums?.image ? albums.image : defaultImage}
-                        objectFit="cover"
-                        rounded="12px"
-                    />
-                </Box>
-                <Box
-                    w={{base: "100%", md: "90%"}}
-                    flexDir={{base: "column", md: "row"}}
-                    ml="23px"
-                >
-                    <Box
-                        mb="16px"
-                        fontSize="38.57px"
-                        color="white"
-                        display={{base: "none", md: "block"}}
-                        fontFamily="sans"
-                        fontStyle="normal"
-                        fontWeight="900"
-                    >
-                        {albums.name}
-                        <Text>{`[Album]`}</Text>
-                    </Box>
-                    <Box
-                        display="flex"
-                        flexDir={{base: "column", md: "row"}}
-                        mb="17px"
-                        alignItems="center"
-                    >
-                        <Box
-                            mb={{base: "31px", md: "0"}}
-                            w={{base: "auto", md: "150px"}}
-                            display="flex"
-                        >
-                            <Button
-                                bg="transparent"
-                                colorScheme="none"
-                                onClick={() => (forAlbum ? OnClickPrev : console.log("Prev"))}
-                                p="0"
-                            >
-                                <SvgForAlbumPrev/>
-                            </Button>
-                            <Button
-                                bg="transparent"
-                                colorScheme="none"
-                                onClick={play}
-                                p="0"
-                                mx="2px"
-                            >
-                                {active ? (
-                                    <>
-                                        {forAlbum && pause ? (
-                                            <SvgPlay fill="white"/>
-                                        ) : (
-                                            <SvgForAlbumPause fill="white"/>
-                                        )}
-                                    </>
-                                ) : (
-                                    <SvgPlay fill="white"/>
-                                )}
-                            </Button>
-                            <Button
-                                bg="transparent"
-                                colorScheme="none"
-                                onClick={() => (forAlbum ? OnClickNext() : console.log("Next"))}
-                                p="0"
-                            >
-                                <SvgForAlbumNext/>
-                            </Button>
-                        </Box>
-                        <Box w="100%" ml="auto" display="flex" alignItems="center">
-                            <Button
-                                display={{base: "none", md: "none"}}
-                                bg="transparent"
-                                colorScheme="none"
-                                onClick={play}
-                                p="0"
-                                mx="2px"
-                            >
-                                {active ? (
-                                    <>
-                                        {forAlbum && pause ? (
-                                            <SvgPlay fill="white"/>
-                                        ) : (
-                                            <SvgForAlbumPause fill="white"/>
-                                        )}
-                                    </>
-                                ) : (
-                                    <SvgPlay fill="white"/>
-                                )}
-                            </Button>
-                            <input
-                                type="range"
-                                min={0}
-                                max={forAlbum ? duration : 0}
-                                value={forAlbum ? currentTime : 0}
-                                onChange={changeCurrentTime}
-                                className="time"
-                            />
-                            <Text
-                                w="60px"
-                                textAlign="end"
-                                fontSize={{base: "12px", md: "16px"}}
-                                textColor="white"
-                            >
-                                {forAlbum ? startTimer() : ""}
-                            </Text>
-                        </Box>
-                    </Box>
-
-                    <Box
-                        display="flex"
-                        alignItems="center"
-                        flexDir={{base: "column", md: "row"}}
-                    >
+              <Button
+                bg="transparent"
+                colorScheme="none"
+                onClick={() => (forAlbum ? OnClickPrev : console.log("Prev"))}
+                p="0"
+              >
+                <SvgForAlbumPrev />
+              </Button>
+              <Button
+                bg="transparent"
+                colorScheme="none"
+                onClick={play}
+                p="0"
+                mx="2px"
+              >
+                {forAlbum && active ? (
+                  <>
+                    {forAlbum && pause ? (
+                      <SvgPlay fill="white" />
+                    ) : (
+                      <SvgForAlbumPause fill="white" />
+                    )}
+                  </>
+                ) : (
+                  <SvgPlay fill="white" />
+                )}
+              </Button>
+              <Button
+                bg="transparent"
+                colorScheme="none"
+                onClick={() => (forAlbum ? OnClickNext() : console.log("Next"))}
+                p="0"
+              >
+                <SvgForAlbumNext />
+              </Button>
+            </Box>
+            <Box w="100%" ml="auto" display="flex" alignItems="center">
+              <Button
+                display={{ base: "block", md: "none" }}
+                bg="transparent"
+                colorScheme="none"
+                onClick={play}
+                p="0"
+                mx="2px"
+              >
+                {active ? (
+                  <>
+                    {forAlbum && pause ? (
+                      <SvgPlay fill="white" />
+                    ) : (
+                      <SvgForAlbumPause fill="white" />
+                    )}
+                  </>
+                ) : (
+                  <SvgPlay fill="white" />
+                )}
+              </Button>
+              <input
+                type="range"
+                min={0}
+                max={forAlbum ? duration : 0}
+                value={forAlbum ? currentTime : 0}
+                onChange={changeCurrentTime}
+                className="time"
+              />
+              <Text
+                w="60px"
+                textAlign="end"
+                fontSize={{ base: "12px", md: "16px" }}
+                textColor="white"
+              >
+                {forAlbum ? startTimer() : 0}
+              </Text>
+            </Box>
+          </Box>
+          <Text
+            textAlign="end"
+            color="blue"
+            fontSize="20px"
+            fontWeight="700"
+            pb="21px"
+            display={{ base: "block", md: "none" }}
+          >
+            <span style={{ fontSize: "28px", paddingRight: "4px" }}>
+              {total}
+            </span>
+            сом
+          </Text>
+          <Box
+            display="flex"
+            alignItems="center"
+            flexDir={{ base: "column", md: "row" }}
+          >
                         <Box
                             display="flex"
                             alignItems="end"

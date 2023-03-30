@@ -21,6 +21,7 @@ import { indexForAlbums } from "./action-creators";
 import PopupForLyrics from "../ui/popupForLyrics";
 
 export default function MyAlbum() {
+  const { fetchTracks } = useTracksAction();
   const [openPopup, setOpenPopup] = useState(false);
   const [indexTab, setIndexTab] = useState<number>(0);
   const { activeTrack } = useAction();
