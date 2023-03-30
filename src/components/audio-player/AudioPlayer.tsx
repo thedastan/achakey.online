@@ -373,26 +373,7 @@ export default function AudioPlayer({listTruck}: IlistMedia) {
               </Button>
             </Box>
             <Box w="100%" ml="auto" display="flex" alignItems="center">
-              <Button
-                display={{ base: "block", md: "none" }}
-                bg="transparent"
-                colorScheme="none"
-                onClick={play}
-                p="0"
-                mx="2px"
-              >
-                {active ? (
-                  <>
-                    {forAlbum && pause ? (
-                      <SvgPlay fill="white" />
-                    ) : (
-                      <SvgForAlbumPause fill="white" />
-                    )}
-                  </>
-                ) : (
-                  <SvgPlay fill="white" />
-                )}
-              </Button>
+
               <input
                 type="range"
                 min={0}
@@ -407,23 +388,11 @@ export default function AudioPlayer({listTruck}: IlistMedia) {
                 fontSize={{ base: "12px", md: "16px" }}
                 textColor="white"
               >
-                {forAlbum ? startTimer() : 0}
+                {forAlbum ? startTimer() : ""}
               </Text>
             </Box>
           </Box>
-          <Text
-            textAlign="end"
-            color="blue"
-            fontSize="20px"
-            fontWeight="700"
-            pb="21px"
-            display={{ base: "block", md: "none" }}
-          >
-            <span style={{ fontSize: "28px", paddingRight: "4px" }}>
-              {total}
-            </span>
-            сом
-          </Text>
+
           <Box
             display="flex"
             alignItems="center"
