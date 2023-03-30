@@ -13,7 +13,7 @@ export default function AllPlaylist() {
   }, []);
 
   return (
-    <section style={{ minHeight: "70vh" }}>
+    <section>
       <ExcerptTrackList tracks={tracks} allTracks />
     </section>
   );
