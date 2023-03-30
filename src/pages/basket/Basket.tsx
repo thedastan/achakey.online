@@ -71,7 +71,7 @@ export default function Basket() {
       <Box
         className={lengthBasket[0]?.cart_item?.length ? "bg-menuBar-blur" : ""}
         w="100%"
-        minH="100vh"
+        minH="90vh"
         pb="50px"
         pt="140px"
         position="relative"
@@ -171,11 +171,10 @@ export default function Basket() {
                   justifyContent="space-between"
                   alignItems="center"
                   maxW="950px"
-                  flexDir={{ base: "column", sm: "row" }}
                   mx="auto"
                   mt="30px"
                 >
-                  <Text my="20px" color="white">
+                  <Text my="10px" color="white">
                     Итого: {total} cом
                   </Text>
                   <Button
