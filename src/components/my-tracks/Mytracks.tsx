@@ -15,14 +15,16 @@ import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 import PopupForLyrics from "../ui/popupForLyrics";
 
 export default function MyTracks() {
-  const [openPopup, setOpenPopup] = useState(false);
-
   const dispatch = useAppDispatch();
   const { fetchMyTracks } = useTracksAction();
   const { activeTrack } = useAction();
   const { excerptPauseAction } = useExcerpAction();
+
+  const [openPopup, setOpenPopup] = useState(false);
+
   const { myTracks } = useAppSelector((state) => state.musicReducer);
   const { active } = useAppSelector((state) => state.playReducer);
+
   const activeText = myTracks.some((el) => el.id === active?.id);
 
   const OnChange = (data: ITrack, index: number) => {

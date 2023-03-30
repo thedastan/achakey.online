@@ -7,7 +7,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
@@ -15,6 +15,7 @@ import { tabBooleanAction } from "./action-creators/action";
 import SvgMyPlaylistEmpty from "../../assets/svg/SvgMyPlaylistEmpty";
 import MyAlbum from "../../components/MyAlbum/MyAlbum";
 import MyTracks from "../../components/my-tracks/Mytracks";
+import { useTracksAction } from "../../hooks/useActions";
 
 enum AlbumOrTracks {
   ALBUM = "ALBUM",
@@ -23,10 +24,18 @@ enum AlbumOrTracks {
 
 export default function MyPlaylist() {
   const dispatch = useAppDispatch();
+  const { fetchMyAlbums, fetchMyTracks } = useTracksAction();
+
   const { myTracks } = useAppSelector((state) => state.musicReducer);
   const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
+
   const isAlbum = isActive === AlbumOrTracks.ALBUM;
   const isTracks = isActive === AlbumOrTracks.TRACKS;
+
+  useEffect(() => {
+    fetchMyAlbums();
+    fetchMyTracks();
+  }, []);
 
   return (
     <section>

@@ -264,8 +264,6 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     fetchBasket();
   }, []);
 
-  console.log(pause);
-
   return (
     <section
       style={{
@@ -351,7 +349,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 p="0"
                 mx="2px"
               >
-                {active ? (
+                {forAlbum && active ? (
                   <>
                     {forAlbum && pause ? (
                       <SvgPlay fill="white" />

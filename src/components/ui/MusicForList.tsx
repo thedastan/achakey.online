@@ -46,7 +46,6 @@ export default function MusicForList({
 }: ITrackChange) {
   const { fetchMyTracks } = useTracksAction();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [controlPause, setControlPause] = useState(false);
   const { loginModal } = useModalforms();
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
