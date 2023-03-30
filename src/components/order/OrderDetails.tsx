@@ -90,9 +90,9 @@ export const OrderDetails = ({
       display="flex"
       justifyContent="center"
       alignItems="center"
-      style={{ background: openPopup ? "rgba(0, 0, 0, 0.82)" : "", inset: openPopup ? "0" : "0" }}
+      style={{ background: openPopup ? "rgba(0, 0, 0, 0.82)" : "" }}
     >
-      <Box w="100%" ml="-5%">
+      <Box w="100%">
         <Box bg="#E0E0E0" mx="auto" rounded="20px" maxW="688px">
           <Container maxW="688px" pb="34px">
             <Box pos="relative">
@@ -107,7 +107,6 @@ export const OrderDetails = ({
                 h="6px"
                 borderRadius="11px"
                 bg="rgba(146, 146, 146, 1);"
-                cursor="pointer"
               />
               <Box
                 w="11px"
