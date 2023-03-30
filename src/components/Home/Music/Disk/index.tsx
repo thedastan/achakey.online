@@ -17,7 +17,7 @@ const Disk: React.FC<MusicProps> = ({musicPlay}) => {
                 alt="disk"
                 className="disk"
                 display={{base: "none", sm: "none", md: "none", lg: "block" ,xl:"block"}}
-                top={{lg: "43%", xl: "43%", "2xl": "43%"}}
+                top={{lg: "35%", xl: "35%", "2xl": "35%"}}
                 width={breakpoints === "lg" ? "140px" : "170px" && breakpoints === "xl" ? "200px" : "221px"}
             />
         </Box>

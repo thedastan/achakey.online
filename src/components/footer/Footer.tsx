@@ -44,7 +44,7 @@ export default function Footer() {
           <Box
             display="flex"
             justifyContent="center"
-            py="9px"
+            py={{base:"9px",md:"0"}}
             ml={{lg: "0", xl: "-80px"}}
             flexDir={{ base: "column", md: "row" }}
             textAlign="center"
@@ -74,7 +74,7 @@ export default function Footer() {
           <Box
             display="flex"
             justifyContent="center"
-            py="9px"
+            py={{base:"9px",md:"0"}}
             flexDir={{ base: "column", md: "row" }}
             textAlign="center"
           >
@@ -83,7 +83,6 @@ export default function Footer() {
                 key={index}
                 color="#949494"
                 fontSize="10px"
-
                 pr={index === 0 ? { base: "0", md: "50px" } : "0"}
               >
                 {item.item}

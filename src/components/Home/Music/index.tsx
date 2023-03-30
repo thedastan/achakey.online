@@ -125,7 +125,7 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
                       md: "none",
                       lg: "block",
                     }}
-                    mt="-89px"
+                    mt="-70px"
                   >
                     <Footer />
                   </Box>

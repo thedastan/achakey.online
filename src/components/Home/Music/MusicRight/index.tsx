@@ -252,6 +252,11 @@ const MusicRight = ({el, nameAlbum, index}: IMusicRight) => {
                     <Stack direction="row" spacing={4} align="center">
                         {!getAccessToken() ? (
                             <Button
+                                onClick={() =>
+                                    !findBasketMusic && getAccessToken()
+                                        ? PostBasketItem(el.music)
+                                        : openModal()
+                                }
                                 bg="none"
                                 fontFamily="sans"
                                 fontSize="14px"
@@ -264,21 +269,17 @@ const MusicRight = ({el, nameAlbum, index}: IMusicRight) => {
                                     "2xl": "210px",
                                 }}
                                 height="35px"
-                                border="1px"
-                                borderColor="white"
+                                border={findBasketMusic ? "none" :"1px"}
+                                borderColor={findBasketMusic ? "#49DEFF" : "none"}
                                 borderRadius="5px"
-                                color="white"
+                                color={findBasketMusic ? "white" :"#49DEFF"}
+                                background={findBasketMusic ? "#007AFF" : "none"}
                                 _hover={{
-                                    color: "#49DEFF",
-                                    borderColor: "#49DEFF",
-                                    background: "none",
+                                    color: "white",
+                                    border:"none",
+                                    background: "#007AFF",
                                 }}
                                 className="music--button"
-                                onClick={() =>
-                                    !findBasketMusic && getAccessToken()
-                                        ? PostBasketItem(el.music)
-                                        : openModal()
-                                }
                             >
                                 {findBasketMusic ? "В корзине" : "В корзину"}
                             </Button>
@@ -301,14 +302,15 @@ const MusicRight = ({el, nameAlbum, index}: IMusicRight) => {
                                     "2xl": "210px",
                                 }}
                                 height="35px"
-                                border="1px"
-                                borderColor="white"
+                                border={findBasketMusic ? "none" :"1px"}
+                                borderColor={findBasketMusic ? "#49DEFF" : "none"}
                                 borderRadius="5px"
-                                color="white"
+                                color={findBasketMusic ? "white" :"#49DEFF"}
+                                background={findBasketMusic ? "#007AFF" : "none"}
                                 _hover={{
-                                    color: "#49DEFF",
-                                    borderColor: "#49DEFF",
-                                    background: "none",
+                                    color: "white",
+                                    border:"none",
+                                    background: "#007AFF",
                                 }}
                                 className="music--button"
                             >
@@ -317,7 +319,7 @@ const MusicRight = ({el, nameAlbum, index}: IMusicRight) => {
                                     <Box
                                         display="flex"
                                         px="5px"
-                                        color="#49DEFF"
+                                        color="white"
                                         fontFamily="sans"
                                         fontSize="14px"
                                     >
