@@ -71,7 +71,7 @@ const AccountManagementForm = () => {
                     fontWeight="500"
                     htmlFor="emailPhone"
                   >
-                    Изменить почту
+                    {userDetails.email ? "Изменить почту" : "Добавить почту"}
                   </FormLabel>
                   <Input
                     id="emailPhone"
@@ -109,7 +109,7 @@ const AccountManagementForm = () => {
                     fontWeight="500"
                     htmlFor="phoneNumber"
                   >
-                    Добавить номер
+                    {userDetails.phone ? "Изменить номер" : "Добавить номер"}
                   </FormLabel>
                   <Input
                     id="phoneNumber"
@@ -149,7 +149,7 @@ const AccountManagementForm = () => {
                     fontWeight="500"
                     htmlFor="name"
                   >
-                    Добавить имя
+                    {userDetails.username ? "Изменить имя" : "Добавить имя"}
                   </FormLabel>
                   <Input
                     id="name"
