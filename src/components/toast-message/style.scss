@@ -11,7 +11,7 @@
 @keyframes card {
   from {
     opacity: 0;
-    transform: translateX(100px);
+    transform: translateX(100vw);
   }
   10% {
     opacity: 0;
@@ -29,5 +29,6 @@
   }
   to {
     transform: translateX(100vw);
+    opacity: 0;
   }
 }

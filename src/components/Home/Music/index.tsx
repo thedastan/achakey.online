@@ -99,9 +99,9 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
         className="mySwiper"
       >
         {dataMainPage.map((el: IDataMainPage, index) => (
-          <Box key={index}>
+          <Box key={index + 1}>
             {el.music !== null && (
-              <SwiperSlide>
+              <SwiperSlide key={index}>
                 <Box
                   display="flex"
                   justifyContent={"space-between"}
