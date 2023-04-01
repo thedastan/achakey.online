@@ -20,6 +20,7 @@ import {
 import BottomPlayer from "./components/bottom-audio-player/BottomPLayer";
 import {useState} from "react";
 import {Box} from "@chakra-ui/react";
+import ToastMessage from './components/toast-message/ToastMessage';
 
 enum AlbumOrTracks {
     ALBUM = "ALBUM",

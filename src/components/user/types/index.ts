@@ -9,7 +9,8 @@ export interface UserDetails {
   id?: string;
   email?: string;
   phone?: string;
-  username?: string
+  username?: string;
+  auth_provider?: string;
 }
 
 export interface UserState {

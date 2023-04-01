@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 
 import { PUBLIC_API } from "../../../../api/Index";
+import { toastMessageFunction } from "../../../toast-message/action/ActionToast";
 import {
   IFormResetPassord,
   IFormTypesResetPasswordPhone,
@@ -22,11 +23,27 @@ export const fetchResetPasswordPhone = (
         type: IFormTypesResetPasswordPhone.RESET_PASSWORD_PHONE,
         payload: { phone: resetPhone.phone },
       });
+      dispatch(
+        //@ts-ignore
+        toastMessageFunction({
+          setOut: true,
+          status: true,
+          message: "Пароль успешно изменён",
+        })
+      );
     } catch (e: any) {
       dispatch({
         type: IFormTypesResetPasswordPhone.RESET_PASSWORD_PHONE_ERROR,
         payload: e.message,
       });
+      dispatch(
+        //@ts-ignore
+        toastMessageFunction({
+          setOut: true,
+          status: false,
+          message: "Произошла ошибка",
+        })
+      );
     }
   };
 };

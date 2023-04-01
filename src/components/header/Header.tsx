@@ -180,7 +180,10 @@ export default function Header() {
             py={{ base: "20px", sm: "0px" }}
             justifyContent={
               breakpoints === "base" && "sm"
-                ? isHomePage ? "space-between" : "end" : "end" && breakpoints === "md"
+                ? isHomePage
+                  ? "space-between"
+                  : "end"
+                : "end" && breakpoints === "md"
                 ? "end"
                 : "end"
             }
@@ -325,7 +328,12 @@ export default function Header() {
                         flexDirection="column"
                         alignItems="flex-start"
                       >
-                        <Box display="flex" justifyContent="center" w="100%" px="20px">
+                        <Box
+                          display="flex"
+                          justifyContent="center"
+                          w="100%"
+                          px="20px"
+                        >
                           <Text
                             color="#000000"
                             my="5px"
@@ -345,28 +353,32 @@ export default function Header() {
                           {!!userDetails?.phone ? userDetails.phone : ""}
                         </Text>
                       </MenuItem>
-                      <MenuItem
-                        color="#000000"
-                        pl="20px"
-                        py="10px"
-                        fontWeight="500"
-                        onClick={() => {
-                          navigate("/accountManagement");
-                        }}
-                      >
-                        Управление аккаунтом
-                      </MenuItem>
-                      <MenuItem
-                        color="#000000"
-                        pl="20px"
-                        py="10px"
-                        fontWeight="500"
-                        onClick={() => {
-                          navigate("/changePassword");
-                        }}
-                      >
-                        Изменить пароль
-                      </MenuItem>
+                      {userDetails.auth_provider !== "google" && (
+                        <>
+                          <MenuItem
+                            color="#000000"
+                            pl="20px"
+                            py="10px"
+                            fontWeight="500"
+                            onClick={() => {
+                              navigate("/accountManagement");
+                            }}
+                          >
+                            Управление аккаунтом
+                          </MenuItem>
+                          <MenuItem
+                            color="#000000"
+                            pl="20px"
+                            py="10px"
+                            fontWeight="500"
+                            onClick={() => {
+                              navigate("/changePassword");
+                            }}
+                          >
+                            Изменить пароль
+                          </MenuItem>
+                        </>
+                      )}
                       <MenuItem
                         color="#000000"
                         pt="10px"

@@ -179,7 +179,7 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
   return (
     <>
       <Container
-        maxW={["75vw", "70vw", "45vw", "38vw", "34vw"]}
+        maxW={["82vw", "62vw", "54vw", "36vw", "34vw"]}
         pr={["0", "0", "0", "0", "60px"]}
         ml={["6%", "16%", "22%", "7%", "10%"]}
         className="music-cont-text"
@@ -249,125 +249,88 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
             </Text>
           </Box>
         </Flex>
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Stack direction="row" spacing={4} align="center">
-                        {!getAccessToken() ? (
-                            <Button
-                                onClick={() =>
-                                    !findBasketMusic && getAccessToken()
-                                        ? PostBasketItem(el.music)
-                                        : openModal()
-                                }
-                                bg="none"
-                                fontFamily="sans"
-                                fontSize="14px"
-                                width={{
-                                    base: "",
-                                    sm: "140px",
-                                    md: "160px",
-                                    lg: "160px",
-                                    xl: "180px",
-                                    "2xl": "210px",
-                                }}
-                                height="35px"
-                                border={findBasketMusic ? "none" :"1px"}
-                                borderColor={findBasketMusic ? "#49DEFF" : "none"}
-                                borderRadius="5px"
-                                color={findBasketMusic ? "white" :"#49DEFF"}
-                                background={findBasketMusic ? "#007AFF" : "none"}
-                                _hover={{
-                                    color: "white",
-                                    border:"none",
-                                    background: "#007AFF",
-                                }}
-                                className="music--button"
-                            >
-                                {findBasketMusic ? "В корзине" : "В корзину"}
-                            </Button>
-                        ) : (
-                            <Button
-                                onClick={() =>
-                                    !findBasketMusic && getAccessToken()
-                                        ? PostBasketItem(el.music)
-                                        : openModal()
-                                }
-                                bg="none"
-                                fontFamily="sans"
-                                fontSize="14px"
-                                width={{
-                                    base: "",
-                                    sm: "140px",
-                                    md: "160px",
-                                    lg: "160px",
-                                    xl: "180px",
-                                    "2xl": "210px",
-                                }}
-                                height="35px"
-                                border={findBasketMusic ? "none" :"1px"}
-                                borderColor={findBasketMusic ? "#49DEFF" : "none"}
-                                borderRadius="5px"
-                                color={findBasketMusic ? "white" :"#49DEFF"}
-                                background={findBasketMusic ? "#007AFF" : "none"}
-                                _hover={{
-                                    color: "white",
-                                    border:"none",
-                                    background: "#007AFF",
-                                }}
-                                className="music--button"
-                            >
-                                {findBasketMusic ? "В корзине" : "В корзину"}
-                                {!el?.music?.album ? (
-                                    <Box
-                                        display="flex"
-                                        px="5px"
-                                        color="white"
-                                        fontFamily="sans"
-                                        fontSize="14px"
-                                    >
-                                        {" "}
-                                        {Math.floor(el.music.price)}<Box px="3px" textDecoration="underline">c</Box>
-                                    </Box>
-                                ) : (
-                                    ""
-                                )}
-                            </Button>
-                        )}
-                        <Link
-                            to={
-                                el?.music?.album
-                                    ? `/excerpts/details/${el?.music?.album}`
-                                    : "/excerpts"
-                            }
-                        >
-                            <Button
-                                border="1px"
-                                bg="none"
-                                fontFamily="sans"
-                                fontSize="14px"
-                                width={{
-                                    base: "",
-                                    sm: "140px",
-                                    md: "160px",
-                                    lg: "160px",
-                                    xl: "180px",
-                                    "2xl": "210px",
-                                }}
-                                height="35px"
-                                borderColor="white"
-                                borderRadius="5px"
-                                color="white"
-                                mx="20px"
-                                className="music--button"
-                                _hover={{
-                                    color: "#49DEFF",
-                                    borderColor: "#49DEFF",
-                                    background: "none",
-                                }}
-                            >
-                                {!el?.music?.album ? "Все треки" : "Треки альбома"}
-                            </Button>
-                        </Link>
-                    </Stack>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Button
+            onClick={() =>
+              getAccessToken()
+                ? !findBasketMusic && PostBasketItem(el.music)
+                : openModal()
+            }
+            bg="none"
+            fontFamily="sans"
+            fontSize="14px"
+            width={{
+              base: "",
+              sm: "140px",
+              md: "160px",
+              lg: "160px",
+              xl: "180px",
+              "2xl": "210px",
+            }}
+            height="35px"
+            border="1px"
+            borderColor="white"
+            borderRadius="5px"
+            color="white"
+            _hover={{
+              color: "#49DEFF",
+              borderColor: "#49DEFF",
+              background: "none",
+            }}
+            className="music--button"
+          >
+            {findBasketMusic ? "В корзине" : "В корзину"}
+            {!el?.music?.album ? (
+              <Box
+                display="flex"
+                px="5px"
+                color="#49DEFF"
+                fontFamily="sans"
+                fontSize="14px"
+              >
+                {Math.floor(el.music.price)}
+                <Box px="3px" textDecoration="underline">
+                  c
+                </Box>
+              </Box>
+            ) : (
+              ""
+            )}
+          </Button>
+          <Link
+            to={
+              el?.music?.album
+                ? `/excerpts/details/${el?.music?.album}`
+                : "/excerpts"
+            }
+          >
+            <Button
+              border="1px"
+              bg="none"
+              fontFamily="sans"
+              fontSize="14px"
+              width={{
+                base: "",
+                sm: "140px",
+                md: "160px",
+                lg: "160px",
+                xl: "180px",
+                "2xl": "210px",
+              }}
+              height="35px"
+              borderColor="white"
+              borderRadius="5px"
+              color="white"
+              className="music--button"
+              _hover={{
+                color: "#49DEFF",
+                borderColor: "#49DEFF",
+                background: "none",
+              }}
+            >
+              {!el?.music?.album ? "Все треки" : "Треки альбома"}
+            </Button>
+          </Link>
         </Box>
       </Container>
     </>

@@ -40,7 +40,10 @@ export const fetchForgotPassword = (email: string) => {
   };
 };
 
-export const fetchForgotPasswordPhone = (phone: string) => {
+export const fetchForgotPasswordPhone = (
+  phone: string,
+  successPhoneForgot: () => void
+) => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch({
@@ -54,6 +57,7 @@ export const fetchForgotPasswordPhone = (phone: string) => {
         payload: { phone },
       });
       sessionStorage.setItem("phoneNumber", phone);
+      successPhoneForgot();
     } catch (e: any) {
       dispatch({
         type: IForgotPasswordTypes.FORGOT_ERROR,
