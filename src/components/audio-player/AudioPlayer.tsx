@@ -31,8 +31,6 @@ import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
 import "./style.scss";
 import "../ui/style.scss";
 import ModalUserAuth from "../form/modal/ModalUser";
-import SvgPause from "../../assets/svg/SvgPause";
-import ReactDOM from "react-dom/client";
 
 interface IlistMedia {
     listTruck?: ITrack[] | any;
@@ -60,7 +58,6 @@ export default function AudioPlayer({listTruck,openPopup,setOpenPopup}:IlistMedi
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const Order = useAppSelector((state) => state.reducerOrder.order);
-  const [openPopup, setOpenPopup] = useState(false);
   const { event } = useAppSelector((state) => state.eventReducer);
   const indexCurrent = useAppSelector(
     (state) => state.currentIndexReducer.currentIndex
