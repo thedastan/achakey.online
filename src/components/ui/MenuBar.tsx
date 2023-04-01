@@ -15,12 +15,11 @@ interface IPropsMenuBar {
   children?: any;
 }
 
-export default function MenuBar({ children }: IPropsMenuBar) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [openPopup, setOpenPopup] = useState(false);
-  const { active } = useAppSelector((state) => state.playReducer);
-  const { basket } = useAppSelector((state) => state.reducerBasket);
-  const { loginModal } = useModalforms();
+export default function MenuBar({children}: IPropsMenuBar) {
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    const {active} = useAppSelector((state) => state.playReducer);
+    const {basket} = useAppSelector((state) => state.reducerBasket);
+    const {loginModal} = useModalforms();
 
   const openModal = () => {
     onOpen();
@@ -30,121 +29,81 @@ export default function MenuBar({ children }: IPropsMenuBar) {
   const handleRefresh = () => {
     window.location.reload();
   };
-
-  const list = [
-    {
-      item: "Главная",
-      svg: (
-        <SvgHome
-          fill={
-            window.location.pathname === "/"
-              ? "white"
-              : "rgba(255, 255, 255, 0.4)"
-          }
-        />
-      ),
-      line: (
-        <Box
-          left="40px"
-          w="0"
-          h="27px"
-          border="1px"
-          borderColor="white"
-          position="absolute"
-          style={{
-            display: window.location.pathname === "/" ? "block" : "none",
-          }}
-        />
-      ),
-      link: "/",
-    },
-    {
-      item: "Все треки",
-      svg: (
-        <SvgAllTracks
-          fill={
-            window.location.pathname === "/excerpts" ||
-            window.location.pathname === "/excerpts/details/" + getIdAlums()
-              ? "white"
-              : "rgba(255, 255, 255, 0.4)"
-          }
-        />
-      ),
-      line: (
-        <Box
-          left="43px"
-          w="0"
-          h="27px"
-          border="1px"
-          borderColor="white"
-          position="absolute"
-          style={{
-            display:
-              window.location.pathname === "/excerpts" ||
-              window.location.pathname === "/excerpts/details/" + getIdAlums()
-                ? "block"
-                : "none",
-          }}
-        />
-      ),
-      link: "/excerpts",
-    },
-    {
-      item: "Моя музыка",
-      svg: (
-        <SvgTrack
-          fill={
-            window.location.pathname === "/my-playlist"
-              ? "white"
-              : "rgba(255, 255, 255, 0.4)"
-          }
-        />
-      ),
-      line: (
-        <Box
-          left="20px"
-          mx="14px"
-          w="0"
-          h="27px"
-          border="1px"
-          borderColor="white"
-          style={{
-            display:
-              window.location.pathname === "/my-playlist" ? "block" : "none",
-          }}
-          position="absolute"
-        />
-      ),
-      link: "/my-playlist",
-    },
-    {
-      item: "Корзина",
-      svg: (
-        <SvgBasket
-          fill={
-            window.location.pathname === "/basket"
-              ? "white"
-              : "rgba(255, 255, 255, 0.4)"
-          }
-        />
-      ),
-      line: (
-        <Box
-          left="42px"
-          w="0"
-          h="27px"
-          border="1px"
-          borderColor="white"
-          style={{
-            display: window.location.pathname === "/basket" ? "block" : "none",
-          }}
-          position="absolute"
-          zIndex="5"
-        />
-      ),
-      link: "/basket",
-    },
-  ];
+    const list = [
+        {
+            item: "Главная",
+            svg: (
+                <SvgHome
+                    fill={
+                        window.location.pathname === "/"
+                            ? "white"
+                            : "rgba(255, 255, 255, 0.4)"
+                    }
+                />
+            ),
+            line: (
+                <Box ml="12px" w="0" h="27px" border="1px" borderColor="white"
+                     style={{display: window.location.pathname === "/" ? "block" : "none"}}/>
+            ),
+            link: "/",
+        },
+        {
+            item: "Все треки",
+            svg: (
+                <SvgAllTracks
+                    fill={
+                        window.location.pathname === "/excerpts" ||
+                        window.location.pathname === "/excerpts/details/" + getIdAlums()
+                            ? "white"
+                            : "rgba(255, 255, 255, 0.4)"
+                    }
+                />
+            ),
+            line: (
+                <Box ml="12px" w="0" h="27px" border="1px" borderColor="white" style={{
+                    display:
+                        window.location.pathname === "/excerpts" ||
+                        window.location.pathname === "/excerpts/details/" + getIdAlums()
+                            ? "block" : "none"
+                }}/>
+            ),
+            link: "/excerpts",
+        },
+        {
+            item: "Моя музыка",
+            svg: (
+                <SvgTrack
+                    fill={
+                        window.location.pathname === "/my-playlist"
+                            ? "white"
+                            : "rgba(255, 255, 255, 0.4)"
+                    }
+                />
+            ),
+            line: (
+                <Box ml="12px" w="0" h="27px" border="1px" borderColor="white"
+                     style={{display: window.location.pathname === "/my-playlist" ? "block" : "none"}}/>
+            ),
+            link: "/my-playlist",
+        },
+        {
+            item: "Корзина",
+            svg: (
+                <SvgBasket
+                    fill={
+                        window.location.pathname === "/basket"
+                            ? "white"
+                            : "rgba(255, 255, 255, 0.4)"
+                    }
+                />
+            ),
+            line: (
+                <Box ml="12px" w="0" h="27px" border="1px" borderColor="white"
+                     style={{display: window.location.pathname === "/basket" ? "block" : "none"}}/>
+            ),
+            link: "/basket",
+        },
+    ];
 
   return (
     <Box maxW="2060px" mx="auto">
@@ -201,27 +160,29 @@ export default function MenuBar({ children }: IPropsMenuBar) {
                 <span className="tooltip-text" id="right">
                   {el.item}
                 </span>
-              </Link>
-              {basket[0]?.cart_item.length && index === 2 && (
-                <Box
-                  fontSize="12px"
-                  position="absolute"
-                  w="20px"
-                  h="20px"
-                  bg="red.500"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  color="white"
-                  rounded="50%"
-                  pr="2px"
-                  right={7}
-                >
-                  {basket[0]?.cart_item?.length}
-                </Box>
-              )}
-            </Box>
-          ))}
+                            </Link>
+                            {basket[0]?.cart_item.length && index === 0 && (
+                                <Box
+                                    fontSize="12px"
+                                    position="absolute"
+                                    w="20px"
+                                    h="20px"
+                                    bg="red.500"
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    color="white"
+                                    rounded="50%"
+                                    border="2px"
+                                    borderColor="#1D1D20"
+                                    right="35px"
+                                    top="15px"
+                                >
+                                    {basket[0]?.cart_item?.length}
+                                </Box>
+                            )}
+                        </Box>
+                    ))}
           {list.slice(3, 4).map((el, index) => (
             <Box
               key={index}
@@ -282,59 +243,64 @@ export default function MenuBar({ children }: IPropsMenuBar) {
             bg="#0B0B0B"
             px="46px"
           >
-            {list.slice(0, 1).map((el, index) => (
-              <Box key={index} onClick={handleRefresh} textColor="white">
-                <Link to={el.link} title={el.item}>
-                  <Box display="flex" position="relative">
-                    {el.svg}
-                    {el.line}
-                  </Box>
-                </Link>
-              </Box>
-            ))}
-            {list.slice(1, 3).map((el, index) => (
-              <Box key={index} textColor="white" position="relative">
-                <Link to={el.link} title={el.item}>
-                  <Box display="flex">
-                    {el.svg}
-                    {el.line}
-                  </Box>
-                </Link>
-              </Box>
-            ))}
-            {list.slice(3, 4).map((el, index) => (
-              <Box display="flex" position="relative">
-                <Box
-                  key={index}
-                  textColor="white"
-                  display="flex"
-                  position="relative"
-                >
-                  <Link to={el.link} title={el.item}>
-                    {el.svg}
-                  </Link>
-                  {basket[0]?.cart_item.length && index === 0 && (
-                    <Box
-                      fontSize="12px"
-                      position="absolute"
-                      w="20px"
-                      h="20px"
-                      bg="red.500"
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      color="white"
-                      rounded="50%"
-                      pr="2px"
-                      right="-10px"
-                    >
-                      {basket[0]?.cart_item?.length}
-                    </Box>
-                  )}
-                </Box>
-                {el.line}
-              </Box>
-            ))}
+         
+                        {list.slice(0, 1).map((el, index) => (
+                            <Box key={index} onClick={handleRefresh} textColor="white">
+                                <Link to={el.link} title={el.item}>
+                                    <Box
+                                        display="flex"
+                                    >
+                                        {el.svg}
+                                        {el.line}
+                                    </Box>
+                                </Link>
+                            </Box>
+                        ))}
+                        {list.slice(1, 3).map((el, index) => (
+                            <Box key={index} textColor="white">
+                                <Link to={el.link} title={el.item}>
+                                    <Box
+                                        display="flex"
+                                    >
+                                        {el.svg}
+                                        {el.line}
+                                    </Box>
+                                </Link>
+                            </Box>
+                        ))}
+                        {list.slice(3, 4).map((el, index) => (
+                            <Box display="flex">
+                                <Box key={index} textColor="white"
+                                     display="flex"
+                                     position="relative"
+                                >
+                                    <Link to={el.link} title={el.item}>
+                                        {el.svg}
+                                    </Link>
+                                    {basket[0]?.cart_item.length && index === 0 && (
+                                        <Box
+                                            fontSize="12px"
+                                            position="absolute"
+                                            w="20px"
+                                            h="20px"
+                                            bg="red.500"
+                                            display="flex"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                            color="white"
+                                            rounded="50%"
+                                            border="2px"
+                                            borderColor="#1D1D20"
+                                            right="-5px"
+                                            top="-3px"
+                                        >
+                                            {basket[0]?.cart_item?.length}
+                                        </Box>
+                                    )}
+                                </Box>
+                                {el.line}
+                            </Box>
+                        ))}
           </Box>
         </Box>
       </Box>

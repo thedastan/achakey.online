@@ -35,7 +35,9 @@ import SvgPause from "../../assets/svg/SvgPause";
 import ReactDOM from "react-dom/client";
 
 interface IlistMedia {
-  listTruck?: ITrack[] | any;
+    listTruck?: ITrack[] | any;
+    openPopup:boolean;
+    setOpenPopup:(value:boolean) => void;
 }
 
 interface ICartArray {
@@ -49,11 +51,9 @@ interface ICart {
   user: string;
   cart_item: ICartArray[];
 }
-
-export default function AudioPlayer({ listTruck }: IlistMedia) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { loginModal } = useModalforms();
-
+export default function AudioPlayer({listTruck,openPopup,setOpenPopup}:IlistMedia) {
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    const {loginModal} = useModalforms();
   const [total, setTotal] = useState(0);
   const dispatch = useAppDispatch();
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
@@ -412,68 +412,67 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
                 <span style={{ fontSize: "28px", paddingRight: "4px" }}>
                   {total}
                 </span>
-                с
-              </Text>
-              <Button
-                onClick={() =>
-                  getAccessToken() ? postOrderAlbum() : openModal()
-                }
-                ml={{ base: "0px", md: "43px", lg: "48px" }}
-                mr={{ sm: "10%", md: "16px" }}
-                w={{ base: "40vw", sm: "39vw", md: "17vw" }}
-                rounded="50px"
-                py="9px"
-                fontSize="14px"
-                bg="blueDark"
-                textColor="white"
-                colorScheme="none"
-              >
-                Купить альбом
-              </Button>
-              <Button
-                onClick={() =>
-                  getAccessToken() ? postCartAlbum() : openModal()
-                }
-                rounded="50px"
-                py="9px"
-                w={{ base: "40vw", sm: "39vw", md: "17vw" }}
-                fontSize="14px"
-                bg={findAlbum ? "blueDark" : "transparent"}
-                border="1px"
-                borderColor={findAlbum ? "blueDark" : "white"}
-                color="white"
-                _hover={{
-                  color: findAlbum ? "white" : "blue",
-                  borderColor: "blue",
-                }}
-                colorScheme="none"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-              >
-                {findAlbum ? "В корзине" : "В корзину"}
-                <Text
-                  textAlign="end"
-                  color="white"
-                  fontSize="14"
-                  fontWeight="600"
-                  display={{ base: "block", md: "none" }}
-                >
-                  <span
-                    style={{
-                      fontSize: "18px",
-                      paddingRight: "4px",
-                      marginLeft: "4px",
-                    }}
-                  >
-                    {total}
-                  </span>
-                  сом
-                </Text>
-              </Button>
-            </Box>
-          </Box>
-        </Box>
+                                сом
+                            </Text>
+                            <Button
+                                onClick={() =>
+                                    getAccessToken() ? postOrderAlbum() : openModal()
+                                }
+                                ml={{base: "0px", md: "43px", lg: "48px"}}
+                                mr={{sm: "10%", md: "16px"}}
+                                w={{base: "40vw", sm: "39vw", md: "17vw"}}
+                                rounded="50px"
+                                py="9px"
+                                fontSize="14px"
+                                bg="blueDark"
+                                textColor="white"
+                                colorScheme="none"
+                            >
+                                Купить альбом
+                            </Button>
+                            <Button
+                                onClick={() =>
+                                    getAccessToken() ? postCartAlbum() : openModal()
+                                }
+                                rounded="50px"
+                                py="9px"
+                                w={{base: "40vw", sm: "39vw", md: "17vw"}}
+                                fontSize="14px"
+                                bg={findAlbum ? "#007AFF" : "none"}
+                                border={findAlbum ? "none" :"1px"}
+                                borderColor={findAlbum ? "#49DEFF" : "none"}
+                                color={findAlbum ? "white" :"#49DEFF"}
+                                _hover={{
+                                    color:"white",
+                                    bg:"#007AFF",
+                                    border: "none",
+                                }}
+                                colorScheme="none"
+                            >
+                                {findAlbum ? "В корзине" : "В корзину"}
+                                <Text
+                                    textAlign="end"
+                                    color="white"
+                                    fontSize="14px"
+                                    fontWeight="700"
+                                    px="5px"
+                                    display={{base: "flex", md: "none"}}
+                                ><span style={{fontSize: "14px", paddingRight: "4px"}}>{total}</span>
+                                    <Box px="1px" textDecoration="underline">c</Box>
+                                </Text>
+                            </Button>
+                        </Box>
+                    </Box>
+                </Box>
+                <Box className={openPopup ? "modalBg" : ""}>
+                    <Box mx="auto" maxW="700px">
+                        <OrderDetails
+                            openPopup={openPopup}
+                            setOpenPopup={setOpenPopup}
+                            className={openPopup ? "active" : ""}
+                        />
+                    </Box>
+                </Box>
       </Box>
     </section>
   );

@@ -77,7 +77,7 @@ export const OrderPopup = ({
                 left="0"
                 right="0"
                 top={{base:"none", md:"0"}}
-                bottom={{base:"-180px", md:"0"}}
+                bottom={{base:"0", md:"0"}}
                 pos="fixed"
                 zIndex="12"
                 bg="transparent"
@@ -85,7 +85,7 @@ export const OrderPopup = ({
                 justifyContent="center"
                 alignItems="center"
             >
-                <Box w="100%" mt="94px">
+                <Box w="100%">
                     <Box
                         bg="#E0E0E0"
                         mx="auto"

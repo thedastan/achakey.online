@@ -5,12 +5,16 @@ export enum OrderTypes {
   ORDER_DETAILS = "ORDER_DETAILS",
   ORDER_POST = "ORDER_POST",
   ORDER_POST_ID = "ORDER_POST_ID",
+  OPEN_MODAL_ORDER = "OPEN_MODAL_ORDER",
+  OPEN_MODAL_ORDER_ID = "OPEN_MODAL_ORDER_ID"
 }
 
 export interface OrderState {
   order: OrderType[];
   orderDetails: OrderType | null;
   orderId: number | null;
+  openOrder:boolean;
+  openOrderId:boolean;
 }
 
 export interface OrderType {
@@ -63,8 +67,20 @@ interface ActionPostOrderId {
   payload: number;
 }
 
+interface ActionOpenOrder {
+  type:OrderTypes.OPEN_MODAL_ORDER,
+  payload:boolean,
+}
+
+interface ActionOpenOrderId {
+  type:OrderTypes.OPEN_MODAL_ORDER_ID,
+  payload:boolean,
+}
+
 export type ActionTypes =
   | ActionOrder
   | ActionOrderDetails
   | ActionPostOrder
-  | ActionPostOrderId;
+  | ActionPostOrderId
+  | ActionOpenOrder
+  | ActionOpenOrderId
