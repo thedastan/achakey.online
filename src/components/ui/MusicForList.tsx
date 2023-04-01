@@ -309,25 +309,27 @@ export default function MusicForList({
             active?.music_short === music?.music_short ? "blue" : "white"
           }
           rounded="38px"
-          fontSize="9px"
-          h="23px"
+          fontSize={{ base: "12px ", md: "9px" }}
+          h={{ base: "28px", md: "23px" }}
           w="84px"
+          fontWeight="400"
+          textAlign="center"
           display="flex"
           alignItems="center"
-          justifyContent="space-between"
+          justifyContent={findMyMusic ? "space-between" : "center"}
           textColor={
             active?.music_short === music?.music_short ? "blue" : "white"
           }
           background="transparent"
           colorScheme="none"
-          color={findMyMusic ? "#49DEFF" : "white"}
+          color={findMyMusic ? "#49DEFF" : findMusic ? "#49DEFF" : "white"}
         >
-          {findMyMusic ? `куплен` : findMusic ? "в корзине" : "+ в корзину"}
-          {findMyMusic && (
-            <Box mt="-3px">
-              <SvgCheckMark />
-            </Box>
-          )}
+          <Text mr={findMyMusic ? "4px" : "0px"}>
+            {findMyMusic ? `куплен` : findMusic ? "в корзине" : "+ в корзину"}
+          </Text>
+          <Box mt="-1px" display={findMyMusic ? "block" : "none"}>
+            <SvgCheckMark />
+          </Box>
         </Button>
       </Box>
     </Box>

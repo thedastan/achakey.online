@@ -1,30 +1,30 @@
-import {Button} from "@chakra-ui/button";
-import {Box, Text} from "@chakra-ui/layout";
-import {Image, useDisclosure} from "@chakra-ui/react";
-import React, {useEffect, useState} from "react";
+import { Button } from "@chakra-ui/button";
+import { Box, Text } from "@chakra-ui/layout";
+import { Image, useDisclosure } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 
 import {
-    currentIndexAction,
-    eventChange,
+  currentIndexAction,
+  eventChange,
 } from "../playlist/reducer/action-creator";
 import {
-    useAction,
-    useActionBasket,
-    useActionOrder,
-    useExcerpAction,
-    useModalforms,
+  useAction,
+  useActionBasket,
+  useActionOrder,
+  useExcerpAction,
+  useModalforms,
 } from "../../hooks/useActions";
-import {useAppDispatch, useAppSelector} from "../../hooks/Index";
-import {ITrack} from "../../redux/types";
-import {changeAction} from "../../global-audio-player-excerpt/action";
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { ITrack } from "../../redux/types";
+import { changeAction } from "../../global-audio-player-excerpt/action";
 
 import SvgPlay from "../../assets/svg/SvgPlay";
 import defaultImage from "../../assets/img/defaultImage.png";
 
-import {getAccessToken, getIdAlums, getUserId} from "../helper";
-import {fetchAlbumsDetails} from "../../pages/details-albums/action-creators";
-import {OrderDetails} from "../order/OrderDetails";
-import {OrderPost} from "../order/types/order";
+import { getAccessToken, getIdAlums, getUserId } from "../helper";
+import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
+import { OrderDetails } from "../order/OrderDetails";
+import { OrderPost } from "../order/types/order";
 import SvgForAlbumPause from "../../assets/svg/SvgForAlbumPause";
 import SvgForAlbumNext from "../../assets/svg/SvgForAlbumNext";
 import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
@@ -35,236 +35,236 @@ import SvgPause from "../../assets/svg/SvgPause";
 import ReactDOM from "react-dom/client";
 
 interface IlistMedia {
-    listTruck?: ITrack[] | any;
+  listTruck?: ITrack[] | any;
 }
 
 interface ICartArray {
-    cart: string;
-    music?: number | null;
-    album?: number | null | any;
+  cart: string;
+  music?: number | null;
+  album?: number | null | any;
 }
 
 interface ICart {
-    total_price: string | number;
-    user: string;
-    cart_item: ICartArray[];
+  total_price: string | number;
+  user: string;
+  cart_item: ICartArray[];
 }
 
-export default function AudioPlayer({listTruck}: IlistMedia) {
-    const {isOpen, onOpen, onClose} = useDisclosure();
-    const {loginModal} = useModalforms();
+export default function AudioPlayer({ listTruck }: IlistMedia) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { loginModal } = useModalforms();
 
-    const [total, setTotal] = useState(0);
-    const dispatch = useAppDispatch();
-    const {albums} = useAppSelector((state) => state.reducerDetailsAlbums);
+  const [total, setTotal] = useState(0);
+  const dispatch = useAppDispatch();
+  const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
 
-    const {basket} = useAppSelector((state) => state.reducerBasket);
-    const Order = useAppSelector((state) => state.reducerOrder.order);
-    const [openPopup, setOpenPopup] = useState(false);
-    const {event} = useAppSelector((state) => state.eventReducer);
-    const indexCurrent = useAppSelector(
-        (state) => state.currentIndexReducer.currentIndex
+  const { basket } = useAppSelector((state) => state.reducerBasket);
+  const Order = useAppSelector((state) => state.reducerOrder.order);
+  const [openPopup, setOpenPopup] = useState(false);
+  const { event } = useAppSelector((state) => state.eventReducer);
+  const indexCurrent = useAppSelector(
+    (state) => state.currentIndexReducer.currentIndex
+  );
+
+  const { pause, active, duration, currentTime, forAlbum } = useAppSelector(
+    (state) => state.excerptPlayerReducer
+  );
+
+  const { pauseTrack } = useAction();
+  const { postBasketItem, fetchBasket } = useActionBasket();
+  const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
+    useActionOrder();
+
+  const {
+    excerptActiveAction,
+    excerptPauseAction,
+    excerptPlayAction,
+    excerptCurrentTimeAction,
+  } = useExcerpAction();
+
+  const play = () => {
+    if (forAlbum) {
+      if (pause) {
+        excerptPlayAction();
+        pauseTrack();
+      } else {
+        excerptPauseAction();
+        pauseTrack();
+      }
+    }
+  };
+
+  const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeAction(Number(e.target.value)));
+
+    excerptCurrentTimeAction(Number(e.target.value));
+  };
+
+  const OnClickNext = () => {
+    dispatch(eventChange(false));
+
+    dispatch(
+      currentIndexAction(
+        listTruck.length - 1 === indexCurrent ? 0 : indexCurrent + 1
+      )
     );
 
-    const {pause, active, duration, currentTime, forAlbum} = useAppSelector(
-        (state) => state.excerptPlayerReducer
+    excerptActiveAction(
+      listTruck[
+        event
+          ? listTruck.length - 1 === indexCurrent
+            ? 0
+            : indexCurrent + 1
+          : listTruck.length - 1 === indexCurrent
+          ? 0
+          : indexCurrent + 1
+      ]
+    );
+  };
+
+  const OnClickPrev = () => {
+    dispatch(
+      currentIndexAction(
+        indexCurrent === 0 ? listTruck.length - 1 : indexCurrent - 1
+      )
     );
 
-    const {pauseTrack} = useAction();
-    const {postBasketItem, fetchBasket} = useActionBasket();
-    const {fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem} =
-        useActionOrder();
-
-    const {
-        excerptActiveAction,
-        excerptPauseAction,
-        excerptPlayAction,
-        excerptCurrentTimeAction,
-    } = useExcerpAction();
-
-    const play = () => {
-        if (forAlbum) {
-            if (pause) {
-                excerptPlayAction();
-                pauseTrack();
-            } else {
-                excerptPauseAction();
-                pauseTrack();
-            }
-        }
-    };
-
-    const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeAction(Number(e.target.value)));
-
-        excerptCurrentTimeAction(Number(e.target.value));
-    };
-
-    const OnClickNext = () => {
-        dispatch(eventChange(false));
-
-        dispatch(
-            currentIndexAction(
-                listTruck.length - 1 === indexCurrent ? 0 : indexCurrent + 1
-            )
-        );
-
-        excerptActiveAction(
-            listTruck[
-                event
-                    ? listTruck.length - 1 === indexCurrent
-                        ? 0
-                        : indexCurrent + 1
-                    : listTruck.length - 1 === indexCurrent
-                        ? 0
-                        : indexCurrent + 1
-                ]
-        );
-    };
-
-    const OnClickPrev = () => {
-        dispatch(
-            currentIndexAction(
-                indexCurrent === 0 ? listTruck.length - 1 : indexCurrent - 1
-            )
-        );
-
-        excerptActiveAction(
-            listTruck[
-                event
-                    ? indexCurrent - 1
-                    : indexCurrent === 0
-                        ? listTruck.length - 1
-                        : indexCurrent - 1
-                ]
-        );
-
-        dispatch(eventChange(false));
-    };
-
-    function startTimer() {
-        let seconds: any = currentTime % 60;
-        let minutes: any = Math.floor(currentTime / 60);
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        return minutes + ":" + seconds;
-    }
-
-    function postCartAlbum() {
-        fetchBasket();
-        const cart: ICart = {
-            user: getUserId(),
-            total_price: Number(active?.price),
-            cart_item: [
-                {
-                    music: null,
-                    cart: getUserId(),
-                    album: albums?.id,
-                },
-            ],
-        };
-
-        const userFiter = basket.filter((el) => el.user === getUserId());
-
-        const filterBasket = userFiter[0]?.cart_item;
-        const includesTracks = filterBasket.filter(
-            (el) => el.album?.id === cart?.cart_item[0].album
-        );
-
-        if (includesTracks[0]?.album?.id !== cart?.cart_item[0]?.album) {
-            postBasketItem(cart);
-            fetchBasket();
-        } else {
-            fetchBasket();
-        }
-        fetchBasket();
-    }
-
-    function postOrderAlbum() {
-        fetchOrder();
-        setOpenPopup(true);
-        const order: OrderPost = {
-            user: getUserId(),
-            total_price: null,
-            status: null,
-            order_item: [
-                {
-                    order: getUserId(),
-                    music: null,
-                    album: albums?.id,
-                },
-            ],
-        };
-
-        const userFiter = Order.filter((el) => el.user === getUserId());
-
-        const filterUser = userFiter.map(
-            //@ts-ignore
-            (el) =>
-                el?.order_item?.filter((i) => i.album?.id === order.order_item[0].album)
-        );
-
-        const newData = filterUser.flat();
-        const arrayOfObjects = newData.map((item) => ({...item}));
-
-        if (arrayOfObjects[0]?.album?.id === order.order_item[0].album) {
-        } else {
-            fetchOrderPost(order);
-            fetchOrder();
-        }
-
-        userFiter?.filter((el) =>
-            el?.order_item?.filter((i) =>
-                i.album?.id === order.order_item[0].album
-                    ? fetchOrderItem(Number(el?.id))
-                    : console.log("NoNo")
-            )
-        );
-
-        userFiter?.filter((el) =>
-            el?.order_item?.filter((i) =>
-                i.album?.id === order.order_item[0].album
-                    ? fetchOrderId(Number(el?.id))
-                    : console.log("id")
-            )
-        );
-
-        setOpenPopup(true);
-        fetchOrder();
-    }
-
-    const findAlbum = basket[0]?.cart_item.some(
-        (el) => el.album?.id === albums.id
+    excerptActiveAction(
+      listTruck[
+        event
+          ? indexCurrent - 1
+          : indexCurrent === 0
+          ? listTruck.length - 1
+          : indexCurrent - 1
+      ]
     );
 
-    const openModal = () => {
-        onOpen();
-        loginModal();
+    dispatch(eventChange(false));
+  };
+
+  function startTimer() {
+    let seconds: any = currentTime % 60;
+    let minutes: any = Math.floor(currentTime / 60);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    return minutes + ":" + seconds;
+  }
+
+  function postCartAlbum() {
+    fetchBasket();
+    const cart: ICart = {
+      user: getUserId(),
+      total_price: Number(active?.price),
+      cart_item: [
+        {
+          music: null,
+          cart: getUserId(),
+          album: albums?.id,
+        },
+      ],
     };
 
-    useEffect(() => {
-        //@ts-ignore
-        dispatch(fetchAlbumsDetails(getIdAlums()));
-    }, []);
+    const userFiter = basket.filter((el) => el.user === getUserId());
 
-    useEffect(() => {
-        let totalAlbum = 0;
+    const filterBasket = userFiter[0]?.cart_item;
+    const includesTracks = filterBasket.filter(
+      (el) => el.album?.id === cart?.cart_item[0].album
+    );
 
-        const numberArrayAlbum = albums.music.map((el) => el.price);
+    if (includesTracks[0]?.album?.id !== cart?.cart_item[0]?.album) {
+      postBasketItem(cart);
+      fetchBasket();
+    } else {
+      fetchBasket();
+    }
+    fetchBasket();
+  }
 
-        const newAlbumDate = numberArrayAlbum.flat();
+  function postOrderAlbum() {
+    fetchOrder();
+    setOpenPopup(true);
+    const order: OrderPost = {
+      user: getUserId(),
+      total_price: null,
+      status: null,
+      order_item: [
+        {
+          order: getUserId(),
+          music: null,
+          album: albums?.id,
+        },
+      ],
+    };
 
-        for (const keys of newAlbumDate) {
-            totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
-        }
-        setTotal(totalAlbum);
-    }, [albums]);
+    const userFiter = Order.filter((el) => el.user === getUserId());
 
-    useEffect(() => {
-        fetchBasket();
-    }, []);
+    const filterUser = userFiter.map(
+      //@ts-ignore
+      (el) =>
+        el?.order_item?.filter((i) => i.album?.id === order.order_item[0].album)
+    );
+
+    const newData = filterUser.flat();
+    const arrayOfObjects = newData.map((item) => ({ ...item }));
+
+    if (arrayOfObjects[0]?.album?.id === order.order_item[0].album) {
+    } else {
+      fetchOrderPost(order);
+      fetchOrder();
+    }
+
+    userFiter?.filter((el) =>
+      el?.order_item?.filter((i) =>
+        i.album?.id === order.order_item[0].album
+          ? fetchOrderItem(Number(el?.id))
+          : console.log("NoNo")
+      )
+    );
+
+    userFiter?.filter((el) =>
+      el?.order_item?.filter((i) =>
+        i.album?.id === order.order_item[0].album
+          ? fetchOrderId(Number(el?.id))
+          : console.log("id")
+      )
+    );
+
+    setOpenPopup(true);
+    fetchOrder();
+  }
+
+  const findAlbum = basket[0]?.cart_item.some(
+    (el) => el.album?.id === albums.id
+  );
+
+  const openModal = () => {
+    onOpen();
+    loginModal();
+  };
+
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchAlbumsDetails(getIdAlums()));
+  }, []);
+
+  useEffect(() => {
+    let totalAlbum = 0;
+
+    const numberArrayAlbum = albums.music.map((el) => el.price);
+
+    const newAlbumDate = numberArrayAlbum.flat();
+
+    for (const keys of newAlbumDate) {
+      totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
+    }
+    setTotal(totalAlbum);
+  }, [albums]);
+
+  useEffect(() => {
+    fetchBasket();
+  }, []);
 
   return (
     <section
@@ -328,7 +328,7 @@ export default function AudioPlayer({listTruck}: IlistMedia) {
           <Box
             display="flex"
             flexDir={{ base: "column", md: "row" }}
-            mb="17px"
+            mb="56px"
             alignItems="center"
           >
             <Box
@@ -373,7 +373,6 @@ export default function AudioPlayer({listTruck}: IlistMedia) {
               </Button>
             </Box>
             <Box w="100%" ml="auto" display="flex" alignItems="center">
-
               <input
                 type="range"
                 min={0}
@@ -392,90 +391,90 @@ export default function AudioPlayer({listTruck}: IlistMedia) {
               </Text>
             </Box>
           </Box>
-
           <Box
             display="flex"
             alignItems="center"
             flexDir={{ base: "column", md: "row" }}
           >
-                        <Box
-                            display="flex"
-                            alignItems="end"
-                            w={{base: "100%", md: "none"}}
-                            justifyContent={{base: "space-between", md: "normal"}}
-                        >
-                            <Text
-                                display={{base: "none", md: "block"}}
-                                color="blue"
-                                fontSize="20px"
-                                fontWeight="700"
-                                mr="10px"
-                            >
-                <span style={{fontSize: "28px", paddingRight: "4px"}}>
+            <Box
+              display="flex"
+              alignItems="end"
+              w={{ base: "100%", md: "none" }}
+              justifyContent={{ base: "space-between", md: "normal" }}
+            >
+              <Text
+                display={{ base: "none", md: "block" }}
+                color="blue"
+                fontSize="20px"
+                fontWeight="700"
+                mr="10px"
+              >
+                <span style={{ fontSize: "28px", paddingRight: "4px" }}>
                   {total}
                 </span>
-                                сом
-                            </Text>
-                            <Button
-                                onClick={() =>
-                                    getAccessToken() ? postOrderAlbum() : openModal()
-                                }
-                                ml={{base: "0px", md: "43px", lg: "48px"}}
-                                mr={{sm: "10%", md: "16px"}}
-                                w={{base: "40vw", sm: "39vw", md: "17vw"}}
-                                rounded="50px"
-                                py="9px"
-                                fontSize="14px"
-                                bg="blueDark"
-                                textColor="white"
-                                colorScheme="none"
-                            >
-                                Купить альбом
-                            </Button>
-                            <Button
-                                onClick={() =>
-                                    getAccessToken() ? postCartAlbum() : openModal()
-                                }
-                                rounded="50px"
-                                py="9px"
-                                w={{base: "40vw", sm: "39vw", md: "17vw"}}
-                                fontSize="14px"
-                                bg={findAlbum ? "#007AFF" : "none"}
-                                border={findAlbum ? "none" :"1px"}
-                                borderColor={findAlbum ? "#49DEFF" : "none"}
-                                color={findAlbum ? "white" :"#49DEFF"}
-                                _hover={{
-                                    color:"white",
-                                    bg:"#007AFF",
-                                    border: "none",
-                                }}
-                                colorScheme="none"
-                            >
-                                {findAlbum ? "В корзине" : "В корзину"}
-                                <Text
-                                    textAlign="end"
-                                    color="white"
-                                    fontSize="14px"
-                                    fontWeight="700"
-                                    px="5px"
-                                    display={{base: "flex", md: "none"}}
-                                ><span style={{fontSize: "14px", paddingRight: "4px"}}>{total}</span>
-                                    <Box px="1px" textDecoration="underline">c</Box>
-                                </Text>
-                            </Button>
-                        </Box>
-                    </Box>
-                </Box>
-                <Box className={openPopup   ? "modalBg"  : ""}>
-                    <Box mx="auto" maxW="700px">
-                        <OrderDetails
-                            openPopup={openPopup}
-                            setOpenPopup={setOpenPopup}
-                            className={openPopup ? "active" : ""}
-                        />
-                    </Box>
-                </Box>
+                с
+              </Text>
+              <Button
+                onClick={() =>
+                  getAccessToken() ? postOrderAlbum() : openModal()
+                }
+                ml={{ base: "0px", md: "43px", lg: "48px" }}
+                mr={{ sm: "10%", md: "16px" }}
+                w={{ base: "40vw", sm: "39vw", md: "17vw" }}
+                rounded="50px"
+                py="9px"
+                fontSize="14px"
+                bg="blueDark"
+                textColor="white"
+                colorScheme="none"
+              >
+                Купить альбом
+              </Button>
+              <Button
+                onClick={() =>
+                  getAccessToken() ? postCartAlbum() : openModal()
+                }
+                rounded="50px"
+                py="9px"
+                w={{ base: "40vw", sm: "39vw", md: "17vw" }}
+                fontSize="14px"
+                bg={findAlbum ? "blueDark" : "transparent"}
+                border="1px"
+                borderColor={findAlbum ? "blueDark" : "white"}
+                color="white"
+                _hover={{
+                  color: findAlbum ? "white" : "blue",
+                  borderColor: "blue",
+                }}
+                colorScheme="none"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              >
+                {findAlbum ? "В корзине" : "В корзину"}
+                <Text
+                  textAlign="end"
+                  color="white"
+                  fontSize="14"
+                  fontWeight="600"
+                  display={{ base: "block", md: "none" }}
+                >
+                  <span
+                    style={{
+                      fontSize: "18px",
+                      paddingRight: "4px",
+                      marginLeft: "4px",
+                    }}
+                  >
+                    {total}
+                  </span>
+                  сом
+                </Text>
+              </Button>
             </Box>
-        </section>
-    );
+          </Box>
+        </Box>
+      </Box>
+    </section>
+  );
 }
