@@ -17,6 +17,7 @@ import actionChangePassword from "../components/form/changePassword/action/index
 import actionEmailVerify from "../pages/emailVerify/action/index";
 import actionResetPasswordPhone from "../components/form/resetPasswordPhone/action/index";
 import actionSendAgain from "../components/form/send-again/action/index";
+import actionToast from "../components/toast-message/action/index";
 import { useAppDispatch } from "./Index";
 
 export const useAction = () => {
@@ -97,4 +98,9 @@ export const useActionResetPasswordPhone = () => {
 export const useActionSendAgain = () => {
   const dispatch = useAppDispatch();
   return bindActionCreators(actionSendAgain, dispatch);
+};
+
+export const useActionToastMessage = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(actionToast, dispatch);
 };

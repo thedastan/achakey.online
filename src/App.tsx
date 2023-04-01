@@ -19,6 +19,7 @@ import {
 } from "./pages/Index";
 import BottomPlayer from "./components/bottom-audio-player/BottomPLayer";
 import { useState } from "react";
+import ToastMessage from './components/toast-message/ToastMessage';
 
 enum AlbumOrTracks {
   ALBUM = "ALBUM",
@@ -34,6 +35,7 @@ function App() {
     <div>
       <AudioPlayerBottom />
       <Navigation />
+      <ToastMessage/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/basket" element={<Basket />} />

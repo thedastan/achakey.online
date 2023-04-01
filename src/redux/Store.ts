@@ -26,6 +26,7 @@ import { reducerEnterSequirity } from "../components/form/enterSequirity/reducer
 import { reducerChangePassword } from "../components/form/changePassword/reducer/ChangePasswordReducer";
 import { emailVerifyReducer } from "../pages/emailVerify/reducer/reducerEmailVerify";
 import { reducerResetPasswordPhone } from "../components/form/resetPasswordPhone/reducer/ReducerResetPassPhone";
+import { reducerToasrMessage } from "../components/toast-message/reducer/reducerToastMessage";
 
 const rootReducer = combineReducers({
   playReducer,
@@ -51,6 +52,7 @@ const rootReducer = combineReducers({
   reducerChangePassword,
   emailVerifyReducer,
   reducerResetPasswordPhone,
+  reducerToasrMessage,
 });
 
 export const setUpStore = () => {

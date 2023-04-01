@@ -5,7 +5,7 @@ import {
 } from "../InterfaceToastMessage";
 
 const initialState: IStateToastMessage = {
-  toast: { message: "", status: false },
+  toast: { message: "", status: false, setOut: false },
 };
 
 export const reducerToasrMessage = (

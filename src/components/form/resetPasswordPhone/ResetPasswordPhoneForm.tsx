@@ -12,13 +12,12 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../../hooks/Index";
 
 import {
-  useActionEmailVerify,
   useActionResetPasswordPhone,
   useActionSendAgain,
 } from "../../../hooks/useActions";
+import { useAppSelector } from "../../../hooks/Index";
 import { getPadTime } from "../../helpers/getPadTime";
 import BtnForm from "../../ui/BtnForm";
 import EyeInput from "../../ui/EyeInput";
@@ -46,19 +45,13 @@ const ResetPasswordPhoneForm = () => {
   const [canMoveNext, setCanMoveNext] = useState(true);
   const regex = new RegExp("^(?:([0-9]))*$");
 
-  const { openModalEmailVerify } = useActionEmailVerify();
-  const { sendAgainPhone } = useActionSendAgain();
-
   const navigate = useNavigate();
 
-  const { loading, resetPassPhone, error } = useAppSelector(
+  const { sendAgainPhone } = useActionSendAgain();
+
+  const { loading } = useAppSelector(
     (state) => state.reducerResetPasswordPhone
   );
-
-  if (!!resetPassPhone?.phone) {
-    navigate("/");
-    openModalEmailVerify(true);
-  }
 
   const handleChange = (e: any) => {
     if (!regex.test(e)) {
@@ -121,9 +114,9 @@ const ResetPasswordPhoneForm = () => {
     if (number.length) {
       setPhoneNumber(number);
     } else {
-      console.log("mikjolklok");
+      navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <Box h="100vh" w="100%" display="flex" alignItems="center">

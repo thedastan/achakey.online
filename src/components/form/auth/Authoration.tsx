@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import {
   Box,
   FormControl,
@@ -10,7 +10,10 @@ import {
 import { useNavigate } from "react-router-dom";
 
 //local
-import { useModalforms } from "../../../hooks/useActions";
+import {
+  useActionToastMessage,
+  useModalforms,
+} from "../../../hooks/useActions";
 import { usePostAuth } from "./../../../hooks/useActions";
 import { useAppSelector } from "../../../hooks/Index";
 import { isEmail, isPhone } from "../../helpers/helperFunction";
@@ -57,10 +60,9 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
     }
   };
 
+  const { toastMessageFunction } = useActionToastMessage();
   const { fetchAuthLogin, errorAuth } = usePostAuth();
-  const { loading, loginUser, error } = useAppSelector(
-    (state) => state.reducerAuth
-  );
+  const { loading, error } = useAppSelector((state) => state.reducerAuth);
 
   const { registerModal, forgotPassModal } = useModalforms();
 
@@ -68,10 +70,21 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
     setPassEye(!passEye);
   };
 
+  const successAuth = () => {
+    navigate("/");
+    onClose();
+    errorAuth();
+    toastMessageFunction({
+      setOut: true,
+      status: true,
+      message: "Добро пожаловать!",
+    });
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (username.length && password.length) {
-      fetchAuthLogin({ username, password });
+      fetchAuthLogin({ username, password }, successAuth);
     }
   };
 
@@ -84,14 +97,6 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
     forgotPassModal();
     errorAuth();
   };
-
-  useEffect(() => {
-    if (loginUser.access || loginUser.id) {
-      navigate("/");
-      onClose();
-      errorAuth();
-    }
-  }, [loginUser, navigate, onClose, errorAuth]);
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>
