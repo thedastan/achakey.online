@@ -11,11 +11,15 @@ import {OrderPopup} from "../../components/order/OrderPopup";
 import {getUserId} from "../../components/helper";
 import {OrderDetails} from "../../components/order/OrderDetails";
 import SvgBasketEmpty from "../../assets/svg/SvgBasketEmpty";
-import ReactDOM from "react-dom/client";
 
-export default function Basket() {
-    const [openPopup, setOpenPopup] = useState(false);
-    const [openPopupId, setOpenPopupId] = useState(false);
+interface IBasketModalProps {
+    openPopup:boolean;
+    setOpenPopup: (value:boolean) => void;
+    openPopupId: boolean;
+    setOpenPopupId: (value:boolean) => void;
+}
+
+export default function Basket({openPopup,setOpenPopup,openPopupId,setOpenPopupId}:IBasketModalProps) {
     const [total, setTotal] = useState(0);
 
     const {fetchBasket} = useActionBasket();

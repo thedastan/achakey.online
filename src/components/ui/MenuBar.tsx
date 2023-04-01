@@ -17,7 +17,6 @@ interface IPropsMenuBar {
 
 export default function MenuBar({children}: IPropsMenuBar) {
     const {isOpen, onOpen, onClose} = useDisclosure();
-    const [openPopup, setOpenPopup] = useState(false);
     const {active} = useAppSelector((state) => state.playReducer);
     const {basket} = useAppSelector((state) => state.reducerBasket);
     const {loginModal} = useModalforms();
@@ -44,7 +43,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
                 />
             ),
             line: (
-                <Box mx="14px" w="0" h="27px" border="1px" borderColor="white"
+                <Box ml="12px" w="0" h="27px" border="1px" borderColor="white"
                      style={{display: window.location.pathname === "/" ? "block" : "none"}}/>
             ),
             link: "/",
@@ -62,7 +61,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
                 />
             ),
             line: (
-                <Box mx="14px" w="0" h="27px" border="1px" borderColor="white" style={{
+                <Box ml="12px" w="0" h="27px" border="1px" borderColor="white" style={{
                     display:
                         window.location.pathname === "/excerpts" ||
                         window.location.pathname === "/excerpts/details/" + getIdAlums()
@@ -83,7 +82,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
                 />
             ),
             line: (
-                <Box mx="14px" w="0" h="27px" border="1px" borderColor="white"
+                <Box ml="12px" w="0" h="27px" border="1px" borderColor="white"
                      style={{display: window.location.pathname === "/my-playlist" ? "block" : "none"}}/>
             ),
             link: "/my-playlist",
@@ -100,7 +99,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
                 />
             ),
             line: (
-                <Box mx="14px" w="0" h="27px" border="1px" borderColor="white"
+                <Box ml="12px" w="0" h="27px" border="1px" borderColor="white"
                      style={{display: window.location.pathname === "/basket" ? "block" : "none"}}/>
             ),
             link: "/basket",
@@ -218,8 +217,10 @@ export default function MenuBar({children}: IPropsMenuBar) {
                                     alignItems="center"
                                     color="white"
                                     rounded="50%"
-                                    pr="2px"
-                                    right={7}
+                                    border="2px"
+                                    borderColor="#1D1D20"
+                                    right="35px"
+                                    top="15px"
                                 >
                                     {basket[0]?.cart_item?.length}
                                 </Box>
@@ -292,8 +293,10 @@ export default function MenuBar({children}: IPropsMenuBar) {
                                             alignItems="center"
                                             color="white"
                                             rounded="50%"
-                                            pr="2px"
-                                            right="-10px"
+                                            border="2px"
+                                            borderColor="#1D1D20"
+                                            right="-5px"
+                                            top="-3px"
                                         >
                                             {basket[0]?.cart_item?.length}
                                         </Box>

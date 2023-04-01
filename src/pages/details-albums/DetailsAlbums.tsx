@@ -8,11 +8,15 @@ import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { fetchAlbumsDetails } from "./action-creators";
 import Footer from "../../components/footer/Footer";
 
-export default function DetailsAlbums() {
+interface IOrderModalProps {
+  openPopup:boolean;
+  setOpenPopup:(value:boolean) => void;
+}
+
+export default function DetailsAlbums({openPopup,setOpenPopup}:IOrderModalProps) {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
-  const [openPopup, setOpenPopup] = useState(false);
 
   useEffect(() => {
     //@ts-ignore
@@ -33,7 +37,7 @@ export default function DetailsAlbums() {
         <Box className="bg-menuBar-blur">
           <Container maxW="1220px" pt="140px">
             <Box pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}>
-              <AudioPlayer listTruck={albums.music} />
+              <AudioPlayer openPopup={openPopup} setOpenPopup={setOpenPopup} listTruck={albums.music} />
               <ExcerptTrackList tracks={albums.music} />
             </Box>
             <BottomPlayer />

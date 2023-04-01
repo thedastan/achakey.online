@@ -11,7 +11,8 @@ interface IMain {
   children: JSX.Element;
 }
 
-export default function PageRouting({ children }: IMain) {
+
+export default function PageRouting({ children }: IMain,{}) {
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
 

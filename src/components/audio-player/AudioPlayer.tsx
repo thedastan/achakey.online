@@ -36,6 +36,8 @@ import ReactDOM from "react-dom/client";
 
 interface IlistMedia {
     listTruck?: ITrack[] | any;
+    openPopup:boolean;
+    setOpenPopup:(value:boolean) => void;
 }
 
 interface ICartArray {
@@ -49,8 +51,7 @@ interface ICart {
     user: string;
     cart_item: ICartArray[];
 }
-
-export default function AudioPlayer({listTruck}: IlistMedia) {
+export default function AudioPlayer({listTruck,openPopup,setOpenPopup}:IlistMedia) {
     const {isOpen, onOpen, onClose} = useDisclosure();
     const {loginModal} = useModalforms();
 
@@ -60,7 +61,6 @@ export default function AudioPlayer({listTruck}: IlistMedia) {
 
     const {basket} = useAppSelector((state) => state.reducerBasket);
     const Order = useAppSelector((state) => state.reducerOrder.order);
-    const [openPopup, setOpenPopup] = useState(false);
     const {event} = useAppSelector((state) => state.eventReducer);
     const indexCurrent = useAppSelector(
         (state) => state.currentIndexReducer.currentIndex
@@ -466,7 +466,7 @@ export default function AudioPlayer({listTruck}: IlistMedia) {
                         </Box>
                     </Box>
                 </Box>
-                <Box className={openPopup   ? "modalBg"  : ""}>
+                <Box className={openPopup ? "modalBg" : ""}>
                     <Box mx="auto" maxW="700px">
                         <OrderDetails
                             openPopup={openPopup}

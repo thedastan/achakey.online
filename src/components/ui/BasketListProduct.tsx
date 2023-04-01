@@ -65,10 +65,8 @@ export default function BasketListProduct({
     }
 
     if (arrayOfObjects[0]?.music?.id === order?.order_item[0]?.music) {
-      console.log(arrayOfObjects);
       fetchOrderId(Number(arrayOfObjects[0]?.id));
       fetchOrderItem(Number(arrayOfObjects[0]?.id));
-      console.log(arrayOfObjects[0]?.id);
     }
 
     userFiter?.filter((el) =>

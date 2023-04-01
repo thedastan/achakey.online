@@ -17,3 +17,15 @@
 a {
     text-decoration: none;
 }
+
+.modalBg {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.82);
+    min-height: 160vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+}
