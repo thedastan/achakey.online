@@ -1,4 +1,5 @@
 export interface IMessage {
+  setOut: boolean;
   status: boolean;
   message: string;
 }

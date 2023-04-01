@@ -44,6 +44,11 @@ const ForgotPassword: FC<IModalInterface> = ({ onClose }) => {
     }
   };
 
+  const successPhoneForgot = () => {
+    navigate("/resetPassword");
+    onClose();
+  };
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (emailPhone.email?.length) {
@@ -53,7 +58,7 @@ const ForgotPassword: FC<IModalInterface> = ({ onClose }) => {
     } else if (emailPhone.phone?.length) {
       setError("");
       const phone = emailPhone.phone;
-      fetchForgotPasswordPhone(phone);
+      fetchForgotPasswordPhone(phone, successPhoneForgot);
     } else {
       setError("Введите почту или номер телефона");
     }
@@ -62,11 +67,6 @@ const ForgotPassword: FC<IModalInterface> = ({ onClose }) => {
   const openRegister = () => {
     registerModal();
   };
-
-  if (!!forgotPassword?.phone) {
-    navigate("/resetPassword");
-    onClose();
-  }
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>

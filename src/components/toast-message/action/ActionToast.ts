@@ -9,3 +9,12 @@ export const toastMessageFunction = (toastMessage: IMessage) => {
     });
   };
 };
+
+export const toastMessageClose = () => {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: IToastMessageType.TOAST_MESSAGE,
+      payload: { setOut: false, status: false, message: "" },
+    });
+  };
+};
