@@ -1,5 +1,5 @@
 import { Box, Button, Text, Image, useDisclosure } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import SvgPlay from "../../assets/svg/SvgPlay";
 import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
@@ -208,7 +208,7 @@ export default function MusicForList({
       <Box
         display="flex"
         alignItems="center"
-        w="25vw"
+        w={{ base: "35vw", md: "25vw" }}
         onClick={() => {
           play(music);
         }}
@@ -216,21 +216,10 @@ export default function MusicForList({
         <Image
           src={music?.image}
           rounded="50%"
-          w="47px"
-          h="47px"
-          mr="29px"
-          display={{ base: "none", md: "block" }}
+          w={{ base: "36px", md: "47px" }}
+          h={{ base: "36px", md: "47px" }}
+          mr={{ base: "0px", md: "29px" }}
         />
-        {active?.music_short !== music?.music_short && (
-          <Image
-            src={music?.image}
-            rounded="50%"
-            w="36px"
-            h="36px"
-            mr="0px"
-            display={{ base: "block", md: "none" }}
-          />
-        )}
         {active?.music_short === music?.music_short ? (
           <Box
             display="inline-block"
@@ -242,14 +231,18 @@ export default function MusicForList({
               {pause ? (
                 <SvgPlayerGifDefault />
               ) : (
-                <Box display="flex" justifyContent="center">
+                <Box
+                  display="flex"
+                  pl={{ base: "10px", sm: "7px", md: "5px", lg: "0px" }}
+                  justifyContent="center"
+                >
                   <SvgPlayerGif />
                 </Box>
               )}
             </Box>
           </Box>
         ) : (
-          <Box display={{ base: "none", md: "block" }} w="32px">
+          <Box display={{ base: "none", md: "block" }}>
             <SvgPlay
               fill={
                 active?.music_short === music?.music_short
