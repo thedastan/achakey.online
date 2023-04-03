@@ -246,12 +246,12 @@ export default function PopupForLyrics({
           rounded="30px"
           bg="rgba(255, 255, 255, 0.08)"
         >
-          <Box w="279px" h="279px" mx="auto" objectFit="cover">
+          <Box maxW="279px" minH="279px" mx="auto" objectFit="cover">
             <Image
               rounded={{ base: "22px", sm: "22px" }}
               src={image}
               h="100%"
-              w="100%"
+              minH="279px"
               objectFit="cover"
             />
           </Box>

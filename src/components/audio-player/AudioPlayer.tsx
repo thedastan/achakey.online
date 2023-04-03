@@ -1,7 +1,7 @@
-import { Button } from "@chakra-ui/button";
-import { Box, Text } from "@chakra-ui/layout";
-import { Image, useDisclosure } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { Button } from "@chakra-ui/button";
+import { Box } from "@chakra-ui/layout";
+import { Image, useDisclosure, Text } from "@chakra-ui/react";
 
 import {
   currentIndexAction,
@@ -28,14 +28,14 @@ import { OrderPost } from "../order/types/order";
 import SvgForAlbumPause from "../../assets/svg/SvgForAlbumPause";
 import SvgForAlbumNext from "../../assets/svg/SvgForAlbumNext";
 import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
+import ModalUserAuth from "../form/modal/ModalUser";
 import "./style.scss";
 import "../ui/style.scss";
-import ModalUserAuth from "../form/modal/ModalUser";
 
 interface IlistMedia {
-    listTruck?: ITrack[] | any;
-    openPopup:boolean;
-    setOpenPopup:(value:boolean) => void;
+  listTruck?: ITrack[] | any;
+  openPopup: boolean;
+  setOpenPopup: (value: boolean) => void;
 }
 
 interface ICartArray {
@@ -49,11 +49,16 @@ interface ICart {
   user: string;
   cart_item: ICartArray[];
 }
-export default function AudioPlayer({listTruck,openPopup,setOpenPopup}:IlistMedia) {
-    const {isOpen, onOpen, onClose} = useDisclosure();
-    const {loginModal} = useModalforms();
+export default function AudioPlayer({
+  listTruck,
+  openPopup,
+  setOpenPopup,
+}: IlistMedia) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { loginModal } = useModalforms();
   const [total, setTotal] = useState(0);
   const dispatch = useAppDispatch();
+
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
@@ -77,9 +82,12 @@ export default function AudioPlayer({listTruck,openPopup,setOpenPopup}:IlistMedi
     excerptPauseAction,
     excerptPlayAction,
     excerptCurrentTimeAction,
+    excerptForAlbumAction,
   } = useExcerpAction();
 
   const play = () => {
+    const activeDefaultMusic = albums?.music[0];
+
     if (forAlbum) {
       if (pause) {
         excerptPlayAction();
@@ -87,6 +95,18 @@ export default function AudioPlayer({listTruck,openPopup,setOpenPopup}:IlistMedi
       } else {
         excerptPauseAction();
         pauseTrack();
+      }
+    }
+
+    if (!active) {
+      excerptActiveAction(activeDefaultMusic);
+      eventChange(true);
+      dispatch(currentIndexAction(0));
+      pauseTrack();
+      {
+        window.location.pathname === "/excerpts/details/" + getIdAlums()
+          ? excerptForAlbumAction(true)
+          : excerptForAlbumAction(false);
       }
     }
   };
@@ -288,6 +308,8 @@ export default function AudioPlayer({listTruck,openPopup,setOpenPopup}:IlistMedi
           mx="auto"
         >
           {albums.name}
+
+          <Text></Text>
           <Text textAlign="center">{`[Album]`}</Text>
         </Box>
         <Box
@@ -409,67 +431,72 @@ export default function AudioPlayer({listTruck,openPopup,setOpenPopup}:IlistMedi
                 <span style={{ fontSize: "28px", paddingRight: "4px" }}>
                   {total}
                 </span>
-                                сом
-                            </Text>
-                            <Button
-                                onClick={() =>
-                                    getAccessToken() ? postOrderAlbum() : openModal()
-                                }
-                                ml={{base: "0px", md: "43px", lg: "48px"}}
-                                mr={{sm: "10%", md: "16px"}}
-                                w={{base: "40vw", sm: "39vw", md: "17vw"}}
-                                rounded="50px"
-                                py="9px"
-                                fontSize="14px"
-                                bg="blueDark"
-                                textColor="white"
-                                colorScheme="none"
-                            >
-                                Купить альбом
-                            </Button>
-                            <Button
-                                onClick={() =>
-                                    getAccessToken() ? postCartAlbum() : openModal()
-                                }
-                                rounded="50px"
-                                py="9px"
-                                w={{base: "40vw", sm: "39vw", md: "17vw"}}
-                                fontSize="14px"
-                                bg={findAlbum ? "#007AFF" : "none"}
-                                border={findAlbum ? "none" :"1px"}
-                                borderColor={findAlbum ? "#49DEFF" : "none"}
-                                color={findAlbum ? "white" :"#49DEFF"}
-                                _hover={{
-                                    color:"white",
-                                    bg:"#007AFF",
-                                    border: "none",
-                                }}
-                                colorScheme="none"
-                            >
-                                {findAlbum ? "В корзине" : "В корзину"}
-                                <Text
-                                    textAlign="end"
-                                    color="white"
-                                    fontSize="14px"
-                                    fontWeight="700"
-                                    px="5px"
-                                    display={{base: "flex", md: "none"}}
-                                ><span style={{fontSize: "14px", paddingRight: "4px"}}>{total}</span>
-                                    <Box px="1px" textDecoration="underline">c</Box>
-                                </Text>
-                            </Button>
-                        </Box>
-                    </Box>
-                </Box>
-                <Box className={openPopup ? "modalBg" : ""}>
-                    <Box mx="auto" maxW="700px">
-                        <OrderDetails
-                            openPopup={openPopup}
-                            setOpenPopup={setOpenPopup}
-                            className={openPopup ? "active" : ""}
-                        />
-                    </Box>
-                </Box>
+                сом
+              </Text>
+              <Button
+                onClick={() =>
+                  getAccessToken() ? postOrderAlbum() : openModal()
+                }
+                ml={{ base: "0px", md: "43px", lg: "48px" }}
+                mr={{ sm: "10%", md: "16px" }}
+                w={{ base: "40vw", sm: "39vw", md: "17vw" }}
+                rounded="50px"
+                py="9px"
+                fontSize="14px"
+                bg="blueDark"
+                textColor="white"
+                colorScheme="none"
+              >
+                Купить альбом
+              </Button>
+              <Button
+                onClick={() =>
+                  getAccessToken() ? postCartAlbum() : openModal()
+                }
+                rounded="50px"
+                py="9px"
+                w={{ base: "40vw", sm: "39vw", md: "17vw" }}
+                fontSize="14px"
+                bg={findAlbum ? "#007AFF" : "none"}
+                border={findAlbum ? "none" : "1px"}
+                borderColor={findAlbum ? "#49DEFF" : "none"}
+                color={findAlbum ? "white" : "#49DEFF"}
+                _hover={{
+                  color: "white",
+                  bg: "#007AFF",
+                  border: "none",
+                }}
+                colorScheme="none"
+              >
+                {findAlbum ? "В корзине" : "В корзину"}
+                <Text
+                  textAlign="end"
+                  color="white"
+                  fontSize="14px"
+                  fontWeight="700"
+                  px="5px"
+                  display={{ base: "flex", md: "none" }}
+                >
+                  <span style={{ fontSize: "14px", paddingRight: "4px" }}>
+                    {total}
+                  </span>
+                  <Box px="1px" textDecoration="underline">
+                    c
+                  </Box>
+                </Text>
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+        <Box className={openPopup ? "modalBg" : ""}>
+          <Box mx="auto" maxW="700px">
+            <OrderDetails
+              openPopup={openPopup}
+              setOpenPopup={setOpenPopup}
+              className={openPopup ? "active" : ""}
+            />
+          </Box>
+        </Box>
       </Box>
     </section>
   );
