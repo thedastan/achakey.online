@@ -256,7 +256,6 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
                 ? !findBasketMusic && PostBasketItem(el.music)
                 : openModal()
             }
-            bg="none"
             fontFamily="sans"
             fontSize="14px"
             width={{
@@ -267,15 +266,15 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
               xl: "180px",
               "2xl": "210px",
             }}
-            height="35px"
-            border="1px"
-            borderColor="white"
+            bg={findBasketMusic ? "#007AFF" : "none"}
+            border={findBasketMusic ? "none" :"1px"}
+            borderColor={findBasketMusic ? "#49DEFF" : "none"}
+            color={findBasketMusic ? "white" :"#49DEFF"}
             borderRadius="5px"
-            color="white"
             _hover={{
-              color: "#49DEFF",
-              borderColor: "#49DEFF",
-              background: "none",
+              color: "white",
+              bg: "#007AFF",
+              border: "none",
             }}
             className="music--button"
           >

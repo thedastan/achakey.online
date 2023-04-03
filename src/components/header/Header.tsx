@@ -117,7 +117,7 @@ export default function Header() {
             : "none"
           : "none"
       }
-      zIndex="1"
+      zIndex="21"
       top="0"
       left="0"
       right="0"
