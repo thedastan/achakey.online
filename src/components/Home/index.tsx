@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box, Text, Button, Stack, useBreakpointValue } from "@chakra-ui/react";
 import Music from "./Music";
-import { HiOutlineChevronDoubleDown } from "react-icons/hi";
 import "./style.css";
+import down from "../../assets/svg/down.svg"
 
 const Home = () => {
   const [musicPlay, setMusicPlay] = useState<boolean>(false);
@@ -72,7 +72,7 @@ const Home = () => {
               transform: musicPlay ? " translateY(-1300%)" : "translateY(100%)",
               transition: musicPlay ? "2s" : "2s",
             }}
-            rightIcon={<HiOutlineChevronDoubleDown className="em" />}
+            rightIcon={<img src={down} alt="img" className="em" />}
           >
             Перейти к трекам<em></em>
           </Button>

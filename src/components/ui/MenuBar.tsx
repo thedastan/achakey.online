@@ -182,7 +182,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
                   {el.item}
                 </span>
                             </Link>
-                            {basket[0]?.cart_item.length && index === 0 && (
+                            {basket[0]?.cart_item.length && index === 0 ?  (
                                 <Box
                                     fontSize="12px"
                                     position="absolute"
@@ -199,7 +199,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
                                 >
                                     {basket[0]?.cart_item?.length}
                                 </Box>
-                            )}
+                            ) : ""}
                         </Box>
                     ))}
                 </Box>
@@ -257,7 +257,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
                                     <Link to={el.link} title={el.item}>
                                         {el.svg}
                                     </Link>
-                                    {basket[0]?.cart_item.length && index === 0 && (
+                                    {basket[0]?.cart_item.length && index === 0 ? (
                                         <Box
                                             fontSize="12px"
                                             position="absolute"
@@ -276,7 +276,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
                                         >
                                             {basket[0]?.cart_item?.length}
                                         </Box>
-                                    )}
+                                    ): ""}
                                 </Box>
                                 {el.line}
                             </Box>
