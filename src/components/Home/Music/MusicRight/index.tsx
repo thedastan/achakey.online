@@ -283,7 +283,7 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
               <Box
                 display="flex"
                 px="5px"
-                color="#49DEFF"
+                color="white"
                 fontFamily="sans"
                 fontSize="14px"
               >
