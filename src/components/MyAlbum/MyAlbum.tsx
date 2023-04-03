@@ -130,7 +130,7 @@ export default function MyAlbum() {
                 <Box
                   key={index}
                   onClick={() => onChangeIndex(index)}
-                  mr="40px"
+                  mr={myAlbums.length - 1 === index ? "0" : "10px"}
                   pos="relative"
                   cursor="pointer"
                 >
