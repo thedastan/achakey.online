@@ -77,7 +77,7 @@ const Authoration: FC<IModalInterface> = ({ onClose }) => {
     toastMessageFunction({
       setOut: true,
       status: true,
-      message: "Добро пожаловать!",
+      message: "Вы успешно авторизовались",
     });
   };
 

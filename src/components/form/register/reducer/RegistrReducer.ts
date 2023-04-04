@@ -15,8 +15,8 @@ export const registerReducer = (state = initialState, action: IForms) => {
     case IFormsTypes.REGISTER_USER: {
       return {
         ...state,
-        registerUser: action.payload,
         loading: false,
+        registerUser: action.payload,
       };
     }
     case IFormsTypes.PHONE_NUMBER_REGISTER: {
@@ -25,11 +25,11 @@ export const registerReducer = (state = initialState, action: IForms) => {
         phoneNumber: action.payload,
       };
     }
-    case IFormsTypes.ERROR_USER: {
+    case IFormsTypes.ERROR_REGISTER: {
       return {
         ...state,
-        error: action.payload,
         loading: false,
+        error: action.payload,
         phoneNumber: "",
       };
     }

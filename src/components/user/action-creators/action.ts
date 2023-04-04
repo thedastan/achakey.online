@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
-import { toast } from "react-toastify";
 
 import API from "../../../api/Index";
 import { ActionUser, UserDetails, UserTypes } from "../types";
+import { toastMessageFunction } from "../../toast-message/action/ActionToast";
 
 export const fetchUser = () => {
   return async (dispatch: Dispatch<ActionUser>) => {
@@ -48,7 +48,14 @@ export const fetchChangeUserFields = (user: UserDetails) => {
       const res = await API.put(`account/users/manager/${user.id}/`, {
         ...user,
       });
-      toast.success("Данные успешно изменены");
+      dispatch(
+        //@ts-ignore
+        toastMessageFunction({
+          setOut: true,
+          status: true,
+          message: "Данные успешно изменены",
+        })
+      );
       dispatch({
         type: UserTypes.USER_DETAILS,
         payload: res.data,
@@ -59,8 +66,22 @@ export const fetchChangeUserFields = (user: UserDetails) => {
         payload: e.message,
       });
       if (e.response.data.phone[0] === "The phone number entered is not valid.")
-        return toast.error("Введенный номер телефона недействителен");
-      toast.error(e.message);
+        return dispatch(
+          //@ts-ignore
+          toastMessageFunction({
+            setOut: true,
+            status: false,
+            message: "Введенный номер телефона недействителен",
+          })
+        );
+      dispatch(
+        //@ts-ignore
+        toastMessageFunction({
+          setOut: true,
+          status: false,
+          message: e.message,
+        })
+      );
     }
   };
 };

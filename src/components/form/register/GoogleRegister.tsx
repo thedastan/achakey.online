@@ -1,6 +1,5 @@
-import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 
 import { usePostAuth } from "../../../hooks/useActions";
 import { ID_CLIENT } from "../../helpers/idClientGoogle";

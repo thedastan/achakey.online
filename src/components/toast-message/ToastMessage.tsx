@@ -17,7 +17,7 @@ const ToastMessage = () => {
   if (toast.setOut) {
     setTimeout(() => {
       onClickClose();
-    }, 4000);
+    }, 8000);
   }
 
   return (
@@ -45,10 +45,10 @@ const ToastMessage = () => {
           <Text
             fontWeight="500"
             fontSize={{ base: "16px", sm: "20px" }}
-            color={toast.setOut ? "#3BBF39" : "redForm"}
+            color={toast.status ? "#3BBF39" : "redForm"}
             pt="5px"
           >
-            {toast.setOut ? "Успешно" : "Ошибка"}
+            {toast.status ? "Успешно" : "Ошибка"}
           </Text>
           <Text
             p="2px"

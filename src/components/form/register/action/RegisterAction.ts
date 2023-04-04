@@ -1,10 +1,33 @@
 import { Dispatch } from "redux";
-import { toast } from "react-toastify";
 
 import { PUBLIC_API } from "../../../../api/Index";
 import { IForms, IFormsTypes, IInputRegister } from "../../formInterfaces";
 
-export const fetchRegister = (user: IInputRegister) => {
+export const fetchRegisterEmail = (user: IInputRegister) => {
+  return async (dispatch: Dispatch<IForms>) => {
+    try {
+      dispatch({
+        type: IFormsTypes.LOADING_REGISTER,
+      });
+      await PUBLIC_API.post("account/register/", {
+        ...user,
+      });
+      dispatch({
+        type: IFormsTypes.REGISTER_USER,
+        payload: user,
+      });
+    } catch (e: any) {
+      dispatch({
+        type: IFormsTypes.ERROR_REGISTER,
+        payload: !!e.response.data?.email[0]
+          ? e.response.data?.email[0]
+          : e.message,
+      });
+    }
+  };
+};
+
+export const fetchRegisterPhone = (user: IInputRegister) => {
   return async (dispatch: Dispatch<IForms>) => {
     try {
       dispatch({
@@ -27,15 +50,20 @@ export const fetchRegister = (user: IInputRegister) => {
       }
     } catch (e: any) {
       dispatch({
-        type: IFormsTypes.ERROR_USER,
-        payload: e.message,
+        type: IFormsTypes.ERROR_REGISTER,
+        payload: !!e.response.data?.phone[0]
+          ? e.response.data?.phone[0]
+          : e.message,
       });
-      if (e.response.data?.email[0]) {
-        return toast.error(e.response.data?.email[0]);
-      }
-      if (e.response.data?.phone[0]) {
-        return toast.error(e.response.data?.phone[0]);
-      }
     }
+  };
+};
+
+export const fetchErrorRegister = () => {
+  return (dispatch: Dispatch<IForms>) => {
+    dispatch({
+      type: IFormsTypes.ERROR_REGISTER,
+      payload: "",
+    });
   };
 };
