@@ -191,6 +191,7 @@ export default function MyAlbum() {
           <Box
             textColor="white"
             maxW="350px"
+            h="auto"
             px="35px"
             py="35px"
             rounded="30px"
@@ -201,8 +202,9 @@ export default function MyAlbum() {
           >
             <Box pb="18px">
               <Image
-                maxW="279px"
-                minH="279px"
+                maxW="100%"
+                h="279px"
+                objectFit="cover"
                 rounded="22px"
                 src={active?.image}
               />

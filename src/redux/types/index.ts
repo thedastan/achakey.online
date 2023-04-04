@@ -12,6 +12,7 @@ export enum ActionTypes {
 
 //Types
 export interface ITrack {
+  music?: string;
   id?: number | null;
   name?: string;
   image?: string;
@@ -19,7 +20,7 @@ export interface ITrack {
   music_short_len?: string;
   user?: any[];
   price?: string;
-  music_short?: string ;
+  music_short?: string;
   created_at?: string;
   updated_at?: string;
   text?: string;
@@ -38,7 +39,7 @@ export interface MusicState {
   albums: IAlbums[];
   myAlbums: IMyAlbums[];
   tracks: ITrack[];
-  track:ITrack;
+  track: ITrack;
   myTracks: IMyTrack[];
   error: string;
   loader: boolean;
