@@ -37,6 +37,7 @@ function App() {
         <Box className={openPopup ? "modalBg" : ""}>
             <AudioPlayerBottom/>
             <Navigation/>
+            <ToastMessage />
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/basket"

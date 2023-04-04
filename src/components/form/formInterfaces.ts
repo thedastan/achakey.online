@@ -48,6 +48,7 @@ export enum IFormsTypes {
   RESET_LOADING = "RESET_LOADING",
   RESET_PASSWORD = "RESET_PASSWORD",
   LOADING_REGISTER = "LOADING_REGISTER",
+  ERROR_REGISTER = "ERROR_REGISTER",
   ERROR_USER = "ERROR_USER",
   VALIDATE_REGISTER = "VALIDATE_REGISTER",
   PHONE_NUMBER_REGISTER = "PHONE_NUMBER_REGISTER",
@@ -79,6 +80,11 @@ interface IRegister {
   payload: IInputRegister;
 }
 
+interface IRegisterError {
+  type: IFormsTypes.ERROR_REGISTER;
+  payload: string | any;
+}
+
 interface IPhoneNumberRegister {
   type: IFormsTypes.PHONE_NUMBER_REGISTER;
   payload: string;
@@ -102,6 +108,7 @@ export type IForms =
   | IRegister
   | IErrorUser
   | ILoadingRegister
+  | IRegisterError
   | ILoadingReset
   | IResetPassword
   | IPhoneNumberRegister

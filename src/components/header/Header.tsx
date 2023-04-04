@@ -328,30 +328,40 @@ export default function Header() {
                         flexDirection="column"
                         alignItems="flex-start"
                       >
-                        <Box
-                          display="flex"
-                          justifyContent="center"
-                          w="100%"
-                          px="20px"
-                        >
-                          <Text
-                            color="#000000"
-                            my="5px"
-                            fontSize="16px"
-                            fontWeight="600"
-                            textAlign="center"
-                          >
-                            {!!userDetails?.username
-                              ? userDetails.username
-                              : ""}
+                        {!!userDetails?.username
+                          ? userDetails.auth_provider !== "google" && (
+                              <Box
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                px="20px"
+                              >
+                                <Text
+                                  color="#000000"
+                                  my="5px"
+                                  fontSize="16px"
+                                  fontWeight="600"
+                                  textAlign="center"
+                                >
+                                  {userDetails.username}
+                                </Text>
+                              </Box>
+                            )
+                          : ""}
+                        {!!userDetails?.email ? (
+                          <Text color="#6B6B6B" my="5px" mx="10px">
+                            {userDetails.email}
                           </Text>
-                        </Box>
-                        <Text color="#6B6B6B" my="5px" mx="10px">
-                          {!!userDetails?.email ? userDetails.email : ""}
-                        </Text>
-                        <Text color="#6B6B6B" my="5px" mx="10px">
-                          {!!userDetails?.phone ? userDetails.phone : ""}
-                        </Text>
+                        ) : (
+                          ""
+                        )}
+                        {!!userDetails?.phone ? (
+                          <Text color="#6B6B6B" my="5px" mx="10px">
+                            {userDetails.phone}
+                          </Text>
+                        ) : (
+                          ""
+                        )}
                       </MenuItem>
                       {userDetails.auth_provider !== "google" && (
                         <>

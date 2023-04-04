@@ -1,5 +1,5 @@
 .toast__block {
-  animation: card 4s ease-in;
+  animation: card 8s ease-out;
 }
 
 .toast__none {
@@ -11,16 +11,16 @@
 @keyframes card {
   from {
     opacity: 0;
-    transform: translateX(100vw);
+    transform: translateX(200px);
   }
   10% {
     opacity: 0;
   }
-  25% {
+  20% {
     transform: translateX(0);
     opacity: 1;
   }
-  55% {
+  65% {
     transform: translateX(0);
     opacity: 1;
   }

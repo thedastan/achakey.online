@@ -7,8 +7,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { useAppSelector } from "../../../hooks/Index";
 import { useActionChangePassword } from "../../../hooks/useActions";
@@ -30,9 +28,7 @@ const ChangePasswordForm = () => {
   const [error_new, setErrorNew] = useState<string>("");
   const [error_confirm, setErrorConfirm] = useState<string>("");
 
-  const { loading, changePass, errorChangePassword } = useAppSelector(
-    (state) => state.reducerChangePassword
-  );
+  const { loading } = useAppSelector((state) => state.reducerChangePassword);
 
   const { fetchChangePassword } = useActionChangePassword();
 
@@ -98,7 +94,6 @@ const ChangePasswordForm = () => {
   return (
     <Box h="100vh" w="100%" display="flex" alignItems="center">
       <Container maxW="1220px">
-        <ToastContainer />
         <Box w={["100%", "90%", "460px"]} mx="auto">
           <Text
             textAlign="center"

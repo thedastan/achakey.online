@@ -6,8 +6,6 @@ import {
 } from "@chakra-ui/react";
 import React, { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 //local
 import { useModalforms, usePostRegistr } from "../../../hooks/useActions";
@@ -35,11 +33,12 @@ const Registration: FC<IModalInterface> = ({ onClose }) => {
   const [errorPas, setErrorPas] = useState<string>("");
   const [errorPasConfirm, setErrorPasConfirm] = useState<string>("");
 
-  const { fetchRegister } = usePostRegistr();
+  const { fetchRegisterEmail, fetchRegisterPhone, fetchErrorRegister } =
+    usePostRegistr();
   const { loginModal, enterSequirityCode } = useModalforms();
   const navigate = useNavigate();
 
-  const { loading, phoneNumber } = useAppSelector(
+  const { loading, phoneNumber, error } = useAppSelector(
     (state) => state.registerReducer
   );
 
@@ -99,9 +98,9 @@ const Registration: FC<IModalInterface> = ({ onClose }) => {
     setErrorEmailPhone("");
     if (password === password_confirm) {
       if (email.length > 5) {
-        fetchRegister({ email, password, password_confirm });
+        fetchRegisterEmail({ email, password, password_confirm });
       } else if (phone.length > 5) {
-        fetchRegister({ phone, password, password_confirm });
+        fetchRegisterPhone({ phone, password, password_confirm });
       } else {
         setErrorEmailPhone("Введите почту или номер");
       }
@@ -112,6 +111,7 @@ const Registration: FC<IModalInterface> = ({ onClose }) => {
 
   const openLogin = () => {
     loginModal();
+    fetchErrorRegister();
   };
 
   if (!!loginUser.access) {
@@ -121,7 +121,6 @@ const Registration: FC<IModalInterface> = ({ onClose }) => {
 
   return (
     <Box w="100%" px={{ sm: "20px" }}>
-      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <FormControl>
           <WordIndex text="войдите через" size="16px" />
@@ -139,7 +138,15 @@ const Registration: FC<IModalInterface> = ({ onClose }) => {
               focusBorderColor={errorEmailPhone.length ? "#FF0000" : "#174079"}
               onChangeInput={handleChange}
             />
-            <TextError text={errorEmailPhone} />
+            <TextError
+              text={
+                errorEmailPhone.length
+                  ? errorEmailPhone
+                  : error.length
+                  ? error
+                  : ""
+              }
+            />
           </Box>
           <Box mb="10px">
             <InputGroup>
