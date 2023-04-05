@@ -100,7 +100,7 @@ export default function MenuBar({ children }: IPropsMenuBar) {
       ),
       line: (
         <Box
-          left="45px"
+          left="37px"
           pos="absolute"
           w="0"
           h="27px"
@@ -231,8 +231,8 @@ export default function MenuBar({ children }: IPropsMenuBar) {
                   alignItems="center"
                   color="white"
                   rounded="50%"
-                  pr="2px"
-                  right={7}
+                  top="15px"
+                  right="33px"
                 >
                   {basket[0]?.cart_item?.length}
                 </Box>
