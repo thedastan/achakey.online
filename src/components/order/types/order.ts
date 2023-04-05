@@ -13,8 +13,8 @@ export interface OrderState {
   order: OrderType[];
   orderDetails: OrderType | null;
   orderId: number | null;
-  openOrder:boolean;
-  openOrderId:boolean;
+  openOrder:boolean | any;
+  openOrderId:boolean | any;
 }
 
 export interface OrderType {

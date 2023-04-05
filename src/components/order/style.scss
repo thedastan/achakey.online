@@ -6,7 +6,7 @@
   &.transform {
     transform: translateY(0);
     opacity: 1;
-    margin: 0 auto;
+    margin:  0 auto;
   }
 }
 
@@ -21,7 +21,7 @@
   &.active {
     transform: translateY(0);
     opacity: 1;
-    margin: 0 auto;
+    margin: auto 0;
   }
 }
 

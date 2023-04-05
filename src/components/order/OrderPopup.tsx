@@ -3,31 +3,28 @@ import {useEffect, useState} from "react";
 
 import API from "../../api/Index";
 import SvgBlackCross from "../../assets/svg/SvgBlackCross";
-import {useAppSelector} from "../../hooks/Index";
+import {useAppDispatch, useAppSelector} from "../../hooks/Index";
 import {useActionOrder} from "../../hooks/useActions";
 import {getUserId} from "../helper";
 import OrderListAlbums from "./orderListForAlbum";
 import defaultImage from "../../assets/img/defaultImage.png";
 import "./style.scss";
+import {OrderTypes} from "./types/order";
 
 interface IOrderPopup {
     className: string;
-    setOpenPopup: (value: boolean) => void;
-    openPopup: boolean;
 }
 
 export const OrderPopup = ({
                                className,
-                               setOpenPopup,
-                               openPopup,
                            }: IOrderPopup) => {
     const {fetchOrder} = useActionOrder();
     const [total, setTotal] = useState(0);
-    const {order} = useAppSelector((state) => state.reducerOrder);
+    const {order,openOrder} = useAppSelector((state) => state.reducerOrder);
     const filterUser = order.filter((el) => el.user === getUserId());
-
+    const dispatch = useAppDispatch()
     function handleClickClose() {
-        setOpenPopup(false);
+        dispatch({type:OrderTypes.OPEN_MODAL_ORDER , payload:false})
     }
 
     const deletedorder = async (id: string) => {
@@ -76,8 +73,8 @@ export const OrderPopup = ({
                 className={`order ${className}`}
                 left="0"
                 right="0"
-                top={{base:"none", md:"0"}}
-                bottom={{base:"0", md:"0"}}
+                top={{base:"none",sm:"none", md:"0"}}
+                bottom="0"
                 pos="fixed"
                 zIndex="12"
                 bg="transparent"
@@ -168,24 +165,24 @@ export const OrderPopup = ({
                                                                 <Box display="flex" alignItems="center">
                                                                     <Text
                                                                         fontWeight="400"
-                                                                        mr="48px"
+                                                                        // mr="48px"
                                                                         fontSize="14px"
                                                                         fontFamily="Montserrat,sans-serif"
                                                                     >
                                                                         {Math.floor(Number(el?.music?.price))} cом
                                                                     </Text>
-                                                                    <Button
-                                                                        onClick={() => deletedorder(`${item.id}`)}
-                                                                        bg="transparent"
-                                                                        colorScheme="none"
-                                                                        px="0"
-                                                                        py="0"
-                                                                        color="#C10404"
-                                                                        fontSize="12px"
-                                                                        fontWeight="400"
-                                                                    >
-                                                                        Удалить
-                                                                    </Button>
+                                                                    {/*<Button*/}
+                                                                    {/*    onClick={() => deletedorder(`${item.id}`)}*/}
+                                                                    {/*    bg="transparent"*/}
+                                                                    {/*    colorScheme="none"*/}
+                                                                    {/*    px="0"*/}
+                                                                    {/*    py="0"*/}
+                                                                    {/*    color="#C10404"*/}
+                                                                    {/*    fontSize="12px"*/}
+                                                                    {/*    fontWeight="400"*/}
+                                                                    {/*>*/}
+                                                                    {/*    Удалить*/}
+                                                                    {/*</Button>*/}
                                                                 </Box>
                                                             </Box>
                                                         </Box>

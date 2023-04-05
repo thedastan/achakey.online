@@ -1,41 +1,40 @@
-import {Box, Button, Container, Image, Text} from "@chakra-ui/react";
+import {Box, Button, Container, flatten, Image, Text} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 
 import API from "../../api/Index";
 import SvgBlackCross from "../../assets/svg/SvgBlackCross";
-import {useAppSelector} from "../../hooks/Index";
+import {useAppDispatch, useAppSelector} from "../../hooks/Index";
 import {useActionOrder} from "../../hooks/useActions";
 import {fetchOrderItem} from "./action-creators/action";
 import OrderListAlbums from "./orderListForAlbum";
 import "./style.scss";
 import ReactDOM from "react-dom/client";
+import {OrderTypes} from "./types/order";
 
 interface IOrderPopup {
     className: string;
-    setOpenPopup: (value: boolean) => void;
-    openPopup: boolean;
 }
 
 export const OrderDetails = ({
                                  className,
-                                 setOpenPopup,
-                                 openPopup,
                              }: IOrderPopup) => {
     const {fetchOrder} = useActionOrder();
     const [total, setTotal] = useState(0);
-    const {orderDetails, orderId} = useAppSelector(
+    const {orderDetails, orderId,openOrder, openOrderId} = useAppSelector(
         (state) => state.reducerOrder
     );
+    const dispatch = useAppDispatch()
 
     function handleClickClose() {
-        setOpenPopup(false);
+        dispatch({type:OrderTypes.OPEN_MODAL_ORDER , payload:false})
+        dispatch({type: OrderTypes.OPEN_MODAL_ORDER_ID, payload:false})
     }
 
     const deletedorder = async (id: string) => {
         try {
             const responce = await API.delete(`order/delete/${id}`);
 
-            setOpenPopup(false);
+            openOrderId(false);
             fetchOrder();
         } catch (e) {
 
@@ -83,7 +82,7 @@ export const OrderDetails = ({
                 className={`details ${className}`}
                 left="0"
                 right="0"
-                top={{base:"0",sm:"-150px"}}
+                top="-150px"
                 bottom="0"
                 pos="fixed"
                 zIndex="4"
@@ -93,7 +92,8 @@ export const OrderDetails = ({
                 alignItems="center"
             >
                 <Box w="100%">
-                    <Box bg="#E0E0E0" mx="auto" rounded="20px" maxW="688px">
+                    <Box bg="#E0E0E0" mx="auto" roundedTop="20px"
+                         roundedBottom={{base: "0px", md: "20px"}} maxW="688px">
                         <Container maxW="688px" pb="34px">
                             <Box pos="relative">
                                 <Box
@@ -165,18 +165,18 @@ export const OrderDetails = ({
                                                             >
                                                                 {Math.floor(el?.music?.price)} cом
                                                             </Text>
-                                                            <Button
-                                                                onClick={() => deletedorder(`${el?.id}`)}
-                                                                bg="transparent"
-                                                                colorScheme="none"
-                                                                px="0"
-                                                                py="0"
-                                                                color="#C10404"
-                                                                fontSize="12px"
-                                                                fontWeight="400"
-                                                            >
-                                                                Удалить
-                                                            </Button>
+                                                            {/*<Button*/}
+                                                            {/*    onClick={() => deletedorder(`${el?.id}`)}*/}
+                                                            {/*    bg="transparent"*/}
+                                                            {/*    colorScheme="none"*/}
+                                                            {/*    px="0"*/}
+                                                            {/*    py="0"*/}
+                                                            {/*    color="#C10404"*/}
+                                                            {/*    fontSize="12px"*/}
+                                                            {/*    fontWeight="400"*/}
+                                                            {/*>*/}
+                                                            {/*    Удалить*/}
+                                                            {/*</Button>*/}
                                                         </Box>
                                                     </Box>
                                                 )}

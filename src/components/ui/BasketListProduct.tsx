@@ -2,11 +2,11 @@ import { Box, Button, Image, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import SvgCross from "../../assets/svg/SvgCross";
-import { useAppSelector } from "../../hooks/Index";
+import {useAppDispatch, useAppSelector} from "../../hooks/Index";
 import { useActionOrder } from "../../hooks/useActions";
 import { ITrack } from "../../redux/types";
 import { getUserId } from "../helper";
-import { OrderPost } from "../order/types/order";
+import {OrderPost, OrderTypes} from "../order/types/order";
 import "./style.scss";
 
 interface IBasketProps {
@@ -16,7 +16,6 @@ interface IBasketProps {
   deleted: (value: string) => void;
   id?: string;
   music: ITrack | undefined;
-  setOpenPopup: (value: boolean) => void;
 }
 
 export default function BasketListProduct({
@@ -26,12 +25,11 @@ export default function BasketListProduct({
   deleted,
   id,
   music,
-  setOpenPopup,
 }: IBasketProps) {
   const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
     useActionOrder();
   const Order = useAppSelector((state) => state.reducerOrder.order);
-
+  const dispatch = useAppDispatch()
   const postOrder = async (cart?: ITrack) => {
     const order: OrderPost = {
       user: getUserId(),
@@ -86,7 +84,7 @@ export default function BasketListProduct({
     );
 
     fetchOrder();
-    setOpenPopup(true);
+    dispatch({type:OrderTypes.OPEN_MODAL_ORDER_ID, payload:true})
   };
 
   useEffect(() => {

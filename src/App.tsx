@@ -20,7 +20,7 @@ import {
 import BottomPlayer from "./components/bottom-audio-player/BottomPLayer";
 import {useState} from "react";
 import {Box} from "@chakra-ui/react";
-import ToastMessage from './components/toast-message/ToastMessage';
+import {useAppSelector} from "./hooks/Index";
 
 enum AlbumOrTracks {
     ALBUM = "ALBUM",
@@ -31,20 +31,16 @@ function App() {
     const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
     const isAlbum = isActive === AlbumOrTracks.ALBUM;
     const isTracks = isActive === AlbumOrTracks.TRACKS;
-    const [openPopup, setOpenPopup] = useState(false);
-    const [openPopupId, setOpenPopupId] = useState(false);
+    const {openOrder, openOrderId} = useAppSelector((state) => state.reducerOrder)
+
     return (
-        <Box className={openPopup ? "modalBg" : ""}>
+        <Box className={openOrder || openOrderId ? "modalBg" : ""}>
             <AudioPlayerBottom/>
             <Navigation/>
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/basket"
-                       element={<Basket
-                           openPopup={openPopup}
-                           setOpenPopup={setOpenPopup}
-                           openPopupId={openPopupId}
-                           setOpenPopupId={setOpenPopupId}/>}/>
+                       element={<Basket/>}/>
                 <Route
                     path="/excerpts"
                     element={
@@ -56,8 +52,7 @@ function App() {
                     }
                 />
                 <Route path="/my-playlist" element={<MyPlaylist/>}/>
-                <Route path="/excerpts/details/:id" element={<DetailsAlbums openPopup={openPopup}
-                                                                            setOpenPopup={setOpenPopup}/>}/>
+                <Route path="/excerpts/details/:id" element={<DetailsAlbums/>}/>
                 <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
                 <Route path="/public-offer" element={<PublicOffer/>}/>
                 <Route path="/changePassword" element={<ChangePasswordPage/>}/>
