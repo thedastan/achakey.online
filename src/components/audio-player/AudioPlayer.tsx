@@ -24,7 +24,7 @@ import defaultImage from "../../assets/img/defaultImage.png";
 import { getAccessToken, getIdAlums, getUserId } from "../helper";
 import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
 import { OrderDetails } from "../order/OrderDetails";
-import { OrderPost } from "../order/types/order";
+import {OrderPost, OrderTypes} from "../order/types/order";
 import SvgForAlbumPause from "../../assets/svg/SvgForAlbumPause";
 import SvgForAlbumNext from "../../assets/svg/SvgForAlbumNext";
 import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
@@ -34,8 +34,6 @@ import "../ui/style.scss";
 
 interface IlistMedia {
   listTruck?: ITrack[] | any;
-  openPopup: boolean;
-  setOpenPopup: (value: boolean) => void;
 }
 
 interface ICartArray {
@@ -51,8 +49,6 @@ interface ICart {
 }
 export default function AudioPlayer({
   listTruck,
-  openPopup,
-  setOpenPopup,
 }: IlistMedia) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { loginModal } = useModalforms();
@@ -63,6 +59,7 @@ export default function AudioPlayer({
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const Order = useAppSelector((state) => state.reducerOrder.order);
+  const {openOrder, openOrderId} = useAppSelector((state) => state.reducerOrder)
   const { event } = useAppSelector((state) => state.eventReducer);
   const indexCurrent = useAppSelector(
     (state) => state.currentIndexReducer.currentIndex
@@ -201,7 +198,7 @@ export default function AudioPlayer({
 
   function postOrderAlbum() {
     fetchOrder();
-    setOpenPopup(true);
+    dispatch({type:OrderTypes.OPEN_MODAL_ORDER, payload:true})
     const order: OrderPost = {
       user: getUserId(),
       total_price: null,
@@ -248,7 +245,7 @@ export default function AudioPlayer({
       )
     );
 
-    setOpenPopup(true);
+    dispatch({type:OrderTypes.OPEN_MODAL_ORDER, payload:true})
     fetchOrder();
   }
 
@@ -488,12 +485,10 @@ export default function AudioPlayer({
             </Box>
           </Box>
         </Box>
-        <Box className={openPopup ? "modalBg" : ""}>
-          <Box mx="auto" maxW="700px">
+        <Box className={openOrder ? "modalBg" : ""}>
+          <Box mx="auto" maxW="700px" >
             <OrderDetails
-              openPopup={openPopup}
-              setOpenPopup={setOpenPopup}
-              className={openPopup ? "active" : ""}
+              className={openOrder ? "active" : ""}
             />
           </Box>
         </Box>

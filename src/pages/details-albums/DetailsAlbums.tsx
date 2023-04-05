@@ -8,12 +8,8 @@ import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { fetchAlbumsDetails } from "./action-creators";
 import Footer from "../../components/footer/Footer";
 
-interface IOrderModalProps {
-  openPopup:boolean;
-  setOpenPopup:(value:boolean) => void;
-}
 
-export default function DetailsAlbums({openPopup,setOpenPopup}:IOrderModalProps) {
+export default function DetailsAlbums() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
@@ -37,7 +33,7 @@ export default function DetailsAlbums({openPopup,setOpenPopup}:IOrderModalProps)
         <Box className="bg-menuBar-blur">
           <Container maxW="1220px" pt="140px">
             <Box pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}>
-              <AudioPlayer openPopup={openPopup} setOpenPopup={setOpenPopup} listTruck={albums.music} />
+              <AudioPlayer listTruck={albums.music} />
               <ExcerptTrackList tracks={albums.music} />
             </Box>
             <BottomPlayer />

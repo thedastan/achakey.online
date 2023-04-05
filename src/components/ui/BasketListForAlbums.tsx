@@ -1,10 +1,10 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import { useAppSelector } from "../../hooks/Index";
+import {useAppDispatch, useAppSelector} from "../../hooks/Index";
 import { useActionOrder } from "../../hooks/useActions";
 import { IMusicForBasket, IPlayList } from "../../pages/basket/types";
-import { OrderPost } from "../order/types/order";
+import {OrderPost, OrderTypes} from "../order/types/order";
 import { getUserId } from "../helper";
 import SvgArrowTop from "../../assets/svg/SvgArrowTop";
 import SvgCross from "../../assets/svg/SvgCross";
@@ -17,7 +17,6 @@ interface IBasketAlbums {
   deleted: (value: string) => void;
   id: string;
   albums: IPlayList | undefined;
-  setOpenPopup: (value: boolean) => void;
 }
 
 export default function BasketListAlbums({
@@ -26,13 +25,13 @@ export default function BasketListAlbums({
   price,
   music,
   albums,
-  setOpenPopup,
   deleted,
   id,
 }: IBasketAlbums) {
   const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
     useActionOrder();
   const Order = useAppSelector((state) => state.reducerOrder.order);
+  const dispatch = useAppDispatch()
   const [active, setActive] = useState<boolean>(false);
   const [total, setTotal] = useState(0);
 
@@ -84,7 +83,7 @@ export default function BasketListAlbums({
       )
     );
 
-    setOpenPopup(true);
+    dispatch({type:OrderTypes.OPEN_MODAL_ORDER_ID, payload:true})
     fetchOrder();
   };
 

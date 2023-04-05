@@ -55,12 +55,11 @@ export default function OrderListAlbums({
           onClick={() => setActive(!active)}
           pb="19px"
           borderBottom="0.5px solid rgba(124, 124, 124, 0.5)"
-          flexDir={{ base: "column", sm: "row" }}
         >
           <Box
             display="flex"
             alignItems="center"
-            w={{ base: "100%", sm: "80%", md: "100%" }}
+            w={{ base: "75%", sm: "80%", md: "80%" }}
           >
             <Image
               src={image ? image : defaultImage}
@@ -74,27 +73,27 @@ export default function OrderListAlbums({
             </Text>
           </Box>
           <Box
-            display="flex"
-            alignItems="center"
-            justifyContent={{ base: "space-between", md: "none" }}
-            w={{ base: "100%", sm: "auto" }}
+            // display="flex"
+            // alignItems="center"
+            // justifyContent={{ base: "space-between", md: "none" }}
+            // w={{ base: "100%", sm: "auto" }}
           >
-            <Text mr="48px">{total} сом</Text>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                deleted(`${id}`);
-              }}
-              bg="transparent"
-              colorScheme="none"
-              px="0"
-              py="0"
-              color="#C10404"
-              fontSize="12px"
-              fontWeight="400"
-            >
-              Удалить
-            </Button>
+            <Text >{total} сом</Text>
+            {/*<Button*/}
+            {/*  onClick={(e) => {*/}
+            {/*    e.stopPropagation();*/}
+            {/*    deleted(`${id}`);*/}
+            {/*  }}*/}
+            {/*  bg="transparent"*/}
+            {/*  colorScheme="none"*/}
+            {/*  px="0"*/}
+            {/*  py="0"*/}
+            {/*  color="#C10404"*/}
+            {/*  fontSize="12px"*/}
+            {/*  fontWeight="400"*/}
+            {/*>*/}
+            {/*  Удалить*/}
+            {/*</Button>*/}
           </Box>
         </Box>
         <Box>

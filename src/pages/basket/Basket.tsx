@@ -5,26 +5,22 @@ import {Link} from "react-router-dom";
 import BasketListAlbums from "../../components/ui/BasketListForAlbums";
 import BasketListProduct from "../../components/ui/BasketListProduct";
 import API from "../../api/Index";
-import {useAppSelector} from "../../hooks/Index";
+import {useAppDispatch, useAppSelector} from "../../hooks/Index";
 import {useActionBasket} from "../../hooks/useActions";
 import {OrderPopup} from "../../components/order/OrderPopup";
 import {getUserId} from "../../components/helper";
 import {OrderDetails} from "../../components/order/OrderDetails";
 import SvgBasketEmpty from "../../assets/svg/SvgBasketEmpty";
+import {OrderTypes} from "../../components/order/types/order";
 
-interface IBasketModalProps {
-    openPopup:boolean;
-    setOpenPopup: (value:boolean) => void;
-    openPopupId: boolean;
-    setOpenPopupId: (value:boolean) => void;
-}
 
-export default function Basket({openPopup,setOpenPopup,openPopupId,setOpenPopupId}:IBasketModalProps) {
+export default function Basket() {
     const [total, setTotal] = useState(0);
 
     const {fetchBasket} = useActionBasket();
     const {basket, loader} = useAppSelector((state) => state.reducerBasket);
-
+    const {openOrder, openOrderId} = useAppSelector((state) => state.reducerOrder)
+    const dispatch = useAppDispatch()
     const lengthBasket = basket.filter((el) => el.user === getUserId());
     const filterUser = basket.filter((el) => el.user === getUserId());
 
@@ -130,7 +126,6 @@ export default function Basket({openPopup,setOpenPopup,openPopupId,setOpenPopupI
                                                 <Box key={idx}>
                                                     {el.album !== null && (
                                                         <BasketListAlbums
-                                                            setOpenPopup={setOpenPopupId}
                                                             albums={el?.album}
                                                             id={String(el.id)}
                                                             deleted={deletedBasket}
@@ -155,7 +150,6 @@ export default function Basket({openPopup,setOpenPopup,openPopupId,setOpenPopupI
                                                 <Box key={idx}>
                                                     {el.music !== null && (
                                                         <BasketListProduct
-                                                            setOpenPopup={setOpenPopupId}
                                                             id={String(el.id)}
                                                             deleted={deletedBasket}
                                                             music={el.music}
@@ -185,7 +179,7 @@ export default function Basket({openPopup,setOpenPopup,openPopupId,setOpenPopupI
                                         Итого: {total} cом
                                     </Text>
                                     <Button
-                                        onClick={() => setOpenPopup(true)}
+                                        onClick={() => dispatch({type:OrderTypes.OPEN_MODAL_ORDER, payload:true})}
                                         bg="#007AFF"
                                         colorScheme="#007AFF"
                                         rounded="10px"
@@ -200,18 +194,14 @@ export default function Basket({openPopup,setOpenPopup,openPopupId,setOpenPopupI
                                 </Box>
                             )}
                         </Box>
-                        <Box className={openPopup ? "modalBg" : ""}>
+                        <Box className={openOrder ? "modalBg" : ""}>
                             <OrderPopup
-                                openPopup={openPopup}
-                                className={openPopup ? "transform" : ""}
-                                setOpenPopup={setOpenPopup}
+                                className={openOrder ? "transform" : ""}
                             />
                         </Box>
-                        <Box className={openPopupId ? "modalBg" : ""}>
+                        <Box className={openOrderId ? "modalBg" : ""}>
                         <OrderDetails
-                                openPopup={openPopupId}
-                                className={openPopupId ? "active" : ""}
-                                setOpenPopup={setOpenPopupId}
+                                className={openOrderId ? "active" : ""}
                             />
                         </Box>
                     </Container>
