@@ -78,6 +78,7 @@ const AccountManagementForm = () => {
                       required: !!userDetails.email ? true : false,
                       pattern: emailPattern,
                     })}
+                    readOnly={!!userDetails.email ? true : false}
                     sx={{
                       "&::placeholder": {
                         color: "#AAAAAA",
@@ -116,6 +117,7 @@ const AccountManagementForm = () => {
                       required: !!userDetails.phone ? true : false,
                       pattern: phonePattern,
                     })}
+                    readOnly={!!userDetails.phone ? true : false}
                     sx={{
                       "&::placeholder": {
                         color: "#AAAAAA",

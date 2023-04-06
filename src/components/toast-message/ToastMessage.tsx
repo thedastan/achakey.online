@@ -26,15 +26,14 @@ const ToastMessage = () => {
         w={{ base: "270px", sm: "380px" }}
         borderRadius="10px"
         position="fixed"
-        top="85px"
-        right={{ base: "1rem", sm: "2rem" }}
+        top="5px"
+        right="5px"
         bg="#FFFFFF"
-        zIndex="20"
+        zIndex="22"
         py="5px"
         pl="15px"
         pr="10px"
         className={toast.setOut ? "toast__block" : "toast__none"}
-        // display={toast.setOut ? "block" : "none"}
       >
         <Box
           display="flex"
