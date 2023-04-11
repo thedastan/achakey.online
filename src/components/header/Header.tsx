@@ -134,13 +134,7 @@ export default function Header() {
           }}
         />
       )}
-      <Container
-        maxW="1440px"
-        pos="relative"
-        display={breakpoints === "base" && "sm" && "md" ? "block" : "flex"}
-        justifyContent="end"
-        alignItems="center"
-      >
+      <Container>
         {!getAccessToken() ? (
           <Box
             display="flex"
