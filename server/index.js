@@ -1,5 +1,5 @@
 const fs = require('fs');
-const http = require('http');
+const http = require('http')
 const https = require('https');
 
 // URL-адрес MP3-файла для загрузки
@@ -17,72 +17,49 @@ protocol.get(mp3Url,(res) => {
   const fileStream = fs.createWriteStream(mp3Path);
   res.pipe(fileStream);
   fileStream.on('finish',() => {
-    // Когда файл сохранен, читаем его содержимое и преобразуем в бинарный формат
+    // Когда файл сохранен, читаем его содержимое и преобразуем в текстовый формат
     const bytes = fs.readFileSync(mp3Path);
-
-    const fileName = 'new-audio.mp3';
-
-    // Записываем байты в новый MP3-файл
-    fs.writeFileSync(fileName,bytes,{ encoding: 'binary' },(err) => {
-      if (err) throw err;
-      console.log('Файл сохранен');
-    });
+    const text = bytes.toString('utf8');
   });
 });
-
-// const protocol = mp3Url.startsWith('https') ? https : http;
-
-// // Создаем новый запрос
-// protocol.get(mp3Url,(res) => {
-//   // Создаем новый файл на диск и сохраняем в него содержимое MP3-файла
-//   const fileStream = fs.createWriteStream(mp3Path);
-//   res.pipe(fileStream);
-//   fileStream.on('finish',() => {
-//     // Когда файл сохранен, читаем его содержимое и преобразуем в текстовый формат
-//     const bytes = fs.readFileSync(mp3Path);
-//     const text = bytes.toString('utf8');
-
-//     const encode = 'utf8';
-
-//     const byte = Buffer.from(text,encode)
-
-//     const fileName = 'audio.mp3'
-
-//     fs.writeFile(fileName,byte,{ encoding: "binary" },(err) => {
-//       if (err) throw err
-
-//       console.log('Файл сохранен!!!')
-//     })
-
-//   });
-// });
-
-// https://dl2.mp3party.net/online/10186650.mp3
 
 // Вариант 1
 // const base64String = 'Jax_02.14_-_Дурак_2WNOL0p.txt';
 // const buffer = Buffer.from(base64String,'base64');
-// const numbersBytes = Buffer.from(buffer,'base64').toJSON().data
 
-// // Вариант 2
-// const encoder = new TextEncoder();
-// const bytes = encoder.encode(base64String);
+// console.log(buffer)
 
-// console.log(new lame.Encoder());
+// const headerSize = 10; // Размер заголовка MP3
+// const fileSize = headerSize + buffer.length; // Размер всего файла
 
-// const encoderMP3 = new lame.Encoder({
-//   output: 'file.mp3',
-//   bitrate: 192,
-//   meta: {
-//     artist: 'My Artist',
-//     title: 'My Song'
+// const header = Buffer.alloc(headerSize);
+// header.write('ID3',0); // ID3
+// header.writeUInt16BE(0x0200,3); // Версия ID3
+// header.writeUInt32BE(0x00000000,5); // Флаги
+// header.writeUInt32BE(fileSize - headerSize,6); // Размер заголовка
+
+// const mp3Data = Buffer.concat([header,buffer]);
+
+// fs.writeFile('output.mp3',mp3Data,(err) => {
+//   if (err) {
+//     console.error(err);
+//     return;
 //   }
+//   console.log('MP3 файл успешно создан!');
 // });
 
-// const stream = encoderMP3.createWriteStream();
-// stream.write(Buffer.from(bytes));
-// stream.end();
+// Вариант 2
+// const txt = 'Jax_02.14_-_Дурак_2WNOL0p.txt';
+// const buffer = Buffer.from(txt,'utf-8')
 
-// encoderMP3.on('finish',function () {
-//   console.log('Файл сохранен!');
-// });
+// //const buffer = Buffer.from(txt,'base64');
+// const filename = 'audio.mp3';
+
+// // Создание нового mp3-файла и запись в него байтов
+// fs.writeFileSync(filename,buffer);
+
+// // // Чтение mp3-файла в буфер
+// const originalMp3 = fs.readFileSync(filename);
+
+// // Объединение оригинального mp3-файла и вставленных данных
+
