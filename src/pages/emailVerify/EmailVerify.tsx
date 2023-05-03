@@ -10,11 +10,11 @@ const EmailVerifyPage: React.FC = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
 
+  const { getEmailVerify } = useActionEmailVerify();
+
   const { loading, authModal, error } = useAppSelector(
     (state) => state.emailVerifyReducer
   );
-
-  const { getEmailVerify } = useActionEmailVerify();
 
   useEffect(() => {
     !!token && getEmailVerify(token);

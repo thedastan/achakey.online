@@ -9,10 +9,10 @@ import {
 import {
   currentIndexAction,
   eventChange,
-} from "../playlist/reducer/action-creator";
+} from "../excerptPlaylist/reducer/action-creator";
 import { IMyTrack, ITrack } from "../../redux/types";
-import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
-import PopupForLyrics from "../ui/popupForLyrics";
+import ListForAlbumOrTracks from "../../components/ui/ListForAlbumOrTracks";
+import PopupForLyrics from "../../components/ui/popupForLyrics";
 
 export default function MyTracks() {
   const dispatch = useAppDispatch();

@@ -1,8 +1,7 @@
 import { Box, Container, Text } from "@chakra-ui/react";
-import { useState } from "react";
 
+import AllAlbums from "../../containers/albums/AllAlbums";
 import { AllPlaylist } from "../Index";
-import AllAlbums from "../../components/albums/AllAlbums";
 
 enum AlbumOrTracks {
   ALBUM = "ALBUM",

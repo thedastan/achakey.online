@@ -13,8 +13,8 @@ import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import { tabBooleanAction } from "./action-creators/action";
 import SvgMyPlaylistEmpty from "../../assets/svg/SvgMyPlaylistEmpty";
-import MyAlbum from "../../components/MyAlbum/MyAlbum";
-import MyTracks from "../../components/my-tracks/Mytracks";
+import MyAlbum from "../../containers/MyAlbum/MyAlbum";
+import MyTracks from "../../containers/myTracks/Mytracks";
 import { useTracksAction } from "../../hooks/useActions";
 
 enum AlbumOrTracks {

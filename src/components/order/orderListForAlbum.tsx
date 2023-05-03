@@ -19,11 +19,7 @@ interface IBasketAlbums {
 export default function OrderListAlbums({
   image,
   name,
-  price,
   music,
-  albums,
-  deleted,
-  id,
 }: IBasketAlbums) {
   const [active, setActive] = useState<boolean>(false);
   const [total, setTotal] = useState(0);

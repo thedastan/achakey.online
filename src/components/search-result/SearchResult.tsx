@@ -12,7 +12,7 @@ import { getIdAlums } from "../helper";
 import {
   currentIndexAction,
   eventChange,
-} from "../playlist/reducer/action-creator";
+} from "../../containers/excerptPlaylist/reducer/action-creator";
 import MusicForList from "../ui/MusicForList";
 
 export default function SearchResult() {

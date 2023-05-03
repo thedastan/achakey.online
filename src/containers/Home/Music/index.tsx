@@ -8,8 +8,8 @@ import "swiper/css/pagination";
 
 import { useAppDispatch, useAppSelector } from "../../../hooks/Index";
 import { useModalforms, useTracksAction } from "../../../hooks/useActions";
-import ModalUserAuth from "../../form/modal/ModalUser";
-import Footer from "../../footer/Footer";
+import ModalUserAuth from "../../../components/form/modal/ModalUser";
+import Footer from "../../../components/footer/Footer";
 import "./musicStyle.css";
 
 import { ITrack } from "../../../redux/types";

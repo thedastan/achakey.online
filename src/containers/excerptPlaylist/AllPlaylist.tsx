@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import ExcerptTrackList from "../excerptTrackList/ExcerptTrackList";
 import { useAppSelector } from "../../hooks/Index";
 import { useTracksAction } from "../../hooks/useActions";
-import { readFileAsBase64 } from "../helpers/readFileAsBase64";
+import { readFileAsBase64 } from "../../components/helpers/readFileAsBase64";
 // import { ByteToMp } from "../helpers/bytyToMp";
-import { ByteToMp3 } from "../helpers/butyToMp3";
+import { ByteToMp3 } from "../../components/helpers/butyToMp3";
 
 export default function AllPlaylist() {
   const { fetchTracks } = useTracksAction();
@@ -25,10 +25,6 @@ export default function AllPlaylist() {
   for (let i = 0; i < binaryString?.length; i++) {
     byteNumbers[i] = binaryString.charCodeAt(i);
   }
-
-  // const mp3File = byteNumbers && ByteToMp(byteNumbers);
-
-  // console.log(mp3File);
 
   return (
     <section>
