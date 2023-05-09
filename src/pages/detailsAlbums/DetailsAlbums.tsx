@@ -1,17 +1,20 @@
 import { Box, Container } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+
 import AudioPlayer from "../../components/audio-player/AudioPlayer";
 import BottomPlayer from "../../components/bottom-audio-player/BottomPLayer";
-import ExcerptTrackList from "../../components/excerptTrackList/ExcerptTrackList";
-import { useAppDispatch, useAppSelector } from "../../hooks/Index";
-import { fetchAlbumsDetails } from "./action-creators";
+import ExcerptTrackList from "../../containers/excerptTrackList/ExcerptTrackList";
 import Footer from "../../components/footer/Footer";
 
+import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { fetchAlbumsDetails } from "./action-creators";
 
 export default function DetailsAlbums() {
   const { id } = useParams();
+
   const dispatch = useAppDispatch();
+
   const { albums } = useAppSelector((state) => state.reducerDetailsAlbums);
 
   useEffect(() => {
@@ -28,8 +31,8 @@ export default function DetailsAlbums() {
   };
 
   return (
-    <>
-      <section style={styles}>
+    <section>
+      <div style={styles}>
         <Box className="bg-menuBar-blur">
           <Container maxW="1220px" pt="140px">
             <Box pl={{ base: "0", md: "4%", lg: "2%", xl: "1%" }}>
@@ -39,8 +42,8 @@ export default function DetailsAlbums() {
             <BottomPlayer />
           </Container>
         </Box>
-      </section>
+      </div>
       <Footer />
-    </>
+    </section>
   );
 }

@@ -12,7 +12,11 @@ import {
 import { SvgPlayerGifDefault } from "../../../../assets/svg/SvgPlayerGifDefault";
 import { SvgPlayerGif } from "../../../../assets/svg/SvgPlayerGif";
 import SvgPlay from "../../../../assets/svg/SvgPlay";
-import { getAccessToken, getIdAlums, getUserId } from "../../../helper";
+import {
+  getAccessToken,
+  getIdAlums,
+  getUserId,
+} from "../../../../components/helper";
 import { Link } from "react-router-dom";
 import {
   useAction,
@@ -25,10 +29,10 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/Index";
 import {
   currentIndexAction,
   eventChange,
-} from "../../../playlist/reducer/action-creator";
+} from "../../../excerptPlaylist/reducer/action-creator";
 import { changeAction } from "../../../../global-audio-player-excerpt/action";
 import { ITrack } from "../../../../redux/types";
-import ModalUserAuth from "../../../form/modal/ModalUser";
+import ModalUserAuth from "../../../../components/form/modal/ModalUser";
 
 interface IMusicRight {
   el: any;
@@ -267,9 +271,9 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
               "2xl": "210px",
             }}
             bg={findBasketMusic ? "#007AFF" : "none"}
-            border={findBasketMusic ? "none" :"1px"}
+            border={findBasketMusic ? "none" : "1px"}
             borderColor={findBasketMusic ? "#49DEFF" : "none"}
-            color={findBasketMusic ? "white" :"#49DEFF"}
+            color={findBasketMusic ? "white" : "#49DEFF"}
             borderRadius="5px"
             _hover={{
               color: "white",

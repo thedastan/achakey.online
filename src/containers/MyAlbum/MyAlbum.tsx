@@ -10,7 +10,7 @@ import {
 import {
   currentIndexAction,
   eventChange,
-} from "../playlist/reducer/action-creator";
+} from "../excerptPlaylist/reducer/action-creator";
 import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
 import { SampleNextArrow } from "../ui/SampleNextArrow";
 import { SamplePrevArrow } from "../ui/SamplePrevArrow";

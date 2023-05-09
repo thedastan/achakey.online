@@ -134,7 +134,7 @@ export default function Header() {
           }}
         />
       )}
-      <Container>
+      <Container maxW="100%">
         {!getAccessToken() ? (
           <Box
             display="flex"

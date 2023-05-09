@@ -9,10 +9,10 @@ import {
 import {
   currentIndexAction,
   eventChange,
-} from "../playlist/reducer/action-creator";
+} from "../excerptPlaylist/reducer/action-creator";
 import { ITrack } from "../../redux/types";
-import MusicForList from "../ui/MusicForList";
-import { getIdAlums } from "../helper";
+import MusicForList from "../../components/ui/MusicForList";
+import { getIdAlums } from "../../components/helper";
 import { useEffect } from "react";
 
 interface ITrackList {

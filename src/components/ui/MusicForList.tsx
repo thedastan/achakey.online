@@ -45,24 +45,22 @@ export default function MusicForList({
   trackBoolean,
 }: ITrackChange) {
   const { fetchMyTracks } = useTracksAction();
+  const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
+    useActionOrder();
+  const { excerptPauseAction, excerptPlayAction } = useExcerpAction();
+  const { postBasketItem, fetchBasket } = useActionBasket();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { loginModal } = useModalforms();
+  const { pauseTrack } = useAction();
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const { myTracks } = useAppSelector((state) => state.musicReducer);
-  const { postBasketItem, fetchBasket } = useActionBasket();
-  const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
-    useActionOrder();
   const Order = useAppSelector((state) => state.reducerOrder.order);
-  const userFilter = basket.filter((el) => el.user === getUserId());
-
   const { pause, active } = useAppSelector(
     (state) => state.excerptPlayerReducer
   );
 
-  const { pauseTrack } = useAction();
-
-  const { excerptPauseAction, excerptPlayAction } = useExcerpAction();
+  const userFilter = basket.filter((el) => el.user === getUserId());
 
   const play = (music: any) => {
     if (pause) {
@@ -236,7 +234,11 @@ export default function MusicForList({
                   pl={{ base: "10px", sm: "7px", md: "5px", lg: "0px" }}
                   justifyContent="center"
                 >
-                  <SvgPlayerGif />
+                  {music?.music_short_len ? (
+                    <SvgPlayerGif />
+                  ) : (
+                    <SvgPlay fill="#FFFFFF" />
+                  )}
                 </Box>
               )}
             </Box>
@@ -254,7 +256,9 @@ export default function MusicForList({
         )}
         <Text
           textColor={
-            active?.music_short === music?.music_short ? "blue" : "white"
+            music?.music_short_len && active?.music_short === music?.music_short
+              ? "blue"
+              : "white"
           }
           fontSize="14.53px"
           ml="17.4px"
@@ -272,15 +276,23 @@ export default function MusicForList({
         <Text
           display="flex"
           alignItems="center"
-          color={active?.music_short === music?.music_short ? "blue" : "white"}
+          color={
+            music?.music_short_len && active?.music_short === music?.music_short
+              ? "blue"
+              : "white"
+          }
           fontSize="14.53px"
         >
-          {currentTimerAudio()}
+          {music?.music_short_len ? currentTimerAudio() : "00:00"}
         </Text>
       </Box>
 
       <Text
-        color={active?.music_short === music?.music_short ? "blue" : "white"}
+        color={
+          music?.music_short_len && active?.music_short === music?.music_short
+            ? "blue"
+            : "white"
+        }
         ml={{ base: "5px", md: "50px" }}
         display="flex"
         alignItems={"center"}
@@ -299,7 +311,9 @@ export default function MusicForList({
           }
           border="1px"
           borderColor={
-            active?.music_short === music?.music_short ? "blue" : "white"
+            music?.music_short_len && active?.music_short === music?.music_short
+              ? "blue"
+              : "white"
           }
           rounded="38px"
           fontSize={{ base: "12px ", md: "9px" }}
@@ -311,7 +325,9 @@ export default function MusicForList({
           alignItems="center"
           justifyContent={findMyMusic ? "space-between" : "center"}
           textColor={
-            active?.music_short === music?.music_short ? "blue" : "white"
+            music?.music_short_len && active?.music_short === music?.music_short
+              ? "blue"
+              : "white"
           }
           background="transparent"
           colorScheme="none"

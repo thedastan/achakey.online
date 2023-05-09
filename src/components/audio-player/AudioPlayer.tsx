@@ -6,7 +6,7 @@ import { Image, useDisclosure, Text } from "@chakra-ui/react";
 import {
   currentIndexAction,
   eventChange,
-} from "../playlist/reducer/action-creator";
+} from "../../containers/excerptPlaylist/reducer/action-creator";
 import {
   useAction,
   useActionBasket,
@@ -22,9 +22,9 @@ import SvgPlay from "../../assets/svg/SvgPlay";
 import defaultImage from "../../assets/img/defaultImage.png";
 
 import { getAccessToken, getIdAlums, getUserId } from "../helper";
-import { fetchAlbumsDetails } from "../../pages/details-albums/action-creators";
+import { fetchAlbumsDetails } from "../../pages/detailsAlbums/action-creators";
 import { OrderDetails } from "../order/OrderDetails";
-import {OrderPost, OrderTypes} from "../order/types/order";
+import { OrderPost, OrderTypes } from "../order/types/order";
 import SvgForAlbumPause from "../../assets/svg/SvgForAlbumPause";
 import SvgForAlbumNext from "../../assets/svg/SvgForAlbumNext";
 import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
@@ -47,9 +47,7 @@ interface ICart {
   user: string;
   cart_item: ICartArray[];
 }
-export default function AudioPlayer({
-  listTruck,
-}: IlistMedia) {
+export default function AudioPlayer({ listTruck }: IlistMedia) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { loginModal } = useModalforms();
   const [total, setTotal] = useState(0);
@@ -59,7 +57,9 @@ export default function AudioPlayer({
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const Order = useAppSelector((state) => state.reducerOrder.order);
-  const {openOrder, openOrderId} = useAppSelector((state) => state.reducerOrder)
+  const { openOrder, openOrderId } = useAppSelector(
+    (state) => state.reducerOrder
+  );
   const { event } = useAppSelector((state) => state.eventReducer);
   const indexCurrent = useAppSelector(
     (state) => state.currentIndexReducer.currentIndex
@@ -198,7 +198,7 @@ export default function AudioPlayer({
 
   function postOrderAlbum() {
     fetchOrder();
-    dispatch({type:OrderTypes.OPEN_MODAL_ORDER, payload:true})
+    dispatch({ type: OrderTypes.OPEN_MODAL_ORDER, payload: true });
     const order: OrderPost = {
       user: getUserId(),
       total_price: null,
@@ -245,7 +245,7 @@ export default function AudioPlayer({
       )
     );
 
-    dispatch({type:OrderTypes.OPEN_MODAL_ORDER, payload:true})
+    dispatch({ type: OrderTypes.OPEN_MODAL_ORDER, payload: true });
     fetchOrder();
   }
 
@@ -486,10 +486,8 @@ export default function AudioPlayer({
           </Box>
         </Box>
         <Box className={openOrder ? "modalBg" : ""}>
-          <Box mx="auto" maxW="700px" >
-            <OrderDetails
-              className={openOrder ? "active" : ""}
-            />
+          <Box mx="auto" maxW="700px">
+            <OrderDetails className={openOrder ? "active" : ""} />
           </Box>
         </Box>
       </Box>
