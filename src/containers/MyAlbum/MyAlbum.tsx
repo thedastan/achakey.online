@@ -11,14 +11,14 @@ import {
   currentIndexAction,
   eventChange,
 } from "../excerptPlaylist/reducer/action-creator";
-import ListForAlbumOrTracks from "../ui/ListForAlbumOrTracks";
-import { SampleNextArrow } from "../ui/SampleNextArrow";
-import { SamplePrevArrow } from "../ui/SamplePrevArrow";
+import ListForAlbumOrTracks from "../../components/ui/ListForAlbumOrTracks";
+import { SampleNextArrow } from "../../components/ui/SampleNextArrow";
+import { SamplePrevArrow } from "../../components/ui/SamplePrevArrow";
 import "./style.css";
 import { useEffect, useState } from "react";
 import { ITrack } from "../../redux/types";
 import { indexForAlbums } from "./action-creators";
-import PopupForLyrics from "../ui/popupForLyrics";
+import PopupForLyrics from "../../components/ui/popupForLyrics";
 
 export default function MyAlbum() {
   const { fetchTracks } = useTracksAction();
