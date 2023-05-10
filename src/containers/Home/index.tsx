@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Box, Text, Button, Stack, useBreakpointValue } from "@chakra-ui/react";
 import Music from "./Music";
 import "./style.css";
 import down from "../../assets/svg/down.svg"
+import {useActionBasket} from "../../hooks/useActions";
 
 const Home = () => {
+
+    const { fetchBasket } = useActionBasket();
+
   const [musicPlay, setMusicPlay] = useState<boolean>(false);
   const breakpoints = useBreakpointValue({
     base: "base",
@@ -15,6 +19,9 @@ const Home = () => {
     "2xl": "2xl",
   });
 
+  useEffect(() => {
+      fetchBasket()
+  }, [])
   return (
     <Box maxW="3072px" className="home-bg">
       <Box

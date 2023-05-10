@@ -89,6 +89,7 @@ export const OrderDetails = ({ className }: IOrderPopup) => {
       display="flex"
       justifyContent="center"
       alignItems="center"
+      p={"0"}
     >
       <Box w="100%">
         <Box

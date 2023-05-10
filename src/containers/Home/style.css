@@ -1,7 +1,13 @@
 .home-bg {
     min-height: 100vh;
-    background: url("../../assets/img/playlist.png") center/cover no-repeat;
+    background: url("../../assets/img/bg1.png") center/cover no-repeat;
     object-fit: cover;
+}
+
+@media (max-width: 1024px) {
+    .home-bg {
+        background: url("../../assets/img/bg2.png") center/cover no-repeat;
+    }
 }
 
 .btn {
@@ -18,7 +24,7 @@
     transform-origin: center left;
     transition: color 0.3s ease;
     position: relative;
-    z-index: 4;
+    z-index: 2;
     outline: none;
 
 }
@@ -87,7 +93,7 @@
 
 .btn:hover {
     color: #0F0F0F;
-    z-index: 50;
+    z-index: 10;
 }
 
 .btn:hover em {
