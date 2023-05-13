@@ -31,6 +31,7 @@ import { reducerChangeTimePlayerBottom } from "../global-audio-player/reducer/in
 import { reducerChange } from "../global-audio-player-excerpt/reducer/index";
 
 import { musicReducer } from "./reducer/index";
+import {reducerMusicModal} from "../containers/Home/Music/redux/reducer/Reducer";
 
 const rootReducer = combineReducers({
   currentIndexReducer,
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
   reducerChangePassword,
   reducerResetPasswordPhone,
   reducerToasrMessage,
+  reducerMusicModal
 });
 
 export const setUpStore = () => {

@@ -3,12 +3,14 @@ import { Box, Text, Button, Stack, useBreakpointValue } from "@chakra-ui/react";
 import Music from "./Music";
 import "./style.css";
 import down from "../../assets/svg/down.svg"
-import {useActionBasket} from "../../hooks/useActions";
+import {useActionBasket, useActionMusicModal} from "../../hooks/useActions";
+import {useAppSelector} from "../../hooks/Index";
 
 const Home = () => {
+    const {ActionMusicModal} = useActionMusicModal()
 
     const { fetchBasket } = useActionBasket();
-
+    const {modal} = useAppSelector((state)=> state.reducerMusicModal)
   const [musicPlay, setMusicPlay] = useState<boolean>(false);
   const breakpoints = useBreakpointValue({base: "base", sm: "sm", md: "md", lg: "lg", xl: "xl", "2xl": "2xl",});
 
@@ -31,8 +33,8 @@ const Home = () => {
           zIndex="2"
           letterSpacing="0.01em"
           style={{
-            transform: musicPlay ? " translateY(-1500%)" : "translateY(100%)",
-            transition: musicPlay ? "2s" : "2s",
+            transform: modal ? " translateY(-1500%)" : "translateY(100%)",
+            transition: modal ? "2s" : "2s",
           }}
         >
           JAX 02.14
@@ -47,8 +49,8 @@ const Home = () => {
           px="25px"
           borderLeft="3px solid #49DEFF"
           style={{
-            transform: musicPlay ? " translateY(-1400%)" : "translateY(65%)",
-            transition: musicPlay ? "2s" : "2s",
+            transform: modal ? " translateY(-1400%)" : "translateY(65%)",
+            transition: modal ? "2s" : "2s",
           }}
         >
           Ограниченный выпуск
@@ -67,17 +69,17 @@ const Home = () => {
             mt="25px"
             height="42px"
             px={breakpoints === "base" && "sm" ? "33px" : "63px"}
-            onClick={() => setMusicPlay(true)}
+            onClick={() => ActionMusicModal(true)}
             style={{
-              transform: musicPlay ? " translateY(-1300%)" : "translateY(100%)",
-              transition: musicPlay ? "2s" : "2s",
+              transform: modal ? " translateY(-1300%)" : "translateY(100%)",
+              transition: modal ? "2s" : "2s",
             }}
             rightIcon={<img src={down} alt="img" className="em" />}
           >
             Перейти к трекам<em></em>
           </Button>
         </Stack>
-        <Music musicPlay={musicPlay} />
+        <Music />
       </Box>
     </Box>
   );

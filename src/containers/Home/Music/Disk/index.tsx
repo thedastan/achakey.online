@@ -2,16 +2,16 @@ import React from 'react';
 import disk from "../../../../assets/img/Disk.png"
 import {Image, Box, useBreakpointValue} from "@chakra-ui/react";
 import "./style.css"
-interface MusicProps {
-    musicPlay: boolean
-}
+import {useAppSelector} from "../../../../hooks/Index";
 
 
 
-const Disk: React.FC<MusicProps> = ({musicPlay}) => {
+const Disk = () => {
     const breakpoints = useBreakpointValue({base: "base", sm: "sm", md: "md", lg: "lg", xl: "xl", "2xl": "2xl"});
+    const {modal} = useAppSelector((state)=> state.reducerMusicModal)
+
     return (
-        <Box style={{display: musicPlay ? "block" : "none"}}   >
+        <Box style={{display: modal ? "block" : "none"}}   >
             <Image
                 src={disk}
                 alt="disk"
