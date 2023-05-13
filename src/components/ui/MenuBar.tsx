@@ -10,6 +10,7 @@ import ModalUserAuth from "../form/modal/ModalUser";
 import {getIdAlums} from "../helper";
 import "./style.scss";
 import {fetchBasket} from "../../pages/basket/action-creators/action";
+import { useState ,useEffect} from "react";
 
 interface IPropsMenuBar {
     children?: any;
@@ -20,17 +21,25 @@ export default function MenuBar({children}: IPropsMenuBar) {
     const {isOpen, onOpen, onClose} = useDisclosure();
     const {active} = useAppSelector((state) => state.playReducer);
     const {basket} = useAppSelector((state) => state.reducerBasket);
-    const {loginModal} = useModalforms();
     const {pathname} = useLocation()
 
-    const openModal = () => {
-        onOpen();
-        loginModal();
-    };
+    // const handleRefresh = () => {
+    //     window.location.reload();
+    // };
+    const [refresh, setRefresh] = useState(false);
 
     const handleRefresh = () => {
-        window.location.reload();
+        setRefresh(true);
     };
+    useEffect(() => {
+        if (refresh) {
+            // Выполните здесь логику обновления компонента или вызовите функцию,
+            // которая обновляет данные, отображаемые в компоненте.
+
+            // После выполнения обновления сбросите флаг обновления.
+            setRefresh(true);
+        }
+    }, [refresh]);
 
     const list = [
         {

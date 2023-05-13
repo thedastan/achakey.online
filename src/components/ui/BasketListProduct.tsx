@@ -1,5 +1,5 @@
-import { Box, Button, Image, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import {Box, Button, Image, ModalOverlay, Text} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 
 import SvgCross from "../../assets/svg/SvgCross";
 import {useAppDispatch, useAppSelector} from "../../hooks/Index";
@@ -16,6 +16,8 @@ interface IBasketProps {
   deleted: (value: string) => void;
   id?: string;
   music: ITrack | undefined;
+  setOverlay: any;
+  openModal2: any;
 }
 
 export default function BasketListProduct({
@@ -25,11 +27,18 @@ export default function BasketListProduct({
   deleted,
   id,
   music,
+    openModal2,
+    setOverlay,
 }: IBasketProps) {
   const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
     useActionOrder();
   const Order = useAppSelector((state) => state.reducerOrder.order);
   const dispatch = useAppDispatch()
+  const OverlayOne = () => (
+      <ModalOverlay
+          bg='rgba(0, 0, 0, 0.7)'
+      />
+  )
   const postOrder = async (cart?: ITrack) => {
     const order: OrderPost = {
       user: getUserId(),
@@ -43,6 +52,8 @@ export default function BasketListProduct({
         },
       ],
     };
+
+
 
     const userFiter = Order?.filter((el) => el.user === getUserId());
 
@@ -132,7 +143,6 @@ export default function BasketListProduct({
             mr={{ base: "10px", md: "26px" }}
           />
           <Text
-            pl={{ base: "0", md: "17px" }}
             fontSize="14.53px"
             fontWeight="400"
             fontFamily="Montserrat,sans-serif"
@@ -150,13 +160,17 @@ export default function BasketListProduct({
         >
           <Text
             fontSize="12px"
-            fontFamily="Montserrat, sans-serif"
+            fontFamily="Roboto, sans-serif"
             color="white"
           >
             {Math.floor(price)} cом
           </Text>
           <Button
-            onClick={() => postOrder(music)}
+            onClick={() => {
+              postOrder(music)
+              setOverlay(<OverlayOne/>)
+              openModal2()
+            }}
             ml={{ base: "2%", md: "18%" }}
             border="1px"
             borderColor="white"
@@ -167,6 +181,7 @@ export default function BasketListProduct({
             background="transparent"
             colorScheme="none"
             zIndex="0"
+            fontFamily="Roboto, sans-serif"
           >
             Оплатить
           </Button>

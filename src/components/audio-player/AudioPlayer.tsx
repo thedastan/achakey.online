@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@chakra-ui/button";
 import { Box } from "@chakra-ui/layout";
-import { Image, useDisclosure, Text } from "@chakra-ui/react";
+import {Image, useDisclosure, Text, ModalOverlay} from "@chakra-ui/react";
 
 import {
   currentIndexAction,
@@ -48,7 +48,19 @@ interface ICart {
   cart_item: ICartArray[];
 }
 export default function AudioPlayer({ listTruck }: IlistMedia) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const OverlayOne = () => (
+      <ModalOverlay
+          bg='rgba(0, 0, 0, 0.7)'
+      />
+  )
+  const [isOpenUser, setIsOpenUser] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  const openModalUser = () => setIsOpenUser(true);
+  const closeModalUser = () => setIsOpenUser(false);
+  const openModal2 = () => setIsOpen2(true);
+  const closeModal2 = () => setIsOpen2(false);
+  const [overlay, setOverlay] = useState(<OverlayOne/>)
+
   const { loginModal } = useModalforms();
   const [total, setTotal] = useState(0);
   const dispatch = useAppDispatch();
@@ -198,7 +210,9 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
   function postOrderAlbum() {
     fetchOrder();
-    dispatch({ type: OrderTypes.OPEN_MODAL_ORDER, payload: true });
+    // dispatch({ type: OrderTypes.OPEN_MODAL_ORDER, payload: true });
+    setOverlay(<OverlayOne/>)
+    openModal2()
     const order: OrderPost = {
       user: getUserId(),
       total_price: null,
@@ -244,8 +258,9 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           : console.log("id")
       )
     );
-
-    dispatch({ type: OrderTypes.OPEN_MODAL_ORDER, payload: true });
+    setOverlay(<OverlayOne/>)
+    openModal2()
+    // dispatch({ type: OrderTypes.OPEN_MODAL_ORDER, payload: true });
     fetchOrder();
   }
 
@@ -254,7 +269,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   );
 
   const openModal = () => {
-    onOpen();
+    openModalUser();
     loginModal();
   };
 
@@ -293,7 +308,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
         flexDir={{ base: "column", md: "row" }}
         alignItems="end"
       >
-        <ModalUserAuth isOpen={isOpen} onClose={onClose} />
+        <ModalUserAuth isOpen={isOpenUser} onClose={closeModalUser} />
         <Box
           mb="13px"
           fontSize="32px"
@@ -485,11 +500,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
             </Box>
           </Box>
         </Box>
-        <Box className={openOrder ? "modalBg" : ""}>
-          <Box mx="auto" maxW="700px">
-            <OrderDetails className={openOrder ? "active" : ""} />
-          </Box>
-        </Box>
+            <OrderDetails overlay={overlay} closeModal2={closeModal2} isOpen2={isOpen2} className={openOrder ? "modal-content" : ""} />
       </Box>
     </section>
   );
