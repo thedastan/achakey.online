@@ -18,6 +18,7 @@ import actionEmailVerify from "../pages/emailVerify/action/index";
 import actionResetPasswordPhone from "../components/form/resetPasswordPhone/action/index";
 import actionSendAgain from "../components/form/send-again/action/index";
 import actionToast from "../components/toast-message/action/index";
+import actionMusicModal from "../containers/Home/Music/redux/action/Index"
 import { useAppDispatch } from "./Index";
 
 export const useAction = () => {
@@ -103,4 +104,9 @@ export const useActionSendAgain = () => {
 export const useActionToastMessage = () => {
   const dispatch = useAppDispatch();
   return bindActionCreators(actionToast, dispatch);
+};
+
+export const useActionMusicModal = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(actionMusicModal, dispatch);
 };

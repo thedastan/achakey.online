@@ -61,7 +61,7 @@
 .swiper-pagination-bullets-dynamic {
     min-height: 100vh;
     margin-top: 20%;
-    margin-right: 3%;
+    margin-right: 4%;
     overflow: hidden;
 }
 
@@ -84,6 +84,7 @@
 @media (max-width: 991px) {
     .swiper-pagination-bullets-dynamic {
         margin-top: 25%;
+        margin-right: 6%;
     }
 }
 
@@ -91,6 +92,7 @@
 @media (max-width: 768px) {
     .swiper-pagination-bullets-dynamic {
         margin-top: 38%;
+        margin-right: 10%;
     }
 }
 

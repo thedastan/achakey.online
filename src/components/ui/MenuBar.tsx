@@ -4,42 +4,26 @@ import SvgAllTracks from "../../assets/svg/SvgAllTracks";
 import SvgBasket from "../../assets/svg/SvgBasket";
 import SvgHome from "../../assets/svg/SvgHome";
 import SvgTrack from "../../assets/svg/SvgTrack";
-import {useAppDispatch, useAppSelector} from "../../hooks/Index";
-import {useModalforms} from "../../hooks/useActions";
+import { useAppSelector} from "../../hooks/Index";
+import {useActionMusicModal, useModalforms} from "../../hooks/useActions";
 import ModalUserAuth from "../form/modal/ModalUser";
 import {getIdAlums} from "../helper";
 import "./style.scss";
-import {fetchBasket} from "../../pages/basket/action-creators/action";
-import { useState ,useEffect} from "react";
 
 interface IPropsMenuBar {
     children?: any;
 }
 
 export default function MenuBar({children}: IPropsMenuBar) {
-    const dispatch = useAppDispatch()
+    const {ActionMusicModal} = useActionMusicModal()
     const {isOpen, onOpen, onClose} = useDisclosure();
     const {active} = useAppSelector((state) => state.playReducer);
     const {basket} = useAppSelector((state) => state.reducerBasket);
     const {pathname} = useLocation()
 
-    // const handleRefresh = () => {
-    //     window.location.reload();
-    // };
-    const [refresh, setRefresh] = useState(false);
-
     const handleRefresh = () => {
-        setRefresh(true);
+        ActionMusicModal(false)
     };
-    useEffect(() => {
-        if (refresh) {
-            // Выполните здесь логику обновления компонента или вызовите функцию,
-            // которая обновляет данные, отображаемые в компоненте.
-
-            // После выполнения обновления сбросите флаг обновления.
-            setRefresh(true);
-        }
-    }, [refresh]);
 
     const list = [
         {
@@ -153,6 +137,7 @@ export default function MenuBar({children}: IPropsMenuBar) {
             link: "/basket",
         },
     ];
+
     return (
         <Box maxW="2060px" mx="auto">
             <ModalUserAuth isOpen={isOpen} onClose={onClose}/>

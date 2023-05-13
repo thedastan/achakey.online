@@ -16,9 +16,6 @@ import { ITrack } from "../../../redux/types";
 import MusicLeft from "./MusicLeft";
 import MusicRight from "./MusicRight";
 
-interface MusicProps {
-  musicPlay: boolean;
-}
 
 interface ICartArray {
   cart: string;
@@ -39,11 +36,12 @@ interface IDataMainPage {
   albumInfo?: string;
 }
 
-const Music: React.FC<MusicProps> = ({ musicPlay }) => {
+const Music = () => {
   const dispatch = useAppDispatch();
   const { fetchTracks } = useTracksAction();
   const { loginModal } = useModalforms();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {modal} = useAppSelector((state)=> state.reducerMusicModal)
 
   const { tracks, albums } = useAppSelector((state) => state.musicReducer);
   const dataMainPage: IDataMainPage[] = [];
@@ -80,11 +78,11 @@ const Music: React.FC<MusicProps> = ({ musicPlay }) => {
       className="music"
       bg="red"
       mx={"auto"}
-      style={{ display: musicPlay ? "block" : "none", background: "#1D1D20" }}
+      style={{ display: modal ? "block" : "none", background: "#1D1D20" }}
       zIndex="auto"
     >
       <ModalUserAuth isOpen={isOpen} onClose={onClose} />
-      <Disk musicPlay={musicPlay} />
+      <Disk />
       <Swiper
         direction={"vertical"}
         slidesPerView={1}
