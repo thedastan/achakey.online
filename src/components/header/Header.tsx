@@ -18,7 +18,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { searchResult } from "./action-creators/Action";
 import Popup from "../ui/Popup";
-import LogoAchakey from "../../assets/svg/AchakeyLogo.svg";
 import {
   useActionEmailVerify,
   useActionUser,
@@ -32,7 +31,7 @@ import "./style.scss";
 import SvgSearch from "../../assets/svg/SvgSearch";
 import { IAlbums } from "../../redux/types";
 import ModalExitAccount from "../form/modal/ModalExitAccount";
-
+import SvgLogo from "../../assets/svg/SvgLogo"
 export interface ISearchTrack {
   albums?: number | string;
   id?: number | null;
@@ -149,9 +148,9 @@ export default function Header() {
             }
             alignItems="center"
           >
-            <Box zIndex="4">
-              <Link to={"/"}>
-                <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo" />
+            <Box zIndex="4" onClick={handleRefresh}>
+              <Link to={"/"} >
+                <SvgLogo/>
               </Link>
             </Box>
             <Button
@@ -170,7 +169,7 @@ export default function Header() {
         ) : (
           <Box
             display="flex"
-            w={{ base: "100%", md: "94%" }}
+            w="100%"
             py={{ base: "20px", sm: "0px" }}
             justifyContent={
               breakpoints === "base" && "sm"
@@ -186,7 +185,7 @@ export default function Header() {
             {!isHomePage ? (
               <InputGroup
                 width={{ sm: "100%", md: "70%", lg: "100%" }}
-                left={{ sm: "0px", md: "50px", lg: "0px" }}
+                left={{ sm: "0px", md: "50px", lg: "7%" }}
                 display="flex"
                 maxW="574px"
                 mx="auto"
@@ -280,22 +279,25 @@ export default function Header() {
               </InputGroup>
             ) : null}
             {isHomePage ? (
-              <Box mx="10px" zIndex="4">
-                <Link to={"/"}>
-                  <Image onClick={handleRefresh} src={LogoAchakey} alt="Logo" />
+              <Box mr="85px" zIndex="4" onClick={handleRefresh} >
+                <Link to={"/"} >
+                  <SvgLogo />
                 </Link>
               </Box>
             ) : null}
-            <Box position="relative">
-              <Menu>
+            <Box position="relative" >
+              <Menu >
                 {({ isOpen }) => (
-                  <>
+                  <Box className="hover-menu">
+                    <Box display="flex" justifyContent="center" alignItems="center" >
+                      <Text className="avatar-text" >Аккаунт</Text>
+                    </Box>
                     <MenuButton
                       isActive={isOpen}
                       as={Button}
                       bg="transparent"
                       colorScheme="transparent"
-                    >
+                      >
                       <SvgAvatar
                         fill={isOpen ? "white" : "rgba(255, 255, 255, 0.4)"}
                       />
@@ -303,7 +305,7 @@ export default function Header() {
                     <MenuList
                       position="absolute"
                       top="-20px"
-                      right="-20px"
+                      right="0"
                       zIndex="4"
                       bg="transparent"
                       border="0"
@@ -397,7 +399,7 @@ export default function Header() {
                         Выйти
                       </MenuItem>
                     </MenuList>
-                  </>
+                  </Box>
                 )}
               </Menu>
             </Box>

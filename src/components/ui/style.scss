@@ -54,6 +54,12 @@ $transitionTime: "1" ".5", "2" ".7", "3" "1", "4" "1.2", "5" "1.5";
   background-size: 100% 50%;
   background-repeat: no-repeat;
   background-color: #1d1d20;
+  @media (max-width: 1024px) {
+    background-image: url("../../assets/img/excerptsBgTable.png");
+  }
+  @media (max-width: 768px) {
+      background-image: url("../../assets/img/excerptsBgMobile.png");
+  }
 }
 
 .bg-menuBar-blur {
@@ -61,3 +67,4 @@ $transitionTime: "1" ".5", "2" ".7", "3" "1", "4" "1.2", "5" "1.5";
   background: rgba(27, 27, 27, 0.55);
   min-height: 100vh;
 }
+

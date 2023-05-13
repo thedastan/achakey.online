@@ -32,10 +32,10 @@ function App() {
     const [isActive, setActive] = useState(AlbumOrTracks.TRACKS);
     const isAlbum = isActive === AlbumOrTracks.ALBUM;
     const isTracks = isActive === AlbumOrTracks.TRACKS;
-    const {openOrder, openOrderId} = useAppSelector((state) => state.reducerOrder)
+    // const {openOrder, openOrderId} = useAppSelector((state) => state.reducerOrder)
 
     return (
-        <Box className={openOrder || openOrderId ? "modalBg" : ""}>
+        <Box /*className={openOrder || openOrderId ? "modalBg" : ""}*/>
             <AudioPlayerBottom/>
             <Navigation/>
             <ToastMessage />

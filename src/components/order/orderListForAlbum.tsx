@@ -37,10 +37,11 @@ export default function OrderListAlbums({
   }, [music]);
 
   return (
-    <Box bg="white" rounded="13px" maxW="950px" mx="auto" mb="10px" px="25px">
+    <Box bg="white" rounded="13px" maxW="950px" mx="auto" mb="10px"
+        >
       <Box
-        pt="19px"
-        pb="45px"
+        pt="11px"
+        pb="20px"
         position="relative"
         className={`accordion ${active && "active"}`}
       >
@@ -49,8 +50,7 @@ export default function OrderListAlbums({
           justifyContent="space-between"
           alignItems="center"
           onClick={() => setActive(!active)}
-          pb="19px"
-          borderBottom="0.5px solid rgba(124, 124, 124, 0.5)"
+          mb="11px" px="25px"
         >
           <Box
             display="flex"
@@ -62,37 +62,18 @@ export default function OrderListAlbums({
               w="35px"
               h="35px"
               rounded="50%"
-              mr="10px"
             />
-            <Text fontSize="18px" fontWeight="400" color="black">
+
+            <Text fontFamily="Roboto,sans-serif" ml={{base:"15px",sm:"26px"}} fontSize="18px" fontWeight="600" color="black">
               Альбом: {name}
             </Text>
           </Box>
-          <Box
-            // display="flex"
-            // alignItems="center"
-            // justifyContent={{ base: "space-between", md: "none" }}
-            // w={{ base: "100%", sm: "auto" }}
-          >
-            <Text >{total} сом</Text>
-            {/*<Button*/}
-            {/*  onClick={(e) => {*/}
-            {/*    e.stopPropagation();*/}
-            {/*    deleted(`${id}`);*/}
-            {/*  }}*/}
-            {/*  bg="transparent"*/}
-            {/*  colorScheme="none"*/}
-            {/*  px="0"*/}
-            {/*  py="0"*/}
-            {/*  color="#C10404"*/}
-            {/*  fontSize="12px"*/}
-            {/*  fontWeight="400"*/}
-            {/*>*/}
-            {/*  Удалить*/}
-            {/*</Button>*/}
+          <Box>
+            <Text fontFamily="Roboto,sans-serif" ml={{base:"14px",sm:"16px"}} fontSize="18px" fontWeight="600" color="black" >{total} сом</Text>
           </Box>
         </Box>
-        <Box>
+        <Box border="0.5px solid rgba(124, 124, 124, 0.5)"/>
+        <Box  pb="16px" px="25px">
           <Box className="accordion__content">
             {music?.map((el: any, index: any) => (
               <Box
@@ -100,7 +81,8 @@ export default function OrderListAlbums({
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
-                py="19px"
+                pb="7px"
+                pt="16px"
                 borderBottom="0.5px solid rgba(124, 124, 124, 0.5)"
               >
                 <Box
@@ -113,22 +95,23 @@ export default function OrderListAlbums({
                     w="35px"
                     h="35px"
                     rounded="50%"
-                    mr={{ base: "10px", md: "26px" }}
                   />
                   <Box>
                     <Text
-                      pl={{ base: "0", md: "17px" }}
+                      pl={{ base: "15px", md: "17px" }}
                       fontSize="14.53px"
                       fontWeight="400"
                       color="black"
+                      fontFamily="Montserrat,sans-serif"
                     >
                       {el.name}
                     </Text>
                     <Text
-                      pl={{ base: "0", md: "17px" }}
+                      pl={{ base: "15px", md: "17px" }}
                       fontSize="10px"
                       fontWeight="400"
                       color="black"
+                      fontFamily="Montserrat,sans-serif"
                     >
                       Альбом: {name}
                     </Text>
@@ -144,10 +127,11 @@ export default function OrderListAlbums({
             display="flex"
             justifyContent="center"
             onClick={() => setActive(!active)}
-            pt="10px"
+            pt="9px"
+            pb="10px"
           >
-            <Box display="flex" alignItems="center" mx="auto">
-              <Text>
+            <Box display="flex" alignItems="center" justifyContent="center" mx="auto">
+              <Text fontFamily='Roboto' fontSize="12px" fontWeight="400" color="#1D1D20">
                 {!active && music?.length} {active ? "скрыть" : "треков"}
               </Text>
               <Box className="accordion__icon" ml="17px">

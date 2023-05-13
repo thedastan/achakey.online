@@ -10,14 +10,7 @@ const Home = () => {
     const { fetchBasket } = useActionBasket();
 
   const [musicPlay, setMusicPlay] = useState<boolean>(false);
-  const breakpoints = useBreakpointValue({
-    base: "base",
-    sm: "sm",
-    md: "md",
-    lg: "lg",
-    xl: "xl",
-    "2xl": "2xl",
-  });
+  const breakpoints = useBreakpointValue({base: "base", sm: "sm", md: "md", lg: "lg", xl: "xl", "2xl": "2xl",});
 
   useEffect(() => {
       fetchBasket()
