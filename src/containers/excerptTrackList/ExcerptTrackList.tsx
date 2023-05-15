@@ -102,6 +102,7 @@ export default function ExcerptTrackList({ tracks, allTracks }: ITrackList) {
         <Box>
           {tracks.map((el, index) => (
             <MusicForList
+              artist={el?.artist}
               name={el?.name}
               key={index}
               music={el}

@@ -337,7 +337,13 @@ export default function PopupForLyrics({
             <Text fontSize="11px">{currentTimerAudio()}</Text>
           </Box>
         </Box>
-        <Text fontSize="14px" lineHeight="19.88px" pt="30px" pb="100px">
+        <Text
+          fontFamily="montsserat"
+          fontSize="14px"
+          lineHeight="19.88px"
+          pt="30px"
+          pb="100px"
+        >
           <p>
             {text?.split("\r\n").map((line, index) => (
               <p key={index}>{line}</p>

@@ -1,22 +1,29 @@
-import React, {useEffect, useState} from "react";
-import { Box, Text, Button, Stack, useBreakpointValue } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Box, Text, Button, useBreakpointValue, Stack } from "@chakra-ui/react";
 import Music from "./Music";
 import "./style.css";
-import down from "../../assets/svg/down.svg"
-import {useActionBasket, useActionMusicModal} from "../../hooks/useActions";
-import {useAppSelector} from "../../hooks/Index";
+import down from "../../assets/svg/down.svg";
+import { useActionBasket, useActionMusicModal } from "../../hooks/useActions";
+import { useAppSelector } from "../../hooks/Index";
 
 const Home = () => {
-    const {ActionMusicModal} = useActionMusicModal()
+  const { ActionMusicModal } = useActionMusicModal();
 
-    const { fetchBasket } = useActionBasket();
-    const {modal} = useAppSelector((state)=> state.reducerMusicModal)
+  const { fetchBasket } = useActionBasket();
+  const { modal } = useAppSelector((state) => state.reducerMusicModal);
   const [musicPlay, setMusicPlay] = useState<boolean>(false);
-  const breakpoints = useBreakpointValue({base: "base", sm: "sm", md: "md", lg: "lg", xl: "xl", "2xl": "2xl",});
+  const breakpoints = useBreakpointValue({
+    base: "base",
+    sm: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+    "2xl": "2xl",
+  });
 
   useEffect(() => {
-      fetchBasket()
-  }, [])
+    fetchBasket();
+  }, []);
   return (
     <Box maxW="3072px" className="home-bg">
       <Box
