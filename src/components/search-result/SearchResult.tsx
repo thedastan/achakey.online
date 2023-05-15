@@ -1,18 +1,13 @@
 import { Box, Container, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import { useAppSelector } from "../../hooks/Index";
 import {
   useAction,
   useExcerpAction,
   useTracksAction,
 } from "../../hooks/useActions";
 import { ITrack } from "../../redux/types";
-import { getIdAlums } from "../helper";
-import {
-  currentIndexAction,
-  eventChange,
-} from "../../containers/excerptPlaylist/reducer/action-creator";
 import MusicForList from "../ui/MusicForList";
 
 export default function SearchResult() {
@@ -81,6 +76,7 @@ export default function SearchResult() {
           </Box>
           <MusicForList
             name={track.name}
+            artist={track.artist}
             music={track}
             onClick={() => OnChange(track)}
           />

@@ -65,13 +65,14 @@ export default function Header() {
 
   const { searchChange } = useAppSelector((state) => state.searchChangeReducer);
   const { tracks, albums } = useAppSelector((state) => state.musicReducer);
-  const arrayListForSearch: ISearchTrack[] = tracks.filter((el) =>
+  const resultSearchTracks: ISearchTrack[] = tracks.filter((el) =>
     el.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
   );
 
-  const searchResultAlbum: IAlbums[] = albums.filter((el) =>
+  const resultSearchAlbums: IAlbums[] = albums.filter((el) =>
     el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
   );
+
 
   const openModal = () => {
     onOpen();
@@ -100,7 +101,7 @@ export default function Header() {
     "2xl": "2xl",
   });
 
-  const userId = JSON.parse(localStorage.getItem("user-id") as string);
+  const userId = localStorage.getItem("user-id") as string;
 
   useEffect(() => {
     fetchUserDetails(userId);
@@ -210,20 +211,21 @@ export default function Header() {
                 {searchChange && (
                   <Popup top={"50px"}>
                     <Box>
-                      {arrayListForSearch.length && searchResultAlbum.length ? (
-                        arrayListForSearch.map((el, index) => (
+                      {resultSearchTracks.length ||
+                      resultSearchAlbums.length ? (
+                        resultSearchTracks.map((el, index) => (
                           <Link to={`/search-result/${el.id}`} key={index}>
                             <Text
                               py="10px"
                               pl="20px"
                               cursor="pointer"
                               borderBottom={
-                                arrayListForSearch.length - 1 === index
+                                resultSearchTracks.length - 1 === index
                                   ? "0"
                                   : "1px"
                               }
                               roundedBottom={
-                                arrayListForSearch.length - 1 === index
+                                resultSearchTracks.length - 1 === index
                                   ? "5px"
                                   : "0"
                               }
@@ -245,8 +247,8 @@ export default function Header() {
                           oops no music...
                         </Text>
                       )}
-                      {arrayListForSearch.length && searchResultAlbum.length
-                        ? searchResultAlbum.map((el, index) => (
+                      {resultSearchTracks.length || resultSearchAlbums.length
+                        ? resultSearchAlbums.map((el, index) => (
                             <Link
                               key={index}
                               to={`/excerpts/details/${el?.id}`}
@@ -256,7 +258,7 @@ export default function Header() {
                                 py="10px"
                                 pl="20px"
                                 borderBottom={
-                                  arrayListForSearch.length - 1 === index
+                                  resultSearchTracks.length - 1 === index
                                     ? "0"
                                     : "1px"
                                 }
