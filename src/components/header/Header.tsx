@@ -31,8 +31,7 @@ import "./style.scss";
 import SvgSearch from "../../assets/svg/SvgSearch";
 import {IAlbums} from "../../redux/types";
 import ModalExitAccount from "../form/modal/ModalExitAccount";
-import SvgLogo from "../../assets/svg/SvgLogo"
-
+import SvgLogo from "../../assets/svg/SvgLogo";
 export interface ISearchTrack {
     albums?: number | string;
     id?: number | null;
@@ -64,15 +63,15 @@ export default function Header() {
 
     const {authModal} = useAppSelector((state) => state.emailVerifyReducer);
 
-    const {searchChange} = useAppSelector((state) => state.searchChangeReducer);
-    const {tracks, albums} = useAppSelector((state) => state.musicReducer);
-    const arrayListForSearch: ISearchTrack[] = tracks.filter((el) =>
-        el.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
-    );
+  const { searchChange } = useAppSelector((state) => state.searchChangeReducer);
+  const { tracks, albums } = useAppSelector((state) => state.musicReducer);
+  const resultSearchTracks: ISearchTrack[] = tracks.filter((el) =>
+    el.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
+  );
 
-    const searchResultAlbum: IAlbums[] = albums.filter((el) =>
-        el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
-    );
+  const resultSearchAlbums: IAlbums[] = albums.filter((el) =>
+    el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
+  );
 
     const openModal = () => {
         onOpen();

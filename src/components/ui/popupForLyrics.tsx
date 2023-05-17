@@ -24,10 +24,12 @@ import {
 import SvgPlay from "../../assets/svg/SvgPlay";
 import SvgAllAlbums from "../../assets/svg/SvgAllList";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
+import SvgLink from "../../assets/svg/SvgLink";
 
 interface IPopup {
   image?: string;
   text?: string;
+  onClose: () => void;
   setOpenPopup: (value: boolean) => void;
   className?: string;
 }
@@ -35,9 +37,13 @@ interface IPopup {
 export default function PopupForLyrics({
   image,
   text,
-  setOpenPopup,
+  onClose,
   className,
+  setOpenPopup,
 }: IPopup) {
+  const [startX, setStartX] = useState<number | null>(null);
+  const [startY, setstartY] = useState<number | null>();
+
   const { tabBoolean } = useAppSelector((state) => state.reducerTabBoolean);
   const { myAlbums: objAlbum, myTracks: listTruck } = useAppSelector(
     (state) => state.musicReducer
@@ -216,6 +222,21 @@ export default function PopupForLyrics({
     return minutes + ":" + seconds;
   }
 
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setStartX(e.touches[0].clientX);
+    setstartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (
+      (startX && e.changedTouches[0].clientX - startX < -50) ||
+      (startY && e.changedTouches[0].clientY - startY > 100)
+    ) {
+      onClose();
+    }
+    setStartX(null);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setPrev(false);
@@ -228,7 +249,8 @@ export default function PopupForLyrics({
       className={`lyrics ${className}`}
       textColor="white"
       px="35px"
-      py="100px"
+      pt="75px"
+      pb="100px"
       roundedTop="30px"
       bg="#1D1D20"
       left="0"
@@ -237,7 +259,9 @@ export default function PopupForLyrics({
       bottom="0"
       pos="fixed"
       pl={{ base: "35px", md: "15%" }}
-      zIndex="4"
+      zIndex="12"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <Box h="90vh" overflowY="auto" pb="50%" pt="20px">
         <Box
@@ -337,7 +361,51 @@ export default function PopupForLyrics({
             <Text fontSize="11px">{currentTimerAudio()}</Text>
           </Box>
         </Box>
-        <Text fontSize="14px" lineHeight="19.88px" pt="30px" pb="100px">
+        <Box
+          mt="20px"
+          bg="rgba(255, 255, 255, 0.08)"
+          rounded="12px"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          py="12px"
+          px="14px"
+          fontFamily="montsserat"
+          fontSize="14px"
+          lineHeight="20px"
+        >
+          <Text>Посмотреть клип</Text>
+          <SvgLink />
+        </Box>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          mt="30px"
+        >
+          <Text
+            fontFamily="Roboto, sans-serif"
+            fontSize="24px"
+            lineHeight="28px"
+            fontWeight="600"
+          >
+            {active?.name}
+          </Text>
+          <Text
+            fontFamily="Roboto, sans-serif"
+            fontSize="14px"
+            lineHeight="16.41px"
+          >
+            Jax 02.14
+          </Text>
+        </Box>
+        <Text
+          fontFamily="montsserat"
+          fontSize="14px"
+          lineHeight="19.88px"
+          mt="30px"
+          pb="100px"
+        >
           <p>
             {text?.split("\r\n").map((line, index) => (
               <p key={index}>{line}</p>

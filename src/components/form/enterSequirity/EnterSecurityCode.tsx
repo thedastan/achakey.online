@@ -35,7 +35,7 @@ const EnterSecurityCode: FC = () => {
   const { sendAgainPhone } = useActionSendAgain();
   const { loginModal } = useModalforms();
 
-  const { loading, error, sequirityCode } = useAppSelector(
+  const { loading, sequirityCode } = useAppSelector(
     (state) => state.reducerEnterSequirity
   );
 
@@ -72,6 +72,12 @@ const EnterSecurityCode: FC = () => {
     setPhoneNumber(number);
   }, []);
 
+  useEffect(() => {
+    if (code.length === 4) {
+      onClickCode();
+    }
+  }, [code]);
+
   return (
     <Box w="100%" px={{ sm: "20px" }}>
       <Text
@@ -102,11 +108,11 @@ const EnterSecurityCode: FC = () => {
           <PinInputField bg="white" py={{ base: "20px", sm: "25px" }} />
         </PinInput>
       </HStack>
-      <Box display="flex" justifyContent="center" py="10px">
+      {/* <Box display="flex" justifyContent="center" py="10px">
         <Button isLoading={loading} onClick={onClickCode}>
           Отправить
         </Button>
-      </Box>
+      </Box> */}
       <Text
         textAlign="center"
         my="10px"

@@ -18,8 +18,10 @@ import { getAccessToken, getUserId } from "../helper";
 import ModalUserAuth from "../form/modal/ModalUser";
 import SvgCheckMark from "../../assets/svg/SvgCheckMark";
 import { OrderPost } from "../order/types/order";
+import defaultImage from "../../assets/img/defaultImage.png";
 
 interface ITrackChange {
+  artist?: string;
   onClick?: any;
   name?: string;
   music?: ITrack;
@@ -39,6 +41,7 @@ interface ICart {
 }
 
 export default function MusicForList({
+  artist,
   onClick,
   name,
   music,
@@ -62,14 +65,19 @@ export default function MusicForList({
 
   const userFilter = basket.filter((el) => el.user === getUserId());
 
-  const play = (music: any) => {
+  const play = (music?: ITrack) => {
     if (pause) {
       excerptPlayAction();
       pauseTrack();
+      if (music?.music !== active?.music) {
+        excerptPauseAction();
+        pauseTrack();
+        onClick(music);
+      }
     } else {
       excerptPauseAction();
-      onClick(music);
       pauseTrack();
+      onClick(music);
     }
   };
 
@@ -138,10 +146,8 @@ export default function MusicForList({
     }
 
     if (arrayOfObjects[0]?.music?.id === order?.order_item[0]?.music) {
-      console.log(arrayOfObjects);
       fetchOrderId(Number(arrayOfObjects[0]?.id));
       fetchOrderItem(Number(arrayOfObjects[0]?.id));
-      console.log(arrayOfObjects[0]?.id);
     }
 
     userFiter?.filter((el) =>
@@ -212,7 +218,7 @@ export default function MusicForList({
         }}
       >
         <Image
-          src={music?.image}
+          src={music?.image || defaultImage}
           rounded="50%"
           w={{ base: "36px", md: "47px" }}
           h={{ base: "36px", md: "47px" }}
@@ -220,7 +226,7 @@ export default function MusicForList({
         />
         {active?.music_short === music?.music_short ? (
           <Box
-            display="inline-block"
+            display={{ base: "none", md: "inline-block" }}
             w={{ base: "36px", md: "32px" }}
             h={{ base: "36px", md: "32px" }}
             pt="2px"
@@ -254,19 +260,36 @@ export default function MusicForList({
             />
           </Box>
         )}
-        <Text
-          textColor={
-            music?.music_short_len && active?.music_short === music?.music_short
-              ? "blue"
-              : "white"
-          }
-          fontSize="14.53px"
-          ml="17.4px"
-          cursor="pointer"
-          noOfLines={1}
-        >
-          {name}
-        </Text>
+        <Box ml="17.4px">
+          <Text
+            fontFamily="montsserat"
+            textColor={
+              music?.music_short_len &&
+              active?.music_short === music?.music_short
+                ? "blue"
+                : "white"
+            }
+            fontSize="14.53px"
+            cursor="pointer"
+            noOfLines={1}
+          >
+            {name}
+          </Text>
+          <Text
+            textColor={
+              music?.music_short_len &&
+              active?.music_short === music?.music_short
+                ? "blue"
+                : "white"
+            }
+            fontFamily="montsserat"
+            fontSize="10px"
+            cursor="pointer"
+            lineHeight="12px"
+          >
+            {artist}
+          </Text>
+        </Box>
       </Box>
       <Box
         display={{ base: "none", md: "flex" }}
@@ -274,6 +297,7 @@ export default function MusicForList({
         ml={{ base: "0", sm: "22px" }}
       >
         <Text
+          fontFamily="montsserat"
           display="flex"
           alignItems="center"
           color={
@@ -297,6 +321,7 @@ export default function MusicForList({
         display="flex"
         alignItems={"center"}
         fontSize="14.53px"
+        fontFamily="montsserat"
       >
         {Math.floor(Number(music?.price))} сом
       </Text>
@@ -331,9 +356,10 @@ export default function MusicForList({
           }
           background="transparent"
           colorScheme="none"
+          fontFamily="montsserat"
           color={findMyMusic ? "#49DEFF" : findMusic ? "#49DEFF" : "white"}
         >
-          <Text mr={findMyMusic ? "4px" : "0px"}>
+          <Text fontFamily="montsserat" mr={findMyMusic ? "4px" : "0px"}>
             {findMyMusic ? `куплен` : findMusic ? "в корзине" : "+ в корзину"}
           </Text>
           <Box mt="-1px" display={findMyMusic ? "block" : "none"}>

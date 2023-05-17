@@ -16,6 +16,7 @@ export const theme = extendTheme({
     mono: "Menlo, monospace",
     sans: "Roboto, sans-serif",
     revert: "SF Pro Text, sans-serif",
+    montsserat: "Montserrat, sans-serif",
   },
   fontSizes: {
     xs: "0.75rem",

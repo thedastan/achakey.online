@@ -1,12 +1,12 @@
 import { IProps } from "./Types";
 import "./style.css";
 
-export function SvgPlayerGif({ fill }: IProps) {
+export function SvgPlayerGif({ width = "24", height = "24" }: IProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width={width}
+      height={height}
       viewBox="0 0 24 24"
     >
       <rect

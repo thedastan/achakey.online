@@ -22,7 +22,7 @@ const AccountManagementForm = () => {
 
   const { fetchUserDetails, fetchChangeUserFields } = useActionUser();
 
-  const userId = JSON.parse(localStorage.getItem("user-id") as string);
+  const userId = localStorage.getItem("user-id") as string
 
   const {
     register,
