@@ -32,7 +32,9 @@ export default function AllAlbums() {
               mb="45px"
               pos="relative"
             >
-              <NavLink to={`details/${el.id}`}>
+              <NavLink
+                to={`details/${el.id}`}
+              >
                 <Image
                   src={el?.image}
                   w="100%"

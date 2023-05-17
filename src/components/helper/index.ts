@@ -7,5 +7,5 @@ export const getUserId = () => {
 };
 
 export const getIdAlums = () => {
-  return localStorage.getItem("id-album") as string;
+  return JSON.parse(localStorage.getItem("id-album") as string);
 };
