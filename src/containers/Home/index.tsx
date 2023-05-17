@@ -37,7 +37,6 @@ const Home = () => {
           fontWeight="400"
           fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
           color="white"
-          zIndex="2"
           letterSpacing="0.01em"
           style={{
             transform: modal ? " translateY(-1500%)" : "translateY(100%)",
@@ -66,7 +65,6 @@ const Home = () => {
           <br />
           Новые альбомы
         </Text>
-        <Stack direction="row" spacing={4} align="center">
           <Button
             className="btn"
             colorScheme="transparent"
@@ -75,7 +73,8 @@ const Home = () => {
             fontSize="15px"
             mt="25px"
             height="42px"
-            px={breakpoints === "base" && "sm" ? "33px" : "63px"}
+            zIndex={{base:"",sm:"9"}}
+            px={{base:"33px",md:"63px"}}
             onClick={() => ActionMusicModal(true)}
             style={{
               transform: modal ? " translateY(-1300%)" : "translateY(100%)",
@@ -85,7 +84,6 @@ const Home = () => {
           >
             Перейти к трекам<em></em>
           </Button>
-        </Stack>
         <Music />
       </Box>
     </Box>
