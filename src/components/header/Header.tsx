@@ -53,25 +53,25 @@ export default function Header() {
     const location = useLocation();
     const isHomePage = location.pathname === "/";
     const navigate = useNavigate();
-    const {loginModal} = useModalforms();
-    const {isOpen, onOpen, onClose} = useDisclosure();
+    const { loginModal } = useModalforms();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const {fetchUserDetails} = useActionUser();
-    const {openModalEmailVerify} = useActionEmailVerify();
+    const { fetchUserDetails } = useActionUser();
+    const { openModalEmailVerify } = useActionEmailVerify();
 
-    const {userDetails} = useAppSelector((state) => state.reducerUser);
+    const { userDetails } = useAppSelector((state) => state.reducerUser);
 
-    const {authModal} = useAppSelector((state) => state.emailVerifyReducer);
+    const { authModal } = useAppSelector((state) => state.emailVerifyReducer);
 
-  const { searchChange } = useAppSelector((state) => state.searchChangeReducer);
-  const { tracks, albums } = useAppSelector((state) => state.musicReducer);
-  const resultSearchTracks: ISearchTrack[] = tracks.filter((el) =>
-    el.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
-  );
+    const { searchChange } = useAppSelector((state) => state.searchChangeReducer);
+    const { tracks, albums } = useAppSelector((state) => state.musicReducer);
+    const arrayListForSearch: ISearchTrack[] = tracks.filter((el) =>
+        el.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
+    );
 
-  const resultSearchAlbums: IAlbums[] = albums.filter((el) =>
-    el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
-  );
+    const searchResultAlbum: IAlbums[] = albums.filter((el) =>
+        el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
+    );
 
     const openModal = () => {
         onOpen();
