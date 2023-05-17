@@ -1,4 +1,5 @@
 export interface IInputRegister {
+  agreement: boolean;
   name?: string;
   surname?: string;
   email?: string;

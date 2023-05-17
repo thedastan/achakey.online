@@ -1,2 +1,2 @@
 export const ID_CLIENT =
-  "426144994353-f3kdvs86sshvbd56ql707tk815ld51ce.apps.googleusercontent.com";
+  "184431057519-5d6102t0daf3ijeukssilhgbgt3o6chh.apps.googleusercontent.com";

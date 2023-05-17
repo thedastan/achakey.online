@@ -65,14 +65,19 @@ export default function MusicForList({
 
   const userFilter = basket.filter((el) => el.user === getUserId());
 
-  const play = (music: any) => {
+  const play = (music?: ITrack) => {
     if (pause) {
       excerptPlayAction();
       pauseTrack();
+      if (music?.music !== active?.music) {
+        excerptPauseAction();
+        pauseTrack();
+        onClick(music);
+      }
     } else {
       excerptPauseAction();
-      onClick(music);
       pauseTrack();
+      onClick(music);
     }
   };
 
@@ -221,7 +226,7 @@ export default function MusicForList({
         />
         {active?.music_short === music?.music_short ? (
           <Box
-            display="inline-block"
+            display={{ base: "none", md: "inline-block" }}
             w={{ base: "36px", md: "32px" }}
             h={{ base: "36px", md: "32px" }}
             pt="2px"

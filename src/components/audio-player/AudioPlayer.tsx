@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@chakra-ui/button";
 import { Box } from "@chakra-ui/layout";
-import {Image, useDisclosure, Text, ModalOverlay} from "@chakra-ui/react";
+import { Image, Text, ModalOverlay } from "@chakra-ui/react";
 
 import {
   currentIndexAction,
@@ -24,7 +24,7 @@ import defaultImage from "../../assets/img/defaultImage.png";
 import { getAccessToken, getIdAlums, getUserId } from "../helper";
 import { fetchAlbumsDetails } from "../../pages/detailsAlbums/action-creators";
 import { OrderDetails } from "../order/OrderDetails";
-import { OrderPost, OrderTypes } from "../order/types/order";
+import { OrderPost } from "../order/types/order";
 import SvgForAlbumPause from "../../assets/svg/SvgForAlbumPause";
 import SvgForAlbumNext from "../../assets/svg/SvgForAlbumNext";
 import SvgForAlbumPrev from "../../assets/svg/SvgForAlbumPrev";
@@ -48,20 +48,16 @@ interface ICart {
   cart_item: ICartArray[];
 }
 export default function AudioPlayer({ listTruck }: IlistMedia) {
-  const OverlayOne = () => (
-      <ModalOverlay
-          bg='rgba(0, 0, 0, 0.7)'
-      />
-  )
+  const OverlayOne = () => <ModalOverlay bg="rgba(0, 0, 0, 0.7)" />;
   const [isOpenUser, setIsOpenUser] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const openModalUser = () => setIsOpenUser(true);
   const closeModalUser = () => setIsOpenUser(false);
   const openModal2 = () => setIsOpen2(true);
   const closeModal2 = () => setIsOpen2(false);
-  const [overlay, setOverlay] = useState(<OverlayOne/>)
+  const [overlay, setOverlay] = useState(<OverlayOne />);
 
-  const { loginModal } = useModalforms();
+  const { loginModal } = useModalforms() || {};
   const [total, setTotal] = useState(0);
   const dispatch = useAppDispatch();
 
@@ -69,9 +65,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
   const { basket } = useAppSelector((state) => state.reducerBasket);
   const Order = useAppSelector((state) => state.reducerOrder.order);
-  const { openOrder, openOrderId } = useAppSelector(
-    (state) => state.reducerOrder
-  );
+  const { openOrder } = useAppSelector((state) => state.reducerOrder);
   const { event } = useAppSelector((state) => state.eventReducer);
   const indexCurrent = useAppSelector(
     (state) => state.currentIndexReducer.currentIndex
@@ -96,27 +90,27 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
 
   const play = () => {
     const activeDefaultMusic = albums?.music[0];
+    const findAlbum = albums.music.find((el) => el.music === active?.music);
 
     if (forAlbum) {
       if (pause) {
         excerptPlayAction();
-        pauseTrack();
       } else {
         excerptPauseAction();
-        pauseTrack();
       }
+      pauseTrack();
     }
 
-    if (!active) {
-      excerptActiveAction(activeDefaultMusic);
-      eventChange(true);
-      dispatch(currentIndexAction(0));
-      pauseTrack();
+    if (!findAlbum) {
       {
         window.location.pathname === "/excerpts/details/" + getIdAlums()
           ? excerptForAlbumAction(true)
           : excerptForAlbumAction(false);
       }
+      excerptActiveAction(activeDefaultMusic);
+      dispatch(currentIndexAction(0));
+      pauseTrack();
+      eventChange(true);
     }
   };
 
@@ -211,8 +205,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
   function postOrderAlbum() {
     fetchOrder();
     // dispatch({ type: OrderTypes.OPEN_MODAL_ORDER, payload: true });
-    setOverlay(<OverlayOne/>)
-    openModal2()
+    setOverlay(<OverlayOne />);
+    openModal2();
     const order: OrderPost = {
       user: getUserId(),
       total_price: null,
@@ -258,8 +252,8 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
           : console.log("id")
       )
     );
-    setOverlay(<OverlayOne/>)
-    openModal2()
+    setOverlay(<OverlayOne />);
+    openModal2();
     // dispatch({ type: OrderTypes.OPEN_MODAL_ORDER, payload: true });
     fetchOrder();
   }
@@ -370,7 +364,11 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               <Button
                 bg="transparent"
                 colorScheme="none"
-                onClick={() => (forAlbum ? OnClickPrev : console.log("Prev"))}
+                onClick={() =>
+                  forAlbum && albums.music.length > 1
+                    ? OnClickPrev()
+                    : console.log("Prev")
+                }
                 p="0"
               >
                 <SvgForAlbumPrev />
@@ -397,7 +395,11 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
               <Button
                 bg="transparent"
                 colorScheme="none"
-                onClick={() => (forAlbum ? OnClickNext() : console.log("Next"))}
+                onClick={() =>
+                  forAlbum && albums.music.length > 1
+                    ? OnClickNext()
+                    : console.log("Next")
+                }
                 p="0"
               >
                 <SvgForAlbumNext />
@@ -500,7 +502,12 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
             </Box>
           </Box>
         </Box>
-            <OrderDetails overlay={overlay} closeModal2={closeModal2} isOpen2={isOpen2} className={openOrder ? "modal-content" : ""} />
+        <OrderDetails
+          overlay={overlay}
+          closeModal2={closeModal2}
+          isOpen2={isOpen2}
+          className={openOrder ? "modal-content" : ""}
+        />
       </Box>
     </section>
   );
