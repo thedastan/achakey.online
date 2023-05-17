@@ -1,10 +1,10 @@
 import { IProps } from "./Types";
 
-export default function SvgPlay({ fill }: IProps) {
+export default function SvgPlay({ fill, width = "33", height = "32" }: IProps) {
   return (
     <svg
-      width="33"
-      height="32"
+      width={width}
+      height={height}
       viewBox="0 0 33 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

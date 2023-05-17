@@ -111,8 +111,9 @@ const Music = () => {
                 {el.music !== null && (
                   <SwiperSlide key={index}>
                     <Box
+                      minH="90vh"
                       display="flex"
-                      justifyContent={"space-between"}
+                      justifyContent={{ base: "center", lg: "space-between" }}
                       alignItems="center"
                       flexDir={{
                         base: "column",

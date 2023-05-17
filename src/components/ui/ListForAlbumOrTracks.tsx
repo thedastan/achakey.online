@@ -34,58 +34,73 @@ export default function ListForAlbumOrTracks({
 
   return (
     <Box
-      py="22px"
+      px="29px"
       onClick={() => onClick(music)}
-      borderBottom="1px"
-      borderColor="#4F4F4F"
-      display="flex"
-      justifyContent="space-between"
-      alignContent="center"
-      background="transparent"
+      background={
+        active?.music === music?.music
+          ? "rgba(255, 255, 255, 0.08)"
+          : "transparent"
+      }
+      rounded="8px"
     >
-      <Box display="flex" alignItems="center">
-        <Text mr={{ base: "10px", md: "30px" }} color="white">
-          0{index}
-        </Text>
-        <Image
-          src={music?.image ? music.image : defaultImage}
-          w="42px"
-          h="42px"
-          mr={{ base: "9px", md: "23px" }}
-          rounded="4px"
-          objectFit="cover"
-        />
-        {active?.music === music?.music ? (
-          <Box display="inline-block" w="32px" h="32px" pt="2px">
-            <Box display="flex" justifyContent="center">
-              {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
+      <Box
+        py="8px"
+        borderBottom={
+          active?.music === music?.music ? "0" : "1px solid #4F4F4F"
+        }
+        display="flex"
+        justifyContent="space-between"
+        alignContent="center"
+      >
+        <Box display="flex" alignItems="center">
+          <Text
+            mr={{ base: "10px", md: "30px" }}
+            color="white"
+            fontFamily="montsserat"
+          >
+            0{index}
+          </Text>
+          <Image
+            src={music?.image ? music.image : defaultImage}
+            w="42px"
+            h="42px"
+            mr={{ base: "9px", md: "23px" }}
+            rounded="4px"
+            objectFit="cover"
+          />
+          {active?.music === music?.music ? (
+            <Box display="inline-block" w="32px" h="32px" pt="2px">
+              <Box display="flex" justifyContent="center">
+                {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
+              </Box>
             </Box>
-          </Box>
-        ) : (
-          <Box display="inline-block" w="32px">
-            <SvgPlay
-              fill={active?.music === music?.music ? "#49DEFF" : "#FFFFFF"}
-            />
-          </Box>
-        )}
+          ) : (
+            <Box display="inline-block" w="32px">
+              <SvgPlay
+                fill={active?.music === music?.music ? "#49DEFF" : "#FFFFFF"}
+              />
+            </Box>
+          )}
+          <Text
+            textColor={active?.music === music?.music ? "blue" : "white"}
+            fontSize="14px"
+            ml={{ base: "8px", md: "17.4px" }}
+            cursor="pointer"
+            noOfLines={1}
+            fontFamily="montsserat"
+          >
+            {`${name} - Jax 02.14  [offical Audio]`}
+          </Text>
+        </Box>
         <Text
+          fontFamily="montsserat"
+          color="white"
           textColor={active?.music === music?.music ? "blue" : "white"}
-          fontSize="14px"
-          ml={{ base: "8px", md: "17.4px" }}
-          cursor="pointer"
-          noOfLines={1}
+          pt="9px"
         >
-          {name}
-          {" [offical Audio]"}
+          {currentTimerAudio()}
         </Text>
       </Box>
-      <Text
-        color="white"
-        textColor={active?.music === music?.music ? "blue" : "white"}
-        pt="9px"
-      >
-        {currentTimerAudio()}
-      </Text>
     </Box>
   );
 }

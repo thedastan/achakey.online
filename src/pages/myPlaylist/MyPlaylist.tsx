@@ -44,14 +44,15 @@ export default function MyPlaylist() {
           <Box
             display="flex"
             justifyContent={{ base: "center", md: "start" }}
-            mb="31px"
             zIndex="0"
+            pl="30px"
+            fontFamily="Roboto, sans-serif"
           >
             <Text
               cursor="pointer"
               fontWeight="600"
               color={isTracks ? "white" : "rgba(255, 255, 255, 0.4)"}
-              mr={{ base: "35px", md: "50px", lg: "69px" }}
+              mr={{ base: "45px", md: "60px", lg: "70px" }}
               fontSize={{ base: "18px", md: "20px", lg: "24px" }}
               onClick={() => {
                 setActive(AlbumOrTracks.TRACKS);

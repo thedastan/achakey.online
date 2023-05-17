@@ -1,11 +1,11 @@
 import { IProps } from "./Types";
 
-export function SvgPlayerGifDefault({ fill }: IProps) {
+export function SvgPlayerGifDefault({ width = "24", height = "24" }: IProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width={width}
+      height={height}
       viewBox="0 0 24 24"
     >
       <rect x="4" y="12" width="2.7" height="8" fill="#49DEFF" />
