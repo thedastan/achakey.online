@@ -31,7 +31,7 @@ import "./style.scss";
 import SvgSearch from "../../assets/svg/SvgSearch";
 import { IAlbums } from "../../redux/types";
 import ModalExitAccount from "../form/modal/ModalExitAccount";
-import SvgLogo from "../../assets/svg/SvgLogo"
+import SvgLogo from "../../assets/svg/SvgLogo";
 export interface ISearchTrack {
   albums?: number | string;
   id?: number | null;
@@ -73,7 +73,6 @@ export default function Header() {
     el?.name?.toLocaleLowerCase().includes(searchChange.toLocaleLowerCase())
   );
 
-
   const openModal = () => {
     onOpen();
     loginModal();
@@ -101,7 +100,7 @@ export default function Header() {
     "2xl": "2xl",
   });
 
-  const userId = localStorage.getItem("user-id") as string;
+  const userId = JSON.parse(localStorage.getItem("user-id") as string);
 
   useEffect(() => {
     fetchUserDetails(userId);
@@ -150,8 +149,8 @@ export default function Header() {
             alignItems="center"
           >
             <Box zIndex="4" onClick={handleRefresh}>
-              <Link to={"/"} >
-                <SvgLogo/>
+              <Link to={"/"}>
+                <SvgLogo />
               </Link>
             </Box>
             <Button
@@ -281,25 +280,29 @@ export default function Header() {
               </InputGroup>
             ) : null}
             {isHomePage ? (
-              <Box mr="85px" zIndex="4" onClick={handleRefresh} >
-                <Link to={"/"} >
+              <Box mr="85px" zIndex="4" onClick={handleRefresh}>
+                <Link to={"/"}>
                   <SvgLogo />
                 </Link>
               </Box>
             ) : null}
-            <Box position="relative" >
-              <Menu >
+            <Box position="relative">
+              <Menu>
                 {({ isOpen }) => (
                   <Box className="hover-menu">
-                    <Box display="flex" justifyContent="center" alignItems="center" >
-                      <Text className="avatar-text" >Аккаунт</Text>
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <Text className="avatar-text">Аккаунт</Text>
                     </Box>
                     <MenuButton
                       isActive={isOpen}
                       as={Button}
                       bg="transparent"
                       colorScheme="transparent"
-                      >
+                    >
                       <SvgAvatar
                         fill={isOpen ? "white" : "rgba(255, 255, 255, 0.4)"}
                       />

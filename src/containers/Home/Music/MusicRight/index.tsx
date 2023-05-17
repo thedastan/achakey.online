@@ -93,19 +93,16 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
   }
 
   const play = (music: any, index: number) => {
-    if (!pause) {
+    if (music?.music?.music !== active?.music) {
       excerptPauseAction();
-      pauseTrack();
-      if (active?.id !== music?.music?.id || !active) {
-        onChangeForMusic(music?.music, index);
-      } else {
-        excerptPauseAction();
-        pauseTrack();
-      }
-    } else {
-      excerptPlayAction();
-      pauseTrack();
+      onChangeForMusic(music?.music, index);
     }
+    if (pause) {
+      excerptPlayAction();
+    } else {
+      excerptPauseAction();
+    }
+    pauseTrack();
   };
 
   const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -211,14 +208,20 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
           alignItems="center"
           my={breakpoints === "base" && "sm" && "md" ? "5" : "7"}
         >
-          <Box fontSize="40px" mr="10px" onClick={() => play(el, index)}>
+          <Box mr="10px" onClick={() => play(el, index)}>
             {active?.music_short === el?.music?.music_short ? (
-              <Box display="inline-block" w="32px" h="32px" pt="2px">
-                {pause ? <SvgPlayerGifDefault /> : <SvgPlayerGif />}
+              <Box display="inline-block" w="47px" h="47px" pt="2px">
+                {pause ? (
+                  <SvgPlayerGifDefault height="47" width="47" />
+                ) : (
+                  <SvgPlayerGif width="47px" height="47px" />
+                )}
               </Box>
             ) : (
-              <Box display="inline-block" w="32px">
+              <Box display="inline-block" w="47px">
                 <SvgPlay
+                  width="47px"
+                  height="47px"
                   fill={
                     active?.music_short === el?.music?.music_short
                       ? "#49DEFF"
@@ -240,12 +243,12 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
               className="time"
             />
             <Text
+              fontFamily="Roboto, sans-serif"
               as="span"
               ml="11px"
-              fontFamily="sans"
               fontWeight="semibold"
               fontSize={["10px", "12px", "14px", "14px", "14px"]}
-              color="rgba(255,255,255,0.34)"
+              color="white"
             >
               {el?.music?.music_short === active?.music_short
                 ? startTimer()
@@ -255,6 +258,7 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
         </Flex>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Button
+            mr={{ base: "20px", md: "24px" }}
             onClick={() =>
               getAccessToken()
                 ? !findBasketMusic && PostBasketItem(el.music)
@@ -267,8 +271,8 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
               sm: "140px",
               md: "160px",
               lg: "160px",
-              xl: "180px",
-              "2xl": "210px",
+              xl: "175px",
+              "2xl": "180px",
             }}
             bg={findBasketMusic ? "#007AFF" : "none"}
             border={findBasketMusic ? "none" : "1px"}
@@ -281,6 +285,7 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
               border: "none",
             }}
             className="music--button"
+            h="35px"
           >
             {findBasketMusic ? "В корзине" : "В корзину"}
             {!el?.music?.album ? (
@@ -308,6 +313,7 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
             }
           >
             <Button
+              h="35px"
               border="1px"
               bg="none"
               fontFamily="sans"
@@ -316,9 +322,8 @@ const MusicRight = ({ el, nameAlbum, index }: IMusicRight) => {
                 base: "",
                 sm: "140px",
                 md: "160px",
-                lg: "160px",
-                xl: "180px",
-                "2xl": "210px",
+                lg: "180px",
+                xl: "210px",
               }}
               height="35px"
               borderColor="white"

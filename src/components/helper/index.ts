@@ -3,7 +3,7 @@ export const getAccessToken = () => {
 };
 
 export const getUserId = () => {
-  return localStorage.getItem("user-id") as string;
+  return JSON.parse(localStorage.getItem("user-id") as string);
 };
 
 export const getIdAlums = () => {
