@@ -131,102 +131,104 @@ export const OrderPopup = ({className, closeModal1, overlay, isOpen1}: IOrderPop
                         <Box h="auto" overflowY="auto">
                             <Box mx={{base: "10px", md: "29px"}} mb="30px">
                                 <Box maxH={{base: "220px", sm: "426px", md: "619px"}} overflowY="auto">
-                                    {order?.map((item, index) => (
-                                        <Box key={index}>
-                                            {item.order_item?.map((el, index) => (
-                                                <div key={index}>
-                                                    {el.music !== null && (
-                                                        <Box
-                                                            bg="white"
-                                                            rounded="10px"
-                                                            my="10px"
-                                                            pt="12px"
-                                                            pb="11px"
-                                                            px="25px"
-                                                        >
-                                                            <Box
-                                                                display="flex"
-                                                                justifyContent="space-between"
-                                                                alignItems="center"
-                                                            >
-                                                                <Box
-                                                                    display="flex"
-                                                                    justifyContent="start"
-                                                                    alignItems="center"
-                                                                    w={{base: "155px", sm: "185px"}}
-                                                                >
-                                                                    <Image
-                                                                        src={
-                                                                            el?.music?.image
-                                                                                ? el.music.image
-                                                                                : defaultImage
-                                                                        }
-                                                                        w="35px"
-                                                                        h="35px"
-                                                                        rounded="50%"
-                                                                    />
-                                                                    <Text
-                                                                        fontSize="14px"
-                                                                        fontWeight="400"
-                                                                        ml={{base: "10px", sm: "26px"}}
-                                                                        textAlign="start"
-                                                                        fontFamily="Roboto,sans-serif"
-                                                                        noOfLines={2}
-                                                                    >
-                                                                        {el?.music?.name}
-                                                                    </Text>
-                                                                </Box>
-                                                                <Box display="flex" alignItems="center">
-                                                                    <Text
-                                                                        fontWeight="400"
-                                                                        // mr="48px"
-                                                                        fontSize="14px"
-                                                                        fontFamily="Roboto,sans-serif"
-                                                                    >
-                                                                        {Math.floor(Number(el?.music?.price))} cом
-                                                                    </Text>
-                                                                    {/*<Button*/}
-                                                                    {/*    onClick={() => deletedorder(`${item.id}`)}*/}
-                                                                    {/*    bg="transparent"*/}
-                                                                    {/*    colorScheme="none"*/}
-                                                                    {/*    px="0"*/}
-                                                                    {/*    py="0"*/}
-                                                                    {/*    color="#C10404"*/}
-                                                                    {/*    fontSize="12px"*/}
-                                                                    {/*    fontWeight="400"*/}
-                                                                    {/*>*/}
-                                                                    {/*    Удалить*/}
-                                                                    {/*</Button>*/}
-                                                                </Box>
-                                                            </Box>
-                                                        </Box>
-                                                    )}
-                                                </div>
-                                            ))}
-                                        </Box>
-                                    ))}
-                                    {order?.map((item, index) => (
-                                        <div key={index}>
-                                            {
-                                                <Box>
-                                                    {item?.order_item?.map((el, index) => (
-                                                        <Box key={index}>
-                                                            {el.album !== null && (
-                                                                <OrderListAlbums
-                                                                    deleted={deletedorder}
-                                                                    id={Number(item.id)}
-                                                                    music={el.album?.music}
-                                                                    image={el.album?.image}
-                                                                    name={el.album?.name}
-                                                                    price={el.album?.total_price}
-                                                                />
-                                                            )}
-                                                        </Box>
-                                                    ))}
-                                                </Box>
-                                            }
-                                        </div>
-                                    ))}
+                                   <Box h='full'>
+                                       {order?.map((item, index) => (
+                                           <Box key={index}>
+                                               {item.order_item?.map((el, index) => (
+                                                   <div key={index}>
+                                                       {el.music !== null && (
+                                                           <Box
+                                                               bg="white"
+                                                               rounded="10px"
+                                                               my="10px"
+                                                               pt="12px"
+                                                               pb="11px"
+                                                               px="25px"
+                                                           >
+                                                               <Box
+                                                                   display="flex"
+                                                                   justifyContent="space-between"
+                                                                   alignItems="center"
+                                                               >
+                                                                   <Box
+                                                                       display="flex"
+                                                                       justifyContent="start"
+                                                                       alignItems="center"
+                                                                       w={{base: "155px", sm: "185px"}}
+                                                                   >
+                                                                       <Image
+                                                                           src={
+                                                                               el?.music?.image
+                                                                                   ? el.music.image
+                                                                                   : defaultImage
+                                                                           }
+                                                                           w="35px"
+                                                                           h="35px"
+                                                                           rounded="50%"
+                                                                       />
+                                                                       <Text
+                                                                           fontSize="14px"
+                                                                           fontWeight="400"
+                                                                           ml={{base: "10px", sm: "26px"}}
+                                                                           textAlign="start"
+                                                                           fontFamily="Roboto,sans-serif"
+                                                                           noOfLines={2}
+                                                                       >
+                                                                           {el?.music?.name}
+                                                                       </Text>
+                                                                   </Box>
+                                                                   <Box display="flex" alignItems="center">
+                                                                       <Text
+                                                                           fontWeight="400"
+                                                                           // mr="48px"
+                                                                           fontSize="14px"
+                                                                           fontFamily="Roboto,sans-serif"
+                                                                       >
+                                                                           {Math.floor(Number(el?.music?.price))} cом
+                                                                       </Text>
+                                                                       {/*<Button*/}
+                                                                       {/*    onClick={() => deletedorder(`${item.id}`)}*/}
+                                                                       {/*    bg="transparent"*/}
+                                                                       {/*    colorScheme="none"*/}
+                                                                       {/*    px="0"*/}
+                                                                       {/*    py="0"*/}
+                                                                       {/*    color="#C10404"*/}
+                                                                       {/*    fontSize="12px"*/}
+                                                                       {/*    fontWeight="400"*/}
+                                                                       {/*>*/}
+                                                                       {/*    Удалить*/}
+                                                                       {/*</Button>*/}
+                                                                   </Box>
+                                                               </Box>
+                                                           </Box>
+                                                       )}
+                                                   </div>
+                                               ))}
+                                           </Box>
+                                       ))}
+                                       {order?.map((item, index) => (
+                                           <div key={index}>
+                                               {
+                                                   <Box>
+                                                       {item?.order_item?.map((el, index) => (
+                                                           <Box key={index}>
+                                                               {el.album !== null && (
+                                                                   <OrderListAlbums
+                                                                       deleted={deletedorder}
+                                                                       id={Number(item.id)}
+                                                                       music={el.album?.music}
+                                                                       image={el.album?.image}
+                                                                       name={el.album?.name}
+                                                                       price={el.album?.total_price}
+                                                                   />
+                                                               )}
+                                                           </Box>
+                                                       ))}
+                                                   </Box>
+                                               }
+                                           </div>
+                                       ))}
+                                   </Box>
                                 </Box>
                             </Box>
                         </Box>

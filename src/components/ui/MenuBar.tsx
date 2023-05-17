@@ -4,7 +4,7 @@ import SvgAllTracks from "../../assets/svg/SvgAllTracks";
 import SvgBasket from "../../assets/svg/SvgBasket";
 import SvgHome from "../../assets/svg/SvgHome";
 import SvgTrack from "../../assets/svg/SvgTrack";
-import { useAppSelector} from "../../hooks/Index";
+import {useAppSelector} from "../../hooks/Index";
 import {useActionMusicModal, useModalforms} from "../../hooks/useActions";
 import ModalUserAuth from "../form/modal/ModalUser";
 import {getIdAlums} from "../helper";
@@ -146,16 +146,16 @@ export default function MenuBar({children}: IPropsMenuBar) {
                 left="0"
                 top="0"
                 bottom="0"
+                zIndex="9"
+                display={{base: "none", md: "block"}}
+                w={pathname === "/" ? "25%" : "96px"}
                 bg={
                     pathname === "/"
                         ? "linear-gradient(90deg, #000000 22.36%, rgba(0, 0, 0, 0) 50.34%)"
                         : "#0B0B0B"
                 }
-                zIndex="1"
-                display={{base: "none", md: "block"}}
-                w={pathname === "/" ? "25%" : "96px"}
             >
-                <Box py="60px">
+                <Box py="42.75px">
                     {list.slice(0, 1).map((el) => (
                         <Box
                             key={el.link}
