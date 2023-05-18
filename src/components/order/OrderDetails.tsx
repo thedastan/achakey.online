@@ -146,7 +146,7 @@ export const OrderDetails = ({className, overlay, closeModal2,isOpen2 }: IOrderP
                             </Box>
                         </Box>
 
-                        <Box h="auto" overflowY="auto">
+                        <Box maxW="272px" overflowY="auto">
                             <Box mx={{base: "10px", md: "29px"}} mb="30px">
                                 <Box maxH="272px" overflowY="auto">
                                     {orderDetails?.order_item?.map((el: any, index: any) => (
