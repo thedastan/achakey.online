@@ -128,7 +128,7 @@ export const OrderPopup = ({className, closeModal1, overlay, isOpen1}: IOrderPop
                             </Box>
                         </Box>
 
-                        <Box maxH={{base: "220px", sm: "426px", md: "619px"}} overflowY="auto">
+                        <Box overflowY="auto">
                             <Box mx={{base: "10px", md: "29px"}} mb="30px">
                                 <Box overflowY="auto">
                                    <Box h='full'>
