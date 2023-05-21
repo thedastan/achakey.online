@@ -2,7 +2,6 @@ const express = require('express');
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
-const ffmpeg = require('fluent-ffmpeg');
 
 const router = express.Router();
 
@@ -42,22 +41,14 @@ router.get('/myMusics', async (req, res) => {
                         }
                         console.log('Conversion completed. MP3 file saved.');
 
-                        ffmpeg.ffprobe(mp3File, (err, metadata) => {
-                          if (err) {
-                            console.error('Error reading MP3 file:', err);
-                            return;
-                          }
-
-                            const durationInMinutes = 1;
-                            const durationInMillis = durationInMinutes * 60 * 100;
+                            const durationInMinutes = 5;
+                            const durationInMillis = durationInMinutes * 60 * 1000;
 
                             setTimeout(() => {
                                 fs.unlinkSync(mp3File);
                                 fs.unlinkSync(base64File);
                                 console.log('Files deleted after', durationInMinutes, 'minutes');
                             }, durationInMillis);
-
-                        });
 
                         return res.status(200).sendFile(mp3File);
                     });
