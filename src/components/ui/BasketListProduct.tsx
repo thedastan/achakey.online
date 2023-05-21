@@ -53,8 +53,6 @@ export default function BasketListProduct({
       ],
     };
 
-
-
     const userFiter = Order?.filter((el) => el.user === getUserId());
 
     const filterUser = userFiter.map(

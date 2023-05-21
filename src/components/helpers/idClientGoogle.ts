@@ -1,2 +1,1 @@
-export const ID_CLIENT =
-  "184431057519-5d6102t0daf3ijeukssilhgbgt3o6chh.apps.googleusercontent.com";
+export const ID_CLIENT = process.env.REACT_APP_GOOGLE_CLIENT_ID;
