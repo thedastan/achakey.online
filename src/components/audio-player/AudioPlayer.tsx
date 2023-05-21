@@ -220,12 +220,12 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
       ],
     };
 
-    const userFiter = Order.filter((el) => el.user === getUserId());
+    const userFiter = basket.filter((el) => el.user === getUserId());
 
     const filterUser = userFiter.map(
       //@ts-ignore
       (el) =>
-        el?.order_item?.filter((i) => i.album?.id === order.order_item[0].album)
+        el?.cart_item?.filter((i) => i.album?.id === order.order_item[0].album)
     );
 
     const newData = filterUser.flat();
@@ -238,7 +238,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     }
 
     userFiter?.filter((el) =>
-      el?.order_item?.filter((i) =>
+      el?.cart_item?.filter((i) =>
         i.album?.id === order.order_item[0].album
           ? fetchOrderItem(Number(el?.id))
           : console.log("NoNo")
@@ -246,7 +246,7 @@ export default function AudioPlayer({ listTruck }: IlistMedia) {
     );
 
     userFiter?.filter((el) =>
-      el?.order_item?.filter((i) =>
+      el?.cart_item?.filter((i) =>
         i.album?.id === order.order_item[0].album
           ? fetchOrderId(Number(el?.id))
           : console.log("id")

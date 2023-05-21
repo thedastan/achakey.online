@@ -15,11 +15,10 @@ import API from "../../api/Index";
 import OrderListAlbums from "./orderListForAlbum";
 
 import {useAppDispatch, useAppSelector} from "../../hooks/Index";
-import {useActionOrder} from "../../hooks/useActions";
-import {fetchOrderItem} from "./action-creators/action";
+import {useActionBasket, useActionOrder} from "../../hooks/useActions";
 import {OrderTypes} from "./types/order";
-import "./style.scss";
 import {motion} from "framer-motion";
+import "./style.scss";
 
 
 interface IOrderPopup {
@@ -38,14 +37,15 @@ export const OrderDetails = ({className, overlay, closeModal2,isOpen2 }: IOrderP
     const [total, setTotal] = useState(0);
 
     const {fetchOrder} = useActionOrder();
+    const {fetchBasketItem} = useActionBasket()
     const {orderDetails, orderId, openOrderId} = useAppSelector(
         (state) => state.reducerOrder
     );
 
-    function handleClickClose() {
-        dispatch({type: OrderTypes.OPEN_MODAL_ORDER, payload: false});
-        dispatch({type: OrderTypes.OPEN_MODAL_ORDER_ID, payload: false});
-    }
+    // function handleClickClose() {
+    //     dispatch({type: OrderTypes.OPEN_MODAL_ORDER, payload: false});
+    //     dispatch({type: OrderTypes.OPEN_MODAL_ORDER_ID, payload: false});
+    // }
 
     const deletedorder = async (id: string) => {
         try {
@@ -58,9 +58,9 @@ export const OrderDetails = ({className, overlay, closeModal2,isOpen2 }: IOrderP
         fetchOrder();
     };
 
-    useEffect(() => {
-        fetchOrderItem(Number(orderId));
-    }, []);
+    // useEffect(() => {
+    //   orderId && orderId>0 && fetchBasketItem(Number(orderId));
+    // }, []);
 
     useEffect(() => {
         let result = 0;
@@ -247,6 +247,9 @@ export const OrderDetails = ({className, overlay, closeModal2,isOpen2 }: IOrderP
                                 px="70px"
                                 fontFamily="Roboto,sans-serif"
                                 py={{base:"14px",sm:"12px"}}
+                                onClick={()=>{
+                                    alert('zakaz')
+                                }}
                             >
                                 Оформить заказ
                             </Button>

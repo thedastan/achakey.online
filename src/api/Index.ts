@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_ADDRESS = "https://api.achakey.online/";
+export const API_ADDRESS = process.env.REACT_APP_BACK_API_URL;
 
 const API = axios.create({
   baseURL: API_ADDRESS,

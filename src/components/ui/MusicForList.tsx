@@ -141,7 +141,6 @@ export default function MusicForList({
     if (arrayOfObjects[0]?.music?.id === order?.order_item[0]?.music) {
       console.log("no");
     } else {
-      fetchOrderPost(order);
       fetchOrder();
     }
 
