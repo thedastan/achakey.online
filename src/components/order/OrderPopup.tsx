@@ -250,7 +250,7 @@ export const OrderPopup = ({className, closeModal1, overlay, isOpen1}: IOrderPop
                                 fontFamily="Roboto,sans-serif"
                                 py={{base:"14px",sm:"12px"}}
                                 onClick={()=>{
-                                    fetchOrderPost({user: basket[0].user, order_item })
+                                    fetchOrderPost({user: basket[0].user, order_item, total_price: total })
                                 }}
                             >
                                 Оформить заказ
