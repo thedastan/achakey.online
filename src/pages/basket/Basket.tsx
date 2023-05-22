@@ -15,7 +15,7 @@ import BasketListAlbums from "../../components/ui/BasketListForAlbums";
 import BasketListProduct from "../../components/ui/BasketListProduct";
 import API from "../../api/Index";
 import { useAppSelector } from "../../hooks/Index";
-import { useActionBasket } from "../../hooks/useActions";
+import { useActionBasket, useActionOrder } from "../../hooks/useActions";
 import { OrderPopup } from "../../components/order/OrderPopup";
 import { getUserId } from "../../components/helper";
 import { OrderDetails } from "../../components/order/OrderDetails";
@@ -34,6 +34,8 @@ export default function Basket() {
   const [total, setTotal] = useState(0);
 
   const { fetchBasket } = useActionBasket();
+  const {fetchOrder} = useActionOrder();
+  
   const { basket, loader } = useAppSelector((state) => state.reducerBasket);
   const { openOrder, openOrderId } = useAppSelector(
     (state) => state.reducerOrder
@@ -50,6 +52,14 @@ export default function Basket() {
     } catch (e) {
       fetchBasket();
     }
+    try {
+      await API.delete(`order/delete/${id}`);
+      openOrderId(false);
+      fetchOrder();
+  } catch (e) {
+      fetchOrder();
+  }
+  fetchOrder();
     fetchBasket();
   };
 

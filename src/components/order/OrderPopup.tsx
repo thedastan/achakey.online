@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import API from "../../api/Index";
 import SvgBlackCross from "../../assets/svg/SvgBlackCross";
 import {useAppDispatch, useAppSelector} from "../../hooks/Index";
-import {useActionOrder} from "../../hooks/useActions";
+import {useActionBasket, useActionOrder} from "../../hooks/useActions";
 import {getUserId} from "../helper";
 import OrderListAlbums from "./orderListForAlbum";
 import defaultImage from "../../assets/img/defaultImage.png";
@@ -25,10 +25,18 @@ export const OrderPopup = ({className, closeModal1, overlay, isOpen1}: IOrderPop
     const dispatch = useAppDispatch();
     const [total, setTotal] = useState(0);
 
-    const {fetchOrder} = useActionOrder();
-    const {order} = useAppSelector((state) => state.reducerOrder);
+    const { fetchOrderPost} = useActionOrder();
+    // const { fetchBasket } = useActionBasket();
+    const {basket} = useAppSelector((state) => state.reducerBasket);
 
-    const filterUser = order.filter((el) => el.user === getUserId());
+    const order_item = basket[0]?.cart_item.map(item => {
+        return {
+          music: item.music ? item.music.id : null,
+          album: item.album ? item.album.id : null
+        };
+      });
+
+    const filterUser = basket.filter((el) => el.user === getUserId());
 
     function handleClickClose() {
         dispatch({type: OrderTypes.OPEN_MODAL_ORDER, payload: false});
@@ -37,43 +45,41 @@ export const OrderPopup = ({className, closeModal1, overlay, isOpen1}: IOrderPop
     const deletedorder = async (id: string) => {
         try {
             const responce = await API.delete(`order/delete/${id}`);
-            fetchOrder();
+            // fetchOrder();
             return console.log(responce);
         } catch (e) {
-            fetchOrder();
+            // fetchOrder();
         }
-        fetchOrder();
+        // fetchOrder();
     };
-
-    useEffect(() => {
-        fetchOrder();
-    }, []);
 
     useEffect(() => {
         let result = 0;
         let totalAlbum = 0;
-
+    
         const numberArray = filterUser.map((el) =>
-            el.order_item?.map((i) => i.music?.price)
+          el.cart_item?.map((i) => i.music?.price)
         );
-
+    
         const numberArrayAlbum = filterUser.map((el) =>
-            el.order_item?.map((i) => i.album?.music?.map((j) => j.price))
+          el.cart_item?.map((i) => i.album?.music?.map((j) => j.price))
         );
-
+    
         const newAlbumDate = numberArrayAlbum.flat();
-
+    
         const newDate = numberArray.flat();
-
+    
+        const filterNewDate = newAlbumDate.filter((el) => el !== undefined);
+    
         for (const keys of newDate) {
-            result += typeof keys === "undefined" ? 0 : Number(keys);
+          result += typeof keys === "undefined" ? 0 : Number(keys);
         }
-
-        for (const keys of newAlbumDate.flat()) {
-            totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
+    
+        for (const keys of filterNewDate.flat()) {
+          totalAlbum += typeof keys === "undefined" ? 0 : Number(keys);
         }
         setTotal(totalAlbum + result);
-    }, [order]);
+      }, [basket]);
     const bottom = useBreakpointValue({base: "0", md: "none"})
     return (
         <>
@@ -126,14 +132,12 @@ export const OrderPopup = ({className, closeModal1, overlay, isOpen1}: IOrderPop
                                 <SvgBlackCross/>
                             </Box>
                         </Box>
-
-                      <Box>
+                        <Box>
                           <Box mx={{base: "10px", md: "29px"}} mb="30px">
                               <Box minH={{base: "220px", sm: "326px", md: "419px"}} overflowY="auto">
                                   <Box h='full'>
-                                      {order?.map((item, index) => (
-                                          <Box key={index}>
-                                              {item.order_item?.map((el, index) => (
+                                        <Box>
+                                            {basket[0]?.cart_item?.map((el, index) => (
                                                   <div key={index}>
                                                       {el.music !== null && (
                                                           <Box
@@ -178,7 +182,8 @@ export const OrderPopup = ({className, closeModal1, overlay, isOpen1}: IOrderPop
                                                                   </Box>
                                                                   <Box display="flex" alignItems="center">
                                                                       <Text
-                                                                          fontWeight="400"
+
+                                                                        fontWeight="400"
                                                                           // mr="48px"
                                                                           fontSize="14px"
                                                                           fontFamily="Roboto,sans-serif"
@@ -186,7 +191,7 @@ export const OrderPopup = ({className, closeModal1, overlay, isOpen1}: IOrderPop
                                                                           {Math.floor(Number(el?.music?.price))} cом
                                                                       </Text>
                                                                       {/*<Button*/}
-                                                                      {/*    onClick={() => deletedorder(`${item.id}`)}*/}
+                                                                      {/*    onClick={() => deletedorder(${item.id})}*/}
                                                                       {/*    bg="transparent"*/}
                                                                       {/*    colorScheme="none"*/}
                                                                       {/*    px="0"*/}
@@ -202,36 +207,28 @@ export const OrderPopup = ({className, closeModal1, overlay, isOpen1}: IOrderPop
                                                           </Box>
                                                       )}
                                                   </div>
-                                              ))}
-                                          </Box>
-                                      ))}
-                                      {order?.map((item, index) => (
-                                          <div key={index}>
-                                              {
-                                                  <Box>
-                                                      {item?.order_item?.map((el, index) => (
-                                                          <Box key={index}>
-                                                              {el.album !== null && (
-                                                                  <OrderListAlbums
-                                                                      deleted={deletedorder}
-                                                                      id={Number(item.id)}
-                                                                      music={el.album?.music}
-                                                                      image={el.album?.image}
-                                                                      name={el.album?.name}
-                                                                      price={el.album?.total_price}
-                                                                  />
-                                                              )}
-                                                          </Box>
-                                                      ))}
-                                                  </Box>
-                                              }
-                                          </div>
-                                      ))}
+                                            ))}
+                                        </Box>
+                                        <Box>
+                                            {basket[0]?.cart_item?.map((el, index) => (
+                                                <Box key={index}>
+                                                    {el.album !== null && (
+                                                        <OrderListAlbums
+                                                            deleted={deletedorder}
+                                                            id={Number(el.id)}
+                                                            music={el.album?.music}
+                                                            image={el.album?.image}
+                                                            name={el.album?.name}
+                                                            price={el.album?.total_price}
+                                                        />
+                                                    )}
+                                                </Box>
+                                            ))}
+                                        </Box>       
                                   </Box>
                               </Box>
                           </Box>
                       </Box>
-
                         <Box
                             display="flex"
                             justifyContent={{base: "center", sm: "space-between"}}
@@ -252,6 +249,9 @@ export const OrderPopup = ({className, closeModal1, overlay, isOpen1}: IOrderPop
                                 px="70px"
                                 fontFamily="Roboto,sans-serif"
                                 py={{base:"14px",sm:"12px"}}
+                                onClick={()=>{
+                                    fetchOrderPost({user: basket[0].user, order_item, total_price: total })
+                                }}
                             >
                                 Оформить заказ
                             </Button>
