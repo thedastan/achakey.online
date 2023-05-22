@@ -6,6 +6,7 @@ import {
   useExcerpAction,
   useTracksAction,
 } from "../hooks/useActions";
+import { API_ADDRESS } from "../api/Index";
 
 let audio: HTMLAudioElement | any;
 
@@ -31,9 +32,11 @@ export default function AudioPlayerBottom() {
 
   const { playTrack, setCurrentTime, setDuration } = useAction();
 
+  //{api}api/myMusics/?textFileUrl=api.achakey.online/media/jax-0214-sebelep.txt
+
   const setAudio = () => {
     if (active) {
-      audio.src = active.music;
+      audio.src = `${API_ADDRESS}${process.env.REACT_APP_URL_CONVERT}${active.music}`;
       audio.volume = volume / 100;
       audio.onloadedmetadata = () => {
         setDuration(Math.ceil(audio.duration));
@@ -43,7 +46,7 @@ export default function AudioPlayerBottom() {
       };
     }
   };
-  
+
   useEffect(() => {
     if (!audio) {
       audio = new Audio();
