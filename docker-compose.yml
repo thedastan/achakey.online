@@ -5,6 +5,12 @@ services:
     container_name: front
     ports:
       - "3000:3000"
+  nodejs:
+    image: node:latest
+    container_name: node
+    ports:
+      - "8000:8000"
+    command: ssh -c "npm run start --prefix convert"
 
   nginx:
     image: linuxserver/swag
