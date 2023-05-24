@@ -19,11 +19,13 @@
     "axios": "1.3.3",
     "body-parser": "^1.20.2",
     "concurrently": "^8.0.1",
+    "express": "^4.18.2",
     "framer-motion": "^9.0.4",
     "lamejs": "^1.2.1",
     "node-id3": "^0.2.6",
     "node-lame": "^1.3.2",
     "node-sass": "7.0.3",
+    "nodemon": "^2.0.22",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.43.2",
@@ -48,7 +50,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "npm run start --prefix convert"
+    "server": "npm run start --prefix convert",
+    "dev": "nodemon file_encrypter/app.js"
   },
   "eslintConfig": {
     "extends": [
