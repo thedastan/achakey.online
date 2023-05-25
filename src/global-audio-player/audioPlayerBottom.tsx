@@ -6,7 +6,7 @@ import {
   useExcerpAction,
   useTracksAction,
 } from "../hooks/useActions";
-import { API_ADDRESS } from "../api/Index";
+import axios from "axios";
 
 let audio: HTMLAudioElement | any;
 
@@ -34,16 +34,33 @@ export default function AudioPlayerBottom() {
 
   //{api}api/myMusics/?textFileUrl=api.achakey.online/media/jax-0214-sebelep.txt
 
-  const setAudio = () => {
+  const setAudio = async () => {
+
     if (active) {
-      audio.src = `${API_ADDRESS}${process.env.REACT_APP_URL_CONVERT}${active.music}`;
-      audio.volume = volume / 100;
-      audio.onloadedmetadata = () => {
-        setDuration(Math.ceil(audio.duration));
-      };
-      audio.ontimeupdate = () => {
-        setCurrentTime(Math.ceil(audio.currentTime));
-      };
+      // axios.get('http://localhost:8080/get_music/{active.music}').then(({data})=> {
+      //   data // path ti file ---> achakey/src/qwertyui.mp3 |
+      // })
+      const url = `${active?.music}`
+      // const url = 'https://example.com/some-page';
+      fetch(`https://localhost:8080/get_music?url=${encodeURIComponent(url)}`).then((data)=> {
+        console.log(data)
+      })
+      // fetch('/get_music', {
+      //   method: 'GET',
+      //   headers: {
+      //     'X-Request-URL': url
+      //   }
+      // }).then((data)=> {
+      //   console.log(data , 'data')
+      //   // audio.src = '';
+      //   // audio.volume = volume / 100;
+      //   // audio.onloadedmetadata = () => {
+      //   //   setDuration(Math.ceil(audio.duration));
+      //   // };
+      //   // audio.ontimeupdate = () => {
+      //   //   setCurrentTime(Math.ceil(audio.currentTime));
+      //   // };
+      // })
     }
   };
 

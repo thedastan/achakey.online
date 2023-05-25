@@ -22,6 +22,7 @@ export default function AudioPlayerExcerpt() {
 
   const setAudio = () => {
     if (active) {
+
       audio.src = active.music_short;
       audio.volume = volume / 100;
       audio.onloadedmetadata = () => {
