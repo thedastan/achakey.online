@@ -156,9 +156,9 @@ export default function MenuBar({children}: IPropsMenuBar) {
                 }
             >
                 <Box py="42.75px">
-                    {list.slice(0, 1).map((el) => (
+                    {list.slice(0, 1).map((el, idx) => (
                         <Box
-                            key={el.link}
+                            key={idx}
                             onClick={handleRefresh}
                             py="17.5px"
                             pl="30px"
@@ -177,9 +177,9 @@ export default function MenuBar({children}: IPropsMenuBar) {
                             </Link>
                         </Box>
                     ))}
-                    {list.slice(1, 2).map((el) => (
+                    {list.slice(1, 2).map((el, idx) => (
                         <Box
-                            key={el.link}
+                            key={idx+1}
                             py="17.5px"
                             pl="30px"
                             pr="41px"
@@ -198,9 +198,9 @@ export default function MenuBar({children}: IPropsMenuBar) {
                             </Link>
                         </Box>
                     ))}
-                    {list.slice(2, 3).map((el) => (
+                    {list.slice(2, 3).map((el, idx) => (
                         <Box
-                            key={el.link}
+                            key={idx+2}
                             py="17.5px"
                             pl="30px"
                             pr="41px"
@@ -282,8 +282,8 @@ export default function MenuBar({children}: IPropsMenuBar) {
                         bg="#0B0B0B"
                         px="46px"
                     >
-                        {list.slice(0, 1).map((el) => (
-                            <Box key={el.link} onClick={handleRefresh} textColor="white">
+                        {list.slice(0, 1).map((el, idx) => (
+                            <Box key={idx} onClick={handleRefresh} textColor="white">
                                 <Link to={el.link} title={el.item}>
                                     <Box pos="relative" display="flex">
                                         {el.svg}
@@ -292,8 +292,8 @@ export default function MenuBar({children}: IPropsMenuBar) {
                                 </Link>
                             </Box>
                         ))}
-                        {list.slice(1, 3).map((el) => (
-                            <Box key={el.link} textColor="white">
+                        {list.slice(1, 3).map((el, idx) => (
+                            <Box key={idx} textColor="white">
                                 <Link to={el.link} title={el.item}>
                                     <Box pos="relative" display="flex">
                                         {el.svg}
@@ -303,9 +303,9 @@ export default function MenuBar({children}: IPropsMenuBar) {
                             </Box>
                         ))}
                         {list.slice(3, 4).map((el, index) => (
-                            <Box display="flex" pos="relative">
+                            <Box display="flex" pos="relative" key={index}>
                                 <Box
-                                    key={index}
+                                    // key={index}
                                     textColor="white"
                                     display="flex"
                                     position="relative"

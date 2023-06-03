@@ -406,11 +406,11 @@ export default function PopupForLyrics({
           mt="30px"
           pb="100px"
         >
-          <p>
+          <span>
             {text?.split("\r\n").map((line, index) => (
               <p key={index}>{line}</p>
             ))}
-          </p>
+          </span>
         </Text>
       </Box>
     </Box>

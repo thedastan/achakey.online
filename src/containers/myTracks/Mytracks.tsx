@@ -107,7 +107,7 @@ export default function MyTracks() {
             <SvgLink />
           </Box>
           <Text fontSize="14px" lineHeight="19.88px" mt="12px">
-            <p>
+            <span>
               {active?.text
                 ?.split("\r\n")
                 .map(
@@ -123,10 +123,10 @@ export default function MyTracks() {
                       | undefined,
                     index: Key | null | undefined
                   ) => (
-                    <p key={index}>{line}</p>
+                    <span key={index}>{line}</span>
                   )
                 )}
-            </p>
+            </span>
           </Text>
         </Box>
       )}
