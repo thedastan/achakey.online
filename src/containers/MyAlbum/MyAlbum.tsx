@@ -247,11 +247,11 @@ export default function MyAlbum() {
               mt="12px"
               fontFamily="montsserat"
             >
-              <p>
+              <span>
                 {active?.text?.split("\r\n").map((line, index) => (
-                  <p key={index}>{line}</p>
+                  <span key={index}>{line}</span>
                 ))}
-              </p>
+              </span>
             </Text>
           </Box>
         </Box>

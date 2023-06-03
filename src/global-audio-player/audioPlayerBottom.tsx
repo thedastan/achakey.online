@@ -8,7 +8,7 @@ import {
 } from "../hooks/useActions";
 import axios from "axios";
 
-let audio: HTMLAudioElement | any;
+let audio: HTMLAudioElement;
 
 export default function AudioPlayerBottom() {
   const { fetchAlbums, fetchTracks } = useTracksAction();
@@ -32,35 +32,27 @@ export default function AudioPlayerBottom() {
 
   const { playTrack, setCurrentTime, setDuration } = useAction();
 
-  //{api}api/myMusics/?textFileUrl=api.achakey.online/media/jax-0214-sebelep.txt
-
   const setAudio = async () => {
-
     if (active) {
-      // axios.get('http://localhost:8080/get_music/{active.music}').then(({data})=> {
-      //   data // path ti file ---> achakey/src/qwertyui.mp3 |
-      // })
-      const url = `${active?.music}`
-      // const url = 'https://example.com/some-page';
-      fetch(`https://localhost:8080/get_music?url=${encodeURIComponent(url)}`).then((data)=> {
-        console.log(data)
-      })
-      // fetch('/get_music', {
-      //   method: 'GET',
-      //   headers: {
-      //     'X-Request-URL': url
-      //   }
-      // }).then((data)=> {
-      //   console.log(data , 'data')
-      //   // audio.src = '';
-      //   // audio.volume = volume / 100;
-      //   // audio.onloadedmetadata = () => {
-      //   //   setDuration(Math.ceil(audio.duration));
-      //   // };
-      //   // audio.ontimeupdate = () => {
-      //   //   setCurrentTime(Math.ceil(audio.currentTime));
-      //   // };
-      // })
+      const textFileUrl = `${active?.music}`;
+      const url = "http://localhost:8080/";
+      try {
+        const { data } = await axios(
+          `${url}api/myMusics?textFileUrl=${textFileUrl}`
+        );
+        audio = new Audio();
+        audio.src = data.mp3Data;
+        audio.onloadedmetadata = () => {
+          setDuration(Math.ceil(audio.duration));
+        };
+        audio.ontimeupdate = () => {
+          setCurrentTime(Math.ceil(audio.currentTime));
+        };
+        audio.play();
+        console.log(data, "response data");
+      } catch (e) {
+        console.log(e, "error");
+      }
     }
   };
 
