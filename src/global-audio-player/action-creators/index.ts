@@ -15,3 +15,7 @@ export const loopAction = (payload: boolean): AudioBottomAction => {
 export const allLoopAction = (payload: boolean): AudioBottomAction => {
   return { type: AudioBottomTypes.ALL_LOOP, payload };
 };
+
+export const loadingAction = (payload: boolean): AudioBottomAction => {
+  return { type: AudioBottomTypes.LOADING_MUSIC, payload };
+};

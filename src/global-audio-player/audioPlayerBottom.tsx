@@ -1,20 +1,22 @@
 import { useEffect } from "react";
 import { pauseTrack } from "../components/bottom-audio-player/action-creators/Player";
-import { useAppSelector } from "../hooks/Index";
+import { useAppDispatch, useAppSelector } from "../hooks/Index";
 import {
   useAction,
   useExcerpAction,
   useTracksAction,
 } from "../hooks/useActions";
 import axios from "axios";
+import { loadingAction } from "./action-creators";
 
 let audio: HTMLAudioElement;
 
 export default function AudioPlayerBottom() {
+  const dispatch = useAppDispatch();
   const { fetchAlbums, fetchTracks } = useTracksAction();
   const { excerptPauseAction } = useExcerpAction();
 
-  const { loop } = useAppSelector(
+  const { loop, changeTime, changeVolume } = useAppSelector(
     (state) => state.reducerChangeTimePlayerBottom
   );
   useEffect(() => {
@@ -24,14 +26,11 @@ export default function AudioPlayerBottom() {
 
   const { pause, active } = useAppSelector((state) => state.playReducer);
 
-  const { changeTime, changeVolume } = useAppSelector(
-    (state) => state.reducerChangeTimePlayerBottom
-  );
-
   const { playTrack, setCurrentTime, setDuration } = useAction();
 
   const setAudio = async () => {
     if (active) {
+      dispatch(loadingAction(true));
       const textFileUrl = `${active?.music}`;
       const url = "http://localhost:8080/";
       try {
@@ -46,8 +45,10 @@ export default function AudioPlayerBottom() {
           setCurrentTime(Math.ceil(audio.currentTime));
         };
         audio.play();
+        dispatch(loadingAction(false));
       } catch (e) {
         console.log(e, "error");
+        dispatch(loadingAction(false));
       }
     }
   };

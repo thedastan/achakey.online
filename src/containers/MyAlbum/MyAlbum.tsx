@@ -1,4 +1,4 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Image, Spinner, Text } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../hooks/Index";
 import Slider from "react-slick";
 
@@ -29,6 +29,9 @@ export default function MyAlbum() {
   const dispatch = useAppDispatch();
   const { myAlbums } = useAppSelector((state) => state.musicReducer);
   const { active } = useAppSelector((state) => state.playReducer);
+  const { loading } = useAppSelector(
+    (state) => state.reducerChangeTimePlayerBottom
+  );
 
   const { excerptPauseAction } = useExcerpAction();
 
@@ -86,6 +89,32 @@ export default function MyAlbum() {
 
   return (
     <Box minH="90vh" display="flex" justifyContent="space-between">
+      {loading && (
+        <Box
+          pos="fixed"
+          top="0"
+          bottom="0"
+          left="0"
+          right="0"
+          bg="rgba(11, 11, 11, 0.49)"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          zIndex="10"
+        >
+          <Box
+            display="flex"
+            flexDir="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Spinner mb="10px" color="#49DEFF" />
+            <Text textColor="white">
+              Пожалуйста подождите идет конвертация музыки...
+            </Text>
+          </Box>
+        </Box>
+      )}
       <Box w="100%" pt="46px">
         <Box mb="40px">
           {myAlbums.length > 4 && (
