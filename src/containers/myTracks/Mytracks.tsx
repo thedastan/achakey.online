@@ -27,23 +27,20 @@ import SvgLink from "../../assets/svg/SvgLink";
 export default function MyTracks() {
   const dispatch = useAppDispatch();
   const { fetchMyTracks } = useTracksAction();
-  const { activeTrack } = useAction();
+  const { activeTrack, playTrack, pauseTrack } = useAction();
   const { excerptPauseAction } = useExcerpAction();
 
   const [openPopup, setOpenPopup] = useState(false);
 
   const { myTracks } = useAppSelector((state) => state.musicReducer);
-  const { active } = useAppSelector((state) => state.playReducer);
+  const { active, pause } = useAppSelector((state) => state.playReducer);
 
   const activeText = myTracks.some((el) => el.id === active?.id);
 
   const OnChange = (data: ITrack, index: number) => {
-    if (data.id !== active?.id) {
-      activeTrack(data);
-      eventChange(true);
-      dispatch(currentIndexAction(index));
-    }
-    excerptPauseAction();
+    activeTrack(data);
+    eventChange(true);
+    dispatch(currentIndexAction(index));
     setOpenPopup(true);
   };
 

@@ -83,11 +83,10 @@ export default function BottomPlayer() {
   const play = () => {
     if (pause) {
       playTrack();
-      excerptPauseAction();
     } else {
       pauseTrack();
-      excerptPauseAction();
     }
+    excerptPauseAction();
   };
 
   const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,6 +104,7 @@ export default function BottomPlayer() {
   const OnClickNext = () => {
     setNext(true);
     dispatch(eventChange(false));
+    playTrack();
 
     dispatch(
       currentIndexAction(
@@ -143,6 +143,7 @@ export default function BottomPlayer() {
 
   const OnClickPrev = () => {
     setPrev(true);
+    playTrack();
 
     dispatch(
       currentIndexAction(
