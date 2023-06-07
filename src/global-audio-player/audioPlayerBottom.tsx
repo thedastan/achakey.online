@@ -22,9 +22,7 @@ export default function AudioPlayerBottom() {
     fetchTracks();
   }, []);
 
-  const { pause, volume, active } = useAppSelector(
-    (state) => state.playReducer
-  );
+  const { pause, active } = useAppSelector((state) => state.playReducer);
 
   const { changeTime, changeVolume } = useAppSelector(
     (state) => state.reducerChangeTimePlayerBottom
@@ -40,7 +38,6 @@ export default function AudioPlayerBottom() {
         const { data } = await axios(
           `${url}api/myMusics?textFileUrl=${textFileUrl}`
         );
-        audio = new Audio();
         audio.src = data.mp3Data;
         audio.onloadedmetadata = () => {
           setDuration(Math.ceil(audio.duration));
@@ -49,7 +46,6 @@ export default function AudioPlayerBottom() {
           setCurrentTime(Math.ceil(audio.currentTime));
         };
         audio.play();
-        console.log(data, "response data");
       } catch (e) {
         console.log(e, "error");
       }
@@ -62,12 +58,12 @@ export default function AudioPlayerBottom() {
     } else {
       setAudio();
     }
-  }, [active]);
+  }, [active?.id]);
 
   useEffect(() => {
     playTrack();
     audio.play();
-  }, [active]);
+  }, [active?.id]);
 
   useEffect(() => {
     audio.currentTime = Number(changeTime);
@@ -80,14 +76,13 @@ export default function AudioPlayerBottom() {
 
   useEffect(() => {
     if (pause) {
-      pauseTrack();
       audio.pause();
-      excerptPauseAction();
+      pauseTrack();
     } else {
-      playTrack();
       audio.play();
-      excerptPauseAction();
+      playTrack();
     }
+    excerptPauseAction();
   }, [pause]);
 
   useEffect(() => {
@@ -102,5 +97,5 @@ export default function AudioPlayerBottom() {
         });
   }, [loop]);
 
-  return <div></div>;
+  return <div />;
 }

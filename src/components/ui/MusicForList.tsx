@@ -48,8 +48,7 @@ export default function MusicForList({
   trackBoolean,
 }: ITrackChange) {
   const { fetchMyTracks } = useTracksAction();
-  const { fetchOrderPost, fetchOrder, fetchOrderId, fetchOrderItem } =
-    useActionOrder();
+  const { fetchOrder, fetchOrderId, fetchOrderItem } = useActionOrder();
   const { excerptPauseAction, excerptPlayAction } = useExcerpAction();
   const { postBasketItem, fetchBasket } = useActionBasket();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -66,9 +65,9 @@ export default function MusicForList({
   const userFilter = basket.filter((el) => el.user === getUserId());
 
   const play = (music?: ITrack) => {
+    pauseTrack();
     if (pause) {
       excerptPlayAction();
-      pauseTrack();
       if (music?.music !== active?.music) {
         excerptPauseAction();
         pauseTrack();
@@ -76,7 +75,6 @@ export default function MusicForList({
       }
     } else {
       excerptPauseAction();
-      pauseTrack();
       onClick(music);
     }
   };

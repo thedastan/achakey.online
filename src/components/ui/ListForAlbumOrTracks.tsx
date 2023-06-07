@@ -4,8 +4,9 @@ import { useAppSelector } from "../../hooks/Index";
 import { SvgPlayerGifDefault } from "../../assets/svg/SvgPlayerGifDefault";
 import { SvgPlayerGif } from "../../assets/svg/SvgPlayerGif";
 import SvgPlay from "../../assets/svg/SvgPlay";
-import { IMyTrack } from "../../redux/types";
+import { IMyTrack, ITrack } from "../../redux/types";
 import defaultImage from "../../assets/img/defaultImage.png";
+import { useAction, useExcerpAction } from "../../hooks/useActions";
 
 interface ITrackList {
   onClick?: any;
@@ -20,6 +21,9 @@ export default function ListForAlbumOrTracks({
   onClick,
   index,
 }: ITrackList) {
+  const { playTrack, pauseTrack } = useAction();
+  const { excerptPauseAction } = useExcerpAction();
+
   const { active, pause } = useAppSelector((state) => state.playReducer);
 
   function currentTimerAudio() {
@@ -32,10 +36,25 @@ export default function ListForAlbumOrTracks({
     return minutes + ":" + seconds;
   }
 
+  const play = (music?: ITrack) => {
+    pauseTrack();
+    if (pause) {
+      playTrack();
+      if (music?.music !== active?.music) {
+        excerptPauseAction();
+        pauseTrack();
+        onClick(music);
+      }
+    } else {
+      excerptPauseAction();
+      onClick(music);
+    }
+  };
+
   return (
     <Box
       px="29px"
-      onClick={() => onClick(music)}
+      onClick={() => play(music)}
       background={
         active?.music === music?.music
           ? "rgba(255, 255, 255, 0.08)"
