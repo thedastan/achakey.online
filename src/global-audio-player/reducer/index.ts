@@ -9,6 +9,7 @@ const initialState: IAudioBottomState = {
   changeVolume: 50,
   allLoop: false,
   loop: false,
+  loading: false,
 };
 
 export const reducerChangeTimePlayerBottom = (
@@ -24,6 +25,8 @@ export const reducerChangeTimePlayerBottom = (
       return { ...state, allLoop: action.payload };
     case AudioBottomTypes.LOOP:
       return { ...state, loop: action.payload };
+    case AudioBottomTypes.LOADING_MUSIC:
+      return { ...state, loading: action.payload };
     default:
       return state;
   }

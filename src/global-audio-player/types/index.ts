@@ -3,6 +3,7 @@ export interface IAudioBottomState {
   changeVolume: number;
   loop: boolean;
   allLoop: boolean;
+  loading: boolean;
 }
 
 export enum AudioBottomTypes {
@@ -10,6 +11,7 @@ export enum AudioBottomTypes {
   CHANGE_VOLUME = "CHANGE_VOLUME",
   LOOP = "LOOP",
   ALL_LOOP = "ALL_LOOP",
+  LOADING_MUSIC = "LOADING_MUSIC",
 }
 
 interface AudioBottomTimeActions {
@@ -32,8 +34,14 @@ interface AudioBottomAllLoopActions {
   payload: boolean;
 }
 
+interface AudioLoading {
+  type: AudioBottomTypes.LOADING_MUSIC;
+  payload: boolean;
+}
+
 export type AudioBottomAction =
   | AudioBottomTimeActions
   | AudioBottomVolumeActions
   | AudioBottomAllLoopActions
-  | AudioBottomLoopActions;
+  | AudioBottomLoopActions
+  | AudioLoading;
