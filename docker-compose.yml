@@ -1,32 +1,36 @@
-version: "2.2"
-services:
-  web:
-    build: .
-    container_name: front
-    ports:
-      - "3000:3000"
-    # volumes:
-    #   - ./static:/static
+version: "3"
 
-  nginx:
+services:
+  swag:
     image: linuxserver/swag
-    restart: always
+    container_name: swag
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Bishkek
-      - URL=achakey.online
+      - URL=achakey.online # Ваш домен
+      - SUBDOMAINS=www, # Указать поддомены, если необходимо
       - VALIDATION=http
-      - ONLY_SUBDOMAINS=false
-      - STAGING=false
-    depends_on:
-      - web
-    ports:
-      - "80:80"
-      - "443:443"
+      - EMAIL=motionwebteam@gmail.com # Ваш email для Let's Encrypt
+      - DNSPLUGIN= # Установить, если требуется использовать плагин DNS
+      - STAGING=false # Установить true для использования Let's Encrypt staging сервера (для тестирования)
     volumes:
-      - ./nginx/nginx.conf:/config/nginx/site-confs/default.conf
-      - lets:/config/keys
-      # - ./static:/usr/share/nginx/static
-volumes:
-  lets:
+      - ./config:/config
+      - ./nginx.conf:/config/nginx/site-confs/default # Путь к вашему файлу nginx.conf
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - 3000
+    environment:
+      - REACT_APP_API_URL=https://api.achakey.online # URL вашего бэкенда Python
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
