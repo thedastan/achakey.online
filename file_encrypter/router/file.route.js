@@ -70,7 +70,7 @@ router.get("/myMusics", async (req, res) => {
               };
 
               // Удаление файлов после заданного времени
-              const durationInMinutes = 5;
+              const durationInMinutes = 1;
               const durationInMillis = durationInMinutes * 60 * 1000;
 
               setTimeout(() => {

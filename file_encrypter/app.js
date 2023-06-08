@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const router = require("./router/file.route");
+const router = require("./router/file.route.js");
 
 const PORT = 8080;
 
@@ -17,3 +17,5 @@ app.use((_, res, next) => {
 app.use("/api", router);
 
 app.listen(PORT, () => console.log(`Server started on port ... ${PORT}`));
+
+module.exports = router;
